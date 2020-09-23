@@ -17,7 +17,7 @@ networks:
         cmd_settings: null
     live:
         gas_limit: auto
-        gas_price: 1e9
+        gas_price: 1000000000
         reverting_tx_gas_limit: false
         default_contract_owner: false
 

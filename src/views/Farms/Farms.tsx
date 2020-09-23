@@ -111,7 +111,7 @@ const Farms: React.FC = () => {
             <CardContainer>
               {diffTime > 0 && (
                 <div style={{ marginBottom: '5vh', marginTop: '5vh' }}>
-                  <Title>Countdown timer until next staking pool opens:</Title>
+                  <Title>The War Begins:</Title>
                   <CountDown launchDate={launch} />
                 </div>
               )}
@@ -127,7 +127,7 @@ const Farms: React.FC = () => {
               </TextContainer>
               <FarmCards />
               {/*<SectionDivider />
-              <CountDownText>Countdown timer until next staking pool opens:</CountDownText>
+              <CountDownText>The War Begins:</CountDownText>
               <CountDown launchDate={start} />
               <WarPool />*/}
             </CardContainer>

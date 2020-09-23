@@ -36,10 +36,10 @@ const Battle: React.FC = () => {
         </BackgroundSection>
         <ContentContainer>
           <Page>
-            <div style={{ marginBottom: '5vh', marginTop: '5vh' }}>
+            {/*<div style={{ marginBottom: '5vh', marginTop: '5vh' }}>
               <Title>The War Begins</Title>
               <CountDown launchDate={1609459200000} />
-            </div>
+            </div>*/}
             <VersusContainer>
               <VersusItem>
                 <VersusCard>

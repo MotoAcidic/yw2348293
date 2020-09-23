@@ -114,7 +114,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
             <StyledDetails><StyledDetail>{apr ? `${apr}% Apr` : ''}</StyledDetail></StyledDetails>
             <>
               <Button
-                disabled={false}
+                disabled={true}
                 text={`Select`}
                 to={`/farms/${farm.id}`}
               />

@@ -104,7 +104,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
             {Date.now() > endTime * 1000 ? (
               <>
                 <Button
-                  disabled={false}
+                  disabled={true}
                   text={`Select`}
                   to={`/farms/${farm.id}`}
                 />
@@ -114,7 +114,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
                 <>
                   <a href={`/farms/${farm.id}`} style={{ textDecoration: 'none', width: '100%' }}>
                     <Button
-                      disabled={false}
+                      disabled={true}
                       text={'Select'}
                       to={`/farms/${farm.id}`}
                     >

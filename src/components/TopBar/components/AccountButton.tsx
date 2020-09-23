@@ -24,6 +24,7 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
           onClick={() => connect('injected')}
           size="lg"
           text="Unlock Wallet"
+          disabled={true}
         />
       ) : (
           <StyledAccountInfo>

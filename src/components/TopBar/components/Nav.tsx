@@ -9,13 +9,35 @@ const Nav: React.FC = () => {
       {/* <StyledLink exact activeClassName="active" to="/earn">Earn</StyledLink> */}
       <StyledLink exact activeClassName="active" to="/battle">Battle</StyledLink>
       {/* <StyledLink exact activeClassName="active" to="/faq">FAQ</StyledLink> */}
-    </StyledNav>
+      <StyledA href="https://medium.com/@yieldwars/welcome-to-yieldwars-%EF%B8%8F-d3e8b388966a">About</StyledA>
+    </StyledNav >
   )
 }
 
 const StyledNav = styled.nav`
   align-items: center;
   display: flex;
+`
+
+const StyledA = styled.a`
+font-family: Alegreya;
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+opacity: 0.7;
+  padding-left: ${props => props.theme.spacing[3]}px;
+  padding-right: ${props => props.theme.spacing[3]}px;
+  text-decoration: none;
+  &:hover {
+    opacity: .9;
+  }
+  &.active {
+    opacity: 1;
+  }
 `
 
 const StyledLink = styled(NavLink)`

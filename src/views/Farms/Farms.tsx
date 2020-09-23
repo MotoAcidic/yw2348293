@@ -41,8 +41,8 @@ const Farms: React.FC = () => {
   const yam = useYam()
   let [farms] = useFarms()
   let [start, setStart] = useState(0)
-  let [tvl, setTVL] = useState({totalValue: new BigNumber(0), poolValues: {}})
-
+  let [tvl, setTVL] = useState({ totalValue: new BigNumber(0), poolValues: {} })
+  let launch = 1600963200000
 
   const [{
     circSupply,
@@ -97,6 +97,8 @@ const Farms: React.FC = () => {
     currentPrice = curPrice;
   }
 
+  let diffTime = launch - Math.round(new Date().getTime());
+
   return (
     <Switch>
       <StyledCanvas>
@@ -107,6 +109,12 @@ const Farms: React.FC = () => {
         <ContentContainer>
           <Page>
             <CardContainer>
+              {diffTime > 0 && (
+                <div style={{ marginBottom: '5vh', marginTop: '5vh' }}>
+                  <Title>Countdown timer until next staking pool opens:</Title>
+                  <CountDown launchDate={launch} />
+                </div>
+              )}
               <TopDisplayContainer>
                 {/*<DisplayItem>TVL: {tvl && !tvl.totalValue.eq(0) ? tvl.totalValue.toString() : '-'}</DisplayItem>
                 <DisplayItem>$War Price: ${currentPrice ? currentPrice : '-'}</DisplayItem>*/}

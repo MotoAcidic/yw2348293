@@ -10,7 +10,7 @@ class Splash extends React.Component {
 		super(props)
 
 		this.state = {
-			launchDate: 1609459200000,
+			launchDate: 1609459200,
 			days: 0,
 			hours: 0,
 			minutes: 0,
@@ -19,7 +19,7 @@ class Splash extends React.Component {
 	}
 
 	componentDidMount() {
-		let diffTime = this.state.launchDate - parseInt(Date.now());
+		let diffTime = this.state.launchDate - parseInt(Math.round(new Date().getTime()));
 		let duration = moment.duration(diffTime);
 		setInterval(() => {
 			duration = moment.duration(duration - 1000);

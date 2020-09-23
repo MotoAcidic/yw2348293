@@ -22,7 +22,7 @@ import useModal from './hooks/useModal'
 import Farms from './views/Farms'
 import Farm from './views/Farm'
 import Splash from './views/Splash/Splash'
-import Battle from './views/Battle/Battle'
+import Battle from './views/Battle/TempBattle'
 
 import theme from './theme'
 
@@ -48,12 +48,12 @@ const App: React.FC = () => {
             {/* <Route path="/earn/:earnId">
                 <Earn /> 
               </Route> */}
-            {/*<Route path="/battle" exact>
+            <Route path="/battle" exact>
               <Battle />
             </Route>
-            <Route path="/faq" exact>
+            {/* <Route path="/faq" exact>
               <Battle />
-            </Route>*/}
+            </Route> */}
           </Switch>
         </Router>
       </StyledCanvas>

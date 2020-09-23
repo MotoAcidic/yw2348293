@@ -13,6 +13,7 @@ import Page from '../../components/Page'
 
 import Landscape from '../../assets/img/landscapebig.png'
 import Sky from '../../assets/img/skybig.png'
+import TallSky from '../../assets/img/tallsky.png'
 
 
 import CountDown from './CountDown'
@@ -31,8 +32,9 @@ const Battle: React.FC = () => {
 				</BackgroundSection>
 				<ContentContainer>
 					<Page>
-						<CountDownText>Coming Soon!</CountDownText>
-						<CountDown launchDate={1609459200000} />
+            <Title>Coming Soon! Wager Your Tokens!</Title>
+						{/* <CountDownText>Countdown timer until next staking pool opens:</CountDownText>
+						<CountDown launchDate={1609459200000} /> */}
 					</Page>
 				</ContentContainer>
 			</StyledCanvas>
@@ -197,8 +199,8 @@ const AuthContainer = styled.div`
 
 const StyledSky = styled.div`
   width: 100%;
-  height: 60vh;
-  background-image: url(${Sky});
+  height: 270vh;
+  background-image: url(${TallSky});
   background-size: 100% 100%;
   background-repeat: repeat-x;
 `

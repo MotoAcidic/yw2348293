@@ -7,7 +7,7 @@ class CountDown extends React.Component {
 		super(props)
 
 		this.state = {
-			launchDate: 1609459200000,
+			launchDate: 1609459200,
 			days: 0,
 			hours: 0,
 			minutes: 0,
@@ -16,7 +16,7 @@ class CountDown extends React.Component {
 	}
 
 	componentDidMount() {
-		let diffTime = this.props.launchDate - parseInt(Date.now());
+		let diffTime = this.props.launchDate - parseInt(Math.round(new Date().getTime()));
 		let duration = moment.duration(diffTime);
 		setInterval(() => {
 			duration = moment.duration(duration - 1000);

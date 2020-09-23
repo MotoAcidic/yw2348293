@@ -5,9 +5,10 @@ const Nav: React.FC = () => {
   return (
     <StyledNav>
       <StyledLink href="https://discord.gg/8pppSYe">Discord</StyledLink>
-      <StyledLink href="https://telegram.com">Telegram</StyledLink>
-      <StyledLink href="https://github.com">Github</StyledLink>
-      <StyledLink href="https://twitter.com">Twitter</StyledLink>
+      <StyledLink href="https://t.me/yieldwarsofficial">Telegram</StyledLink>
+      {/* <StyledLink href="https://github.com">Github</StyledLink> */}
+      <StyledLink href="https://medium.com/@yieldwars">Medium</StyledLink>
+      <StyledLink href="https://twitter.com/yieldwars">Twitter</StyledLink>
     </StyledNav>
   )
 }

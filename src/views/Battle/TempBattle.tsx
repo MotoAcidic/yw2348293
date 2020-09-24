@@ -22,10 +22,57 @@ import TallSky from '../../assets/img/tallsky.png'
 
 import CountDown from './CountDown'
 
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) {
+    return true
+  }
+  else {
+    return false
+  }
+}
+
 
 const Battle: React.FC = () => {
 
-
+  let leaderboardContent = (
+    <>
+      <LeaderBoardItem>
+        <StyledContent>
+          1st
+                <img src={yam} width="30%" />
+          <StyledTitle>Yam</StyledTitle>
+        </StyledContent>
+      </LeaderBoardItem>
+      <LeaderBoardItem>
+        <StyledContent>
+          2nd
+                <img src={sushi} width="30%" />
+          <StyledTitle>Sushi</StyledTitle>
+        </StyledContent>
+      </LeaderBoardItem>
+      <LeaderBoardItem>
+        <StyledContent>
+          3rd
+                <img src={yam} width="30%" />
+          <StyledTitle>Yam</StyledTitle>
+        </StyledContent>
+      </LeaderBoardItem>
+      <LeaderBoardItem>
+        <StyledContent>
+          4th
+                <img src={sushi} width="30%" />
+          <StyledTitle>Sushi</StyledTitle>
+        </StyledContent>
+      </LeaderBoardItem>
+      <LeaderBoardItem>
+        <StyledContent>
+          5th
+                <img src={yam} width="30%" />
+          <StyledTitle>Yam</StyledTitle>
+        </StyledContent>
+      </LeaderBoardItem>
+    </>
+  )
 
   return (
     <Switch>
@@ -98,44 +145,9 @@ const Battle: React.FC = () => {
               </VersusItem>
               <Divider />
             </VersusContainer>
-            <Title>Leader Board</Title>
-            <LeaderBoard>
-              <LeaderBoardItem>
-                <StyledContent>
-                  1st
-                <img src={yam} width="30%" />
-                  <StyledTitle>Yam</StyledTitle>
-                </StyledContent>
-              </LeaderBoardItem>
-              <LeaderBoardItem>
-                <StyledContent>
-                  2nd
-                <img src={sushi} width="30%" />
-                  <StyledTitle>Sushi</StyledTitle>
-                </StyledContent>
-              </LeaderBoardItem>
-              <LeaderBoardItem>
-                <StyledContent>
-                  3rd
-                <img src={yam} width="30%" />
-                  <StyledTitle>Yam</StyledTitle>
-                </StyledContent>
-              </LeaderBoardItem>
-              <LeaderBoardItem>
-                <StyledContent>
-                  4th
-                <img src={sushi} width="30%" />
-                  <StyledTitle>Sushi</StyledTitle>
-                </StyledContent>
-              </LeaderBoardItem>
-              <LeaderBoardItem>
-                <StyledContent>
-                  5th
-                <img src={yam} width="30%" />
-                  <StyledTitle>Yam</StyledTitle>
-                </StyledContent>
-              </LeaderBoardItem>
-            </LeaderBoard>
+            <Title>Leaderboard</Title>
+            {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}
+
             {/* <Title>Schedule</Title>
             <Schedule>
               <ScheduleItem>
@@ -243,6 +255,13 @@ flex-direction: row;
 justify-content: space-evenly;
 width: 60%;
 height: 25vh;
+`
+
+const MobileLeaderBoard = styled.div`
+margin-top: 3vh;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
 `
 
 const StyledTitle = styled.h4`

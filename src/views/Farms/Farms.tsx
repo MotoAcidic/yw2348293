@@ -29,11 +29,21 @@ import WarPool from './WarPool'
 
 import FarmCards from './components/FarmCards'
 import CountDown from './components/CountDown'
+import MobileCountDown from './components/MobileCountdown'
+
 import { Account } from '../../yam/lib/accounts'
 import { getStartTime, getTotalValue } from '../../yamUtils'
 import useFarms from '../../hooks/useFarms'
 import BigNumber from 'bignumber.js'
 
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) {
+    return true
+  }
+  else {
+    return false
+  }
+}
 
 const Farms: React.FC = () => {
   const { path } = useRouteMatch()
@@ -103,7 +113,7 @@ const Farms: React.FC = () => {
     <Switch>
       <StyledCanvas>
         <BackgroundSection>
-          <TallStyledSky />
+          {isMobile() ? <MobileTallStyledSky /> : <TallStyledSky />}
           <StyledLandscape />
         </BackgroundSection>
         <ContentContainer>
@@ -112,7 +122,7 @@ const Farms: React.FC = () => {
               {diffTime > 0 && (
                 <div style={{ marginBottom: '5vh', marginTop: '5vh' }}>
                   <Title>The War Begins:</Title>
-                  <CountDown launchDate={launch} />
+                  {isMobile() ? <MobileCountDown launchDate={launch} /> : <CountDown launchDate={launch} />}
                 </div>
               )}
               <TopDisplayContainer>
@@ -258,7 +268,7 @@ font-family: Alegreya;
 `
 
 const TextContainer = styled.div`
-width: 60%;
+width: 80vw;
 height: 20vh;
   display: flex;
   flex-direction: column;
@@ -269,7 +279,7 @@ height: 20vh;
 `
 
 const TopDisplayContainer = styled.div`
-width: 40%;
+width: 40vw;
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -315,6 +325,14 @@ const StyledLandscape = styled.div`
   background-image: url(${Landscape});
   background-size: cover;
   transform: translateY(-1px)
+`
+
+const MobileTallStyledSky = styled.div`
+width: 100%;
+height: 550vh;
+background-image: url(${TallSky});
+background-size: 100% 100%;
+background-repeat: repeat-x;
 `
 
 const BackgroundSection = styled.div`

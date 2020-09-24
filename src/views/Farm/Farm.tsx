@@ -20,6 +20,15 @@ import Stake from './components/Stake'
 import Sky from '../../assets/img/skybig.png'
 import Landscape from '../../assets/img/landscapebig.png'
 
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) {
+    return true
+  }
+  else {
+    return false
+  }
+}
+
 const Farm: React.FC = () => {
   const { farmId } = useParams()
 
@@ -38,7 +47,7 @@ const Farm: React.FC = () => {
     icon: ''
   }
   console.log(farmId);
-  
+
 
   const StyledCountdown = styled.div`
   color: ${props => props.theme.color.primary.main};
@@ -72,11 +81,26 @@ const Farm: React.FC = () => {
     return earnToken.toUpperCase()
   }, [earnToken])
 
+  let content = (
+    <>
+      <StyledCardWrapper>
+        <Harvest poolContract={contract} />
+      </StyledCardWrapper>
+      <StyledCardWrapper>
+        <Stake
+          poolContract={contract}
+          tokenContract={tokenContract}
+          tokenName={depositToken.toUpperCase()}
+        />
+      </StyledCardWrapper>
+    </>
+  )
+
   return (
     <StyledCanvas>
       <BackgroundSection>
-        <StyledSky />
-        <StyledLandscape />
+        {isMobile() ? <MobileStyledSky /> : <StyledSky />}
+        {isMobile() ? <MobileStyledLandscape /> : <StyledLandscape />}
       </BackgroundSection>
       <ContentContainer>
         <Page>
@@ -86,18 +110,7 @@ const Farm: React.FC = () => {
             title={name}
           />
           <StyledFarm>
-            <StyledCardsWrapper>
-              <StyledCardWrapper>
-                <Harvest poolContract={contract} />
-              </StyledCardWrapper>
-              <StyledCardWrapper>
-                <Stake
-                  poolContract={contract}
-                  tokenContract={tokenContract}
-                  tokenName={depositToken.toUpperCase()}
-                />
-              </StyledCardWrapper>
-            </StyledCardsWrapper>
+            {isMobile() ? <MobileStyledCardsWrapper>{content}</MobileStyledCardsWrapper> : <StyledCardsWrapper>{content}</StyledCardsWrapper>}
             {/* <div>
               <Button
                 onClick={onRedeem}
@@ -126,9 +139,25 @@ const StyledCardsWrapper = styled.div`
   margin-bottom: 10vh;
 `
 
+const MobileStyledCardsWrapper = styled.div`
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-evenly;
+  margin-bottom: 10vh;
+`
+
 const StyledCardWrapper = styled.div`
   display: flex;
   width: 300px;
+  height: 350px;
+  border-radius: 8px;
+  border: solid 2px #0095f0;
+  background-color: #003677;
+`
+
+const MobileStyledCardWrapper = styled.div`
+  display: flex;
+  width: 80vw;
   height: 350px;
   border-radius: 8px;
   border: solid 2px #0095f0;
@@ -147,23 +176,30 @@ const StyledLink = styled.a`
 const StyledCanvas = styled.div`
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: #154f9b;
-  overflow: hidden;
-
 `
 
 const StyledSky = styled.div`
   position: absolute;
-  width: 100%;
+  width: 100vw;
   height: 60%;
   background-image: url(${Sky});
   background-size: 100% 100%;
   background-repeat: repeat-x;
 `
 
-const StyledLandscape = styled.div`
+const MobileStyledSky = styled.div`
   position: absolute;
+  width: 100vw;
+  height: 200vh;
+  background-image: url(${Sky});
+  background-size: 100% 100%;
+  background-repeat: repeat-x;
+`
+
+const StyledLandscape = styled.div`
+position: absolute;
   width: 100%;
   height: 45%;
   top: 55vh;
@@ -171,12 +207,22 @@ const StyledLandscape = styled.div`
   background-size: cover;
 `
 
+const MobileStyledLandscape = styled.div`
+position: absolute;
+  width: 100%;
+  height: 45%;
+  top: 200vh;
+  background-image: url(${Landscape});
+  background-size: cover;
+`
+
 const BackgroundSection = styled.div`
+
 `
 
 const ContentContainer = styled.div`
   position: absolute;
-  width: 100%;
+  width: 100vw;
   text-align: center;
 `
 

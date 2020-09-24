@@ -24,7 +24,7 @@ export const INTEGERS = {
 
 //erc20 list/xixi
 export const addressMap = {
-    
+
   /*uniswapFactory : "0xc0a47dFe034B400B47bDaD5FecDa2621de6c4d95",
   uniswapFactoryV2: "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
   */
@@ -42,7 +42,7 @@ export const addressMap = {
   srm_pool: "0xcce4158494ae8296E3936823058B17e03eEBa6c3",
   farm_pool: "0xcce4158494ae8296E3936823058B17e03eEBa6c3",
 
-  link: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
+  /*link: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
   snx: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
   yfi: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
   comp: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
@@ -53,9 +53,9 @@ export const addressMap = {
   wnxm: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
   mkr: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
   srm: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
-  farm: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
+  farm: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",*/
 
-/*
+
 link: "0x514910771af9ca656af840dff83e8264ecf986ca",
 snx: "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
 yfi: "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
@@ -68,7 +68,7 @@ mkr: "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
 bzrx: "0x56d811088235f11c8920698a204a5010a788f4b3",
 srm: "0x476c5e26a75bd202a9683ffd34359c0cc15be0ff", // 6 decimals
 farm: "0xa0246c9032bc3a600820415ae600c6388619a14d",
-*/
+
 
   UNIRouter: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
   Pricing: "0xD61BF18a0A2747642B8E015EbA1545810f4B9cA1", // kovan

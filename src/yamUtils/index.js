@@ -537,30 +537,7 @@ export const getAssetPrices = async (yam) => {
 
   const priceData = {};
   keys.forEach((key, i) => priceData[key] = yam.toBigN(priceArr[i]).div(10**6).toFixed(4));
-  console.log(priceData);
-  
-
-
-/*
-    let totalValue = new BigNumber(0)
-    let poolValues = {}
-    if (pools && pools[0].contract) {
-      for (let i = 0; i < pools.length; i++) {
-        let pool = pools[i]
-        poolValues[pool.contract._address] = new BigNumber(await pool.contract.methods.totalSupply().call())
-        totalValue = totalValue.plus(poolValues[pool.contract._address])
-        if (i === (pools.length - 1)) {
-          return {totalValue, poolValues};
-        }
-      }
-    }
-
-    yam.assetPrices = prices;
-    return prices;
-  } else {
-    return prices;
-  }
-  */
+  //console.log(priceData);
 }
 
 export const getStartTime = async (pool) => {

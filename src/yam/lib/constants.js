@@ -60,10 +60,10 @@ export const addressMap = {
   snx: "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
   yfi: "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
   comp: "0xc00e94cb662c3520282e6f5717214004a7f26888",
-  chads: "0x69692D3345010a207b759a7D1af6fc7F38b35c5E", // <-- CHADS  Chads Apes
+  chads: "0x69692D3345010a207b759a7D1af6fc7F38b35c5E",
   lend: "0x80fb784b7ed66730e8b1dbd9820afd29931aab03",
   uni: "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
-  wnxm: "0x0d438f3b5175bebc262bf23753c1e53d03432bde",  // <-- BASED Ghouls (0x68A118Ef45063051Eac49c7e647CE5Ace48a68a5, 18)
+  wnxm: "0x0d438f3b5175bebc262bf23753c1e53d03432bde",
   mkr: "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
   bzrx: "0x56d811088235f11c8920698a204a5010a788f4b3",
   srm: "0x476c5e26a75bd202a9683ffd34359c0cc15be0ff", // 6 decimals

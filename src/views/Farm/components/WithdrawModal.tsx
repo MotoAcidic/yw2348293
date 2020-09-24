@@ -8,7 +8,7 @@ import ModalActions from '../../../components/ModalActions'
 import ModalTitle from '../../../components/ModalTitle'
 import TokenInput from '../../../components/TokenInput'
 
-import { getFullDisplayBalance } from '../../../utils/formatBalance'
+import { getFullDisplayBalance, getSNXDisplayBalance  } from '../../../utils/formatBalance'
 
 interface WithdrawModalProps extends ModalProps {
   max: BigNumber,
@@ -21,6 +21,9 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ onConfirm, onDismiss, max
   const [done, setDone] = useState(false)
 
   const fullBalance = useMemo(() => {
+    if (tokenName === 'SRM') {
+      return getSNXDisplayBalance(max)
+    }
     return getFullDisplayBalance(max)
   }, [max])
 

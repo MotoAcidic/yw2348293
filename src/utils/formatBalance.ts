@@ -12,3 +12,7 @@ export const getDisplayBalance = (balance: BigNumber, decimals = 18) => {
 export const getFullDisplayBalance = (balance: BigNumber, decimals = 18) => {
   return balance.dividedBy(new BigNumber(10).pow(decimals)).toFixed()
 }
+
+export const getSNXDisplayBalance = (balance: BigNumber, decimals = 6) => {
+  return balance.dividedBy(new BigNumber(10).pow(decimals)).toFixed()
+}

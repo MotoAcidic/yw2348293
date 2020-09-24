@@ -21,7 +21,7 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
   const [done, setDone] = useState(false)
 
   const fullBalance = useMemo(() => {
-    if (tokenName === 'SNX') {
+    if (tokenName === 'SRM') {
       return getSNXDisplayBalance(max)
     }
     return getFullDisplayBalance(max)

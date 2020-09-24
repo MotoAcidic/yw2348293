@@ -79,7 +79,7 @@ const Advertisements: React.FC = () => {
 
   // src location of logic for this to update the address
 
-  //can set a gas base price as well send({from: account, gas: 200000})
+  //can set a gas base price as well send({from: account, gas: 300000})
 
   const initiate_vote = useCallback(() => {
     vote_new_token(yam, account)

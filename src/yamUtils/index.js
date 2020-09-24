@@ -30,10 +30,10 @@ export const stake = async (poolContract, amount, account) => {
     const precision = poolContract.options.address.toLowerCase() === "0x7845664310e205c979aa067bcfe02704d1001bcf" ?
       new BigNumber(10).pow(6) :
       new BigNumber(10).pow(18);
-    
+
     return poolContract.methods
       .stake((new BigNumber(amount).times(precision)).toString())
-      .send({ from: account, gas: 200000 })
+      .send({ from: account, gas: 300000 })
       .on('transactionHash', tx => {
         console.log(tx)
         return tx.transactionHash
@@ -52,7 +52,7 @@ export const unstake = async (poolContract, amount, account) => {
 
     return poolContract.methods
       .withdraw((new BigNumber(amount).times(precision)).toString())
-      .send({ from: account, gas: 200000 })
+      .send({ from: account, gas: 300000 })
       .on('transactionHash', tx => {
         console.log(tx)
         return tx.transactionHash
@@ -67,7 +67,7 @@ export const harvest = async (poolContract, account) => {
   if (now >= 1097172400) {
     return poolContract.methods
       .getReward()
-      .send({ from: account, gas: 200000 })
+      .send({ from: account, gas: 300000 })
       .on('transactionHash', tx => {
         console.log(tx)
         return tx.transactionHash
@@ -82,7 +82,7 @@ export const redeem = async (poolContract, account) => {
   if (now >= 1097172400) {
     return poolContract.methods
       .exit()
-      .send({ from: account, gas: 200000 })
+      .send({ from: account, gas: 300000 })
       .on('transactionHash', tx => {
         console.log(tx)
         return tx.transactionHash
@@ -223,7 +223,7 @@ export const getCurrentPrice = async (yam) => {
       "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
     ]
   ).call();
-  
+
   // call for kovan
   /*let p = await yam.contracts.uni_router.methods.getAmountsOut(
     new BigNumber(1000000000000000000),

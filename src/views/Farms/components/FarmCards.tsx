@@ -142,7 +142,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
               <span>Earn WAR</span>
             </DepositEarn>
             <Button
-              disabled={true}
+              disabled={false}
               text={`Select`}
               to={`/farms/${farm.id}`}
               size='xlg'

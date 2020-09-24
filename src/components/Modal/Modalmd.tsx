@@ -27,6 +27,8 @@ const StyledModal = styled.div`
   border-radius: 12px;
   box-shadow: 24px 24px 48px -24px ${props => props.theme.color.grey[600]};
   position: relative;
+  z-index: 100000;
+
 `
 
 export default Modalmd

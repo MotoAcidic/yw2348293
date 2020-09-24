@@ -216,7 +216,7 @@ export const getStaked = async (yam, pool, account) => {
 export const getCurrentPrice = async (yam) => {
   //return yam.toBigN(await yam.contracts.rebaser.methods.getCurrentTWAP().call())
   let p = await yam.contracts.uni_router.methods.getAmountsOut(
-    new BigNumber(1000000000000000000),
+    new BigNumber("1000000000000000000"),
     [
       "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde",
       "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",

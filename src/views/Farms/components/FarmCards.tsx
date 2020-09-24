@@ -147,12 +147,12 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
               to={`/farms/${farm.id}`}
               size='xlg'
             />
-            {/* {apr !== 0 && ( */}
+            {apr !== 0 && (
             <StyledDetails>
               <StyledDetail>APR</StyledDetail>
               <StyledDetail>{apr ? `${apr}% Apr` : ''}6%</StyledDetail>
             </StyledDetails>
-            {/* )} */}
+            )}
           </StyledContent>
         </CardContent>
       </Card>

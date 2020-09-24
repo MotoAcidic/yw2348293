@@ -52,6 +52,17 @@ const Farms: React.FC = ({ children }) => {
 
     let farmsArr = [
       {
+        contract: pools ? pools["chads_pool"] : undefined,
+        name: "CHADS Apes",
+        depositToken: "CHADS",
+        depositTokenAddress: tokens ? tokens["chads_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "🦍",
+        id: "CHADS",
+        sort: 9
+      },
+      {
         contract: pools ? pools["farm_pool"] : undefined,
         name: "FARM Tractors",
         depositToken: "FARM",
@@ -107,17 +118,6 @@ const Farms: React.FC = ({ children }) => {
         sort: 9
       },
       {
-        contract: pools ? pools["omg_pool"] : undefined,
-        name: "OMG Mafia",
-        depositToken: "OMG",
-        depositTokenAddress: tokens ? tokens["omg_token"].options.address : undefined,
-        earnToken: 'WAR',
-        earnTokenAddress: yamAddress,
-        icon: "🕴️",
-        id: "OMG",
-        sort: 9
-      },
-      {
         contract: pools ? pools["bzrx_pool"] : undefined,
         name: "BZRX Berserkers",
         depositToken: "BZRX",
@@ -157,7 +157,7 @@ const Farms: React.FC = ({ children }) => {
         depositTokenAddress: tokens ? tokens["wnxm_token"].options.address : undefined,
         earnToken: 'WAR',
         earnTokenAddress: yamAddress,
-        icon: "👾",
+        icon: "👾", // BASED Ghouls 💀
         id: "WNXM",
         sort: 9
       },

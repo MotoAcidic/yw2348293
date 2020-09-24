@@ -89,7 +89,7 @@ export const approve = async (tokenContract, poolContract, account) => {
     .approve(poolContract.options.address, ethers.constants.MaxUint256)
     .send({ from: account, gas: 80000 })
 }
-//after adding more parameters update the id to be a param 
+//after adding more parameters update the id to be a param
 //which is unique to the voting option
 export const get_y_n_vote = async (provider, account) => {
   if (provider) {
@@ -215,7 +215,7 @@ export const getCurrentPrice = async (yam) => {
       "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
     ]
   ).call();*/
-  
+
   // call for kovan
   /*let p = await yam.contracts.uni_router.methods.getAmountsOut(
     new BigNumber(1000000000000000000),
@@ -224,7 +224,7 @@ export const getCurrentPrice = async (yam) => {
     ]
   ).call();
 
-  
+
 
   p = yam.toBigN(p[p.length - 1]).div(10**18).toFixed(4);
   console.log(p);
@@ -284,7 +284,7 @@ export const getNextRebaseTimestamp = async (yam) => {
     console.log(e)
   }
 }
- 
+
 
 export const getSupply = async (provider) => {
   if (provider) {
@@ -457,7 +457,7 @@ export const getAPR = async (pool) => {
   //const totalSupply = await getTotalSupply(pool);
   /*if (pool) {
     return 10;
-  } else { 
+  } else {
     return 0;
   }*/
   return 0;
@@ -466,11 +466,11 @@ export const getAPR = async (pool) => {
 export const getTotalValue = async (pools) => {
   let totalValue = new BigNumber(0)
   let poolValues = {}
-  if (pools && pools[0].contract) {  
+  if (pools && pools[0].contract) {
     for (let i = 0; i < pools.length; i++) {
       let pool = pools[i]
       poolValues[pool.contract._address] = new BigNumber(0); //await pool.contract.methods.totalSupply().call())
-      totalValue = totalValue.plus(poolValues[pool.contract._address]) 
+      totalValue = totalValue.plus(poolValues[pool.contract._address])
       if (i === (pools.length - 1)) {
         return {totalValue, poolValues};
       }
@@ -487,7 +487,7 @@ export const getAssetPrices = async (yam) => {
       snx: "1000000000000000000",
       yfi: "1000000000000000000",
       comp: "1000000000000000000",
-      omg: "1000000000000000000",
+      chads: "1000000000000000000",
       bzrx: "1000000000000000000",
       uni: "1000000000000000000",
       lend: "1000000000000000000",
@@ -502,7 +502,7 @@ export const getAssetPrices = async (yam) => {
       snx: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
       yfi: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
       comp: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
-      omg: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
+      chads: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
       bzrx: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
       uni: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
       lend: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
@@ -516,18 +516,18 @@ export const getAssetPrices = async (yam) => {
 
     let totalValue = new BigNumber(0)
     let poolValues = {}
-    if (pools && pools[0].contract) {  
+    if (pools && pools[0].contract) {
       for (let i = 0; i < pools.length; i++) {
         let pool = pools[i]
         poolValues[pool.contract._address] = new BigNumber(await pool.contract.methods.totalSupply().call())
-        totalValue = totalValue.plus(poolValues[pool.contract._address]) 
+        totalValue = totalValue.plus(poolValues[pool.contract._address])
         if (i === (pools.length - 1)) {
           return {totalValue, poolValues};
         }
       }
     }
 
-    yam.assetPrices = prices; 
+    yam.assetPrices = prices;
     return prices;
   } else {
     return prices;
@@ -537,12 +537,12 @@ export const getAssetPrices = async (yam) => {
 
 export const getStartTime = async (pool) => {
   let starttime = 0
-  if (pool && pool.contract) {  
+  if (pool && pool.contract) {
     starttime = await pool.contract.methods.starttime().call()
   }
   return starttime;
 }
- 
+
 export const getYamContract = (yam) => {
   return yam.contracts.yam;
 }

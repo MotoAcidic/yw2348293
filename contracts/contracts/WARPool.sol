@@ -561,10 +561,7 @@ contract IRewardDistributionRecipient is Ownable {
         _;
     }
 
-    function setRewardDistribution(address _rewardDistribution)
-        external
-        onlyOwner
-    {
+    function setRewardDistribution(address _rewardDistribution) external onlyOwner {
         rewardDistribution = _rewardDistribution;
     }
 }
@@ -699,7 +696,6 @@ contract WARPool is LPTokenWrapper, IRewardDistributionRecipient {
                 .add(rewards[account]);
     }
 
-    // stake visibility is public as overriding LPTokenWrapper's stake() function
     function stake(uint256 amount) public updateReward(msg.sender) checkStart checkBalance(amount) {
         require(amount > 0, "Cannot stake 0");
         super.stake(amount);

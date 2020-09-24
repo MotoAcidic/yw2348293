@@ -131,7 +131,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
 
   return (
     <StyledCardWrapper>
-      {i === 0 && <RainbowShadow />}
+      {(i === 0 || i === 1) && <RainbowShadow />}
       <Card>
         <CardContent>
           <StyledContent>
@@ -142,7 +142,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
               <span>Earn WAR</span>
             </DepositEarn>
             <Button
-              disabled={true}
+              disabled={false}
               text={`Select`}
               to={`/farms/${farm.id}`}
               size='xlg'
@@ -313,7 +313,7 @@ padding: 0px 12px;
 const StyledDetail = styled.div`
 font-family: Alegreya;
 line-height: 32px;
-    font-size: 18px;
+font-size: 18px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;

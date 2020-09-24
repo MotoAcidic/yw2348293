@@ -21,9 +21,6 @@ const WithdrawModal: React.FC<WithdrawModalProps> = ({ onConfirm, onDismiss, max
   const [done, setDone] = useState(false)
 
   const fullBalance = useMemo(() => {
-    if (tokenName === 'SRM') {
-      return getSNXDisplayBalance(max)
-    }
     return getFullDisplayBalance(max)
   }, [max])
 

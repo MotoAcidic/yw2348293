@@ -27,8 +27,12 @@ export const getPoolEndTime = async (poolContract) => {
 export const stake = async (poolContract, amount, account) => {
   let now = new Date().getTime() / 1000;
   if (now >= 1097172400) {
+    const precision = poolContract.options.address.toLowerCase() === "0x7845664310e205c979aa067bcfe02704d1001bcf" ?
+      new BigNumber(10).pow(6) :
+      new BigNumber(10).pow(18);
+    
     return poolContract.methods
-      .stake((new BigNumber(amount).times(new BigNumber(10).pow(18))).toString())
+      .stake((new BigNumber(amount).times(precision)).toString())
       .send({ from: account, gas: 200000 })
       .on('transactionHash', tx => {
         console.log(tx)
@@ -42,8 +46,12 @@ export const stake = async (poolContract, amount, account) => {
 export const unstake = async (poolContract, amount, account) => {
   let now = new Date().getTime() / 1000;
   if (now >= 1097172400) {
+    const precision = poolContract.options.address.toLowerCase() === "0x7845664310e205c979aa067bcfe02704d1001bcf" ?
+      new BigNumber(10).pow(6) :
+      new BigNumber(10).pow(18);
+
     return poolContract.methods
-      .withdraw((new BigNumber(amount).times(new BigNumber(10).pow(18))).toString())
+      .withdraw((new BigNumber(amount).times(precision)).toString())
       .send({ from: account, gas: 200000 })
       .on('transactionHash', tx => {
         console.log(tx)

@@ -150,9 +150,7 @@ const StyledCardWrapper = styled.div`
   display: flex;
   width: 300px;
   height: 350px;
-  border-radius: 8px;
-  border: solid 2px #0095f0;
-  background-color: #003677;
+
 `
 
 const MobileStyledCardWrapper = styled.div`

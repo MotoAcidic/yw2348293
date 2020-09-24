@@ -8,25 +8,52 @@ import AccountButton from './components/AccountButton'
 import Nav from './components/Nav'
 import TxButton from './components/TxButton'
 
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) {
+    return true
+  }
+  else {
+    return false
+  }
+}
+
 const TopBar: React.FC = () => {
   return (
     <StyledTopBar>
-      <Container size="lg">
-        <StyledTopBarInner>
-          <div style={{ flex: 1 }}>
-            <Logo />
-          </div>
+      {isMobile() ? (
+        <Container size="lg">
+          <StyledTopBarInner>
+            <div style={{ flex: 1 }}>
+              <Logo />
+            </div>
+            <div style={{
+              flex: 1,
+              display: 'flex',
+              justifyContent: 'flex-end'
+            }}>
+              <AccountButton />
+            </div>
+          </StyledTopBarInner >
           <Nav />
-          <div style={{
-            flex: 1,
-            display: 'flex',
-            justifyContent: 'flex-end'
-          }}>
-            <AccountButton />
-          </div>
-        </StyledTopBarInner>
-      </Container>
-    </StyledTopBar>
+        </Container >
+      ) : (
+          <Container size="lg">
+            <StyledTopBarInner>
+              <div style={{ flex: 1 }}>
+                <Logo />
+              </div>
+              <Nav />
+              <div style={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: 'flex-end'
+              }}>
+                <AccountButton />
+              </div>
+            </StyledTopBarInner >
+          </Container >
+        )}
+    </StyledTopBar >
   )
 }
 

@@ -2,11 +2,21 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Nav from './components/Nav'
+import MobileNav from './components/MobileNav'
+
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) {
+    return true
+  }
+  else {
+    return false
+  }
+}
 
 const Footer: React.FC = () => (
   <StyledFooter>
     <StyledFooterInner>
-      <Nav />
+      {isMobile() ? <MobileNav /> : <Nav />}
     </StyledFooterInner>
   </StyledFooter>
 )

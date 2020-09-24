@@ -14,6 +14,16 @@ import { Farm } from '../../../contexts/Farms'
 
 import { getAPR, getPoolEndTime } from '../../../yamUtils'
 
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) {
+    return true
+  }
+  else {
+    return false
+  }
+}
+
+
 const FarmCards: React.FC = () => {
   let [farms] = useFarms()
 
@@ -28,6 +38,19 @@ const FarmCards: React.FC = () => {
     return newFarmRows
   }, [[]])
 
+  if (isMobile()) {
+    return (
+      <MobileStyledCards>
+        {!!farms.length && farms.map((farm, i) => (
+          <StyledRow key={i}>
+            <React.Fragment>
+              <FarmCard farm={farm} />
+            </React.Fragment>
+          </StyledRow>
+        ))}
+      </MobileStyledCards>
+    )
+  }
 
   return (
     <StyledCards>
@@ -104,6 +127,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
     }
   }, [farm, aprVal])
 
+
   return (
     <StyledCardWrapper>
       <Card>
@@ -111,6 +135,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
           <StyledContent>
             <CardIcon>{farm.icon}</CardIcon>
             <StyledTitle>{farm.name}</StyledTitle>
+            <span>Deposit {farm.id}</span>
+            <span>Earn WAR</span>
             <StyledDetails><StyledDetail>{apr ? `${apr}% Apr` : ''}</StyledDetail></StyledDetails>
             <>
               <Button
@@ -151,6 +177,11 @@ const StyledCardAccent = styled.div`
 const StyledCards = styled.div`
 margin-top: 3vh;
   width: 1100px;
+`
+
+const MobileStyledCards = styled.div`
+margin-top: 3vh;
+  width: 100vw;
 `
 
 const StyledLoadingWrapper = styled.div`
@@ -196,6 +227,16 @@ const StyledContent = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   height: 100%;
+  font-family: Alegreya;
+font-size: 15px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+color: #ffffff;
+  padding: 0;
 `
 
 const StyledDenominator = styled.div`

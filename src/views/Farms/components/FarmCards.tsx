@@ -44,7 +44,7 @@ const FarmCards: React.FC = () => {
         {!!farms.length && farms.map((farm, i) => (
           <StyledRow key={i}>
             <React.Fragment>
-              <FarmCard farm={farm} />
+              <FarmCard farm={farm} i={i} />
             </React.Fragment>
           </StyledRow>
         ))}
@@ -58,7 +58,7 @@ const FarmCards: React.FC = () => {
         <StyledRow key={i}>
           {farmRow.map((farm, j) => (
             <React.Fragment key={j}>
-              <FarmCard farm={farm} />
+              <FarmCard farm={farm} i={i + j} />
             </React.Fragment>
           ))}
         </StyledRow>
@@ -76,10 +76,11 @@ const FarmCards: React.FC = () => {
 
 interface FarmCardProps {
   farm: Farm,
+  i: Number,
 }
 const WARNING_TIMESTAMP = 1598000400000
 
-const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
+const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   // const [startTime, setStartTime] = useState(0)
   // const [endTime, setEndTime] = useState(0)
   const [apr, setAPR] = useState(0)
@@ -130,27 +131,70 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
 
   return (
     <StyledCardWrapper>
+      {i === 0 && <RainbowShadow />}
       <Card>
         <CardContent>
           <StyledContent>
             <CardIcon>{farm.icon}</CardIcon>
             <StyledTitle>{farm.name}</StyledTitle>
-            <span>Deposit {farm.id}</span>
-            <span>Earn WAR</span>
-            <StyledDetails><StyledDetail>{apr ? `${apr}% Apr` : ''}</StyledDetail></StyledDetails>
-            <>
-              <Button
-                disabled={true}
-                text={`Select`}
-                to={`/farms/${farm.id}`}
-              />
-            </>
+            <DepositEarn>
+              <span>Deposit {farm.id}</span>
+              <span>Earn WAR</span>
+            </DepositEarn>
+            <Button
+              disabled={true}
+              text={`Select`}
+              to={`/farms/${farm.id}`}
+              size='xlg'
+            />
+            {/* {apr !== 0 && ( */}
+            <StyledDetails>
+              <StyledDetail>APR</StyledDetail>
+              <StyledDetail>{apr ? `${apr}% Apr` : ''}6%</StyledDetail>
+            </StyledDetails>
+            {/* )} */}
           </StyledContent>
         </CardContent>
       </Card>
     </StyledCardWrapper>
   )
 }
+
+const RainbowShadow = styled.div`
+background: linear-gradient(
+  45deg,
+  rgba(255, 0, 0, 1) 0%,
+  rgba(255, 154, 0, 1) 10%,
+  rgba(208, 222, 33, 1) 20%,
+  rgba(79, 220, 74, 1) 30%,
+  rgba(63, 218, 216, 1) 40%,
+  rgba(47, 201, 226, 1) 50%,
+  rgba(28, 127, 238, 1) 60%,
+  rgba(95, 21, 242, 1) 70%,
+  rgba(186, 12, 248, 1) 80%,
+  rgba(251, 7, 217, 1) 90%,
+  rgba(255, 0, 0, 1) 100%
+);
+background-size: 300% 300%;
+animation: dOtNsp 2s linear infinite;
+border-radius: 12px;
+filter: blur(6px);
+position: absolute;
+top: -2px;
+right: -2px;
+bottom: -2px;
+left: -2px;
+z-index: 0;
+`
+
+const DepositEarn = styled.div`
+display: flex;
+flex-direction: column;
+margin-top: 8px;
+margin-bottom: 24px;
+font-size: 18px;
+line-height: 1.3;
+`
 
 const StyledCardAccent = styled.div`
   background: linear-gradient(
@@ -171,7 +215,7 @@ const StyledCardAccent = styled.div`
   filter: blur(4px);
   position: absolute;
   top: -2px; right: -2px; bottom: -2px; left: -2px;
-  z-index: -1;
+  z-index: 1000000;
 `
 
 const StyledCards = styled.div`
@@ -199,19 +243,17 @@ const StyledRow = styled.div`
 `
 
 const StyledCardWrapper = styled.div`
+position: relative;
   display: flex;
-  width: 250px;
-  height: 290px;
-  border-radius: 8px;
-  border: solid 2px #0095f0;
-  background-color: #003677;
+  width: 275px;
+  height: 350px;
+
 `
 
 const StyledTitle = styled.h4`
-margin: 0;
 font-family: Alegreya;
-font-size: 25px;
-font-weight: bold;
+font-size: 28px;
+font-weight: 700;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
@@ -219,13 +261,13 @@ letter-spacing: normal;
 text-align: center;
 color: #ffffff;
   padding: 0;
+  margin: 8px 0px 0px;
 `
 
 const StyledContent = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   height: 100%;
   font-family: Alegreya;
 font-size: 15px;
@@ -252,16 +294,29 @@ const StyledSpacer = styled.div`
 `
 
 const StyledDetails = styled.div`
-  text-align: center;
+display: flex;
+-webkit-box-pack: justify;
+justify-content: space-between;
+box-sizing: border-box;
+border-radius: 8px;
+background: rgb(20,91,170);
+color: rgb(170, 149, 132);
+width: 100%;
+margin-top: 12px;
+line-height: 32px;
+font-size: 13px;
+border: 1px solid rgb(230, 220, 213);
+text-align: center;
+padding: 0px 12px;
 `
 
 const StyledDetail = styled.div`
 font-family: Alegreya;
-font-size: 20px;
+line-height: 32px;
+    font-size: 18px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
-line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 }

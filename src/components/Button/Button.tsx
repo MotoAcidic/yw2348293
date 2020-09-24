@@ -8,7 +8,7 @@ interface ButtonProps {
   disabled?: boolean,
   href?: string,
   onClick?: () => void,
-  size?: 'sm' | 'md' | 'lg',
+  size?: 'sm' | 'md' | 'lg' | 'xlg',
   text?: string,
   to?: string,
   variant?: 'default' | 'secondary' | 'tertiary'
@@ -27,7 +27,7 @@ const Button: React.FC<ButtonProps> = ({
   const { color, spacing } = useContext(ThemeContext)
 
   let buttonColor = 'white'
-  
+
 
   if (disabled) {
     buttonColor = 'grey'
@@ -35,6 +35,7 @@ const Button: React.FC<ButtonProps> = ({
 
   let boxShadow: string
   let buttonSize: number
+  let buttonHeight: number
   let buttonPadding: number
   let fontSize: number
   switch (size) {
@@ -43,6 +44,7 @@ const Button: React.FC<ButtonProps> = ({
         -8px -8px 16px ${color.grey[100]}FF;`
       buttonPadding = 5
       buttonSize = 100
+      buttonHeight = 40
       fontSize = 14
       break
     case 'lg':
@@ -50,6 +52,15 @@ const Button: React.FC<ButtonProps> = ({
         -12px -12px 24px ${color.grey[100]}ff;`
       buttonPadding = 10
       buttonSize = 170
+      buttonHeight = 40
+      fontSize = 16
+      break
+    case 'xlg':
+      boxShadow = `6px 6px 12px ${color.grey[300]},
+          -12px -12px 24px ${color.grey[100]}ff;`
+      buttonPadding = 10
+      buttonSize = 250
+      buttonHeight = 56
       fontSize = 16
       break
     case 'md':
@@ -58,6 +69,7 @@ const Button: React.FC<ButtonProps> = ({
         -12px -12px 24px -2px ${color.grey[100]}ff;`
       buttonPadding = 8
       buttonSize = 135
+      buttonHeight = 40
       fontSize = 16
   }
 
@@ -80,6 +92,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       padding={buttonPadding}
       size={buttonSize}
+      height={buttonHeight}
     >
       {children}
       {ButtonChild}
@@ -93,20 +106,21 @@ interface StyledButtonProps {
   disabled?: boolean,
   fontSize: number,
   padding: number,
-  size: number
+  size: number,
+  height: number,
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
   border: 0;
-  border-radius: 12px;
+  border-radius: 18px;
   cursor: pointer;
   display: flex;
   font-size: ${props => props.fontSize}px;
   border-radius: 8px;
-  border: solid 2px #0095f0;
+  box-shadow: rgb(0,34,79) 6px 6px 12px, rgb(0,54,119) -12px -12px 24px -2px;
   background-color: #003983;
-  height: 40px;
+  height: ${props => props.height}px;
   justify-content: center;
   outline: none;
   padding-left: ${props => props.padding}px;

@@ -9,7 +9,6 @@ import {
 } from '../../yamUtils'
 
 const getCurrentPrice = async (yam: typeof Yam): Promise<number> => {
-  // FORBROCK: get current YAM price
   return gCP(yam)
 }
 

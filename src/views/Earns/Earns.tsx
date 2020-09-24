@@ -36,8 +36,8 @@ const Earns: React.FC = () => {
           <Page>
             <CardContainer>
               <ButtonContainer>
-                {/*<Button size='md'>TVL</Button>
-                <Button size='md'>$War Price</Button>*/}
+                {/*<Button size='md'>TVL</Button>*/}
+                <Button size='md'>$War Price</Button>
                 <Button size='md'>Supply</Button>
               </ButtonContainer>
               <TextContainer>

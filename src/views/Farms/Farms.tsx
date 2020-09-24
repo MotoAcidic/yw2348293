@@ -78,7 +78,7 @@ const Farms: React.FC = () => {
   }, [yam, setTVL, setTVL])
 
   useEffect(() => {
-    if (yam && account && farms[0] && farms[0].contract) {
+    if (yam && account && farms && farms[0]) {
       fetchStats()
       fetchStartTime()
       fetchTotalValue()
@@ -126,8 +126,8 @@ const Farms: React.FC = () => {
                 </div>
               )}
               <TopDisplayContainer>
-                {/*<DisplayItem>TVL: {tvl && !tvl.totalValue.eq(0) ? tvl.totalValue.toString() : '-'}</DisplayItem>
-                <DisplayItem>$War Price: ${currentPrice ? currentPrice : '-'}</DisplayItem>*/}
+                {/*<DisplayItem>TVL: {tvl && !tvl.totalValue.eq(0) ? tvl.totalValue.toString() : '-'}</DisplayItem>*/}
+                <DisplayItem>$War Price: ${currentPrice ? currentPrice : '-'}</DisplayItem>
                 <DisplayItem>Supply: 2,800,000</DisplayItem>
               </TopDisplayContainer>
               <TextContainer>

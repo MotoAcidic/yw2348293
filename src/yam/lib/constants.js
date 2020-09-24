@@ -69,8 +69,11 @@ export const addressMap = {
   srm: "0x476c5e26a75bd202a9683ffd34359c0cc15be0ff", // 6 decimals
   farm: "0xa0246c9032bc3a600820415ae600c6388619a14d",
 
+  war: "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde",
 
   UNIRouter: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-  Pricing: "0xD61BF18a0A2747642B8E015EbA1545810f4B9cA1", // kovan
+
+  Pricing: "0xA056b5a1fC97ea86D949cdB67Be4950e29942421", // mainnet
+  //Pricing: "0xD61BF18a0A2747642B8E015EbA1545810f4B9cA1", // kovan
 }
 

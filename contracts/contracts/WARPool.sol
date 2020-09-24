@@ -609,8 +609,6 @@ contract WARPool is LPTokenWrapper, IRewardDistributionRecipient {
     uint256 public DURATION;
     uint256 public starttime;
 
-    uint256 public maxStakeFirstDay;
-
     uint256 public periodFinish = 0;
     uint256 public rewardRate = 0;
     uint256 public lastUpdateTime;
@@ -623,20 +621,15 @@ contract WARPool is LPTokenWrapper, IRewardDistributionRecipient {
     event Withdrawn(address indexed user, uint256 amount);
     event RewardPaid(address indexed user, uint256 reward);
 
-    constructor(address _lpToken, string memory _desc, uint256 _maxStakeFirstDay, uint256 _starttime) public LPTokenWrapper(_lpToken) {
+    constructor(address _lpToken, string memory _desc, uint256 _starttime) public LPTokenWrapper(_lpToken) {
         rewardDistribution = msg.sender;
         desc = _desc;
-        maxStakeFirstDay = _maxStakeFirstDay;
         starttime = _starttime;
     }
 
     function setStartTime(uint256 _starttime) external onlyOwner {
         require(block.timestamp < starttime, "started");
         starttime = _starttime;
-    }
-
-    function setMaxStakeFirstDay(uint256 _maxStakeFirstDay) external onlyOwner {
-        maxStakeFirstDay = _maxStakeFirstDay;
     }
 
     modifier checkStart(){
@@ -654,21 +647,6 @@ contract WARPool is LPTokenWrapper, IRewardDistributionRecipient {
         _;
     }
 
-    modifier checkBalance(uint256 amount) {
-        uint256 _starttime = starttime;
-        if (block.timestamp >= _starttime && block.timestamp < _starttime + 1 days) {
-            require(balanceOf(msg.sender).add(amount) <= maxStakeFirstDay, "over limit");
-        }
-        _;
-    }
-
-
-    function seize(IERC20 _token, uint amount) external onlyOwner {
-        if (block.timestamp >= starttime && block.timestamp < periodFinish) {
-            require(_token != lpToken, "lpToken");
-        }
-        _token.safeTransfer(msg.sender, amount);
-    }
 
     function lastTimeRewardApplicable() public view returns (uint256) {
         return Math.min(block.timestamp, periodFinish);
@@ -696,7 +674,7 @@ contract WARPool is LPTokenWrapper, IRewardDistributionRecipient {
                 .add(rewards[account]);
     }
 
-    function stake(uint256 amount) public updateReward(msg.sender) checkStart checkBalance(amount) {
+    function stake(uint256 amount) public updateReward(msg.sender) checkStart {
         require(amount > 0, "Cannot stake 0");
         super.stake(amount);
         emit Staked(msg.sender, amount);

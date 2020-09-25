@@ -465,7 +465,7 @@ export const getTotalSupply = async (pool) => {
 }
 
 export const getAPR = async (pool, yam) => {
-  const curPrice = new BigNumber(2);//new BigNumber(await getCurrentPrice(yam))
+  const curPrice = new BigNumber(2.8);//new BigNumber(await getCurrentPrice(yam))
   let rewardPerYear = await getRewardPerYear(pool.contract);
   const totalSupply = await getTotalSupply(pool)
   let assetPrice = await getAssetPrices(yam)

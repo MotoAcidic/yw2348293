@@ -133,7 +133,7 @@ const Farms: React.FC = () => {
               )}
               <TopDisplayContainer>
                 <DisplayItem>TVL: ${tvl && !tvl.totalValue.eq(0) ? Number(tvl.totalValue.toFixed(2)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '-'}</DisplayItem>
-                <DisplayItem>$War Price: ${currentPrice ? Number(currentPrice.toFixed(2)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '-'}</DisplayItem>
+                <DisplayItem>$War Price: ${currentPrice ? Number(currentPrice).toLocaleString(undefined, { minimumFractionDigits: 4, maximumFractionDigits: 4 }) : '-'}</DisplayItem>
                 <DisplayItem>Supply: 2,800,000</DisplayItem>
               </TopDisplayContainer>
               <TextContainer>

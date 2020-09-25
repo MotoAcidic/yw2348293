@@ -27,9 +27,13 @@ export const getPoolEndTime = async (poolContract) => {
 export const stake = async (poolContract, amount, account) => {
   let now = new Date().getTime() / 1000;
   if (now >= 1097172400) {
+    const precision = poolContract.options.address.toLowerCase() === "0x7845664310e205c979aa067bcfe02704d1001bcf" ?
+      new BigNumber(10).pow(6) :
+      new BigNumber(10).pow(18);
+
     return poolContract.methods
-      .stake((new BigNumber(amount).times(new BigNumber(10).pow(18))).toString())
-      .send({ from: account, gas: 200000 })
+      .stake((new BigNumber(amount).times(precision)).toString())
+      .send({ from: account, gas: 300000 })
       .on('transactionHash', tx => {
         console.log(tx)
         return tx.transactionHash
@@ -42,9 +46,13 @@ export const stake = async (poolContract, amount, account) => {
 export const unstake = async (poolContract, amount, account) => {
   let now = new Date().getTime() / 1000;
   if (now >= 1097172400) {
+    const precision = poolContract.options.address.toLowerCase() === "0x7845664310e205c979aa067bcfe02704d1001bcf" ?
+      new BigNumber(10).pow(6) :
+      new BigNumber(10).pow(18);
+
     return poolContract.methods
-      .withdraw((new BigNumber(amount).times(new BigNumber(10).pow(18))).toString())
-      .send({ from: account, gas: 200000 })
+      .withdraw((new BigNumber(amount).times(precision)).toString())
+      .send({ from: account, gas: 300000 })
       .on('transactionHash', tx => {
         console.log(tx)
         return tx.transactionHash
@@ -59,7 +67,7 @@ export const harvest = async (poolContract, account) => {
   if (now >= 1097172400) {
     return poolContract.methods
       .getReward()
-      .send({ from: account, gas: 200000 })
+      .send({ from: account, gas: 300000 })
       .on('transactionHash', tx => {
         console.log(tx)
         return tx.transactionHash
@@ -74,7 +82,7 @@ export const redeem = async (poolContract, account) => {
   if (now >= 1097172400) {
     return poolContract.methods
       .exit()
-      .send({ from: account, gas: 200000 })
+      .send({ from: account, gas: 300000 })
       .on('transactionHash', tx => {
         console.log(tx)
         return tx.transactionHash
@@ -207,14 +215,14 @@ export const getStaked = async (yam, pool, account) => {
 
 export const getCurrentPrice = async (yam) => {
   //return yam.toBigN(await yam.contracts.rebaser.methods.getCurrentTWAP().call())
-  /*let p = await yam.contracts.uni_router.methods.getAmountsOut(
-    new BigNumber(1000000000000000000),
+  let p = await yam.contracts.uni_router.methods.getAmountsOut(
+    "1000000000000000000",
     [
-      "0x56d811088235f11c8920698a204a5010a788f4b3",
+      "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde",
       "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
       "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
     ]
-  ).call();*/
+  ).call();
 
   // call for kovan
   /*let p = await yam.contracts.uni_router.methods.getAmountsOut(
@@ -222,14 +230,11 @@ export const getCurrentPrice = async (yam) => {
     [
       "0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"
     ]
-  ).call();
+  ).call();*/
 
-
-
-  p = yam.toBigN(p[p.length - 1]).div(10**18).toFixed(4);
-  console.log(p);
-  return p;*/
-  return 0;
+  p = yam.toBigN(p[p.length - 1]).div(10**6).toFixed(4);
+  //console.log(p);
+  return p;
 }
 
 export const getTargetPrice = async (yam) => {
@@ -486,63 +491,63 @@ export const getTotalValue = async (pools) => {
     }
   }
 }
-/*
+
 export const getAssetPrices = async (yam) => {
-  let prices = yam.assetPrices;
-  if (Object.keys(yam.assetPrices).length === 0) {
 
-    let inAmounts = {
-      link: "1000000000000000000",
-      snx: "1000000000000000000",
-      yfi: "1000000000000000000",
-      comp: "1000000000000000000",
-      chads: "1000000000000000000",
-      bzrx: "1000000000000000000",
-      uni: "1000000000000000000",
-      lend: "1000000000000000000",
-      wnxm: "1000000000000000000",
-      mkr: "1000000000000000000",
-      srm: "1000000",
-      farm: "1000000000000000000",
-    }
+  const inAmounts = [
+    "1000000000000000000", // link
+    "1000000000000000000", // snx
+    "1000000000000000000", // yfi
+    "1000000000000000000", // comp
+    "1000000000000000000", // chads
+    "1000000000000000000", // lend
+    "1000000000000000000", // uni
+    "1000000000000000000", // wnxm
+    "1000000000000000000", // mkr
+    "1000000000000000000", // bzrx
+    "1000000", // srm
+    "1000000000000000000", // farm
+    "1000000000000000000", // war
+  ]
 
-    let routes = {
-      link: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
-      snx: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
-      yfi: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
-      comp: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
-      chads: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
-      bzrx: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
-      uni: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
-      lend: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
-      wnxm: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
-      mkr: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
-      srm: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
-      farm: ["0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"],
-    }
+  const routes = [
+    /*link*/ [["0x514910771af9ca656af840dff83e8264ecf986ca", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*snx*/ [["0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*yfi*/ [["0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*comp*/ [["0xc00e94cb662c3520282e6f5717214004a7f26888", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*chads*/ [["0x69692D3345010a207b759a7D1af6fc7F38b35c5E", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*lend*/ [["0x80fb784b7ed66730e8b1dbd9820afd29931aab03", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*uni*/ [["0x1f9840a85d5af5bf1d1762f925bdaddc4201f984", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*wnxm*/ [["0x0d438f3b5175bebc262bf23753c1e53d03432bde", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*mkr*/ [["0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*bzrx*/ [["0x56d811088235f11c8920698a204a5010a788f4b3", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*srm*/ [["0x476c5e26a75bd202a9683ffd34359c0cc15be0ff", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*farm*/ [["0xa0246c9032bc3a600820415ae600c6388619a14d", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*war*/ [["0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+  ];
 
-    let priceArr = await pool.contract.methods.totalSupply().call()
+  const priceArr = await yam.contracts.pricing.methods.getAmountsOutMulti(inAmounts, routes).call();
+  const keys = [
+    "link",
+    "snx",
+    "yfi",
+    "comp",
+    "chads",
+    "lend",
+    "uni",
+    "wnxm",
+    "mkr",
+    "bzrx",
+    "srm",
+    "farm",
+    "war",
+  ];
+  //console.log(priceArr);
 
-    let totalValue = new BigNumber(0)
-    let poolValues = {}
-    if (pools && pools[0].contract) {
-      for (let i = 0; i < pools.length; i++) {
-        let pool = pools[i]
-        poolValues[pool.contract._address] = new BigNumber(await pool.contract.methods.totalSupply().call())
-        totalValue = totalValue.plus(poolValues[pool.contract._address])
-        if (i === (pools.length - 1)) {
-          return {totalValue, poolValues};
-        }
-      }
-    }
-
-    yam.assetPrices = prices;
-    return prices;
-  } else {
-    return prices;
-  }
+  const priceData = {};
+  keys.forEach((key, i) => priceData[key] = yam.toBigN(priceArr[i]).div(10**6).toFixed(4));
+  //console.log(priceData);
 }
-*/
 
 
 

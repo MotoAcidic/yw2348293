@@ -37,7 +37,7 @@ export class Contracts {
     this.uni_fact = new this.web3.eth.Contract(UNIFactJson);
     this.UNIAmpl = new this.web3.eth.Contract(ERC20Json.abi);
 
-    this.yam = new this.web3.eth.Contract(WARJson.abi);
+    this.war = new this.web3.eth.Contract(WARJson.abi);
 
     this.pricing = new this.web3.eth.Contract(PricingJson.abi);
 
@@ -79,11 +79,11 @@ export class Contracts {
     provider,
     networkId
   ) {
-    this.yam.setProvider(provider);
+    this.war.setProvider(provider);
     this.uni_router.setProvider(provider);
     this.pricing.setProvider(provider);
     const contracts = [
-      { contract: this.yam, json: WARJson },
+      { contract: this.war, json: WARJson },
       { contract: this.link_pool, json: WARPoolJson },
       { contract: this.snx_pool, json: WARPoolJson },
       { contract: this.yfi_pool, json: WARPoolJson },
@@ -132,6 +132,7 @@ export class Contracts {
     this.srm_token.options.address = addressMap["srm"];
     this.farm_token.options.address = addressMap["farm"];
 
+    this.war.options.address = addressMap["war"];
 
     this.uni_fact.options.address = addressMap["uniswapFactoryV2"];
     this.uni_router.options.address = addressMap["UNIRouter"];

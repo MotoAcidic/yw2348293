@@ -13,7 +13,11 @@ const useStakedBalance = (pool: Contract) => {
   const yam = useYam()
 
   const fetchBalance = useCallback(async () => {
-    const balance = await getStaked(yam, pool, account)
+    const precision = pool.options.address.toLowerCase() === "0x7845664310e205c979aa067bcfe02704d1001bcf" ?
+        new BigNumber(10).pow(12) :
+        new BigNumber(1);
+    
+    const balance = (await getStaked(yam, pool, account) as BigNumber).multipliedBy(precision);
     setBalance(new BigNumber(balance))
   }, [account, pool, yam])
 

@@ -232,7 +232,7 @@ export const getCurrentPrice = async (yam) => {
     ]
   ).call();*/
 
-  p = yam.toBigN(p[p.length - 1]).div(10**6).toFixed(4);
+  p = yam.toBigN(p[p.length - 1]).div(10 ** 6).toFixed(4);
   //console.log(p);
   return p;
 }
@@ -438,7 +438,14 @@ export const getDelegatedBalance = async (yam, account) => {
 }
 
 export const getRewardPerYear = async (pool) => {
-  const getRewardPerYear = new BigNumber(await pool.methods.rewardRate().call()).div(10 ** 18).multipliedBy(31536000);
+  let getRewardPerYear
+  if (pool.options.address.toLowerCase == "0x476c5e26a75bd202a9683ffd34359c0cc15be0ff") { // SRM has 6 decimals
+    getRewardPerYear = new BigNumber(await pool.methods.rewardRate().call()).div(10 ** 6).multipliedBy(31536000);
+  }
+  else {
+    getRewardPerYear = new BigNumber(await pool.methods.rewardRate().call()).div(10 ** 18).multipliedBy(31536000);
+  }
+
   return getRewardPerYear;
 }
 
@@ -448,8 +455,8 @@ export const getRewardRate = async (pool) => {
 }
 
 export const getTotalSupply = async (pool) => {
-  let totalSupply = new BigNumber(await pool.methods.totalSupply().call());
-  if (pool.options.address.toLowerCase == "0x476c5e26a75bd202a9683ffd34359c0cc15be0ff") { // SRM has 6 decimals
+  let totalSupply = new BigNumber(await pool.contract.methods.totalSupply().call());
+  if (pool.id == "SRM") { // SRM has 6 decimals    
     totalSupply = totalSupply.div(10 ** 6);
   } else {
     totalSupply = totalSupply.div(10 ** 18);
@@ -457,24 +464,15 @@ export const getTotalSupply = async (pool) => {
   return totalSupply;
 }
 
-export const getAPY = async (pool, yam) => {
-  const curPrice = await getCurrentPrice(yam);
-  const rewardPerYear = getRewardPerYear(pool);
-  const totalSupply = getTotalSupply(pool)
-  const assetPrice = 5
-  const apy = rewardPerYear.mult(curPrice).div(totalSupply.mult(assetPrice))
-  return apy
-}
+export const getAPR = async (pool, yam) => {
+  const curPrice = new BigNumber(await getCurrentPrice(yam))
+  let rewardPerYear = await getRewardPerYear(pool.contract);
+  const totalSupply = await getTotalSupply(pool)
+  let assetPrice = await getAssetPrices(yam)
+  assetPrice = new BigNumber(assetPrice[pool.id])
 
-export const getAPR = async (pool) => {
-  //const rewardPerYear = await getRewardPerYear(pool);
-  //const totalSupply = await getTotalSupply(pool);
-  /*if (pool) {
-    return 10;
-  } else {
-    return 0;
-  }*/
-  return 0;
+  let apy = rewardPerYear.multipliedBy(curPrice).dividedBy(totalSupply.multipliedBy(assetPrice)).multipliedBy(100).toNumber()
+  return apy
 }
 
 export const getTotalValue = async (pools) => {
@@ -492,61 +490,68 @@ export const getTotalValue = async (pools) => {
   }
 }
 
+let assetPrices = null
+
 export const getAssetPrices = async (yam) => {
+  if (assetPrices) {
+    return assetPrices
+  }
+  else {
+    const inAmounts = [
+      "1000000000000000000", // link
+      "1000000000000000000", // snx
+      "1000000000000000000", // yfi
+      "1000000000000000000", // comp
+      "1000000000000000000", // chads
+      "1000000000000000000", // lend
+      "1000000000000000000", // uni
+      "1000000000000000000", // wnxm
+      "1000000000000000000", // mkr
+      "1000000000000000000", // bzrx
+      "1000000", // srm
+      "1000000000000000000", // farm
+      "1000000000000000000", // war
+    ]
 
-  const inAmounts = [
-    "1000000000000000000", // link
-    "1000000000000000000", // snx
-    "1000000000000000000", // yfi
-    "1000000000000000000", // comp
-    "1000000000000000000", // chads
-    "1000000000000000000", // lend
-    "1000000000000000000", // uni
-    "1000000000000000000", // wnxm
-    "1000000000000000000", // mkr
-    "1000000000000000000", // bzrx
-    "1000000", // srm
-    "1000000000000000000", // farm
-    "1000000000000000000", // war
-  ]
+    const routes = [
+    /*link*/[["0x514910771af9ca656af840dff83e8264ecf986ca", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*snx*/[["0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*yfi*/[["0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*comp*/[["0xc00e94cb662c3520282e6f5717214004a7f26888", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*chads*/[["0x69692D3345010a207b759a7D1af6fc7F38b35c5E", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*lend*/[["0x80fb784b7ed66730e8b1dbd9820afd29931aab03", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*uni*/[["0x1f9840a85d5af5bf1d1762f925bdaddc4201f984", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*wnxm*/[["0x0d438f3b5175bebc262bf23753c1e53d03432bde", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*mkr*/[["0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*bzrx*/[["0x56d811088235f11c8920698a204a5010a788f4b3", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*srm*/[["0x476c5e26a75bd202a9683ffd34359c0cc15be0ff", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*farm*/[["0xa0246c9032bc3a600820415ae600c6388619a14d", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*war*/[["0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    ];
 
-  const routes = [
-    /*link*/ [["0x514910771af9ca656af840dff83e8264ecf986ca", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
-    /*snx*/ [["0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
-    /*yfi*/ [["0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
-    /*comp*/ [["0xc00e94cb662c3520282e6f5717214004a7f26888", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
-    /*chads*/ [["0x69692D3345010a207b759a7D1af6fc7F38b35c5E", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
-    /*lend*/ [["0x80fb784b7ed66730e8b1dbd9820afd29931aab03", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
-    /*uni*/ [["0x1f9840a85d5af5bf1d1762f925bdaddc4201f984", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
-    /*wnxm*/ [["0x0d438f3b5175bebc262bf23753c1e53d03432bde", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
-    /*mkr*/ [["0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
-    /*bzrx*/ [["0x56d811088235f11c8920698a204a5010a788f4b3", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
-    /*srm*/ [["0x476c5e26a75bd202a9683ffd34359c0cc15be0ff", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
-    /*farm*/ [["0xa0246c9032bc3a600820415ae600c6388619a14d", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
-    /*war*/ [["0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
-  ];
+    const priceArr = await yam.contracts.pricing.methods.getAmountsOutMulti(inAmounts, routes).call();
+    const keys = [
+      "LINK",
+      "SNX",
+      "YFI",
+      "COMP",
+      "CHADS",
+      "AAVE",
+      "UNI",
+      "WNXM",
+      "MKR",
+      "BZRX",
+      "SRM",
+      "FARM",
+      "WAR",
+    ];
+    //console.log(priceArr);
 
-  const priceArr = await yam.contracts.pricing.methods.getAmountsOutMulti(inAmounts, routes).call();
-  const keys = [
-    "link",
-    "snx",
-    "yfi",
-    "comp",
-    "chads",
-    "lend",
-    "uni",
-    "wnxm",
-    "mkr",
-    "bzrx",
-    "srm",
-    "farm",
-    "war",
-  ];
-  //console.log(priceArr);
-
-  const priceData = {};
-  keys.forEach((key, i) => priceData[key] = yam.toBigN(priceArr[i]).div(10**6).toFixed(4));
-  //console.log(priceData);
+    const priceData = {};
+    keys.forEach((key, i) => priceData[key] = yam.toBigN(priceArr[i]).div(10 ** 6).toFixed(4));
+    assetPrices = priceData
+    return priceData
+  }
 }
 
 

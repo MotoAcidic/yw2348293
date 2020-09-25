@@ -13,6 +13,7 @@ import useFarms from '../../../hooks/useFarms'
 import { Farm } from '../../../contexts/Farms'
 
 import { getAPR, getPoolEndTime } from '../../../yamUtils'
+import useYam from '../../../hooks/useYam'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -84,6 +85,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   // const [startTime, setStartTime] = useState(0)
   // const [endTime, setEndTime] = useState(0)
   const [apr, setAPR] = useState(0)
+  const yam = useYam()
 
   // const getStartTime = useCallback(async () => {
   //   const startTime = await getPoolStartTime(farm.contract)
@@ -118,17 +120,19 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   // console.log(farm);
 
   const aprVal = useCallback(async () => {
-    const apr = await getAPR(farm.contract)
+    const apr = await getAPR(farm, yam)
+    console.log(apr);
+    
     setAPR(apr)
   }, [farm, setAPR])
 
   useEffect(() => {
-    if (farm && !apr) {
+    if (farm.contract && !apr && yam) {
       aprVal()
     }
-  }, [farm, aprVal])
+  }, [farm, yam])
 
-  console.log(farm);
+  // console.log(farm);
   
 
   return (
@@ -152,7 +156,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
             {apr !== 0 && (
             <StyledDetails>
               <StyledDetail>APR</StyledDetail>
-              <StyledDetail>{apr ? `${apr}% Apr` : ''}</StyledDetail>
+              <StyledDetail>{apr ? `${apr.toFixed(2)}%` : ''}</StyledDetail>
             </StyledDetails>
             )}
           </StyledContent>

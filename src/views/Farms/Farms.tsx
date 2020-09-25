@@ -108,7 +108,7 @@ const Farms: React.FC = () => {
   }
 
   let diffTime = launch - Math.round(new Date().getTime());
-
+  
   return (
     <Switch>
       <StyledCanvas>

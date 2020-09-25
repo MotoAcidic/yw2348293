@@ -433,7 +433,7 @@ export const getDelegatedBalance = async (yam, account) => {
 }
 
 export const getRewardPerYear = async (pool) => {
-  const getRewardPerYear = new BigNumber(await pool.methods.rewardRate().call()).div(10**18).multipliedBy(31536000);
+  const getRewardPerYear = new BigNumber(await pool.methods.rewardRate().call()).div(10 ** 18).multipliedBy(31536000);
   return getRewardPerYear;
 }
 
@@ -445,11 +445,20 @@ export const getRewardRate = async (pool) => {
 export const getTotalSupply = async (pool) => {
   let totalSupply = new BigNumber(await pool.methods.totalSupply().call());
   if (pool.options.address.toLowerCase == "0x476c5e26a75bd202a9683ffd34359c0cc15be0ff") { // SRM has 6 decimals
-    totalSupply = totalSupply.div(10**6);
+    totalSupply = totalSupply.div(10 ** 6);
   } else {
-    totalSupply = totalSupply.div(10**18);
+    totalSupply = totalSupply.div(10 ** 18);
   }
   return totalSupply;
+}
+
+export const getAPY = async (pool, yam) => {
+  const curPrice = await getCurrentPrice(yam);
+  const rewardPerYear = getRewardPerYear(pool);
+  const totalSupply = getTotalSupply(pool)
+  const assetPrice = 5
+  const apy = rewardPerYear.mult(curPrice).div(totalSupply.mult(assetPrice))
+  return apy
 }
 
 export const getAPR = async (pool) => {
@@ -472,7 +481,7 @@ export const getTotalValue = async (pools) => {
       poolValues[pool.contract._address] = new BigNumber(0); //await pool.contract.methods.totalSupply().call())
       totalValue = totalValue.plus(poolValues[pool.contract._address])
       if (i === (pools.length - 1)) {
-        return {totalValue, poolValues};
+        return { totalValue, poolValues };
       }
     }
   }
@@ -534,6 +543,8 @@ export const getAssetPrices = async (yam) => {
   }
 }
 */
+
+
 
 export const getStartTime = async (pool) => {
   let starttime = 0

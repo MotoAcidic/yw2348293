@@ -128,6 +128,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
     }
   }, [farm, aprVal])
 
+  console.log(farm);
+  
 
   return (
     <StyledCardWrapper>

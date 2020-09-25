@@ -147,7 +147,7 @@ const Farms: React.FC = () => {
               <CountDown launchDate={start} />
               <WarPool />*/}
               <Disclaimer>
-                *The Implied APY $WAR Price reflects the price of $WAR and subsequent APYs of pools in Pool 1 if the price was $2.80. Because we do not have the Pool 2 Liquidity Pool open until September 28th, we believe the present APYs will not reflect future token price when BATTLES begin. On September 28th, we will revert the APYs back to the price reflection on Uniswap.
+                *The Implied APR $WAR Price reflects the price of $WAR and subsequent APRs of pools in Pool 1 as if the price was $2.80. Because we do not have the Pool 2 Liquidity Pool open until September 28th, we believe the present APRs will not reflect future token price when BATTLES begin. On September 28th, we will revert the APRs back to the price observed on Uniswap.
               </Disclaimer>
             </CardContainer>
           </Page>

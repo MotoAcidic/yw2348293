@@ -72,18 +72,24 @@ const Farms: React.FC = () => {
     setStart(st)
   }, [yam, farms, setStart])
 
-  const fetchTotalValue = useCallback(async () => {
-    const tv = await getTotalValue(farms)
+  const fetchTotalValue = useCallback(async (pools) => {
+    const tv = await getTotalValue(pools, yam)
     setTVL(tv)
-  }, [yam, setTVL, setTVL])
+  }, [yam, setTVL, setTVL])  
 
   useEffect(() => {
     if (yam && account && farms && farms[0]) {
       fetchStats()
       fetchStartTime()
-      fetchTotalValue()
     }
-  }, [yam, account])
+    if (yam && farms) {
+      console.log(farms);
+      
+      fetchTotalValue(farms)
+    }
+  }, [yam, account, farms, farms[0]])
+  
+  
 
   const [onPresentStake] = useModal(
     <StakeModal
@@ -126,7 +132,7 @@ const Farms: React.FC = () => {
                 </div>
               )}
               <TopDisplayContainer>
-                {/*<DisplayItem>TVL: {tvl && !tvl.totalValue.eq(0) ? tvl.totalValue.toString() : '-'}</DisplayItem>*/}
+                <DisplayItem>TVL: {tvl && !tvl.totalValue.eq(0) ? tvl.totalValue.toFixed(2) : '-'}</DisplayItem>
                 <DisplayItem>$War Price: ${currentPrice ? currentPrice : '-'}</DisplayItem>
                 <DisplayItem>Supply: 2,800,000</DisplayItem>
               </TopDisplayContainer>

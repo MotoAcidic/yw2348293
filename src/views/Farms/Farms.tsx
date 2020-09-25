@@ -146,6 +146,9 @@ const Farms: React.FC = () => {
               <CountDownText>The War Begins:</CountDownText>
               <CountDown launchDate={start} />
               <WarPool />*/}
+              <Disclaimer>
+                *The Implied APY $WAR Price reflects the price of $WAR and subsequent APYs of pools in Pool 1 if the price was $2.80. Because we do not have the Pool 2 Liquidity Pool open until September 28th, we believe the present APYs will not reflect future token price when BATTLES begin. On September 28th, we will revert the APYs back to the price reflection on Uniswap.
+              </Disclaimer>
             </CardContainer>
           </Page>
         </ContentContainer>
@@ -153,6 +156,18 @@ const Farms: React.FC = () => {
     </Switch>
   )
 }
+
+const Disclaimer = styled.div`
+margin: 30px;
+color: white;
+font-family: Alegreya;
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.4;
+  color: #ffffff;
+`
 
 const DisplayItem = styled.div`
 color: white;
@@ -290,6 +305,7 @@ width: 40vw;
   flex-direction: row;
   align-content: center;
   justify-content: space-evenly;
+  margin-top: 4vh;
 `
 
 const CardContainer = styled.div`

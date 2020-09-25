@@ -154,7 +154,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
             {apr !== 0 && (
             <StyledDetails>
               <StyledDetail>APR</StyledDetail>
-              <StyledDetail>{apr ? `${apr.toFixed(2)}%` : ''}</StyledDetail>
+              <StyledDetail>{apr ? `${apr.toFixed(2)}%*` : ''}</StyledDetail>
             </StyledDetails>
             )}
           </StyledContent>

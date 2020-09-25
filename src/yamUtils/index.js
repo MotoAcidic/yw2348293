@@ -215,14 +215,14 @@ export const getStaked = async (yam, pool, account) => {
 
 export const getCurrentPrice = async (yam) => {
   //return yam.toBigN(await yam.contracts.rebaser.methods.getCurrentTWAP().call())
-  let p = await yam.contracts.uni_router.methods.getAmountsOut(
+  let p;/* = await yam.contracts.uni_router.methods.getAmountsOut(
     "1000000000000000000",
     [
       "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde",
       "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
       "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
     ]
-  ).call();
+  ).call();*/
 
   // call for kovan
   /*let p = await yam.contracts.uni_router.methods.getAmountsOut(
@@ -232,9 +232,11 @@ export const getCurrentPrice = async (yam) => {
     ]
   ).call();*/
 
-  p = yam.toBigN(p[p.length - 1]).div(10 ** 6).toFixed(4);
+  /*p = yam.toBigN(p[p.length - 1]).div(10 ** 6).toFixed(4);
   //console.log(p);
-  return p;
+  return p;*/
+
+  return 2;
 }
 
 export const getTargetPrice = async (yam) => {

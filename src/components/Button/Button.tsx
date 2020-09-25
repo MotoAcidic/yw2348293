@@ -74,14 +74,26 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   const ButtonChild = useMemo(() => {
-    if (to) {
-      return <StyledLink to={to}>{text}</StyledLink>
-    } else if (href) {
-      return <StyledExternalLink href={href} target="__blank">{text}</StyledExternalLink>
-    } else {
-      return text
-    }
+
+    return text
   }, [href, text, to])
+
+  if (href) {
+    return (
+      <StyledButton
+        boxShadow={boxShadow}
+        color={buttonColor}
+        disabled={disabled}
+        fontSize={fontSize}
+        onClick={onClick}
+        padding={buttonPadding}
+        size={buttonSize}
+        height={buttonHeight}
+      >
+        <StyledExternalLink href={href} target="__blank">{children}</StyledExternalLink>
+      </StyledButton>
+    )
+  }
 
   return (
     <StyledButton
@@ -148,20 +160,25 @@ const StyledLink = styled(Link)`
   flex: 1;
   height: 56px;
   justify-content: center;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 100%;
   margin: 0 ${props => -props.theme.spacing[4]}px;
-  padding: 0 ${props => props.theme.spacing[4]}px;
   text-decoration: none;
 `
 
 const StyledExternalLink = styled.a`
-  align-items: center;
+  align-items: center !important;
   color: inherit;
   display: flex;
   flex: 1;
   height: 56px;
-  justify-content: center;
+  justify-content: center !important;
+  text-align: center !important;
   margin: 0 ${props => -props.theme.spacing[4]}px;
-  padding: 0 ${props => props.theme.spacing[4]}px;
+  padding-left: 10px;
+  padding-right: 10px;
   text-decoration: none;
 `
 

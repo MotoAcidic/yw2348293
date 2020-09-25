@@ -475,19 +475,23 @@ export const getAPR = async (pool, yam) => {
   return apy
 }
 
-export const getTotalValue = async (pools) => {
+export const getTotalValue = async (pools, yam) => {
   let totalValue = new BigNumber(0)
   let poolValues = {}
+  
   if (pools && pools[0].contract) {
     for (let i = 0; i < pools.length; i++) {
       let pool = pools[i]
-      poolValues[pool.contract._address] = new BigNumber(0); //await pool.contract.methods.totalSupply().call())
-      totalValue = totalValue.plus(poolValues[pool.contract._address])
+      let supply = new BigNumber(await getTotalSupply(pool))
+      let prices = await getAssetPrices(yam)
+      prices = prices[pool.id]
+      poolValues[pool.contract._address] = supply.multipliedBy(prices) //await pool.contract.methods.totalSupply().call())      
+      totalValue = totalValue.plus(supply.multipliedBy(prices))
       if (i === (pools.length - 1)) {
         return { totalValue, poolValues };
       }
     }
-  }
+  }  
 }
 
 let assetPrices = null

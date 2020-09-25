@@ -137,7 +137,7 @@ const Farms: React.FC = () => {
                 <DisplayItem>Supply: 2,800,000</DisplayItem>
               </TopDisplayContainer>
               <TextContainer>
-                <img src={Icon} width="82px" />
+                <Button href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde">UNISWAP</Button>
                 <LargeText>Select a farm</LargeText>
                 <SmallText>Earn WAR tokens by Farming the fields of Byzantium</SmallText>
               </TextContainer>
@@ -156,6 +156,27 @@ const Farms: React.FC = () => {
     </Switch>
   )
 }
+
+const StyledA = styled.a`
+font-family: Alegreya;
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+opacity: 0.7;
+  padding-left: ${props => props.theme.spacing[3]}px;
+  padding-right: ${props => props.theme.spacing[3]}px;
+  text-decoration: none;
+  &:hover {
+    opacity: .9;
+  }
+  &.active {
+    opacity: 1;
+  }
+`
 
 const Disclaimer = styled.div`
 margin: 30px;

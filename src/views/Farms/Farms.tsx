@@ -22,6 +22,7 @@ import Icon from '../../assets/img/icon.png'
 import Landscape from '../../assets/img/landscapebig.png'
 import TallSky from '../../assets/img/tallsky.png'
 import Sky from '../../assets/img/skybig.png'
+import Uniswap from '../../assets/img/uniswap.png'
 import StakeModal from './StakeModal'
 import UnstakeModal from './UnstakeModal'
 import WarPool from './WarPool'
@@ -137,7 +138,7 @@ const Farms: React.FC = () => {
                 <DisplayItem>Supply: 2,800,000</DisplayItem>
               </TopDisplayContainer>
               <TextContainer>
-                <Button href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde">UNISWAP</Button>
+                <StyledA href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde" />
                 <LargeText>Select a farm</LargeText>
                 <SmallText>Earn WAR tokens by Farming the fields of Byzantium</SmallText>
               </TextContainer>
@@ -158,6 +159,23 @@ const Farms: React.FC = () => {
 }
 
 const StyledA = styled.a`
+align-items: center;
+border: 0;
+border-radius: 18px;
+cursor: pointer;
+display: flex;
+font-size: 16px;
+border-radius: 8px;
+box-shadow: rgb(0,34,79) 6px 6px 12px, rgb(0,54,119) -12px -12px 24px -2px;
+background-image: url(${Uniswap});
+background-size: cover;
+height: 50px;
+justify-content: center;
+outline: none;
+padding-left: 10px;
+padding-right: 10px;
+opacity: .8;
+width: 180px;
 font-family: Alegreya;
 font-size: 20px;
 font-weight: bold;
@@ -165,17 +183,10 @@ font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-color: #ffffff;
-opacity: 0.7;
-  padding-left: ${props => props.theme.spacing[3]}px;
-  padding-right: ${props => props.theme.spacing[3]}px;
-  text-decoration: none;
-  &:hover {
-    opacity: .9;
-  }
-  &.active {
-    opacity: 1;
-  }
+color: white;
+&:hover {
+  opacity: 1;
+}
 `
 
 const Disclaimer = styled.div`

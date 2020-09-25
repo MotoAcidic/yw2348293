@@ -174,7 +174,7 @@ justify-content: center;
 outline: none;
 padding-left: 10px;
 padding-right: 10px;
-opacity: .8;
+opacity: 1;
 width: 180px;
 font-family: Alegreya;
 font-size: 20px;
@@ -184,9 +184,7 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: white;
-&:hover {
-  opacity: 1;
-}
+
 `
 
 const Disclaimer = styled.div`

@@ -120,7 +120,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   // console.log(farm);
 
   const aprVal = useCallback(async () => {
-    const apr = await getAPR(farm, yam)    
+    const apr = farm.id !== `CHADS` ? await getAPR(farm, yam) : 0;
     setAPR(apr)
   }, [farm, setAPR])
 

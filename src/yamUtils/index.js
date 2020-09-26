@@ -456,7 +456,7 @@ export const getRewardRate = async (pool) => {
 
 export const getTotalSupply = async (pool) => {
   let totalSupply = new BigNumber(await pool.contract.methods.totalSupply().call());
-  if (pool.id == "SRM") { // SRM has 6 decimals    
+  if (pool.id == "SRM") { // SRM has 6 decimals
     totalSupply = totalSupply.div(10 ** 6);
   } else {
     totalSupply = totalSupply.div(10 ** 18);
@@ -478,20 +478,20 @@ export const getAPR = async (pool, yam) => {
 export const getTotalValue = async (pools, yam) => {
   let totalValue = new BigNumber(0)
   let poolValues = {}
-  
+
   if (pools && pools[0].contract) {
     for (let i = 0; i < pools.length; i++) {
       let pool = pools[i]
       let supply = new BigNumber(await getTotalSupply(pool))
       let prices = await getAssetPrices(yam)
       prices = prices[pool.id]
-      poolValues[pool.contract._address] = supply.multipliedBy(prices) //await pool.contract.methods.totalSupply().call())      
+      poolValues[pool.contract._address] = supply.multipliedBy(prices) //await pool.contract.methods.totalSupply().call())
       totalValue = totalValue.plus(supply.multipliedBy(prices))
       if (i === (pools.length - 1)) {
         return { totalValue, poolValues };
       }
     }
-  }  
+  }
 }
 
 let assetPrices = null
@@ -515,6 +515,7 @@ export const getAssetPrices = async (yam) => {
       "1000000", // srm
       "1000000000000000000", // farm
       "1000000000000000000", // war
+      "1000000000000000000", // mbbased
     ]
 
     const routes = [
@@ -531,6 +532,7 @@ export const getAssetPrices = async (yam) => {
     /*srm*/[["0x476c5e26a75bd202a9683ffd34359c0cc15be0ff", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
     /*farm*/[["0xa0246c9032bc3a600820415ae600c6388619a14d", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
     /*war*/[["0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
+    /*mbbased*/[["0x26cf82e4ae43d31ea51e72b663d26e26a75af729", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]],
     ];
 
     const priceArr = await yam.contracts.pricing.methods.getAmountsOutMulti(inAmounts, routes).call();
@@ -548,6 +550,7 @@ export const getAssetPrices = async (yam) => {
       "SRM",
       "FARM",
       "WAR",
+      "mbBASED",
     ];
     //console.log(priceArr);
 

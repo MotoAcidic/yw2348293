@@ -53,6 +53,7 @@ export class Contracts {
     this.mkr_token = new this.web3.eth.Contract(ERC20Json.abi);
     this.srm_token = new this.web3.eth.Contract(ERC20Json.abi);
     this.farm_token = new this.web3.eth.Contract(ERC20Json.abi);
+    this.mbbased_token = new this.web3.eth.Contract(ERC20Json.abi);
 
 
     this.link_pool = new this.web3.eth.Contract(WARPoolJson.abi);
@@ -67,6 +68,7 @@ export class Contracts {
     this.mkr_pool = new this.web3.eth.Contract(WARPoolJson.abi);
     this.srm_pool = new this.web3.eth.Contract(WARPoolJson.abi);
     this.farm_pool = new this.web3.eth.Contract(WARPoolJson.abi);
+    this.mbbased_pool = new this.web3.eth.Contract(WARPoolJson.abi);
 
     this.erc20 = new this.web3.eth.Contract(ERC20Json.abi);
 
@@ -96,6 +98,7 @@ export class Contracts {
       { contract: this.mkr_pool, json: WARPoolJson },
       { contract: this.srm_pool, json: WARPoolJson },
       { contract: this.farm_pool, json: WARPoolJson },
+      { contract: this.mbbased_pool, json: WARPoolJson },
     ]
 
     contracts.forEach(contract => this.setContractProvider(
@@ -118,6 +121,7 @@ export class Contracts {
     this.mkr_pool.options.address = addressMap["mkr_pool"];
     this.srm_pool.options.address = addressMap["srm_pool"];
     this.farm_pool.options.address = addressMap["farm_pool"];
+    this.mbbased_pool.options.address = addressMap["mbbased_pool"];
 
     this.link_token.options.address = addressMap["link"];
     this.snx_token.options.address = addressMap["snx"];
@@ -131,6 +135,7 @@ export class Contracts {
     this.mkr_token.options.address = addressMap["mkr"];
     this.srm_token.options.address = addressMap["srm"];
     this.farm_token.options.address = addressMap["farm"];
+    this.mbbased_token.options.address = addressMap["mbbased"];
 
     this.war.options.address = addressMap["war"];
 
@@ -151,6 +156,7 @@ export class Contracts {
       {"tokenAddr": this.mkr_token.options.address, "poolAddr": this.mkr_pool.options.address},
       {"tokenAddr": this.srm_token.options.address, "poolAddr": this.srm_pool.options.address},
       {"tokenAddr": this.farm_token.options.address, "poolAddr": this.farm_pool.options.address},
+      {"tokenAddr": this.mbbased_token.options.address, "poolAddr": this.mbbased_pool.options.address},
     ]
   }
 
@@ -169,6 +175,7 @@ export class Contracts {
     this.mkr_token.options.from = account;
     this.srm_token.options.from = account;
     this.farm_token.options.from = account;
+    this.mbbased_token.options.from = account;
     this.uni_router.options.from = account;
     this.pricing.options.from = account;
   }

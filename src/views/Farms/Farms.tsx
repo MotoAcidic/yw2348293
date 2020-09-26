@@ -138,7 +138,7 @@ const Farms: React.FC = () => {
                 <DisplayItem>Supply: 2,800,000</DisplayItem>
               </TopDisplayContainer>
               <TextContainer>
-                <StyledA href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde" />
+                <StyledA href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde" target="_blank" />
                 <LargeText>Select a farm</LargeText>
                 <SmallText>Earn WAR tokens by Farming the fields of Byzantium</SmallText>
               </TextContainer>

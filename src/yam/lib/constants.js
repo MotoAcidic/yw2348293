@@ -41,6 +41,7 @@ export const addressMap = {
   srm_pool: "0x7845664310e205C979Aa067BCfE02704D1001BCf",
   farm_pool: "0xD74a66c60761231960b9A67daB72871E545C72f5",
   wnxm_pool: "0xCC3A2c4891740e2055f4C6875a28BB9EB32f2e69",
+  mbbased_pool: "0x67bA643d6acDB7c12F913f0bbE4632df9889e0E5",
 
   /*link: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
   snx: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
@@ -68,6 +69,7 @@ export const addressMap = {
   bzrx: "0x56d811088235f11c8920698a204a5010a788f4b3",
   srm: "0x476c5e26a75bd202a9683ffd34359c0cc15be0ff", // 6 decimals
   farm: "0xa0246c9032bc3a600820415ae600c6388619a14d",
+  mbbased: "0x26cF82e4aE43D31eA51e72B663d26e26a75AF729",
 
   war: "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde",
 

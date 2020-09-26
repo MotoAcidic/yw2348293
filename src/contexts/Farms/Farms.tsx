@@ -52,14 +52,14 @@ const Farms: React.FC = ({ children }) => {
 
     let farmsArr = [
       {
-        contract: pools ? pools["chads_pool"] : undefined,
-        name: "CHADS Apes",
-        depositToken: "CHADS",
-        depositTokenAddress: tokens ? tokens["chads_token"].options.address : undefined,
+        contract: pools ? pools["mbbased_pool"] : undefined,
+        name: "mbBASED Ghouls",
+        depositToken: "mbBASED",
+        depositTokenAddress: tokens ? tokens["mbbased_token"].options.address : undefined,
         earnToken: 'WAR',
         earnTokenAddress: yamAddress,
-        icon: "🦍",
-        id: "CHADS",
+        icon: "💀",
+        id: "mbBASED",
         sort: 9
       },
       {
@@ -181,6 +181,17 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🧙‍♂️",
         id: "SRM",
+        sort: 9
+      },
+      {
+        contract: pools ? pools["chads_pool"] : undefined,
+        name: "CHADS Apes",
+        depositToken: "CHADS",
+        depositTokenAddress: tokens ? tokens["chads_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "🦍",
+        id: "CHADS",
         sort: 9
       },
 

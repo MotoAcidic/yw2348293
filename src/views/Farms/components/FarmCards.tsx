@@ -135,7 +135,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
 
   return (
     <StyledCardWrapper>
-      {(farm.id === 'CHADS' || farm.id === 'FARM') && <RainbowShadow />}
+      {(farm.id === 'mbBASED' || farm.id === 'FARM') && <RainbowShadow />}
       <Card>
         <CardContent>
           <StyledContent>
@@ -154,7 +154,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
             {apr !== 0 && (
             <StyledDetails>
               <StyledDetail>APR</StyledDetail>
-              <StyledDetail>{apr ? `${apr.toFixed(2)}%*` : ''}</StyledDetail>
+              <StyledDetail>{apr ? `${apr.toFixed(2)}%*` : 'Coming soon'}</StyledDetail>
             </StyledDetails>
             )}
           </StyledContent>

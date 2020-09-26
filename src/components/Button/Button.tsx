@@ -74,26 +74,14 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   const ButtonChild = useMemo(() => {
-
-    return text
+    if (to) {
+      return <StyledLink to={to}>{text}</StyledLink>
+    } else if (href) {
+      return <StyledExternalLink href={href} target="__blank">{text}</StyledExternalLink>
+    } else {
+      return text
+    }
   }, [href, text, to])
-
-  if (href) {
-    return (
-      <StyledButton
-        boxShadow={boxShadow}
-        color={buttonColor}
-        disabled={disabled}
-        fontSize={fontSize}
-        onClick={onClick}
-        padding={buttonPadding}
-        size={buttonSize}
-        height={buttonHeight}
-      >
-        <StyledExternalLink href={href} target="__blank">{children}</StyledExternalLink>
-      </StyledButton>
-    )
-  }
 
   return (
     <StyledButton
@@ -174,8 +162,8 @@ const StyledExternalLink = styled.a`
   display: flex;
   flex: 1;
   height: 56px;
-  justify-content: center !important;
-  text-align: center !important;
+  justify-content: center;
+  text-align: center;
   margin: 0 ${props => -props.theme.spacing[4]}px;
   padding-left: 10px;
   padding-right: 10px;

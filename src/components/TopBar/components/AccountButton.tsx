@@ -28,7 +28,7 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
         />
       ) : (
           <StyledAccountInfo>
-            <Oval />{account.substring(0, 10) + '...'}
+            <Oval /><StyledA href={`https://etherscan.io/address/${account}`} target={`_blank`}>{account.substring(0, 6) + '...' + account.substring(account.length - 4)}</StyledA>
           </StyledAccountInfo>
         )}
     </StyledAccountButton>
@@ -59,6 +59,25 @@ font-family: Alegreya;
   display: flex;
   flex-direction: row;
   align-items: center;
+`
+
+const StyledA = styled.a`
+font-family: Alegreya;
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+opacity: 0.7;
+  text-decoration: none;
+  &:hover {
+    opacity: .9;
+  }
+  &.active {
+    opacity: 1;
+  }
 `
 
 export default AccountButton

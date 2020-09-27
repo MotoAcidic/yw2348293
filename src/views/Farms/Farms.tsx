@@ -53,7 +53,7 @@ const Farms: React.FC = () => {
   let [farms] = useFarms()
   let [start, setStart] = useState(0)
   let [tvl, setTVL] = useState({ totalValue: new BigNumber(0), poolValues: {} })
-  let launch = 1600963200000
+  let launch = 1601308800000
 
   const [{
     circSupply,
@@ -126,12 +126,6 @@ const Farms: React.FC = () => {
         <ContentContainer>
           <Page>
             <CardContainer>
-              {diffTime > 0 && (
-                <div style={{ marginBottom: '5vh', marginTop: '5vh' }}>
-                  <Title>The War Begins:</Title>
-                  {isMobile() ? <MobileCountDown launchDate={launch} /> : <CountDown launchDate={launch} />}
-                </div>
-              )}
               <TopDisplayContainer>
                 <DisplayItem>TVL: ${tvl && !tvl.totalValue.eq(0) ? Number(tvl.totalValue.toFixed(2)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '-'}</DisplayItem>
                 <DisplayItem>$War Price: ${currentPrice ? Number(currentPrice).toLocaleString(undefined, { minimumFractionDigits: 4, maximumFractionDigits: 4 }) : '-'}</DisplayItem>
@@ -142,6 +136,13 @@ const Farms: React.FC = () => {
                 <LargeText>Select a farm</LargeText>
                 <SmallText>Earn WAR tokens by Farming the fields of Byzantium</SmallText>
               </TextContainer>
+              {diffTime > 0 && (
+                <div style={{ marginBottom: '5vh', marginTop: '5vh' }}>
+                  <Title>Pool 2 Begins:</Title>
+                  {isMobile() ? <MobileCountDown launchDate={launch} /> : <CountDown launchDate={launch} />}
+                </div>
+              )}
+              <WarPool />
               <FarmCards />
               {/*<SectionDivider />
               <CountDownText>The War Begins:</CountDownText>

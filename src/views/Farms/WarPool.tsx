@@ -58,7 +58,7 @@ const WarPool: React.FC = () => {
 		earnToken,
 		name,
 		icon,
-	} = useFarm('comp') || {
+	} = useFarm('UNIPOOL') || {
 		contract: null,
 		depositToken: '',
 		depositTokenAddress: '',

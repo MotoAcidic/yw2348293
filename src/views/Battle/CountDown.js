@@ -85,13 +85,13 @@ font-family: Alegreya;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1;
+  line-height: 80px;
   letter-spacing: 2px;
   color: #ffffff;
 `
 
 const Timer = styled.div`
-width: 550px;
+width: 480px;
 height: 50%;
 margin: auto;
 margin-top: 3vh;

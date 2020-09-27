@@ -51,7 +51,6 @@ const Farms: React.FC = () => {
   const { account, connect } = useWallet()
   const yam = useYam()
   let [farms] = useFarms()
-  let [start, setStart] = useState(0)
   let [tvl, setTVL] = useState({ totalValue: new BigNumber(0), poolValues: {} })
   let launch = 1601308800000
 
@@ -68,11 +67,6 @@ const Farms: React.FC = () => {
     setStats(statsData)
   }, [yam, setStats])
 
-  const fetchStartTime = useCallback(async () => {
-    const st = await getStartTime(farms[0])
-    setStart(st)
-  }, [yam, farms, setStart])
-
   const fetchTotalValue = useCallback(async (pools) => {
     const tv = await getTotalValue(pools, yam)
     setTVL(tv)
@@ -81,11 +75,8 @@ const Farms: React.FC = () => {
   useEffect(() => {
     if (yam && account && farms && farms[0]) {
       fetchStats()
-      fetchStartTime()
     }
-    if (yam && farms) {
-      console.log(farms);
-      
+    if (yam && farms) {      
       fetchTotalValue(farms)
     }
   }, [yam, account, farms, farms[0]])
@@ -382,7 +373,7 @@ const StyledLandscape = styled.div`
 
 const MobileTallStyledSky = styled.div`
 width: 100%;
-height: 550vh;
+height: 750vh;
 background-image: url(${TallSky});
 background-size: 100% 100%;
 background-repeat: repeat-x;

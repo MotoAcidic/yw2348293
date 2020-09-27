@@ -22,7 +22,7 @@ import useModal from './hooks/useModal'
 import Farms from './views/Farms'
 import Farm from './views/Farm'
 import Splash from './views/Splash/Splash'
-import Battle from './views/Battle/TempBattle'
+import Battle from './views/Battle/Battle'
 
 import theme from './theme'
 

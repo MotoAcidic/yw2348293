@@ -53,7 +53,7 @@ const Farms: React.FC = () => {
   let [farms] = useFarms()
   let [start, setStart] = useState(0)
   let [tvl, setTVL] = useState({ totalValue: new BigNumber(0), poolValues: {} })
-  let launch = 1601568000000
+  let launch = 1601308800000
 
   const [{
     circSupply,
@@ -136,12 +136,12 @@ const Farms: React.FC = () => {
                 <LargeText>Select a farm</LargeText>
                 <SmallText>Earn WAR tokens by Farming the fields of Byzantium</SmallText>
               </TextContainer>
-              {/* {diffTime > 0 && (
+              {diffTime > 0 && (
                 <div style={{ marginBottom: '5vh', marginTop: '5vh' }}>
                   <Title>Pool 2 Begins:</Title>
                   {isMobile() ? <MobileCountDown launchDate={launch} /> : <CountDown launchDate={launch} />}
                 </div>
-              )} */}
+              )}
               <WarPool />
               <FarmCards />
               {/*<SectionDivider />

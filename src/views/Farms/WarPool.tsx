@@ -43,7 +43,6 @@ import useStake from '../../hooks/useStake'
 import useStakedBalance from '../../hooks/useStakedBalance'
 import useTokenBalance from '../../hooks/useTokenBalance'
 import useUnstake from '../../hooks/useUnstake'
-import useFarms from '../../hooks/useFarms'
 
 
 const WarPool: React.FC = () => {
@@ -58,7 +57,7 @@ const WarPool: React.FC = () => {
 		earnToken,
 		name,
 		icon,
-	} = useFarm('COMP') || {
+	} = useFarm('SNX') || {
 		contract: null,
 		depositToken: '',
 		depositTokenAddress: '',

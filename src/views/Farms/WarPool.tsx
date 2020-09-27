@@ -58,7 +58,7 @@ const WarPool: React.FC = () => {
 		earnToken,
 		name,
 		icon,
-	} = useFarm('COMP') || {
+	} = useFarm('comp') || {
 		contract: null,
 		depositToken: '',
 		depositTokenAddress: '',
@@ -74,7 +74,7 @@ const WarPool: React.FC = () => {
 
 	const { onReward } = useReward(contract)
 	const earnings = useEarnings(contract)
-	const tokenBalance = useTokenBalance(contract ? contract.options.address : null)
+	const tokenBalance = useTokenBalance(depositTokenAddress)
 	const stakedBalance = useStakedBalance(contract)
 	const { onStake } = useStake(contract)
 	const { onUnstake } = useUnstake(contract)
@@ -111,7 +111,7 @@ const WarPool: React.FC = () => {
 		<StakeModal
 			max={tokenBalance}
 			onConfirm={onStake}
-			tokenName={"WAR"}
+			tokenName={"ETH-WAR-UNI-V2"}
 		/>
 	)
 
@@ -119,7 +119,7 @@ const WarPool: React.FC = () => {
 		<UnstakeModal
 			max={stakedBalance}
 			onConfirm={onUnstake}
-			tokenName={"WAR"}
+			tokenName={"ETH-WAR-UNI-V2"}
 		/>
 	)
 
@@ -136,21 +136,22 @@ const WarPool: React.FC = () => {
 		}
 	  }, [onApprove, setRequestedApproval])
 
+        const now = new Date().getTime() / 1000;
 
 	return (
 		<InfoContainer>
-			<Title>Uniswap WAR/sUSD</Title>
+			<Title>Uniswap WAR/ETH</Title>
 			<InfoDivider />
 			<InfoLines>
-				<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} UsUSDBASED-V2</ShadedLine></Line>
-				<Line>CurrentlyStaked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
+				<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} ETH-WAR-UNI-V2</ShadedLine></Line>
+				<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
 				<Line>Rewards Available: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></Line>
 			</InfoLines>
 			<BottomButtonContainer>
 				{!allowance.toNumber() ? (
 					<Button
 						size="lg"
-						disabled={account ? false : true}
+						disabled={now < 1601308800 && account ? false : true}
 						onClick={handleApprove}
 						text={`Approve WAR`}
 					/>
@@ -165,7 +166,7 @@ const WarPool: React.FC = () => {
 							<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
 							<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
 							<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
-							<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>
+							{/*<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>*/}
 							{/* <Button size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</Button>
 							<Button size='lg' onClick={onReward} disabled={true}>Claim Rewards</Button>
 							<Button size='lg' onClick={onPresentUnstake} disabled={true}>Unstake Tokens</Button>

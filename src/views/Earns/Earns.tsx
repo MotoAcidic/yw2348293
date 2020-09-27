@@ -50,10 +50,10 @@ const Earns: React.FC = () => {
               <CountDownText>Countdown timer until next staking pool opens:</CountDownText>
               <CountDown />
               <InfoContainer>
-                <Title>Uniswap WAR/sUSD</Title>
+                <Title>Uniswap WAR/ETH</Title>
                 <InfoDivider />
                 <InfoLines>
-                  <Line>Your Balance: <ShadedLine>{0} UsUSDBASED-V2</ShadedLine></Line>
+                  <Line>Your Balance: <ShadedLine>{0} ETH-WAR-UNI-V2</ShadedLine></Line>
                   <Line>CurrentlyStaked: <ShadedLine>{0}</ShadedLine></Line>
                   <Line>Rewards Available: <ShadedLine>{0} WAR</ShadedLine></Line>
                 </InfoLines>

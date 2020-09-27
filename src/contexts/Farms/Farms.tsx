@@ -40,16 +40,6 @@ const Farms: React.FC = ({ children }) => {
     }
 
 
-
-    //let pool;
-    //let tokenAddress = '0xE92346d9369Fe03b735Ed9bDeB6bdC2591b8227E'
-
-
-    //console.log("here", yam, pools, tokens)
-
-    // const web3 = new Web3(ethereum as provider);
-    // const poolContract = new web3.eth.Contract(Pool.abi, Pool.networks[1].address);
-
     let farmsArr = [
       {
         contract: pools ? pools["mbbased_pool"] : undefined,
@@ -195,6 +185,17 @@ const Farms: React.FC = ({ children }) => {
         sort: 9
       },
 
+      {
+        contract: pools ? pools["unipool_pool"] : undefined,
+        name: "",
+        depositToken: "ETH-WAR-UNI-V2",
+        depositTokenAddress: tokens ? tokens["unipool_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "🦍",
+        id: "UNIPOOL",
+        sort: 9
+      },
     ]
 
     // farmsArr.sort((a, b) => a.sort < b.sort ? 1 : -1)

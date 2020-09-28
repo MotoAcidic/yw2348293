@@ -477,16 +477,15 @@ export const getAPR = async (pool, yam) => {
   return apy
 }
 
-export const getWarAPR = async (pool, yam) => {
+export const getWarAPR = async (contract, yam) => {
   const curPrice = new BigNumber(2.8);//new BigNumber(await getCurrentPrice(yam))
-  let rewardPerYear = await getRewardPerYear(pool);
-  const totalSupply = new BigNumber(2800000)
-  let assetPrice = await getAssetPrices(yam)
-  assetPrice = new BigNumber(assetPrice[pool.id])
-  console.log(rewardPerYear, curPrice, totalSupply, assetPrice);
-  let apy = rewardPerYear.dividedBy(totalSupply).multipliedBy(100).toNumber()
-  console.log(apy);
-  
+  let rewardPerYear = await getRewardPerYear(contract);
+  //console.log(`rewardPerYear`, rewardPerYear.toString())
+  const totalSupply = new BigNumber(await contract.methods.totalSupply().call()).div(10 ** 18);
+  let assetPrice = new BigNumber(35);
+  //console.log(`totalSupply`, totalSupply.toString())
+
+  let apy = rewardPerYear.multipliedBy(curPrice).dividedBy(totalSupply.multipliedBy(assetPrice)).multipliedBy(100).toNumber()
   return apy
 }
 

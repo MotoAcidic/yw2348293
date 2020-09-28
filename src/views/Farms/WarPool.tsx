@@ -94,7 +94,7 @@ const WarPool: React.FC = () => {
 	const [apr, setAPR] = useState(0)
 
 	const aprVal = useCallback(async () => {
-		console.log(contract);
+		//console.log(`contract`,contract);
 
 		const apr = await getWarAPR(contract, yam)
 		setAPR(apr)

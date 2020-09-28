@@ -201,7 +201,7 @@ const WarPool: React.FC = () => {
 				{!allowance.toNumber() ? (
 					<Button
 						size="lg"
-						disabled={now < 1601308800 && account ? false : true}
+						disabled={account ? false : true}
 						onClick={handleApprove}
 						text={`Approve WAR`}
 					/>

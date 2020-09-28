@@ -559,7 +559,7 @@ export const getAssetPrices = async (yam) => {
     let priceData = {};
     keys.forEach((key, i) => priceData[key] = yam.toBigN(priceArr[i]).div(10 ** 6).toFixed(4));
     
-    priceData["UNIPOOL"] = 0;
+    priceData["UNIPOOL"] = priceData["WAR"] * 2;
     assetPrices = priceData;
     return priceData;
   }

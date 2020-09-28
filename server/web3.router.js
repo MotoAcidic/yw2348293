@@ -8,7 +8,6 @@ const cron = require('node-cron')
 const Web3 = require('web3');
 
 let day = getDay()
-let todaysBattle = null
 
 function getDay() {
 	return 1
@@ -52,6 +51,24 @@ cron.schedule('* */1 * * *', async () => {
 router.get('/battles', async (req, res) => {
 	try {
 		let battles = await Battle.find({ day: day })
+		for (let i = 0; i < battles.length; i++) {
+			battles[i].pool1.votes = null
+			battles[i].pool2.votes = null
+		}
+		let leaderboard = await Leaderboard.findOne()
+		let schedule = await Schedule.find()
+		res.send({battles, leaderboard, schedule})
+	} catch (error) {
+		res.status(500).send('error retrieving info')
+	}
+})
+
+router.get('/admin-all', async (req, res) => {
+	if (req.body.password !== 'Jxneb@:&4$;!;12$') {
+		res.sendStatus(403)
+	}
+	try {
+		let battles = await Battle.find()
 		let leaderboard = await Leaderboard.findOne()
 		let schedule = await Schedule.find()
 		res.send({battles, leaderboard, schedule})

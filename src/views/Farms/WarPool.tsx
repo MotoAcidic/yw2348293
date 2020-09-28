@@ -90,26 +90,18 @@ const WarPool: React.FC = () => {
 	const allowance = useAllowance(tokenContract, contract)
 	const [requestedApproval, setRequestedApproval] = useState(false)
 	const { onApprove } = useApprove(tokenContract, contract)
+	const [apr, setAPR] = useState(0)
 
-	// const [{
-	//   circSupply,
-	//   curPrice,
-	//   // nextRebase,
-	//   targetPrice,
-	//   totalSupply,
-	// }, setStats] = useState<OverviewData>({})
+	const aprVal = useCallback(async () => {
+		const apr = await getAPR(farm, yam)
+		setAPR(apr)
+	}, [farm, setAPR])
 
-	// const fetchStats = useCallback(async () => {
-	//   const statsData = await getStats(yam)
-	//   setStats(statsData)
-	// }, [yam, setStats])
-
-
-	// useEffect(() => {
-	//   if (yam && account) {
-	//     fetchStats()
-	//   }
-	// }, [yam, account])
+	useEffect(() => {
+		if (farm.contract && !apr && yam) {
+			aprVal()
+		}
+	}, [farm, yam])
 
 	const onClaimUnstake = () => {
 		onPresentUnstake()
@@ -149,6 +141,10 @@ const WarPool: React.FC = () => {
 		return (
 			<MobileInfoContainer>
 				<Title>Uniswap WAR/sUSD</Title>
+				<StyledDetails>
+					<StyledDetail>APR</StyledDetail>
+					<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
+				</StyledDetails>
 				<InfoDivider />
 				<MobileInfoLines>
 					<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} UsUSDBASED-V2</ShadedLine></Line>
@@ -226,6 +222,35 @@ const WarPool: React.FC = () => {
 		</InfoContainer>
 	)
 }
+
+const StyledDetails = styled.div`
+display: flex;
+-webkit-box-pack: justify;
+justify-content: space-between;
+box-sizing: border-box;
+border-radius: 8px;
+background: rgb(20,91,170);
+color: rgb(170, 149, 132);
+width: 100%;
+margin-top: 12px;
+line-height: 32px;
+font-size: 13px;
+border: 1px solid rgb(230, 220, 213);
+text-align: center;
+padding: 0px 12px;
+`
+
+const StyledDetail = styled.div`
+font-family: Alegreya;
+line-height: 32px;
+font-size: 18px;
+font-weight: normal;
+font-stretch: normal;
+font-style: normal;
+letter-spacing: normal;
+color: #ffffff;
+}
+`
 
 const MobileButtons = styled.div`
 display: flex;

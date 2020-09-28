@@ -12,6 +12,7 @@
     "bignumber.js": "^9.0.0",
     "ethereumjs-wallet": "^1.0.1",
     "moment": "^2.27.0",
+    "mongoose": "^5.10.7",
     "node-cron": "^2.0.3",
     "numeral": "^2.0.6",
     "react": "^16.13.1",

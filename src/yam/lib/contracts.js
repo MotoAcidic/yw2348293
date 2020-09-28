@@ -55,6 +55,7 @@ export class Contracts {
     this.farm_token = new this.web3.eth.Contract(ERC20Json.abi);
     this.mbbased_token = new this.web3.eth.Contract(ERC20Json.abi);
     this.unipool_token = new this.web3.eth.Contract(ERC20Json.abi);
+    this.battlepool_token = new this.web3.eth.Contract(ERC20Json.abi);
 
 
     this.link_pool = new this.web3.eth.Contract(WARPoolJson.abi);
@@ -71,6 +72,7 @@ export class Contracts {
     this.farm_pool = new this.web3.eth.Contract(WARPoolJson.abi);
     this.mbbased_pool = new this.web3.eth.Contract(WARPoolJson.abi);
     this.unipool_pool = new this.web3.eth.Contract(WARPoolJson.abi);
+    this.battlepool_pool = new this.web3.eth.Contract(WARPoolJson.abi);
 
     this.erc20 = new this.web3.eth.Contract(ERC20Json.abi);
 
@@ -102,6 +104,7 @@ export class Contracts {
       { contract: this.farm_pool, json: WARPoolJson },
       { contract: this.mbbased_pool, json: WARPoolJson },
       { contract: this.unipool_pool, json: WARPoolJson },
+      { contract: this.battlepool_pool, json: WARPoolJson },
     ]
 
     contracts.forEach(contract => this.setContractProvider(
@@ -126,6 +129,7 @@ export class Contracts {
     this.farm_pool.options.address = addressMap["farm_pool"];
     this.mbbased_pool.options.address = addressMap["mbbased_pool"];
     this.unipool_pool.options.address = addressMap["unipool_pool"];
+    this.battlepool_pool.options.address = addressMap["battlepool_pool"];
 
     this.link_token.options.address = addressMap["link"];
     this.snx_token.options.address = addressMap["snx"];
@@ -141,6 +145,7 @@ export class Contracts {
     this.farm_token.options.address = addressMap["farm"];
     this.mbbased_token.options.address = addressMap["mbbased"];
     this.unipool_token.options.address = addressMap["unipool"];
+    this.battlepool_token.options.address = addressMap["battlepool"];
 
     this.war.options.address = addressMap["war"];
 
@@ -163,6 +168,7 @@ export class Contracts {
       {"tokenAddr": this.farm_token.options.address, "poolAddr": this.farm_pool.options.address},
       {"tokenAddr": this.mbbased_token.options.address, "poolAddr": this.mbbased_pool.options.address},
       {"tokenAddr": this.unipool_token.options.address, "poolAddr": this.unipool_pool.options.address},
+      {"tokenAddr": this.battlepool_token.options.address, "poolAddr": this.battlepool_pool.options.address},
     ]
   }
 
@@ -183,6 +189,7 @@ export class Contracts {
     this.farm_token.options.from = account;
     this.mbbased_token.options.from = account;
     this.unipool_token.options.from = account;
+    this.battlepool_token.options.from = account;
     this.uni_router.options.from = account;
     this.pricing.options.from = account;
   }

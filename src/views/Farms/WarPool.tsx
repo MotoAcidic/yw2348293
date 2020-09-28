@@ -44,6 +44,7 @@ import useStakedBalance from '../../hooks/useStakedBalance'
 import useTokenBalance from '../../hooks/useTokenBalance'
 import useUnstake from '../../hooks/useUnstake'
 import useFarms from '../../hooks/useFarms'
+import { getWarAPR, getPoolEndTime } from '../../yamUtils'
 
 
 function isMobile() {
@@ -93,15 +94,17 @@ const WarPool: React.FC = () => {
 	const [apr, setAPR] = useState(0)
 
 	const aprVal = useCallback(async () => {
-		const apr = await getAPR(farm, yam)
+		console.log(contract);
+
+		const apr = await getWarAPR(contract, yam)
 		setAPR(apr)
-	}, [farm, setAPR])
+	}, [contract, setAPR])
 
 	useEffect(() => {
-		if (farm.contract && !apr && yam) {
+		if (contract && !apr && yam) {
 			aprVal()
 		}
-	}, [farm, yam])
+	}, [contract, yam])
 
 	const onClaimUnstake = () => {
 		onPresentUnstake()
@@ -140,11 +143,13 @@ const WarPool: React.FC = () => {
 	if (isMobile()) {
 		return (
 			<MobileInfoContainer>
-				<Title>Uniswap WAR/sUSD</Title>
-				<StyledDetails>
-					<StyledDetail>APR</StyledDetail>
-					<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
-				</StyledDetails>
+				<WarTopContainer>
+					<Title>Uniswap WAR/sUSD</Title>
+					<StyledDetails>
+						<StyledDetail>APR</StyledDetail>
+						<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
+					</StyledDetails>
+				</WarTopContainer>
 				<InfoDivider />
 				<MobileInfoLines>
 					<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} UsUSDBASED-V2</ShadedLine></Line>
@@ -185,7 +190,13 @@ const WarPool: React.FC = () => {
 
 	return (
 		<InfoContainer>
-			<Title>Uniswap WAR/sUSD</Title>
+			<WarTopContainer>
+				<Title>Uniswap WAR/sUSD</Title>
+				<StyledDetails>
+					<StyledDetail>APR</StyledDetail>
+					<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
+				</StyledDetails>
+			</WarTopContainer>
 			<InfoDivider />
 			<InfoLines>
 				<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} UsUSDBASED-V2</ShadedLine></Line>
@@ -223,7 +234,14 @@ const WarPool: React.FC = () => {
 	)
 }
 
+const WarTopContainer = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: center;
+`
+
 const StyledDetails = styled.div`
+position: absolute;
 display: flex;
 -webkit-box-pack: justify;
 justify-content: space-between;
@@ -231,8 +249,9 @@ box-sizing: border-box;
 border-radius: 8px;
 background: rgb(20,91,170);
 color: rgb(170, 149, 132);
-width: 100%;
-margin-top: 12px;
+width: 200px;
+margin-top: 6px;
+margin-left: 780px;
 line-height: 32px;
 font-size: 13px;
 border: 1px solid rgb(230, 220, 213);

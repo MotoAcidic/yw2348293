@@ -148,11 +148,11 @@ const WarPool: React.FC = () => {
 	if (isMobile()) {
 		return (
 			<MobileInfoContainer>
-				<Title>Uniswap WAR/sUSD</Title>
+				<Title>Uniswap WAR/ETH</Title>
 				<InfoDivider />
 				<MobileInfoLines>
-					<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} UsUSDBASED-V2</ShadedLine></Line>
-					<Line>CurrentlyStaked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
+					<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} ETH-WAR-UNI-V2</ShadedLine></Line>
+					<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
 					<Line>Rewards Available: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></Line>
 				</MobileInfoLines>
 				<BottomButtonContainer>

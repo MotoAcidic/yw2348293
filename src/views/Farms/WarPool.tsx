@@ -45,6 +45,15 @@ import useTokenBalance from '../../hooks/useTokenBalance'
 import useUnstake from '../../hooks/useUnstake'
 
 
+function isMobile() {
+	if (window.innerWidth < window.innerHeight) {
+		return true
+	}
+	else {
+		return false
+	}
+}
+
 const WarPool: React.FC = () => {
 	const { account, connect, ethereum } = useWallet()
 	const yam = useYam()
@@ -57,7 +66,7 @@ const WarPool: React.FC = () => {
 		earnToken,
 		name,
 		icon,
-	} = useFarm('SNX') || {
+	} = useFarm('UNIPOOL') || {
 		contract: null,
 		depositToken: '',
 		depositTokenAddress: '',
@@ -73,7 +82,7 @@ const WarPool: React.FC = () => {
 
 	const { onReward } = useReward(contract)
 	const earnings = useEarnings(contract)
-	const tokenBalance = useTokenBalance(contract ? contract.options.address : null)
+	const tokenBalance = useTokenBalance(depositTokenAddress)
 	const stakedBalance = useStakedBalance(contract)
 	const { onStake } = useStake(contract)
 	const { onUnstake } = useUnstake(contract)
@@ -110,7 +119,7 @@ const WarPool: React.FC = () => {
 		<StakeModal
 			max={tokenBalance}
 			onConfirm={onStake}
-			tokenName={"WAR"}
+			tokenName={"ETH-WAR-UNI-V2"}
 		/>
 	)
 
@@ -118,38 +127,80 @@ const WarPool: React.FC = () => {
 		<UnstakeModal
 			max={stakedBalance}
 			onConfirm={onUnstake}
-			tokenName={"WAR"}
+			tokenName={"ETH-WAR-UNI-V2"}
 		/>
 	)
 
 	const handleApprove = useCallback(async () => {
 		try {
-		  setRequestedApproval(true)
-		  const txHash = await onApprove()
-		  // user rejected tx or didn't go thru
-		  if (!txHash) {
-			setRequestedApproval(false)
-		  }
+			setRequestedApproval(true)
+			const txHash = await onApprove()
+			// user rejected tx or didn't go thru
+			if (!txHash) {
+				setRequestedApproval(false)
+			}
 		} catch (e) {
-		  console.log(e)
+			console.log(e)
 		}
-	  }, [onApprove, setRequestedApproval])
+	}, [onApprove, setRequestedApproval])
 
+	if (isMobile()) {
+		return (
+			<MobileInfoContainer>
+				<Title>Uniswap WAR/sUSD</Title>
+				<InfoDivider />
+				<MobileInfoLines>
+					<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} UsUSDBASED-V2</ShadedLine></Line>
+					<Line>CurrentlyStaked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
+					<Line>Rewards Available: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></Line>
+				</MobileInfoLines>
+				<BottomButtonContainer>
+					{!allowance.toNumber() ? (
+						<Button
+							size="lg"
+							disabled={account ? false : true}
+							onClick={handleApprove}
+							text={`Approve WAR`}
+						/>
+						// <Button
+						// 	size="lg"
+						// 	disabled={true}
+						// 	onClick={handleApprove}
+						// 	text={`Approve WAR`}
+						// />
+					) : (
+							<MobileButtons>
+								<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
+								<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
+								<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
+								<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>
+								{/* <Button size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</Button>
+								<Button size='lg' onClick={onReward} disabled={true}>Claim Rewards</Button>
+								<Button size='lg' onClick={onPresentUnstake} disabled={true}>Unstake Tokens</Button>
+								<Button size='lg' onClick={onClaimUnstake} disabled={true}>Claim & Unstake</Button> */}
+							</MobileButtons>
+						)}
+				</BottomButtonContainer>
+			</MobileInfoContainer>
+		)
+	}
+
+        const now = new Date().getTime() / 1000;
 
 	return (
 		<InfoContainer>
-			<Title>Uniswap WAR/sUSD</Title>
+			<Title>Uniswap WAR/ETH</Title>
 			<InfoDivider />
 			<InfoLines>
-				<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} UsUSDBASED-V2</ShadedLine></Line>
-				<Line>CurrentlyStaked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
+				<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} ETH-WAR-UNI-V2</ShadedLine></Line>
+				<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
 				<Line>Rewards Available: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></Line>
 			</InfoLines>
 			<BottomButtonContainer>
 				{!allowance.toNumber() ? (
 					<Button
 						size="lg"
-						disabled={account ? false : true}
+						disabled={now < 1601308800 && account ? false : true}
 						onClick={handleApprove}
 						text={`Approve WAR`}
 					/>
@@ -164,7 +215,7 @@ const WarPool: React.FC = () => {
 							<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
 							<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
 							<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
-							<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>
+							{/*<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>*/}
 							{/* <Button size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</Button>
 							<Button size='lg' onClick={onReward} disabled={true}>Claim Rewards</Button>
 							<Button size='lg' onClick={onPresentUnstake} disabled={true}>Unstake Tokens</Button>
@@ -175,6 +226,11 @@ const WarPool: React.FC = () => {
 		</InfoContainer>
 	)
 }
+
+const MobileButtons = styled.div`
+display: flex;
+flex-direction: column;
+`
 
 const DisplayItem = styled.div`
 color: white;
@@ -225,6 +281,24 @@ font-family: SFMono;
   color: #ffffff;
 `
 
+const MobileInfoLines = styled.div`
+width: 100%;
+height: 50%;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+text-align: left;
+margin: 3%;
+font-family: SFMono;
+  font-size: 18px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: #ffffff;
+`
+
 const Title = styled.div`
 font-family: Alegreya;
   font-size: 25px;
@@ -247,6 +321,16 @@ margin-top: 1%;
 const InfoContainer = styled.div`
 width: 1000px;
   height: 375px;
+  border-radius: 8px;
+  border: solid 4px #97d5ff;
+  background-color: #003677;
+  margin-top: 6vh;
+  margin-bottom: 6vh;
+`
+
+const MobileInfoContainer = styled.div`
+width: 300px;
+  height: 450px;
   border-radius: 8px;
   border: solid 4px #97d5ff;
   background-color: #003677;

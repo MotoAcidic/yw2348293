@@ -213,6 +213,8 @@ export const getStaked = async (yam, pool, account) => {
   return yam.toBigN(await pool.methods.balanceOf(account).call())
 }
 
+export const getUnipool = (yam) => yam.contracts["unipool"];
+
 export const getCurrentPrice = async (yam) => {
   //return yam.toBigN(await yam.contracts.rebaser.methods.getCurrentTWAP().call())
   let p = await yam.contracts.uni_router.methods.getAmountsOut(
@@ -554,10 +556,12 @@ export const getAssetPrices = async (yam) => {
     ];
     //console.log(priceArr);
 
-    const priceData = {};
+    let priceData = {};
     keys.forEach((key, i) => priceData[key] = yam.toBigN(priceArr[i]).div(10 ** 6).toFixed(4));
-    assetPrices = priceData
-    return priceData
+    
+    priceData["UNIPOOL"] = 0;
+    assetPrices = priceData;
+    return priceData;
   }
 }
 

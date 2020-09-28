@@ -28,7 +28,6 @@ function isMobile() {
 const FarmCards: React.FC = () => {
   let [farms] = useFarms()
 
-
   let rows = farms.reduce<Farm[][]>((farmRows, farm) => {
     const newFarmRows = [...farmRows]
     if (newFarmRows[newFarmRows.length - 1].length === 3) {
@@ -37,7 +36,7 @@ const FarmCards: React.FC = () => {
       newFarmRows[newFarmRows.length - 1].push(farm)
     }
     return newFarmRows
-  }, [[]])
+  }, [[]]);
 
   if (isMobile()) {
     return (
@@ -120,7 +119,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   // console.log(farm);
 
   const aprVal = useCallback(async () => {
-    const apr = farm.id !== `CHADS` ? await getAPR(farm, yam) : 0;
+    const apr = farm.id !== `CHADS` && farm.id !== `UNIPOOL` ? await getAPR(farm, yam) : 0;
     setAPR(apr)
   }, [farm, setAPR])
 
@@ -132,6 +131,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
 
   // console.log(farm);
   
+  if (farm.id === `UNIPOOL`) {
+    return null;
+  }
 
   return (
     <StyledCardWrapper>

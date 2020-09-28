@@ -19,7 +19,6 @@ import useYam from '../../hooks/useYam'
 import { OverviewData } from './types'
 import useEarnings from '../../hooks/useEarnings'
 import useReward from '../../hooks/useReward'
-import { Contract } from 'web3-eth-contract'
 
 
 import Icon from '../../assets/img/icon.png'

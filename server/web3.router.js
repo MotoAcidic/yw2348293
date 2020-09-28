@@ -4,13 +4,20 @@ const Leaderboard = require('./Leaderboard.schema')
 const Schedule = require('./Schedule.schema')
 const Battle = require('./Battle.schema')
 const cron = require('node-cron')
-
+const abi = require('./BATTLEPool.json')
 const Web3 = require('web3');
+// const Contract = require('web3-eth-contract');
+const web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io/v3/df0ee84acd8a4a29969695303b0a1a6d'))
+const contract = new web3.eth.Contract(abi.abi, '0xCC3A2c4891740e2055f4C6875a28BB9EB32f2e69')
+// console.log(contract.methods);
+
 
 let day = getDay()
 
-function getDay() {
-	return 1
+async function getDay() {
+	let day = await contract.methods.battleDay().call()
+	console.log(day);
+	return day
 }
 
 async function finishBattle(day) {

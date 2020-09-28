@@ -43,7 +43,7 @@ if (chainId === 1) {
     wnxm_pool: "0xCC3A2c4891740e2055f4C6875a28BB9EB32f2e69",
     mbbased_pool: "0x67bA643d6acDB7c12F913f0bbE4632df9889e0E5",
     unipool_pool: "0xA11cB7F893F3939f91d3c6E23025B41877190D6c",
-  
+
     link: "0x514910771af9ca656af840dff83e8264ecf986ca",
     snx: "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
     yfi: "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
@@ -60,9 +60,9 @@ if (chainId === 1) {
     unipool: "0x24004f6fCE7e3842e5a308eAC032E09f1883CeF8",
 
     war: "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde",
-  
+
     UNIRouter: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-  
+
     Pricing: "0xA056b5a1fC97ea86D949cdB67Be4950e29942421",
   }
 } else { // 42 = kovan
@@ -80,8 +80,8 @@ if (chainId === 1) {
     farm_pool: "0xcce4158494ae8296e3936823058b17e03eeba6c3",
     wnxm_pool: "0xcce4158494ae8296e3936823058b17e03eeba6c3",
     mbbased_pool: "0xcce4158494ae8296e3936823058b17e03eeba6c3",
-    
-  
+
+
     link: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
     snx: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
     yfi: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
@@ -95,13 +95,16 @@ if (chainId === 1) {
     srm: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
     farm: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
     mbbased: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
-  
     unipool: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
 
+    unipool: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",
+
+	battlepool: "0xCC3A2c4891740e2055f4C6875a28BB9EB32f2e69",
+
     war: "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde",
-  
+
     UNIRouter: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-  
+
     Pricing: "0xD61BF18a0A2747642B8E015EbA1545810f4B9cA1", // kovan
   }
 }

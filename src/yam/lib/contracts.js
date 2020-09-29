@@ -145,7 +145,7 @@ export class Contracts {
     this.farm_token.options.address = addressMap["farm"];
     this.mbbased_token.options.address = addressMap["mbbased"];
     this.unipool_token.options.address = addressMap["unipool"];
-    this.battlepool_token.options.address = addressMap["battlepool"];
+    this.battlepool_token.options.address = addressMap["war"];
 
     this.war.options.address = addressMap["war"];
 

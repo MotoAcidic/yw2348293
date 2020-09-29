@@ -123,7 +123,7 @@ const Farms: React.FC = () => {
                 <DisplayItem>Supply: 2,800,000</DisplayItem>
               </TopDisplayContainer>
               <HelloBar>YieldWars Battle page will launch at 5pm PT today!!
-              Official statement on our telegram here: <a href="https://t.me/YieldWarsOfficial/4548">https://t.me/YieldWarsOfficial/4548</a>
+              Official statement on our telegram here: <a style={{color: 'white'}} href="https://t.me/YieldWarsOfficial/4548">https://t.me/YieldWarsOfficial/4548</a>
               </HelloBar>
               <TextContainer>
                 <StyledA href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde" target="_blank" />

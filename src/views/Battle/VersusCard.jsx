@@ -44,7 +44,7 @@ const Versus = ({ battles }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	console.log(battles);
-	const [voted, setVoted] = useState(cookie.get(battles[0]._id + battles[1]._id))
+	const [voted, setVoted] = useState(false)
 	const [checked1, setChecked1] = useState(cookie.get(battles[0]._id))
 	const [checked2, setChecked2] = useState(cookie.get(battles[1]._id))
 	const battle1 = {
@@ -54,11 +54,6 @@ const Versus = ({ battles }) => {
 	const battle2 = {
 		farm1: farms.find(farm => farm.id === battles[1].pool1.name),
 		farm2: farms.find(farm => farm.id === battles[1].pool2.name)
-	}
-
-	const voteLocked = () => {
-		cookie.set(battles[0]._id + battles[1]._id, true)
-		setVoted(true)
 	}
 
 	const pick1 = (g) => {
@@ -115,11 +110,25 @@ const Versus = ({ battles }) => {
 			sig: signature
 		}).then(res => {
 			console.log(res);
-			voteLocked()
+			setVoted(true)
 		}).catch(err => {
 			console.log(err);
 		})
 	}
+
+	useEffect(() => {
+		if (account) {
+			axios.post('https://yieldwars-api.herokuapp.com/api/status', {
+				address: account,
+			}).then(res => {
+				console.log(res.data);
+				setVoted(res.data)
+			}).catch(err => {
+				console.log(err);
+
+			})
+		}
+	}, [account])
 
 	return (
 		<>

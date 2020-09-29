@@ -25,6 +25,9 @@ const BattleSchema = new Schema({
 			},
 			amount: {
 				type: Number,
+			},
+			timestamp: {
+				type: Number
 			}
 		}]
 	},
@@ -43,6 +46,9 @@ const BattleSchema = new Schema({
 			},
 			amount: {
 				type: Number,
+			},
+			timestamp: {
+				type: Number
 			}
 		}]
 	}

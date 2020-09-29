@@ -116,18 +116,6 @@ router.get('/battles', async (req, res) => {
 	}
 })
 
-router.get('/admin-all', async (req, res) => {
-	if (req.body.password !== 'Jxneb@:&4$;!;12$') {
-		res.sendStatus(403)
-	}
-	try {
-		let battles = await Battle.find()
-		let leaderboard = await Leaderboard.findOne()
-		let schedule = await Schedule.find()
-		res.send({ battles, leaderboard, schedule })
-	} catch (error) {
-		res.status(500).send('error retrieving info')
-	}
-})
+
 
 module.exports = router

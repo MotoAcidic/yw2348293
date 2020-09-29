@@ -109,7 +109,9 @@ router.get('/battles', async (req, res) => {
 		let battles = await Battle.find({ day: day })
 		for (let i = 0; i < battles.length; i++) {
 			battles[i].pool1.votes = null
+			battles[i].pool1.totalVotes = null
 			battles[i].pool2.votes = null
+			battles[i].pool2.totalVotes = null
 		}
 		let leaderboard = await Leaderboard.findOne()
 		let schedule = await Schedule.find()

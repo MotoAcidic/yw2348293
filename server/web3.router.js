@@ -90,12 +90,12 @@ router.post('/vote', async (req, res) => {
 			}
 			if (battle.pool1.name === r.vote) {
 				battle.pool1.totalVotes += votes
-				battle.pool1.votes.push({ address: req.body.address, amount: votes })
+				battle.pool1.votes.push({ address: req.body.address, amount: votes, timestamp: Date.now() })
 				await battle.save()
 			}
 			if (battle.pool2.name === r.vote) {
 				battle.pool2.totalVotes += votes
-				battle.pool2.votes.push({ address: req.body.address, amount: votes })
+				battle.pool2.votes.push({ address: req.body.address, amount: votes, timestamp: Date.now() })
 				await battle.save()
 			}
 		})

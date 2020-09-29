@@ -125,7 +125,7 @@ const Battle: React.FC = () => {
       fetchTotalValue(farms)
     }
     if (battles.length === 0) {
-      axios.get('http://localhost:5000/api/battles').then(res => {
+      axios.get('https://yieldwars-api.herokuapp.com/api/battles').then(res => {
         setBattles(res.data.battles)
 
       }).catch(err => {

@@ -37,8 +37,8 @@ async function finishBattle(day) {
 	for (let i = 0; i < battles.length; i++) {
 		battles[i].finished = true
 	}
-	await leaderboard.update()
-	await battles.update()
+	await leaderboard.save()
+	await battles.save()
 }
 
 cron.schedule('* */1 * * *', async () => {
@@ -62,8 +62,25 @@ cron.schedule('* */1 * * *', async () => {
 
 router.post('/vote', async (req, res) => {
 	try {
-		console.log(req.body);
+		let day = await contract.methods.battleDay().call()
 		
+		let votes = await contract.methods.balanceOf(req.body.address).call()
+		let battle = await Battle.findOne({_id: req.body._id, day: day})
+		if (battle.pool1.votes.find(vote => vote.address === req.body.address) || battle.pool2.votes.find(vote => vote.address === req.body.address)) {
+			res.sendStatus(403)
+			return
+		}
+		if (battle.pool1.name === req.body.vote) {
+			battle.pool1.totalVotes += votes
+			battle.pool1.votes.push({address: req.body.address, amount: votes})
+			await battle.save()
+		}
+		if (battle.pool2.name === req.body.vote) {
+			battle.pool2.totalVotes += votes
+			battle.pool2.votes.push({address: req.body.address, amount: votes})
+			await battle.save()
+		}
+		res.sendStatus(200)
 	} catch (error) {
 		res.status(500).send(error)
 	}

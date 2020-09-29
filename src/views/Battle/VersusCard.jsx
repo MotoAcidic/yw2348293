@@ -40,7 +40,7 @@ function isMobile() {
 let cookie = new Cookie()
 
 
-const Versus = ({ farm1, farm2, cast }) => {
+const Versus = ({ farm1, farm2, cast, r }) => {
 	let [farms] = useFarms()
 	const yam = useYam()
 	const [checked, setChecked] = useState(cookie.get(farm1.id + farm2.id))
@@ -55,12 +55,13 @@ const Versus = ({ farm1, farm2, cast }) => {
 		if (!checked)
 			return
 		if (checked === 1)
-			pool = farm1.id
+			pool = farm1
 		if (checked === 2)
-			pool = farm2.id
+			pool = farm2
 		axios.post('http://localhost:5000/api/vote', {
 			address: account,
-			vote: pool
+			vote: pool.id,
+			_id: r._id
 		})
 	}
 

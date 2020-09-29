@@ -44,7 +44,7 @@ const Versus = ({ battles }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	console.log(battles);
-
+	const [voted, setVoted] = useState(cookie.get(battles[0]._id + battles[1]._id))
 	const [checked1, setChecked1] = useState(cookie.get(battles[0]._id))
 	const [checked2, setChecked2] = useState(cookie.get(battles[1]._id))
 	const battle1 = {
@@ -56,6 +56,10 @@ const Versus = ({ battles }) => {
 		farm2: farms.find(farm => farm.id === battles[1].pool2.name)
 	}
 
+	const voteLocked = () => {
+		cookie.set(battles[0]._id + battles[1]._id, true)
+		setVoted(true)
+	}
 
 	const pick1 = (g) => {
 		cookie.set(battles[0]._id, g)
@@ -111,6 +115,7 @@ const Versus = ({ battles }) => {
 			sig: signature
 		}).then(res => {
 			console.log(res);
+			voteLocked()
 		}).catch(err => {
 			console.log(err);
 		})
@@ -186,7 +191,7 @@ const Versus = ({ battles }) => {
 					</VersusCard>
 				</VersusItem>
 			</VSContentContainer>
-			{account && <Button size="lg" onClick={castVote}>Cast Your Votes</Button>}
+			{account && <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button>}
 		</>
 	)
 }

@@ -61,6 +61,10 @@ cron.schedule('* * */1 * *', async () => {
 });
 
 router.post('/vote', async (req, res) => {
+	if (!req.body) {
+		res.sendStatus(500)
+		return
+	}
 	try {
 		let s = {
 			address: req.body.address,
@@ -76,6 +80,7 @@ router.post('/vote', async (req, res) => {
 		req.body.vote.forEach(async r => {
 			let battle = await Battle.findOne({ _id: r._id, day: day })
 			if (battle.pool1.votes.findIndex(vote => vote.address === req.body.address) !== -1 || battle.pool2.votes.findIndex(vote => vote.address === req.body.address) !== -1) {
+				res.status(403)
 				return
 			}
 			if (battle.pool1.name === r.vote) {
@@ -89,7 +94,7 @@ router.post('/vote', async (req, res) => {
 				await battle.save()
 			}
 		})
-		res.sendStatus(200)
+		res.send("ok")
 	} catch (error) {
 		console.log(error);
 

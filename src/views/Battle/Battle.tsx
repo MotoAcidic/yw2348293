@@ -88,7 +88,6 @@ const Battle: React.FC = () => {
   const yam = useYam()
   let [tvl, setTVL] = useState({ totalValue: new BigNumber(0), poolValues: {} })
   const { account, connect } = useWallet()
-  let [cast, setCast] = useState(false)
   let [battles, setBattles] = useState([])
   // let [voted, setVoted] = useState(cookie.get('voted'))
 
@@ -109,11 +108,6 @@ const Battle: React.FC = () => {
     const tv = await getTotalValue(pools, yam)
     setTVL(tv)
   }, [yam, setTVL, setTVL])
-
-  const castVote = () => {
-    setCast(true)
-    // setVoted(true)
-  }
 
   useEffect(() => {
     if (yam && account && farms && farms[0]) {

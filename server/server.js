@@ -8,11 +8,9 @@ const dotenv = require('dotenv')
 const Web3 = require('web3');
 const cors = require('cors')
 const connectDB = require('./db')
-dotenv.config()
-connectDB()
+
 
 app.use(cors())
-
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", '*');
   res.header("Access-Control-Allow-Credentials", true);
@@ -20,6 +18,9 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
   next();
 });
+
+dotenv.config()
+connectDB()
 
 
 app.use(bodyParser.json())

@@ -70,18 +70,18 @@ const Farms: React.FC = () => {
   const fetchTotalValue = useCallback(async (pools) => {
     const tv = await getTotalValue(pools, yam)
     setTVL(tv)
-  }, [yam, setTVL, setTVL])  
+  }, [yam, setTVL, setTVL])
 
   useEffect(() => {
     if (yam && account && farms && farms[0]) {
       fetchStats()
     }
-    if (yam && farms) {      
+    if (yam && farms) {
       fetchTotalValue(farms)
     }
   }, [yam, account, farms, farms[0]])
-  
-  
+
+
 
   const [onPresentStake] = useModal(
     <StakeModal
@@ -106,7 +106,7 @@ const Farms: React.FC = () => {
   }
 
   let diffTime = launch - Math.round(new Date().getTime());
-  
+
   return (
     <Switch>
       <StyledCanvas>
@@ -122,6 +122,9 @@ const Farms: React.FC = () => {
                 <DisplayItem>$War Price: ${currentPrice ? Number(currentPrice).toLocaleString(undefined, { minimumFractionDigits: 4, maximumFractionDigits: 4 }) : '-'}</DisplayItem>
                 <DisplayItem>Supply: 2,800,000</DisplayItem>
               </TopDisplayContainer>
+              <HelloBar>YieldWars Battle page will launch at 5pm PT today!!
+              Official statement on our telegram here: <a href="https://t.me/YieldWarsOfficial/4548">https://t.me/YieldWarsOfficial/4548</a>
+              </HelloBar>
               <TextContainer>
                 <StyledA href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde" target="_blank" />
                 <LargeText>Select a farm</LargeText>
@@ -149,6 +152,18 @@ const Farms: React.FC = () => {
     </Switch>
   )
 }
+
+const HelloBar = styled.div`
+margin-top: 6vh;
+font-family: Alegreya;
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+`
 
 const StyledA = styled.a`
 align-items: center;

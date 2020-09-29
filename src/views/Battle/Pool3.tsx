@@ -197,7 +197,8 @@ const WarPool: React.FC = () => {
 			<InfoLines>
 				<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
 				<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
-				<Line>Rewards Available: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></Line>
+				<Line>Past Battle Reward: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></Line>
+				<Line>Daily Rewards Available: <ShadedLine>42,000 WAR</ShadedLine></Line>
 			</InfoLines>
 			<BottomButtonContainer>
 				{!allowance.toNumber() ? (

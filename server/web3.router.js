@@ -78,7 +78,7 @@ router.post('/vote', async (req, res) => {
 		let votes = new BigNumber(await contract.methods.balanceOf(req.body.address).call()).dividedBy(10**18).toFixed(18)
 		console.log(votes);
 		
-		if (req.body.address !== signingAddress || votes === 0) {
+		if (req.body.address !== signingAddress || parseFloat(votes) === 0) {
 			res.sendStatus(403)
 			return
 		}
@@ -89,13 +89,13 @@ router.post('/vote', async (req, res) => {
 				return
 			}
 			if (battle.pool1.name === r.vote) {
-				battle.pool1.totalVotes += votes
-				battle.pool1.votes.push({ address: req.body.address, amount: votes, timestamp: Date.now() })
+				battle.pool1.totalVotes += parseFloat(votes)
+				battle.pool1.votes.push({ address: req.body.address, amount: parseFloat(votes), timestamp: Date.now() })
 				await battle.save()
 			}
 			if (battle.pool2.name === r.vote) {
-				battle.pool2.totalVotes += votes
-				battle.pool2.votes.push({ address: req.body.address, amount: votes, timestamp: Date.now() })
+				battle.pool2.totalVotes += parseFloat(votes)
+				battle.pool2.votes.push({ address: req.body.address, amount: parseFloat(votes), timestamp: Date.now() })
 				await battle.save()
 			}
 		})
@@ -104,6 +104,31 @@ router.post('/vote', async (req, res) => {
 		console.log(error);
 
 		res.status(500).send(error)
+	}
+})
+
+router.post('/status', async (req, res) => {
+	// console.log(req.body.address);
+	
+	try {
+		let day = await contract.methods.battleDay().call()
+		let battles = await Battle.find({ day: day })
+		let battle1 = battles[0]
+		let battle2 = battles[1]
+		// console.log(battle1, battle2);
+		
+		if ((battle1.pool1.votes.findIndex(vote => vote.address === req.body.address) !== -1) 
+		|| (battle1.pool2.votes.findIndex(vote => vote.address === req.body.address) !== -1)
+		|| (battle2.pool1.votes.findIndex(vote => vote.address === req.body.address) !== -1)
+		|| (battle2.pool2.votes.findIndex(vote => vote.address === req.body.address) !== -1)
+		) {
+			res.send(true)
+		} else {
+			res.send(false)
+		}
+	} catch (error) {
+		console.log(error);
+		res.status(500).send('error')
 	}
 })
 

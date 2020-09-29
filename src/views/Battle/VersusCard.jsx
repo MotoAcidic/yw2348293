@@ -42,11 +42,12 @@ let cookie = new Cookie()
 const Versus = ({ farm1, farm2, cast, r }) => {
 	let [farms] = useFarms()
 	const yam = useYam()
-	const [checked, setChecked] = useState(cookie.get(farm1.id + farm2.id))
+	const [checked, setChecked] = useState(cookie.get(r._id))
 	const { account, connect } = useWallet()
+	console.log(cookie.get(r._id));
 	const pick = (g) => {
+		cookie.set(r._id, g)
 		setChecked(g)
-		cookie.set(farm1.id + farm2.id, g)
 	}
 
 	const castVote = async () => {
@@ -73,7 +74,6 @@ const Versus = ({ farm1, farm2, cast, r }) => {
 	}
 
 	useEffect(() => {
-		console.log(cast);
 		if (cast) {
 			castVote()
 		}
@@ -81,39 +81,37 @@ const Versus = ({ farm1, farm2, cast, r }) => {
 
 	return (
 		<VersusItem>
-			<div>
-				<VersusCard>
-					<StyledContent>
-						<CardIcon>{farm1.icon}</CardIcon>
-						<StyledTitle>{farm1.name}</StyledTitle>
-						{checked === 1 ? (
+			<VersusCard>
+				<StyledContent>
+					<CardIcon>{farm1.icon}</CardIcon>
+					<StyledTitle>{farm1.name}</StyledTitle>
+					{checked === 1 ? (
+						<ButtonContainer onClick={() => pick(1)}>
+							<img src={checkedIcon} width="40%"/>
+						</ButtonContainer>
+					) : (
 							<ButtonContainer onClick={() => pick(1)}>
-								<img src={checkedIcon} />
+								<img src={uncheckedIcon} width="40%"/>
 							</ButtonContainer>
-						) : (
-								<ButtonContainer onClick={() => pick(1)}>
-									<img src={uncheckedIcon} />
-								</ButtonContainer>
-							)}
-					</StyledContent>
-				</VersusCard>
+						)}
+				</StyledContent>
+			</VersusCard>
                     VS
 			<VersusCard>
-					<StyledContent>
-						<CardIcon>{farm2.icon}</CardIcon>
-						<StyledTitle>{farm2.name}</StyledTitle>
-						{checked === 2 ? (
+				<StyledContent>
+					<CardIcon>{farm2.icon}</CardIcon>
+					<StyledTitle>{farm2.name}</StyledTitle>
+					{checked === 2 ? (
+						<ButtonContainer onClick={() => pick(2)}>
+							<img src={checkedIcon} width="40%"/>
+						</ButtonContainer>
+					) : (
 							<ButtonContainer onClick={() => pick(2)}>
-								<img src={checkedIcon} />
+								<img src={uncheckedIcon} width="40%" />
 							</ButtonContainer>
-						) : (
-								<ButtonContainer onClick={() => pick(2)}>
-									<img src={uncheckedIcon} />
-								</ButtonContainer>
-							)}
-					</StyledContent>
-				</VersusCard>
-			</div>
+						)}
+				</StyledContent>
+			</VersusCard>
 		</VersusItem>
 	)
 }
@@ -161,7 +159,7 @@ color: #ffffff;
 `
 
 const VersusCard = styled.div`
-width: 240px;
+width: 220px;
   height: 247px;
   border-radius: 8px;
   border: solid 2px #0095f0;

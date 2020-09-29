@@ -127,7 +127,6 @@ const Battle: React.FC = () => {
     if (battles.length === 0) {
       axios.get('http://localhost:5000/api/battles').then(res => {
         setBattles(res.data.battles)
-        console.log(res.data);
         
       }).catch(err => {
         console.log(err);
@@ -212,7 +211,7 @@ const Battle: React.FC = () => {
             <Pool3 />
             <Title style={{ marginTop: '4vh' }}>Step 2: Choose your victors</Title>
             <VSContentContainer>{vsContent}</VSContentContainer>
-            {account && <Button onClick={castVote}>Cast Your Votes</Button>}
+            {account && <Button size="lg" onClick={castVote}>Cast Your Votes</Button>}
             {/* <Title>Leaderboard</Title>
             {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}
 
@@ -242,7 +241,7 @@ width: 595px;
 
 const VSContentContainer = styled.div`
 margin-top: 1vh;
-width: 1000px;
+width: 600px;
 height: 600px;
 display: flex;
 flex-direction: column;

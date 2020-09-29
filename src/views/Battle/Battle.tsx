@@ -147,7 +147,7 @@ const Battle: React.FC = () => {
       const p2 = farms.find(farm => farm.id === r.pool2.name)
 
       return (
-        <VersusCard farm1={p1} farm2={p2} cast={cast} />
+        <VersusCard farm1={p1} farm2={p2} cast={cast} r={r} />
       )
     })
 

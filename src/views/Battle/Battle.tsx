@@ -127,28 +127,19 @@ const Battle: React.FC = () => {
     if (battles.length === 0) {
       axios.get('http://localhost:5000/api/battles').then(res => {
         setBattles(res.data.battles)
-        
+
       }).catch(err => {
         console.log(err);
-        
+
       })
     }
   }, [yam, account, farms, farms[0]])
 
 
-  let vsContent;
   let leaderboardContent;
   let scheduleContent;
 
   if (farms[0]) {
-    vsContent = battles.map((r, index) => {
-      const p1 = farms.find(farm => farm.id === r.pool1.name)
-      const p2 = farms.find(farm => farm.id === r.pool2.name)
-
-      return (
-        <VersusCard farm1={p1} farm2={p2} cast={cast} r={r} />
-      )
-    })
 
     leaderboardContent = leaderboard.map((item, index) => {
       let pool = farms.find(farm => farm.id === item)
@@ -210,8 +201,7 @@ const Battle: React.FC = () => {
             <Title>Step 1: Stake WAR at least once to enter the battle</Title>
             <Pool3 />
             <Title style={{ marginTop: '4vh' }}>Step 2: Choose your victors</Title>
-            <VSContentContainer>{vsContent}</VSContentContainer>
-            {account && <Button size="lg" onClick={castVote}>Cast Your Votes</Button>}
+            {battles.length > 0 && <VersusCard battles={battles} />}
             {/* <Title>Leaderboard</Title>
             {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}
 
@@ -239,22 +229,7 @@ width: 595px;
   color: #ffffff;
 `
 
-const VSContentContainer = styled.div`
-margin-top: 1vh;
-width: 600px;
-height: 600px;
-display: flex;
-flex-direction: column;
-justify-content: space-evenly;
-font-family: Alegreya;
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-`
+
 
 const ScheduleVSCard = styled.div`
 width: 175px;

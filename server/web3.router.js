@@ -17,10 +17,10 @@ day = getDay()
 
 function getDay() {
 	let day = contract.methods.battleDay().call()
-	console.log('hi', day);
+	// console.log('hi', day);
 	Promise.resolve(day).then(res => {
-		console.log('bye',res);
-		
+		// console.log('bye', res);
+
 		return res
 	})
 }
@@ -41,7 +41,7 @@ async function finishBattle(day) {
 	await battles.save()
 }
 
-cron.schedule('* */1 * * *', async () => {
+cron.schedule('* * */1 * *', async () => {
 	if (getDay() > day) {
 		finishBattle(day)
 		let schedule = await Schedule.find({ day: day })
@@ -62,28 +62,37 @@ cron.schedule('* */1 * * *', async () => {
 
 router.post('/vote', async (req, res) => {
 	try {
-		console.log(req.body);
-		
-		let day = await contract.methods.battleDay().call()
-		
-		let votes = await contract.methods.balanceOf(req.body.address).call()
-		let battle = await Battle.findOne({_id: req.body._id, day: day})
-		if (battle.pool1.votes.find(vote => vote.address === req.body.address) || battle.pool2.votes.find(vote => vote.address === req.body.address)) {
+		let s = {
+			address: req.body.address,
+			vote: req.body.vote
+		}
+		const signingAddress = web3.eth.accounts.recover(JSON.stringify(s), req.body.sig);
+		if (req.body.address !== signingAddress) {
 			res.sendStatus(403)
 			return
 		}
-		if (battle.pool1.name === req.body.vote) {
-			battle.pool1.totalVotes += votes
-			battle.pool1.votes.push({address: req.body.address, amount: votes})
-			await battle.save()
-		}
-		if (battle.pool2.name === req.body.vote) {
-			battle.pool2.totalVotes += votes
-			battle.pool2.votes.push({address: req.body.address, amount: votes})
-			await battle.save()
-		}
+		let day = await contract.methods.battleDay().call()
+		let votes = await contract.methods.balanceOf(req.body.address).call()
+		req.body.vote.forEach(async r => {
+			let battle = await Battle.findOne({ _id: r._id, day: day })
+			if (battle.pool1.votes.findIndex(vote => vote.address === req.body.address) !== -1 || battle.pool2.votes.findIndex(vote => vote.address === req.body.address) !== -1) {
+				return
+			}
+			if (battle.pool1.name === r.vote) {
+				battle.pool1.totalVotes += votes
+				battle.pool1.votes.push({ address: req.body.address, amount: votes })
+				await battle.save()
+			}
+			if (battle.pool2.name === r.vote) {
+				battle.pool2.totalVotes += votes
+				battle.pool2.votes.push({ address: req.body.address, amount: votes })
+				await battle.save()
+			}
+		})
 		res.sendStatus(200)
 	} catch (error) {
+		console.log(error);
+
 		res.status(500).send(error)
 	}
 })
@@ -91,7 +100,7 @@ router.post('/vote', async (req, res) => {
 router.get('/battles', async (req, res) => {
 	try {
 		let day = await contract.methods.battleDay().call()
-		
+
 		let battles = await Battle.find({ day: day })
 		for (let i = 0; i < battles.length; i++) {
 			battles[i].pool1.votes = null
@@ -99,10 +108,10 @@ router.get('/battles', async (req, res) => {
 		}
 		let leaderboard = await Leaderboard.findOne()
 		let schedule = await Schedule.find()
-		res.send({battles, leaderboard, schedule})
+		res.send({ battles, leaderboard, schedule })
 	} catch (error) {
 		console.log(error);
-		
+
 		res.status(500).send('error retrieving info')
 	}
 })
@@ -115,7 +124,7 @@ router.get('/admin-all', async (req, res) => {
 		let battles = await Battle.find()
 		let leaderboard = await Leaderboard.findOne()
 		let schedule = await Schedule.find()
-		res.send({battles, leaderboard, schedule})
+		res.send({ battles, leaderboard, schedule })
 	} catch (error) {
 		res.status(500).send('error retrieving info')
 	}

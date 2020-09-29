@@ -140,10 +140,10 @@ const WarPool: React.FC = () => {
 			<MobileInfoContainer>
 				<WarTopContainer>
 					<Title>Uniswap WAR/sUSD</Title>
-					<StyledDetails>
+					{/* <StyledDetails>
 						<StyledDetail>APR</StyledDetail>
 						<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
-					</StyledDetails>
+					</StyledDetails> */}
 				</WarTopContainer>
 				<InfoDivider />
 				<MobileInfoLines>

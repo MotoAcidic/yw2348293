@@ -39,87 +39,177 @@ function isMobile() {
 let cookie = new Cookie()
 
 
-const Versus = ({ farm1, farm2, cast, r }) => {
+const Versus = ({ battles }) => {
 	let [farms] = useFarms()
 	const yam = useYam()
-	const [checked, setChecked] = useState(cookie.get(r._id))
 	const { account, connect } = useWallet()
-	console.log(cookie.get(r._id));
-	const pick = (g) => {
-		cookie.set(r._id, g)
-		setChecked(g)
+	console.log(battles);
+
+	const [checked1, setChecked1] = useState(cookie.get(battles[0]._id))
+	const [checked2, setChecked2] = useState(cookie.get(battles[1]._id))
+	const battle1 = {
+		farm1: farms.find(farm => farm.id === battles[0].pool1.name),
+		farm2: farms.find(farm => farm.id === battles[0].pool2.name)
+	}
+	const battle2 = {
+		farm1: farms.find(farm => farm.id === battles[1].pool1.name),
+		farm2: farms.find(farm => farm.id === battles[1].pool2.name)
+	}
+
+
+	const pick1 = (g) => {
+		cookie.set(battles[0]._id, g)
+		setChecked1(g)
+	}
+
+	const pick2 = (g) => {
+		cookie.set(battles[1]._id, g)
+		setChecked2(g)
 	}
 
 	const castVote = async () => {
-		let pool
-		if (!checked)
+		let vote1
+		let vote2
+		console.log(checked1, checked2);
+		if (!checked1 || !checked2)
 			return
-		if (checked === 1)
-			pool = farm1
-		if (checked === 2)
-			pool = farm2
-		const signature = await yam.web3.eth.sign({
+		if (checked1 == 1)
+			vote1 = battle1.farm1.id
+		if (checked1 == 2)
+			vote1 = battle1.farm2.id
+		if (checked2 == 1)
+			vote2 = battle2.farm1.id
+		if (checked2 == 2)
+			vote2 = battle2.farm2.id
+		console.log(vote1, vote2);
+		const signature = await yam.web3.eth.personal.sign(JSON.stringify({
 			address: account,
-			vote: pool.id,
-			_id: r._id
-		}, account).catch(err => console.log(err))
+			vote: [
+				{
+					vote: vote1,
+					_id: battles[0]._id,
+				},
+				{
+					vote: vote2,
+					_id: battles[1]._id,
+				}
+			]
+		}), account).catch(err => console.log(err))
 		console.log(signature);
 		axios.post('http://localhost:5000/api/vote', {
 			address: account,
-			vote: pool.id,
-			_id: r._id,
+			vote: [
+				{
+					vote: vote1,
+					_id: battles[0]._id,
+				},
+				{
+					vote: vote2,
+					_id: battles[1]._id,
+				}
+			],
 			sig: signature
+		}).then(res => {
+			console.log(res);
+		}).catch(err => {
+			console.log(err);
 		})
-
 	}
 
-	useEffect(() => {
-		if (cast) {
-			castVote()
-		}
-	}, [cast])
-
 	return (
-		<VersusItem>
-			<VersusCard>
-				<StyledContent>
-					<CardIcon>{farm1.icon}</CardIcon>
-					<StyledTitle>{farm1.name}</StyledTitle>
-					{checked === 1 ? (
-						<ButtonContainer onClick={() => pick(1)}>
-							<img src={checkedIcon} width="40%"/>
-						</ButtonContainer>
-					) : (
-							<ButtonContainer onClick={() => pick(1)}>
-								<img src={uncheckedIcon} width="40%"/>
-							</ButtonContainer>
-						)}
-				</StyledContent>
-			</VersusCard>
+		<>
+			<VSContentContainer>
+				<VersusItem>
+					<VersusCard>
+						<StyledContent>
+							<CardIcon>{battle1.farm1.icon}</CardIcon>
+							<StyledTitle>{battle1.farm1.name}</StyledTitle>
+							{checked1 == 1 ? (
+								<ButtonContainer onClick={() => pick1(1)}>
+									<img src={checkedIcon} width="40%" />
+								</ButtonContainer>
+							) : (
+									<ButtonContainer onClick={() => pick1(1)}>
+										<img src={uncheckedIcon} width="40%" />
+									</ButtonContainer>
+								)}
+						</StyledContent>
+					</VersusCard>
                     VS
-			<VersusCard>
-				<StyledContent>
-					<CardIcon>{farm2.icon}</CardIcon>
-					<StyledTitle>{farm2.name}</StyledTitle>
-					{checked === 2 ? (
-						<ButtonContainer onClick={() => pick(2)}>
-							<img src={checkedIcon} width="40%"/>
-						</ButtonContainer>
-					) : (
-							<ButtonContainer onClick={() => pick(2)}>
-								<img src={uncheckedIcon} width="40%" />
-							</ButtonContainer>
-						)}
-				</StyledContent>
-			</VersusCard>
-		</VersusItem>
+					<VersusCard>
+						<StyledContent>
+							<CardIcon>{battle1.farm2.icon}</CardIcon>
+							<StyledTitle>{battle1.farm2.name}</StyledTitle>
+							{checked1 == 2 ? (
+								<ButtonContainer onClick={() => pick1(2)}>
+									<img src={checkedIcon} width="40%" />
+								</ButtonContainer>
+							) : (
+									<ButtonContainer onClick={() => pick1(2)}>
+										<img src={uncheckedIcon} width="40%" />
+									</ButtonContainer>
+								)}
+						</StyledContent>
+					</VersusCard>
+				</VersusItem>
+				<VersusItem>
+					<VersusCard>
+						<StyledContent>
+							<CardIcon>{battle2.farm1.icon}</CardIcon>
+							<StyledTitle>{battle2.farm1.name}</StyledTitle>
+							{checked2 == 1 ? (
+								<ButtonContainer onClick={() => pick2(1)}>
+									<img src={checkedIcon} width="40%" />
+								</ButtonContainer>
+							) : (
+									<ButtonContainer onClick={() => pick2(1)}>
+										<img src={uncheckedIcon} width="40%" />
+									</ButtonContainer>
+								)}
+						</StyledContent>
+					</VersusCard>
+                    VS
+					<VersusCard>
+						<StyledContent>
+							<CardIcon>{battle2.farm2.icon}</CardIcon>
+							<StyledTitle>{battle2.farm2.name}</StyledTitle>
+							{checked2 == 2 ? (
+								<ButtonContainer onClick={() => pick2(2)}>
+									<img src={checkedIcon} width="40%" />
+								</ButtonContainer>
+							) : (
+									<ButtonContainer onClick={() => pick2(2)}>
+										<img src={uncheckedIcon} width="40%" />
+									</ButtonContainer>
+								)}
+						</StyledContent>
+					</VersusCard>
+				</VersusItem>
+			</VSContentContainer>
+			{account && <Button size="lg" onClick={castVote}>Cast Your Votes</Button>}
+		</>
 	)
 }
 
 const ButtonContainer = styled.div`
 
 `
-
+const VSContentContainer = styled.div`
+margin-top: 1vh;
+width: 600px;
+height: 600px;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+font-family: Alegreya;
+  font-size: 25px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+`
 
 const StyledContent = styled.div`
   align-items: center;

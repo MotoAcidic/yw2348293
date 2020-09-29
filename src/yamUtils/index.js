@@ -477,16 +477,15 @@ export const getAPR = async (pool, yam) => {
   return apy
 }
 
-export const getWarAPR = async (pool, yam) => {
+export const getWarAPR = async (contract, yam) => {
   const curPrice = new BigNumber(2.8);//new BigNumber(await getCurrentPrice(yam))
-  let rewardPerYear = await getRewardPerYear(pool);
-  const totalSupply = new BigNumber(2800000)
-  let assetPrice = await getAssetPrices(yam)
-  assetPrice = new BigNumber(assetPrice[pool.id])
-  console.log(rewardPerYear, curPrice, totalSupply, assetPrice);
-  let apy = rewardPerYear.dividedBy(totalSupply).multipliedBy(100).toNumber()
-  console.log(apy);
-  
+  let rewardPerYear = await getRewardPerYear(contract);
+  //console.log(`rewardPerYear`, rewardPerYear.toString())
+  const totalSupply = new BigNumber(await contract.methods.totalSupply().call()).div(10 ** 18);
+  let assetPrice = new BigNumber(35);
+  //console.log(`totalSupply`, totalSupply.toString())
+
+  let apy = rewardPerYear.multipliedBy(curPrice).dividedBy(totalSupply.multipliedBy(assetPrice)).multipliedBy(100).toNumber()
   return apy
 }
 
@@ -502,6 +501,8 @@ export const getTotalValue = async (pools, yam) => {
       prices = prices[pool.id]
       poolValues[pool.contract._address] = supply.multipliedBy(prices) //await pool.contract.methods.totalSupply().call())
       totalValue = totalValue.plus(supply.multipliedBy(prices))
+      //console.log(pool.id, supply.multipliedBy(prices).toString())
+
       if (i === (pools.length - 1)) {
         return { totalValue, poolValues };
       }
@@ -572,7 +573,7 @@ export const getAssetPrices = async (yam) => {
     let priceData = {};
     keys.forEach((key, i) => priceData[key] = yam.toBigN(priceArr[i]).div(10 ** 6).toFixed(4));
     
-    priceData["UNIPOOL"] = priceData["WAR"] * 2;
+    priceData["UNIPOOL"] = 35;
     assetPrices = priceData;
     return priceData;
   }

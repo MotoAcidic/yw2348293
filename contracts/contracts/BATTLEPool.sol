@@ -104,6 +104,11 @@ contract BATTLEPool is LPTokenWrapper, IRewardDistributionRecipient {
         lpToken.safeTransfer(msg.sender, transferAmount);
     }
 
+    function exit() external {
+        withdraw(balanceOf(msg.sender));
+        getReward();
+    }
+
     function battleDay() public view returns (uint256) {
         uint256 _starttime = starttime;
         if (block.timestamp < _starttime || block.timestamp >= endtime) {

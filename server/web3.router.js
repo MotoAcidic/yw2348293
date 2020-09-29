@@ -41,7 +41,7 @@ async function finishBattle(day) {
 	await battles.save()
 }
 
-cron.schedule('* */1 * * *', async () => {
+cron.schedule('* * */1 * *', async () => {
 	if (getDay() > day) {
 		finishBattle(day)
 		let schedule = await Schedule.find({ day: day })

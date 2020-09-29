@@ -6,9 +6,13 @@ const PORT = process.env.PORT || 5000
 const web3Router = require('./web3.router')
 const dotenv = require('dotenv')
 const Web3 = require('web3');
+const cors = require('cors')
 const connectDB = require('./db')
 dotenv.config()
 connectDB()
+
+app.use(cors())
+
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))

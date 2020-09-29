@@ -11,11 +11,12 @@ import Card from '../../components/Card'
 import CardContent from '../../components/CardContent'
 import CardIcon from '../../components/CardIcon'
 import Page from '../../components/Page'
-import sushi from '../../assets/img/sushi.png'
-import yamimg from '../../assets/img/yam.png'
+import checkedIcon from '../../assets/img/checked.png'
+import uncheckedIcon from '../../assets/img/unchecked.png'
 
 import { getAPR, getPoolEndTime } from '../../yamUtils'
 import useYam from '../../hooks/useYam'
+import { useWallet } from 'use-wallet'
 
 
 import Landscape from '../../assets/img/landscapebig.png'
@@ -24,7 +25,8 @@ import TallSky from '../../assets/img/tallsky.png'
 import useFarms from '../../hooks/useFarms'
 import useFarm from '../../hooks/useFarm'
 import { Farm } from '../../contexts/Farms'
-
+import Cookie from 'universal-cookie'
+import axios from 'axios'
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -35,30 +37,39 @@ function isMobile() {
 	}
 }
 
-interface VersusProps {
-	farm1: Farm,
-	farm2: Farm,
-}
-const Versus: React.FC<VersusProps> = ({ farm1, farm2 }) => {
+let cookie = new Cookie()
+
+
+const Versus = ({ farm1, farm2, cast }) => {
 	let [farms] = useFarms()
 	const yam = useYam()
-	const [apr1, setAPR1] = useState(0)
-	const [apr2, setAPR2] = useState(0)
+	const [checked, setChecked] = useState(cookie.get(farm1.id + farm2.id))
+	const { account, connect } = useWallet()
+	const pick = (g) => {
+		setChecked(g)
+		cookie.set(farm1.id + farm2.id, g)
+	}
 
-
-	const aprVal = useCallback(async () => {
-		const apr1 = farm1.id !== `CHADS` ? await getAPR(farm1, yam) : 0;
-		const apr2 = farm2.id !== `CHADS` ? await getAPR(farm2, yam) : 0;
-		setAPR1(apr1)
-		setAPR2(apr2)
-	}, [farm1, setAPR1])
+	const castVote = () => {
+		let pool
+		if (!checked)
+			return
+		if (checked === 1)
+			pool = farm1.id
+		if (checked === 2)
+			pool = farm2.id
+		axios.post('http://localhost:5000/api/vote', {
+			address: account,
+			vote: pool
+		})
+	}
 
 	useEffect(() => {
-		if (farm1.contract && !apr1 && yam) {
-			aprVal()
+		console.log(cast);
+		if (cast) {
+			castVote()
 		}
-	}, [farm1, yam])
-
+	}, [cast])
 
 	return (
 		<VersusItem>
@@ -66,12 +77,15 @@ const Versus: React.FC<VersusProps> = ({ farm1, farm2 }) => {
 				<StyledContent>
 					<CardIcon>{farm1.icon}</CardIcon>
 					<StyledTitle>{farm1.name}</StyledTitle>
-					<Button
-						disabled={true}
-						text={`Select`}
-						size='lg'
-					/>
-					<StyledDetails><StyledDetail>{apr1.toFixed(2)}% Apr</StyledDetail></StyledDetails>
+					{checked === 1 ? (
+						<ButtonContainer onClick={() => pick(1)}>
+							<img src={checkedIcon} />
+						</ButtonContainer>
+					) : (
+							<ButtonContainer onClick={() => pick(1)}>
+								<img src={uncheckedIcon} />
+							</ButtonContainer>
+						)}
 				</StyledContent>
 			</VersusCard>
                     VS
@@ -79,17 +93,24 @@ const Versus: React.FC<VersusProps> = ({ farm1, farm2 }) => {
 				<StyledContent>
 					<CardIcon>{farm2.icon}</CardIcon>
 					<StyledTitle>{farm2.name}</StyledTitle>
-					<Button
-						disabled={true}
-						text={`Select`}
-						size='lg'
-					/>
-					<StyledDetails><StyledDetail>{apr2.toFixed(2)}% Apr</StyledDetail></StyledDetails>
+					{checked === 2 ? (
+						<ButtonContainer onClick={() => pick(2)}>
+							<img src={checkedIcon} />
+						</ButtonContainer>
+					) : (
+							<ButtonContainer onClick={() => pick(2)}>
+								<img src={uncheckedIcon} />
+							</ButtonContainer>
+						)}
 				</StyledContent>
 			</VersusCard>
 		</VersusItem>
 	)
 }
+
+const ButtonContainer = styled.div`
+
+`
 
 
 const StyledContent = styled.div`

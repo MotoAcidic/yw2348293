@@ -12,12 +12,17 @@ const contract = new web3.eth.Contract(abi.abi, '0xCC3A2c4891740e2055f4C6875a28B
 // console.log(contract.methods);
 
 
-let day = getDay()
+let day = 0
+day = getDay()
 
-async function getDay() {
-	let day = await contract.methods.battleDay().call()
-	console.log(day);
-	return day
+function getDay() {
+	let day = contract.methods.battleDay().call()
+	console.log('hi', day);
+	Promise.resolve(day).then(res => {
+		console.log('bye',res);
+		
+		return res
+	})
 }
 
 async function finishBattle(day) {
@@ -55,8 +60,19 @@ cron.schedule('* */1 * * *', async () => {
 	}
 });
 
+router.post('/vote', async (req, res) => {
+	try {
+		console.log(req.body);
+		
+	} catch (error) {
+		res.status(500).send(error)
+	}
+})
+
 router.get('/battles', async (req, res) => {
 	try {
+		let day = await contract.methods.battleDay().call()
+		
 		let battles = await Battle.find({ day: day })
 		for (let i = 0; i < battles.length; i++) {
 			battles[i].pool1.votes = null
@@ -66,6 +82,8 @@ router.get('/battles', async (req, res) => {
 		let schedule = await Schedule.find()
 		res.send({battles, leaderboard, schedule})
 	} catch (error) {
+		console.log(error);
+		
 		res.status(500).send('error retrieving info')
 	}
 })

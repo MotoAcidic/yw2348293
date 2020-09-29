@@ -5,7 +5,7 @@ import {
   useRouteMatch,
 } from 'react-router-dom'
 import styled from 'styled-components'
-
+import axios from 'axios'
 import Button from '../../components/Button'
 import Card from '../../components/Card'
 import CardContent from '../../components/CardContent'
@@ -19,7 +19,7 @@ import useYam from '../../hooks/useYam'
 import BigNumber from 'bignumber.js'
 import { useWallet } from 'use-wallet'
 
-
+import Pool3 from './Pool3'
 import Landscape from '../../assets/img/landscapebig.png'
 import Sky from '../../assets/img/skybig.png'
 import TallSky from '../../assets/img/tallsky.png'
@@ -27,10 +27,12 @@ import useFarms from '../../hooks/useFarms'
 import useFarm from '../../hooks/useFarm'
 import { getTotalValue } from '../../yamUtils'
 import { getStats } from './utils'
-
-import VersusCard from './VersusCard'
+import Cookie from 'universal-cookie'
+import VersusCard from './VersusCard.jsx'
 
 import CountDown from './CountDown'
+
+const cookie = new Cookie()
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -86,6 +88,9 @@ const Battle: React.FC = () => {
   const yam = useYam()
   let [tvl, setTVL] = useState({ totalValue: new BigNumber(0), poolValues: {} })
   const { account, connect } = useWallet()
+  let [cast, setCast] = useState(false)
+  let [battles, setBattles] = useState([])
+  // let [voted, setVoted] = useState(cookie.get('voted'))
 
   const [{
     circSupply,
@@ -105,6 +110,11 @@ const Battle: React.FC = () => {
     setTVL(tv)
   }, [yam, setTVL, setTVL])
 
+  const castVote = () => {
+    setCast(true)
+    // setVoted(true)
+  }
+
   useEffect(() => {
     if (yam && account && farms && farms[0]) {
       fetchStats()
@@ -114,6 +124,16 @@ const Battle: React.FC = () => {
 
       fetchTotalValue(farms)
     }
+    if (battles.length === 0) {
+      axios.get('http://localhost:5000/api/battles').then(res => {
+        setBattles(res.data.battles)
+        console.log(res.data);
+        
+      }).catch(err => {
+        console.log(err);
+        
+      })
+    }
   }, [yam, account, farms, farms[0]])
 
 
@@ -122,12 +142,12 @@ const Battle: React.FC = () => {
   let scheduleContent;
 
   if (farms[0]) {
-    vsContent = vs.map((r, index) => {
-      const p1 = farms.find(farm => farm.id === r.pool1)
-      const p2 = farms.find(farm => farm.id === r.pool2)
+    vsContent = battles.map((r, index) => {
+      const p1 = farms.find(farm => farm.id === r.pool1.name)
+      const p2 = farms.find(farm => farm.id === r.pool2.name)
 
       return (
-        <VersusCard farm1={p1} farm2={p2} />
+        <VersusCard farm1={p1} farm2={p2} cast={cast} />
       )
     })
 
@@ -188,20 +208,18 @@ const Battle: React.FC = () => {
               <DisplayItem>$War Price: ${currentPrice ? Number(currentPrice).toLocaleString(undefined, { minimumFractionDigits: 4, maximumFractionDigits: 4 }) : '-'}</DisplayItem>
               <DisplayItem>Supply: 2,800,000</DisplayItem>
             </TopDisplayContainer>
-            <div style={{ marginTop: '5vh' }}>
-              <CountdownText>Countdown until the next staking pool opens:</CountdownText>
-              <CountDown launchDate={1609459200000} />
-            </div>
-            <Title>Stake WAR to Vote</Title>
-            <Title style={{ marginTop: '8vh' }}>Todays Battles</Title>
+            <Title>Step 1: Stake WAR at least once to enter the battle</Title>
+            <Pool3 />
+            <Title style={{ marginTop: '8vh' }}>Step 2: Choose your victors</Title>
             <VSContentContainer>{vsContent}</VSContentContainer>
-            <Title>Leaderboard</Title>
+            {account && <Button onClick={castVote} disabled={cast ? true : false}>Cast Your Votes</Button>}
+            {/* <Title>Leaderboard</Title>
             {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}
 
             <Title>Schedule</Title>
             <Schedule>
               {scheduleContent}
-            </Schedule>
+            </Schedule> */}
           </Page>
         </ContentContainer>
       </StyledCanvas>

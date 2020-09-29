@@ -144,7 +144,7 @@ const WarPool: React.FC = () => {
 		return (
 			<MobileInfoContainer>
 				<WarTopContainer>
-					<Title>Uniswap WAR/sUSD</Title>
+					<Title>Uniswap WAR/ETH</Title>
 					<StyledDetails>
 						<StyledDetail>APR</StyledDetail>
 						<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
@@ -187,12 +187,12 @@ const WarPool: React.FC = () => {
 		)
 	}
 
-        const now = new Date().getTime() / 1000;
+	const now = new Date().getTime() / 1000;
 
 	return (
 		<InfoContainer>
 			<WarTopContainer>
-				<Title>Uniswap WAR/sUSD</Title>
+				<Title>Uniswap WAR/ETH</Title>
 				<StyledDetails>
 					<StyledDetail>APR</StyledDetail>
 					<StyledDetail>{apr.toFixed(2)}%</StyledDetail>

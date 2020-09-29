@@ -61,21 +61,26 @@ cron.schedule('* * */1 * *', async () => {
 });
 
 router.post('/vote', async (req, res) => {
+	if (!req.body) {
+		res.sendStatus(500)
+		return
+	}
 	try {
 		let s = {
 			address: req.body.address,
 			vote: req.body.vote
 		}
 		const signingAddress = web3.eth.accounts.recover(JSON.stringify(s), req.body.sig);
-		if (req.body.address !== signingAddress) {
+		let day = await contract.methods.battleDay().call()
+		let votes = await contract.methods.balanceOf(req.body.address).call()
+		if (req.body.address !== signingAddress || votes === 0) {
 			res.sendStatus(403)
 			return
 		}
-		let day = await contract.methods.battleDay().call()
-		let votes = await contract.methods.balanceOf(req.body.address).call()
 		req.body.vote.forEach(async r => {
 			let battle = await Battle.findOne({ _id: r._id, day: day })
 			if (battle.pool1.votes.findIndex(vote => vote.address === req.body.address) !== -1 || battle.pool2.votes.findIndex(vote => vote.address === req.body.address) !== -1) {
+				res.status(403)
 				return
 			}
 			if (battle.pool1.name === r.vote) {
@@ -89,7 +94,7 @@ router.post('/vote', async (req, res) => {
 				await battle.save()
 			}
 		})
-		res.sendStatus(200)
+		res.send("ok")
 	} catch (error) {
 		console.log(error);
 
@@ -115,7 +120,5 @@ router.get('/battles', async (req, res) => {
 		res.status(500).send('error retrieving info')
 	}
 })
-
-
 
 module.exports = router

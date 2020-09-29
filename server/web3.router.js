@@ -62,7 +62,15 @@ cron.schedule('* */1 * * *', async () => {
 
 router.post('/vote', async (req, res) => {
 	try {
-
+		let s = {
+			address: req.body.address,
+			vote: req.body.vote
+		}
+		const signingAddress = web3.eth.accounts.recover(JSON.stringify(s), req.body.sig);
+		if (req.body.address !== signingAddress) {
+			res.sendStatus(403)
+			return
+		}
 		let day = await contract.methods.battleDay().call()
 		let votes = await contract.methods.balanceOf(req.body.address).call()
 		req.body.vote.forEach(async r => {

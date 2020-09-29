@@ -501,7 +501,7 @@ export const getTotalValue = async (pools, yam) => {
       prices = prices[pool.id]
       poolValues[pool.contract._address] = supply.multipliedBy(prices) //await pool.contract.methods.totalSupply().call())
       totalValue = totalValue.plus(supply.multipliedBy(prices))
-      console.log(pool.id, supply.multipliedBy(prices).toString())
+      //console.log(pool.id, supply.multipliedBy(prices).toString())
 
       if (i === (pools.length - 1)) {
         return { totalValue, poolValues };

@@ -21,6 +21,8 @@ app.use(function(req, res, next) {
 
 dotenv.config()
 connectDB()
+app.use(express.static('build'))
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/api', web3Router)

@@ -61,6 +61,10 @@ cron.schedule('* * */1 * *', async () => {
 });
 
 router.post('/vote', async (req, res) => {
+	if (!req.body) {
+		res.sendStatus(500)
+		return
+	}
 	try {
 		let s = {
 			address: req.body.address,

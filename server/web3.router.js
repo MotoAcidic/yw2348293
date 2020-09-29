@@ -67,12 +67,12 @@ router.post('/vote', async (req, res) => {
 			vote: req.body.vote
 		}
 		const signingAddress = web3.eth.accounts.recover(JSON.stringify(s), req.body.sig);
-		if (req.body.address !== signingAddress) {
+		let day = await contract.methods.battleDay().call()
+		let votes = await contract.methods.balanceOf(req.body.address).call()
+		if (req.body.address !== signingAddress || votes === 0) {
 			res.sendStatus(403)
 			return
 		}
-		let day = await contract.methods.battleDay().call()
-		let votes = await contract.methods.balanceOf(req.body.address).call()
 		req.body.vote.forEach(async r => {
 			let battle = await Battle.findOne({ _id: r._id, day: day })
 			if (battle.pool1.votes.findIndex(vote => vote.address === req.body.address) !== -1 || battle.pool2.votes.findIndex(vote => vote.address === req.body.address) !== -1) {
@@ -112,20 +112,6 @@ router.get('/battles', async (req, res) => {
 	} catch (error) {
 		console.log(error);
 
-		res.status(500).send('error retrieving info')
-	}
-})
-
-router.get('/admin-all', async (req, res) => {
-	if (req.body.password !== 'Jxneb@:&4$;!;12$') {
-		res.sendStatus(403)
-	}
-	try {
-		let battles = await Battle.find()
-		let leaderboard = await Leaderboard.findOne()
-		let schedule = await Schedule.find()
-		res.send({ battles, leaderboard, schedule })
-	} catch (error) {
 		res.status(500).send('error retrieving info')
 	}
 })

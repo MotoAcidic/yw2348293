@@ -93,6 +93,7 @@ export const redeem = async (poolContract, account) => {
 }
 
 export const approve = async (tokenContract, poolContract, account) => {
+
   return tokenContract.methods
     .approve(poolContract.options.address, ethers.constants.MaxUint256)
     .send({ from: account, gas: 80000 })
@@ -574,6 +575,7 @@ export const getAssetPrices = async (yam) => {
     keys.forEach((key, i) => priceData[key] = yam.toBigN(priceArr[i]).div(10 ** 6).toFixed(4));
     
     priceData["UNIPOOL"] = 35;
+    priceData["BATTLEPOOL"] = priceData["WAR"];
     assetPrices = priceData;
     return priceData;
   }

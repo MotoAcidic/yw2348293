@@ -192,8 +192,20 @@ const Farms: React.FC = ({ children }) => {
         depositTokenAddress: tokens ? tokens["unipool_token"].options.address : undefined,
         earnToken: 'WAR',
         earnTokenAddress: yamAddress,
-        icon: "🦍",
+        icon: "",
         id: "UNIPOOL",
+        sort: 9
+      },
+
+      {
+        contract: pools ? pools["battlepool_pool"] : undefined,
+        name: "",
+        depositToken: "WAR",
+        depositTokenAddress: tokens ? tokens["battlepool_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "",
+        id: "BATTLEPOOL",
         sort: 9
       },
     ]

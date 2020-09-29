@@ -119,7 +119,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   // console.log(farm);
 
   const aprVal = useCallback(async () => {
-    const apr = farm.id !== `CHADS` && farm.id !== `UNIPOOL` ? await getAPR(farm, yam) : 0;
+    const apr = farm.id !== `CHADS` && farm.id !== `UNIPOOL` && farm.id !== `BATTLEPOOL` ? await getAPR(farm, yam) : 0;
     setAPR(apr)
   }, [farm, setAPR])
 
@@ -131,7 +131,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
 
   // console.log(farm);
   
-  if (farm.id === `UNIPOOL`) {
+  if (farm.id === `UNIPOOL` || farm.id === `BATTLE`) {
     return null;
   }
 

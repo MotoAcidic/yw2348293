@@ -7,8 +7,8 @@ const cron = require('node-cron')
 const abi = require('./BATTLEPool.json')
 const Web3 = require('web3');
 // const Contract = require('web3-eth-contract');
-const web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io/v3/df0ee84acd8a4a29969695303b0a1a6d'))
-const contract = new web3.eth.Contract(abi.abi, '0xCC3A2c4891740e2055f4C6875a28BB9EB32f2e69')
+const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/a768678405854cf584ae620be7844cc3'))
+const contract = new web3.eth.Contract(abi.abi, '0xa9CDb5e3C911884Ca6D4b32273c219B536Ee9e6A')
 // console.log(contract.methods);
 
 

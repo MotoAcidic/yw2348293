@@ -19,7 +19,6 @@ import useYam from '../../hooks/useYam'
 import { OverviewData } from './types'
 import useEarnings from '../../hooks/useEarnings'
 import useReward from '../../hooks/useReward'
-import { Contract } from 'web3-eth-contract'
 
 
 import Icon from '../../assets/img/icon.png'
@@ -29,10 +28,6 @@ import Sky from '../../assets/img/skybig.png'
 import StakeModal from './StakeModal'
 import UnstakeModal from './UnstakeModal'
 
-
-import FarmCards from './components/FarmCards'
-import CountDown from './components/CountDown'
-import { Account } from '../../yam/lib/accounts'
 import useFarm from '../../hooks/useFarm'
 import useRedeem from '../../hooks/useRedeem'
 import { getContract } from '../../utils/erc20'
@@ -68,7 +63,7 @@ const WarPool: React.FC = () => {
 		earnToken,
 		name,
 		icon,
-	} = useFarm('UNIPOOL') || {
+	} = useFarm('BATTLEPOOL') || {
 		contract: null,
 		depositToken: '',
 		depositTokenAddress: '',
@@ -144,7 +139,7 @@ const WarPool: React.FC = () => {
 		return (
 			<MobileInfoContainer>
 				<WarTopContainer>
-					<Title>Uniswap WAR/ETH</Title>
+					<Title>Uniswap WAR/sUSD</Title>
 					<StyledDetails>
 						<StyledDetail>APR</StyledDetail>
 						<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
@@ -187,12 +182,12 @@ const WarPool: React.FC = () => {
 		)
 	}
 
-	const now = new Date().getTime() / 1000;
+        const now = new Date().getTime() / 1000;
 
 	return (
 		<InfoContainer>
 			<WarTopContainer>
-				<Title>Uniswap WAR/ETH</Title>
+				<Title>Uniswap WAR/sUSD</Title>
 				<StyledDetails>
 					<StyledDetail>APR</StyledDetail>
 					<StyledDetail>{apr.toFixed(2)}%</StyledDetail>

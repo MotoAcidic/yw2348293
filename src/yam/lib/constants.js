@@ -43,7 +43,7 @@ if (chainId === 1) {
     wnxm_pool: "0xCC3A2c4891740e2055f4C6875a28BB9EB32f2e69",
     mbbased_pool: "0x67bA643d6acDB7c12F913f0bbE4632df9889e0E5",
     unipool_pool: "0xA11cB7F893F3939f91d3c6E23025B41877190D6c",
-    battlepool_pool: "0x24004f6fCE7e3842e5a308eAC032E09f1883CeF8",
+    battlepool_pool: "0xa9CDb5e3C911884Ca6D4b32273c219B536Ee9e6A",
 
     link: "0x514910771af9ca656af840dff83e8264ecf986ca",
     snx: "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
@@ -59,6 +59,7 @@ if (chainId === 1) {
     farm: "0xa0246c9032bc3a600820415ae600c6388619a14d",
     mbbased: "0x26cF82e4aE43D31eA51e72B663d26e26a75AF729",
     unipool: "0x24004f6fCE7e3842e5a308eAC032E09f1883CeF8",
+    battlepool: "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde",
 
     war: "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde",
 

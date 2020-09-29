@@ -39,7 +39,7 @@ import useStakedBalance from '../../hooks/useStakedBalance'
 import useTokenBalance from '../../hooks/useTokenBalance'
 import useUnstake from '../../hooks/useUnstake'
 import useFarms from '../../hooks/useFarms'
-import { getWarAPR, getPoolEndTime } from '../../yamUtils'
+//import { getWarAPR, getPoolEndTime } from '../../yamUtils'
 
 
 function isMobile() {
@@ -86,9 +86,9 @@ const WarPool: React.FC = () => {
 	const allowance = useAllowance(tokenContract, contract)
 	const [requestedApproval, setRequestedApproval] = useState(false)
 	const { onApprove } = useApprove(tokenContract, contract)
-	const [apr, setAPR] = useState(0)
+	//const [apr, setAPR] = useState(0)
 
-	const aprVal = useCallback(async () => {
+	/*const aprVal = useCallback(async () => {
 		console.log(contract);
 
 		const apr = await getWarAPR(contract, yam)
@@ -99,7 +99,7 @@ const WarPool: React.FC = () => {
 		if (contract && !apr && yam) {
 			aprVal()
 		}
-	}, [contract, yam])
+	}, [contract, yam])*/
 
 	const onClaimUnstake = () => {
 		onPresentUnstake()
@@ -110,7 +110,7 @@ const WarPool: React.FC = () => {
 		<StakeModal
 			max={tokenBalance}
 			onConfirm={onStake}
-			tokenName={"ETH-WAR-UNI-V2"}
+			tokenName={"WAR"}
 		/>
 	)
 
@@ -118,7 +118,7 @@ const WarPool: React.FC = () => {
 		<UnstakeModal
 			max={stakedBalance}
 			onConfirm={onUnstake}
-			tokenName={"ETH-WAR-UNI-V2"}
+			tokenName={"WAR"}
 		/>
 	)
 

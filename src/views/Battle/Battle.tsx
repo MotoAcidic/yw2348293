@@ -5,7 +5,7 @@ import {
   useRouteMatch,
 } from 'react-router-dom'
 import styled from 'styled-components'
-
+import axios from 'axios'
 import Button from '../../components/Button'
 import Card from '../../components/Card'
 import CardContent from '../../components/CardContent'
@@ -19,7 +19,7 @@ import useYam from '../../hooks/useYam'
 import BigNumber from 'bignumber.js'
 import { useWallet } from 'use-wallet'
 
-
+import Pool3 from './Pool3'
 import Landscape from '../../assets/img/landscapebig.png'
 import Sky from '../../assets/img/skybig.png'
 import TallSky from '../../assets/img/tallsky.png'
@@ -27,10 +27,12 @@ import useFarms from '../../hooks/useFarms'
 import useFarm from '../../hooks/useFarm'
 import { getTotalValue } from '../../yamUtils'
 import { getStats } from './utils'
-
-import VersusCard from './VersusCard'
+import Cookie from 'universal-cookie'
+import VersusCard from './VersusCard.jsx'
 
 import CountDown from './CountDown'
+
+const cookie = new Cookie()
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -86,6 +88,8 @@ const Battle: React.FC = () => {
   const yam = useYam()
   let [tvl, setTVL] = useState({ totalValue: new BigNumber(0), poolValues: {} })
   const { account, connect } = useWallet()
+  let [battles, setBattles] = useState([])
+  // let [voted, setVoted] = useState(cookie.get('voted'))
 
   const [{
     circSupply,
@@ -114,22 +118,22 @@ const Battle: React.FC = () => {
 
       fetchTotalValue(farms)
     }
+    if (battles.length === 0) {
+      axios.get('https://yieldwars-api.herokuapp.com/api/battles').then(res => {
+        setBattles(res.data.battles)
+
+      }).catch(err => {
+        console.log(err);
+
+      })
+    }
   }, [yam, account, farms, farms[0]])
 
 
-  let vsContent;
   let leaderboardContent;
   let scheduleContent;
 
   if (farms[0]) {
-    vsContent = vs.map((r, index) => {
-      const p1 = farms.find(farm => farm.id === r.pool1)
-      const p2 = farms.find(farm => farm.id === r.pool2)
-
-      return (
-        <VersusCard farm1={p1} farm2={p2} />
-      )
-    })
 
     leaderboardContent = leaderboard.map((item, index) => {
       let pool = farms.find(farm => farm.id === item)
@@ -188,20 +192,17 @@ const Battle: React.FC = () => {
               <DisplayItem>$War Price: ${currentPrice ? Number(currentPrice).toLocaleString(undefined, { minimumFractionDigits: 4, maximumFractionDigits: 4 }) : '-'}</DisplayItem>
               <DisplayItem>Supply: 2,800,000</DisplayItem>
             </TopDisplayContainer>
-            <div style={{ marginTop: '5vh' }}>
-              <CountdownText>Countdown until the next staking pool opens:</CountdownText>
-              <CountDown launchDate={1609459200000} />
-            </div>
-            <Title>Stake WAR to Vote</Title>
-            <Title style={{ marginTop: '8vh' }}>Todays Battles</Title>
-            <VSContentContainer>{vsContent}</VSContentContainer>
-            <Title>Leaderboard</Title>
+            <Title>Step 1: Stake WAR at least once to enter the battle</Title>
+            <Pool3 />
+            <Title style={{ marginTop: '4vh' }}>Step 2: Choose your victors</Title>
+            {battles.length > 0 && <VersusCard battles={battles} />}
+            {/* <Title>Leaderboard</Title>
             {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}
 
             <Title>Schedule</Title>
             <Schedule>
               {scheduleContent}
-            </Schedule>
+            </Schedule> */}
           </Page>
         </ContentContainer>
       </StyledCanvas>
@@ -222,22 +223,7 @@ width: 595px;
   color: #ffffff;
 `
 
-const VSContentContainer = styled.div`
-margin-top: 1vh;
-width: 1000px;
-height: 600px;
-display: flex;
-flex-direction: column;
-justify-content: space-evenly;
-font-family: Alegreya;
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-`
+
 
 const ScheduleVSCard = styled.div`
 width: 175px;
@@ -524,6 +510,7 @@ width: 40%;
   align-content: center;
   justify-content: space-evenly;
   margin-top: 4vh;
+  margin-bottom: 6vh;
 `
 
 const CardContainer = styled.div`

@@ -153,4 +153,7 @@ contract BATTLEPool is LPTokenWrapper, IRewardDistributionRecipient {
         }
         lastUpdateTime = block.timestamp;
     }
+
+    // unused
+    function notifyRewardAmount(uint256 reward, uint256 _duration) external { return; }
 }

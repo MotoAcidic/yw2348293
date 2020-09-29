@@ -4,13 +4,25 @@ const Leaderboard = require('./Leaderboard.schema')
 const Schedule = require('./Schedule.schema')
 const Battle = require('./Battle.schema')
 const cron = require('node-cron')
-
+const abi = require('./BATTLEPool.json')
 const Web3 = require('web3');
+// const Contract = require('web3-eth-contract');
+const web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io/v3/df0ee84acd8a4a29969695303b0a1a6d'))
+const contract = new web3.eth.Contract(abi.abi, '0xCC3A2c4891740e2055f4C6875a28BB9EB32f2e69')
+// console.log(contract.methods);
 
-let day = getDay()
+
+let day = 0
+day = getDay()
 
 function getDay() {
-	return 1
+	let day = contract.methods.battleDay().call()
+	// console.log('hi', day);
+	Promise.resolve(day).then(res => {
+		// console.log('bye', res);
+
+		return res
+	})
 }
 
 async function finishBattle(day) {
@@ -25,11 +37,11 @@ async function finishBattle(day) {
 	for (let i = 0; i < battles.length; i++) {
 		battles[i].finished = true
 	}
-	await leaderboard.update()
-	await battles.update()
+	await leaderboard.save()
+	await battles.save()
 }
 
-cron.schedule('* */1 * * *', async () => {
+cron.schedule('* * */1 * *', async () => {
 	if (getDay() > day) {
 		finishBattle(day)
 		let schedule = await Schedule.find({ day: day })
@@ -48,31 +60,65 @@ cron.schedule('* */1 * * *', async () => {
 	}
 });
 
-router.get('/battles', async (req, res) => {
+router.post('/vote', async (req, res) => {
+	if (!req.body) {
+		res.sendStatus(500)
+		return
+	}
 	try {
-		let battles = await Battle.find({ day: day })
-		for (let i = 0; i < battles.length; i++) {
-			battles[i].pool1.votes = null
-			battles[i].pool2.votes = null
+		let s = {
+			address: req.body.address,
+			vote: req.body.vote
 		}
-		let leaderboard = await Leaderboard.findOne()
-		let schedule = await Schedule.find()
-		res.send({battles, leaderboard, schedule})
+		const signingAddress = web3.eth.accounts.recover(JSON.stringify(s), req.body.sig);
+		let day = await contract.methods.battleDay().call()
+		let votes = await contract.methods.balanceOf(req.body.address).call()
+		if (req.body.address !== signingAddress || votes === 0) {
+			res.sendStatus(403)
+			return
+		}
+		req.body.vote.forEach(async r => {
+			let battle = await Battle.findOne({ _id: r._id, day: day })
+			if (battle.pool1.votes.findIndex(vote => vote.address === req.body.address) !== -1 || battle.pool2.votes.findIndex(vote => vote.address === req.body.address) !== -1) {
+				res.status(403)
+				return
+			}
+			if (battle.pool1.name === r.vote) {
+				battle.pool1.totalVotes += votes
+				battle.pool1.votes.push({ address: req.body.address, amount: votes })
+				await battle.save()
+			}
+			if (battle.pool2.name === r.vote) {
+				battle.pool2.totalVotes += votes
+				battle.pool2.votes.push({ address: req.body.address, amount: votes })
+				await battle.save()
+			}
+		})
+		res.send("ok")
 	} catch (error) {
-		res.status(500).send('error retrieving info')
+		console.log(error);
+
+		res.status(500).send(error)
 	}
 })
 
-router.get('/admin-all', async (req, res) => {
-	if (req.body.password !== 'Jxneb@:&4$;!;12$') {
-		res.sendStatus(403)
-	}
+router.get('/battles', async (req, res) => {
 	try {
-		let battles = await Battle.find()
+		let day = await contract.methods.battleDay().call()
+
+		let battles = await Battle.find({ day: day })
+		for (let i = 0; i < battles.length; i++) {
+			battles[i].pool1.votes = null
+			battles[i].pool1.totalVotes = null
+			battles[i].pool2.votes = null
+			battles[i].pool2.totalVotes = null
+		}
 		let leaderboard = await Leaderboard.findOne()
 		let schedule = await Schedule.find()
-		res.send({battles, leaderboard, schedule})
+		res.send({ battles, leaderboard, schedule })
 	} catch (error) {
+		console.log(error);
+
 		res.status(500).send('error retrieving info')
 	}
 })

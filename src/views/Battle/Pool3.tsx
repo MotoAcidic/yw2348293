@@ -364,8 +364,8 @@ width: 1000px;
   border-radius: 8px;
   border: solid 4px #97d5ff;
   background-color: #003677;
-  margin-top: 6vh;
-  margin-bottom: 6vh;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
 `
 
 const MobileInfoContainer = styled.div`

@@ -210,9 +210,9 @@ const Battle: React.FC = () => {
             </TopDisplayContainer>
             <Title>Step 1: Stake WAR at least once to enter the battle</Title>
             <Pool3 />
-            <Title style={{ marginTop: '8vh' }}>Step 2: Choose your victors</Title>
+            <Title style={{ marginTop: '4vh' }}>Step 2: Choose your victors</Title>
             <VSContentContainer>{vsContent}</VSContentContainer>
-            {account && <Button onClick={castVote} disabled={cast ? true : false}>Cast Your Votes</Button>}
+            {account && <Button onClick={castVote}>Cast Your Votes</Button>}
             {/* <Title>Leaderboard</Title>
             {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}
 
@@ -542,6 +542,7 @@ width: 40%;
   align-content: center;
   justify-content: space-evenly;
   margin-top: 4vh;
+  margin-bottom: 6vh;
 `
 
 const CardContainer = styled.div`

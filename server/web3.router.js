@@ -62,6 +62,8 @@ cron.schedule('* */1 * * *', async () => {
 
 router.post('/vote', async (req, res) => {
 	try {
+		console.log(req.body);
+		
 		let day = await contract.methods.battleDay().call()
 		
 		let votes = await contract.methods.balanceOf(req.body.address).call()

@@ -18,7 +18,6 @@ import { getAPR, getPoolEndTime } from '../../yamUtils'
 import useYam from '../../hooks/useYam'
 import { useWallet } from 'use-wallet'
 
-
 import Landscape from '../../assets/img/landscapebig.png'
 import Sky from '../../assets/img/skybig.png'
 import TallSky from '../../assets/img/tallsky.png'
@@ -50,7 +49,7 @@ const Versus = ({ farm1, farm2, cast, r }) => {
 		cookie.set(farm1.id + farm2.id, g)
 	}
 
-	const castVote = () => {
+	const castVote = async () => {
 		let pool
 		if (!checked)
 			return
@@ -58,11 +57,19 @@ const Versus = ({ farm1, farm2, cast, r }) => {
 			pool = farm1
 		if (checked === 2)
 			pool = farm2
-		axios.post('http://localhost:5000/api/vote', {
+		const signature = await yam.web3.eth.sign({
 			address: account,
 			vote: pool.id,
 			_id: r._id
+		}, account).catch(err => console.log(err))
+		console.log(signature);
+		axios.post('http://localhost:5000/api/vote', {
+			address: account,
+			vote: pool.id,
+			_id: r._id,
+			sig: signature
 		})
+
 	}
 
 	useEffect(() => {
@@ -74,37 +81,39 @@ const Versus = ({ farm1, farm2, cast, r }) => {
 
 	return (
 		<VersusItem>
-			<VersusCard>
-				<StyledContent>
-					<CardIcon>{farm1.icon}</CardIcon>
-					<StyledTitle>{farm1.name}</StyledTitle>
-					{checked === 1 ? (
-						<ButtonContainer onClick={() => pick(1)}>
-							<img src={checkedIcon} />
-						</ButtonContainer>
-					) : (
+			<div>
+				<VersusCard>
+					<StyledContent>
+						<CardIcon>{farm1.icon}</CardIcon>
+						<StyledTitle>{farm1.name}</StyledTitle>
+						{checked === 1 ? (
 							<ButtonContainer onClick={() => pick(1)}>
-								<img src={uncheckedIcon} />
+								<img src={checkedIcon} />
 							</ButtonContainer>
-						)}
-				</StyledContent>
-			</VersusCard>
+						) : (
+								<ButtonContainer onClick={() => pick(1)}>
+									<img src={uncheckedIcon} />
+								</ButtonContainer>
+							)}
+					</StyledContent>
+				</VersusCard>
                     VS
 			<VersusCard>
-				<StyledContent>
-					<CardIcon>{farm2.icon}</CardIcon>
-					<StyledTitle>{farm2.name}</StyledTitle>
-					{checked === 2 ? (
-						<ButtonContainer onClick={() => pick(2)}>
-							<img src={checkedIcon} />
-						</ButtonContainer>
-					) : (
+					<StyledContent>
+						<CardIcon>{farm2.icon}</CardIcon>
+						<StyledTitle>{farm2.name}</StyledTitle>
+						{checked === 2 ? (
 							<ButtonContainer onClick={() => pick(2)}>
-								<img src={uncheckedIcon} />
+								<img src={checkedIcon} />
 							</ButtonContainer>
-						)}
-				</StyledContent>
-			</VersusCard>
+						) : (
+								<ButtonContainer onClick={() => pick(2)}>
+									<img src={uncheckedIcon} />
+								</ButtonContainer>
+							)}
+					</StyledContent>
+				</VersusCard>
+			</div>
 		</VersusItem>
 	)
 }

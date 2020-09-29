@@ -6,10 +6,12 @@ const Battle = require('./Battle.schema')
 const cron = require('node-cron')
 const abi = require('./BATTLEPool.json')
 const Web3 = require('web3');
+const BigNumber = require('bignumber.js')
 // const Contract = require('web3-eth-contract');
 const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/a768678405854cf584ae620be7844cc3'))
 const contract = new web3.eth.Contract(abi.abi, '0xa9CDb5e3C911884Ca6D4b32273c219B536Ee9e6A')
 // console.log(contract.methods);
+// let value = contract.methods.balanceOf('0x0f93e12029b7a934b40443889eea09dea97d48a9').call();
 
 
 let day = 0
@@ -20,7 +22,8 @@ function getDay() {
 	// console.log('hi', day);
 	Promise.resolve(day).then(res => {
 		console.log('day', res);
-
+		// console.log(value);
+		
 		return res
 	})
 }
@@ -72,7 +75,9 @@ router.post('/vote', async (req, res) => {
 		}
 		const signingAddress = web3.eth.accounts.recover(JSON.stringify(s), req.body.sig);
 		let day = await contract.methods.battleDay().call()
-		let votes = await contract.methods.balanceOf(req.body.address).call()
+		let votes = new BigNumber(await contract.methods.balanceOf(req.body.address).call()).dividedBy(10**18).toFixed(18)
+		console.log(votes);
+		
 		if (req.body.address !== signingAddress || votes === 0) {
 			res.sendStatus(403)
 			return

@@ -100,7 +100,7 @@ const Versus = ({ battles }) => {
 			]
 		}), account).catch(err => console.log(err))
 		console.log(signature);
-		axios.post('https://yieldwars-api.herokuapp.com/api/vote', {
+		axios.post('http://localhost:5000/api/vote', {
 			address: account,
 			vote: [
 				{

@@ -120,6 +120,8 @@ const Battle: React.FC = () => {
     }
     if (battles.length === 0) {
       axios.get('https://yieldwars-api.herokuapp.com/api/battles').then(res => {
+        console.log(res.data.battles);
+        
         setBattles(res.data.battles)
 
       }).catch(err => {

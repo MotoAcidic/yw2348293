@@ -19,7 +19,7 @@ function getDay() {
 	let day = contract.methods.battleDay().call()
 	// console.log('hi', day);
 	Promise.resolve(day).then(res => {
-		// console.log('bye', res);
+		console.log('day', res);
 
 		return res
 	})

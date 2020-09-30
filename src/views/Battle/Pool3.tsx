@@ -187,7 +187,7 @@ const WarPool: React.FC = () => {
 	return (
 		<InfoContainer>
 			<WarTopContainer>
-				<Title>WAR Pool</Title>
+				<Title>WARchest</Title>
 				{/*<StyledDetails>
 					<StyledDetail>APR</StyledDetail>
 					<StyledDetail>{apr.toFixed(2)}%</StyledDetail>

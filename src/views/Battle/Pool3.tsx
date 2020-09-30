@@ -184,6 +184,9 @@ const WarPool: React.FC = () => {
 
         const now = new Date().getTime() / 1000;
 
+		const earningsBalance = getDisplayBalance(earnings);
+
+
 	return (
 		<InfoContainer>
 			<WarTopContainer>
@@ -197,7 +200,7 @@ const WarPool: React.FC = () => {
 			<InfoLines>
 				<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
 				<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
-				<Line>Past Battle Reward: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></Line>
+				<Line>Past Battle Reward: <ShadedLine>{earningsBalance} WAR{earningsBalance === `0.000` ? ` (check back soon)` : ``}</ShadedLine></Line>
 				<Line>Daily Rewards Available: <ShadedLine>42,000 WAR</ShadedLine></Line>
 			</InfoLines>
 			<BottomButtonContainer>

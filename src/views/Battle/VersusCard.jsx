@@ -21,6 +21,8 @@ import { useWallet } from 'use-wallet'
 import Landscape from '../../assets/img/landscapebig.png'
 import Sky from '../../assets/img/skybig.png'
 import TallSky from '../../assets/img/tallsky.png'
+import FightInstructions from '../../assets/img/flightinstructions.png'
+
 import useFarms from '../../hooks/useFarms'
 import useFarm from '../../hooks/useFarm'
 import { Farm } from '../../contexts/Farms'
@@ -47,13 +49,17 @@ const Versus = ({ battles }) => {
 	const [voted, setVoted] = useState(false)
 	const [checked1, setChecked1] = useState(cookie.get(battles[0]._id))
 	const [checked2, setChecked2] = useState(cookie.get(battles[1]._id))
+	const farmTemplate = {
+		icon: "🤔",
+		name: "THINKING Errors"
+	}
 	const battle1 = {
-		farm1: farms.find(farm => farm.id === battles[0].pool1.name),
-		farm2: farms.find(farm => farm.id === battles[0].pool2.name)
+		farm1: farms.find(farm => farm.id === battles[0].pool1.name) || farmTemplate,
+		farm2: farms.find(farm => farm.id === battles[0].pool2.name) || farmTemplate
 	}
 	const battle2 = {
-		farm1: farms.find(farm => farm.id === battles[1].pool1.name),
-		farm2: farms.find(farm => farm.id === battles[1].pool2.name)
+		farm1: farms.find(farm => farm.id === battles[1].pool1.name) || farmTemplate,
+		farm2: farms.find(farm => farm.id === battles[1].pool2.name) || farmTemplate
 	}
 
 	const pick1 = (g) => {
@@ -75,7 +81,7 @@ const Versus = ({ battles }) => {
 		if (checked1 == 1)
 			vote1 = battle1.farm1.id
 		if (checked1 == 2)
-			vote1 = "MEME"
+			vote1 = battle1.farm2.id
 		if (checked2 == 1)
 			vote2 = battle2.farm1.id
 		if (checked2 == 2)
@@ -130,6 +136,8 @@ const Versus = ({ battles }) => {
 		}
 	}, [account])
 
+	console.log(battle2);
+
 	return (
 		<>
 			<VSContentContainer>
@@ -152,8 +160,8 @@ const Versus = ({ battles }) => {
                     VS
 					<VersusCard>
 						<StyledContent>
-							<CardIcon>🍍</CardIcon>
-							<StyledTitle>{"MEME Pineapples"}</StyledTitle>
+							<CardIcon>{battle1.farm2.icon}</CardIcon>
+							<StyledTitle>{battle1.farm2.name}</StyledTitle>
 							{checked1 == 2 ? (
 								<ButtonContainer onClick={() => pick1(2)}>
 									<img src={checkedIcon} width="40%" />
@@ -201,18 +209,58 @@ const Versus = ({ battles }) => {
 				</VersusItem>
 			</VSContentContainer>
 			{account && <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button>}
-			<StyledText>
-				Fight with the winning army and plunder 50% of the losers yield!
-            </StyledText>
-			<StyledText>
-				Run away before the battle is over (16:00 UTC) and you must leave 50% of your spoils behind
-			</StyledText>
-			<StyledText>
-				Come back daily at 9AM PT to Vote for new winners!
-            </StyledText>
+			<Title>How the battles work  </Title>
+			<StyledContainer>
+				<StyledCard>
+					<StyledCardContent>
+						<img src={FightInstructions} width="100%" />
+					</StyledCardContent>
+				</StyledCard>
+			</StyledContainer>
 		</>
 	)
 }
+
+const Title = styled.div`
+font-family: Alegreya;
+  font-size: 25px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  margin-top: 1%;
+`
+
+const StyledCardContent = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+`
+
+const StyledContainer = styled.div`
+  box-sizing: border-box;
+  margin: 0 auto;
+  margin-top: 3vh;
+  max-width: 730px;
+  height: 540px;
+  width: 100%;
+`
+
+const StyledCard = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  border-radius: 8px;
+    background-color: #003677;
+`
 
 const StyledText = styled.p`
 font-family: Alegreya;

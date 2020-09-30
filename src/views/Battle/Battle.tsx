@@ -125,6 +125,7 @@ const Battle: React.FC = () => {
         let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
           return a.votes - b.votes;
         })
+        console.log(lb);
         setLeaderboard(lb)
         setBattles(res.data.battles)
 

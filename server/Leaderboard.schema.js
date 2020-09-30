@@ -122,6 +122,36 @@ const LeaderboardSchema = new Schema({
 				type: Number,
 				default: 0
 			}
+		},
+		{
+			pool: {
+				type: String,
+				default: "MEME"
+			},
+			votes: {
+				type: Number,
+				default: 0
+			}
+		},
+		{
+			pool: {
+				type: String,
+				default: "PICKLE"
+			},
+			votes: {
+				type: Number,
+				default: 0
+			}
+		},
+		{
+			pool: {
+				type: String,
+				default: "YAM"
+			},
+			votes: {
+				type: Number,
+				default: 0
+			}
 		}
 	]
 });

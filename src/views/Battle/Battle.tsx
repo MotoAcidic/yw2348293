@@ -198,9 +198,9 @@ const Battle: React.FC = () => {
               <DisplayItem>$War Price: ${currentPrice ? Number(currentPrice).toLocaleString(undefined, { minimumFractionDigits: 4, maximumFractionDigits: 4 }) : '-'}</DisplayItem>
               <DisplayItem>Supply: 2,800,000</DisplayItem>
             </TopDisplayContainer>
-            <Title>Step 1: Stake WAR at least once to enter the battle</Title>
+            <Title>Step 1: Stake $WAR to enter the battle</Title>
             <Pool3 />
-            <Title style={{ marginTop: '4vh' }}>Step 2: Choose your victors</Title>
+            <Title style={{ marginTop: '4vh' }}>Step 2: Vote for the armies you will fight for</Title>
             {battles.length > 0 && <VersusCard battles={battles} />}
             <Title>Leaderboard</Title>
             {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}

@@ -75,7 +75,7 @@ const Versus = ({ battles }) => {
 		if (checked1 == 1)
 			vote1 = battle1.farm1.id
 		if (checked1 == 2)
-			vote1 = battle1.farm2.id
+			vote1 = "MEME"
 		if (checked2 == 1)
 			vote2 = battle2.farm1.id
 		if (checked2 == 2)
@@ -152,8 +152,8 @@ const Versus = ({ battles }) => {
                     VS
 					<VersusCard>
 						<StyledContent>
-							<CardIcon>{battle1.farm2.icon}</CardIcon>
-							<StyledTitle>{battle1.farm2.name}</StyledTitle>
+							<CardIcon>🍍</CardIcon>
+							<StyledTitle>{"MEME Pineapples"}</StyledTitle>
 							{checked1 == 2 ? (
 								<ButtonContainer onClick={() => pick1(2)}>
 									<img src={checkedIcon} width="40%" />
@@ -201,9 +201,29 @@ const Versus = ({ battles }) => {
 				</VersusItem>
 			</VSContentContainer>
 			{account && <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button>}
+			<StyledText>
+				Fight with the winning army and plunder 50% of the losers yield!
+            </StyledText>
+			<StyledText>
+				Run away before the battle is over (16:00 UTC) and you must leave 50% of your spoils behind
+			</StyledText>
+			<StyledText>
+				Come back daily at 9AM PT to Vote for new winners!
+            </StyledText>
 		</>
 	)
 }
+
+const StyledText = styled.p`
+font-family: Alegreya;
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+`
 
 const ButtonContainer = styled.div`
 

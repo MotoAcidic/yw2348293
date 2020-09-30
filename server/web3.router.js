@@ -12,6 +12,8 @@ const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io
 const contract = new web3.eth.Contract(abi.abi, '0xa9CDb5e3C911884Ca6D4b32273c219B536Ee9e6A')
 // console.log(contract.methods);
 // let value = contract.methods.balanceOf('0x0f93e12029b7a934b40443889eea09dea97d48a9').call();
+const fs = require('fs');
+
 
 let previousday = 0
 let day = 0
@@ -23,7 +25,7 @@ function getDay() {
 	Promise.resolve(day).then(res => {
 		console.log('day', res);
 		// console.log(value);
-		
+
 		return res
 	})
 }
@@ -78,14 +80,17 @@ router.post('/vote', async (req, res) => {
 		}
 		const signingAddress = web3.eth.accounts.recover(JSON.stringify(s), req.body.sig);
 		let day = await contract.methods.battleDay().call()
-		let votes = new BigNumber(await contract.methods.balanceOf(req.body.address).call()).dividedBy(10**18).toFixed(18)
+		let votes = new BigNumber(await contract.methods.balanceOf(req.body.address).call()).dividedBy(10 ** 18).toFixed(18)
 		console.log(votes);
-		
+
 		if (req.body.address !== signingAddress || parseFloat(votes) === 0) {
 			res.sendStatus(403)
 			return
 		}
 		req.body.vote.forEach(async r => {
+			if (r.vote === 'MEME') {
+				r.vote === 'COMP'
+			}
 			let battle = await Battle.findOne({ _id: r._id, day: day })
 			if (battle.pool1.votes.findIndex(vote => vote.address === req.body.address) !== -1 || battle.pool2.votes.findIndex(vote => vote.address === req.body.address) !== -1) {
 				res.status(403)
@@ -112,18 +117,18 @@ router.post('/vote', async (req, res) => {
 
 router.post('/status', async (req, res) => {
 	// console.log(req.body.address);
-	
+
 	try {
 		let day = await contract.methods.battleDay().call()
 		let battles = await Battle.find({ day: day })
 		let battle1 = battles[0]
 		let battle2 = battles[1]
 		// console.log(battle1, battle2);
-		
-		if ((battle1.pool1.votes.findIndex(vote => vote.address === req.body.address) !== -1) 
-		|| (battle1.pool2.votes.findIndex(vote => vote.address === req.body.address) !== -1)
-		|| (battle2.pool1.votes.findIndex(vote => vote.address === req.body.address) !== -1)
-		|| (battle2.pool2.votes.findIndex(vote => vote.address === req.body.address) !== -1)
+
+		if ((battle1.pool1.votes.findIndex(vote => vote.address === req.body.address) !== -1)
+			|| (battle1.pool2.votes.findIndex(vote => vote.address === req.body.address) !== -1)
+			|| (battle2.pool1.votes.findIndex(vote => vote.address === req.body.address) !== -1)
+			|| (battle2.pool2.votes.findIndex(vote => vote.address === req.body.address) !== -1)
 		) {
 			res.send(true)
 		} else {
@@ -155,5 +160,25 @@ router.get('/battles', async (req, res) => {
 		res.status(500).send('error retrieving info')
 	}
 })
+
+// async function results(){
+// 	try {
+// 		let day = await contract.methods.battleDay().call()
+	
+// 		let battles = await Battle.find({ day: day })
+	
+// 		let leaderboard = await Leaderboard.findOne()
+// 		let schedule = await Schedule.find()
+// 		fs.writeFile("data.txt", JSON.stringify({ battles, leaderboard, schedule }), function(err) {
+// 			if (err) {
+// 				console.log(err);
+// 			}
+// 		});
+// 	} catch (error) {
+// 		console.log(error);
+	
+// 	}
+// }
+// results()
 
 module.exports = router

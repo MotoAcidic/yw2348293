@@ -118,6 +118,9 @@ const About: React.FC = () => {
                   8. Once you are staked in WAR, there is a 1.5% unstaking fee. This fee goes directly to
                   the people still staked in WAR.
                 </StyledText>
+                <StyledText>
+                  9. Once you vote, you are locked in with your teams for the day. If you stake more tokens later in the day, they will be available for the next battle.
+                </StyledText>
               </StyledCardContent>
             </StyledCard>
           </StyledContainer>

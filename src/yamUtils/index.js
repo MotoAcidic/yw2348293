@@ -490,6 +490,13 @@ export const getWarAPR = async (contract, yam) => {
   return apy
 }
 
+export const getBattleAPR = async (contract, yam) => {
+  let rewardPerYear = new BigNumber(56000).multipliedBy(365);
+  const totalSupply = new BigNumber(await contract.methods.totalSupply().call()).div(10 ** 18);
+  let apy = rewardPerYear.dividedBy(totalSupply).multipliedBy(100).toNumber()
+  return apy
+}
+
 export const getTotalValue = async (pools, yam) => {
   let totalValue = new BigNumber(0)
   let poolValues = {}

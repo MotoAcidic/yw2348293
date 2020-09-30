@@ -39,7 +39,7 @@ import useStakedBalance from '../../hooks/useStakedBalance'
 import useTokenBalance from '../../hooks/useTokenBalance'
 import useUnstake from '../../hooks/useUnstake'
 import useFarms from '../../hooks/useFarms'
-//import { getWarAPR, getPoolEndTime } from '../../yamUtils'
+import { getBattleAPR } from '../../yamUtils'
 
 
 function isMobile() {
@@ -86,12 +86,12 @@ const WarPool: React.FC = () => {
 	const allowance = useAllowance(tokenContract, contract)
 	const [requestedApproval, setRequestedApproval] = useState(false)
 	const { onApprove } = useApprove(tokenContract, contract)
-	//const [apr, setAPR] = useState(0)
+	const [apr, setAPR] = useState(0)
 
-	/*const aprVal = useCallback(async () => {
+	const aprVal = useCallback(async () => {
 		console.log(contract);
 
-		const apr = await getWarAPR(contract, yam)
+		const apr = await getBattleAPR(contract, yam)
 		setAPR(apr)
 	}, [contract, setAPR])
 
@@ -99,7 +99,7 @@ const WarPool: React.FC = () => {
 		if (contract && !apr && yam) {
 			aprVal()
 		}
-	}, [contract, yam])*/
+	}, [contract, yam])
 
 	const onClaimUnstake = () => {
 		onPresentUnstake()
@@ -140,10 +140,10 @@ const WarPool: React.FC = () => {
 			<MobileInfoContainer>
 				<WarTopContainer>
 					<Title>WAR Pool</Title>
-					{/* <StyledDetails>
+					<StyledDetails>
 						<StyledDetail>APR</StyledDetail>
 						<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
-					</StyledDetails> */}
+					</StyledDetails>
 				</WarTopContainer>
 				<InfoDivider />
 				<MobileInfoLines>
@@ -191,17 +191,17 @@ const WarPool: React.FC = () => {
 		<InfoContainer>
 			<WarTopContainer>
 				<Title>WARchest</Title>
-				{/*<StyledDetails>
+				<StyledDetails>
 					<StyledDetail>APR</StyledDetail>
 					<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
-				</StyledDetails>*/}
+				</StyledDetails>
 			</WarTopContainer>
 			<InfoDivider />
 			<InfoLines>
 				<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
 				<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
 				<Line>Past Battle Reward: <ShadedLine>{earningsBalance} WAR{earningsBalance === `0.000` ? ` (check back soon)` : ``}</ShadedLine></Line>
-				<Line>Daily Rewards Available: <ShadedLine>42,000 WAR</ShadedLine></Line>
+				<Line>Daily Rewards Available: <ShadedLine>56,000 WAR</ShadedLine></Line>
 			</InfoLines>
 			<BottomButtonContainer>
 				{!allowance.toNumber() ? (

@@ -13,7 +13,7 @@ const contract = new web3.eth.Contract(abi.abi, '0xa9CDb5e3C911884Ca6D4b32273c21
 // console.log(contract.methods);
 // let value = contract.methods.balanceOf('0x0f93e12029b7a934b40443889eea09dea97d48a9').call();
 
-
+let previousday = 0
 let day = 0
 day = getDay()
 
@@ -45,8 +45,11 @@ async function finishBattle(day) {
 }
 
 cron.schedule('* * */1 * *', async () => {
-	if (getDay() > day) {
+	let today = await getDay()
+	if (today > day) {
 		finishBattle(day)
+		previousday = day
+		day = today
 		let schedule = await Schedule.find({ day: day })
 		schedule.forEach(async match => {
 			let battle = new Battle({

@@ -23,6 +23,7 @@ import Farms from './views/Farms'
 import Farm from './views/Farm'
 import Splash from './views/Splash/Splash'
 import Battle from './views/Battle/Battle'
+import About from './views/About/About'
 
 import theme from './theme'
 
@@ -51,9 +52,9 @@ const App: React.FC = () => {
             <Route path="/battle" exact>
               <Battle />
             </Route>
-            {/* <Route path="/faq" exact>
-              <Battle />
-            </Route> */}
+            <Route path="/faq" exact>
+              <About />
+            </Route>
           </Switch>
         </Router>
       </StyledCanvas>

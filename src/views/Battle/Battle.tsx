@@ -89,6 +89,7 @@ const Battle: React.FC = () => {
   let [tvl, setTVL] = useState({ totalValue: new BigNumber(0), poolValues: {} })
   const { account, connect } = useWallet()
   let [battles, setBattles] = useState([])
+  let [leaderboard, setLeaderboard] = useState([])
   // let [voted, setVoted] = useState(cookie.get('voted'))
 
   const [{
@@ -120,8 +121,11 @@ const Battle: React.FC = () => {
     }
     if (battles.length === 0) {
       axios.get('https://yieldwars-api.herokuapp.com/api/battles').then(res => {
-        console.log(res.data.battles);
-        
+        console.log(res.data);
+        let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
+          return a.votes - b.votes;
+        })
+        setLeaderboard(lb)
         setBattles(res.data.battles)
 
       }).catch(err => {
@@ -136,9 +140,9 @@ const Battle: React.FC = () => {
   let scheduleContent;
 
   if (farms[0]) {
-
+    leaderboard = leaderboard.slice(0, 5)
     leaderboardContent = leaderboard.map((item, index) => {
-      let pool = farms.find(farm => farm.id === item)
+      let pool = farms.find(farm => farm.id === item.pool)
       let rank = 'th'
       if (index === 0)
         rank = 'st'
@@ -198,10 +202,10 @@ const Battle: React.FC = () => {
             <Pool3 />
             <Title style={{ marginTop: '4vh' }}>Step 2: Choose your victors</Title>
             {battles.length > 0 && <VersusCard battles={battles} />}
-            {/* <Title>Leaderboard</Title>
+            <Title>Leaderboard</Title>
             {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}
 
-            <Title>Schedule</Title>
+            {/* <Title>Schedule</Title>
             <Schedule>
               {scheduleContent}
             </Schedule> */}

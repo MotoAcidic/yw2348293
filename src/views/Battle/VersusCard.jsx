@@ -246,7 +246,7 @@ const StyledContainer = styled.div`
   margin: 0 auto;
   margin-top: 3vh;
   max-width: 730px;
-  height: 540px;
+  height: 570px;
   width: 100%;
 `
 

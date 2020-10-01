@@ -30,7 +30,7 @@ cron.schedule('0 1 */1 * *', async () => {
 
 	if (tomorrow > today) {
 		finishBattle(today)
-		setTimeout(() => {
+		setTimeout(async () => {
 			let schedule = await Schedule.find({ day: tomorrow })
 			schedule.forEach(async match => {
 				let battle = new Battle({
@@ -161,6 +161,8 @@ router.post('/previous-battles', async (req, res) => {
 		return
 	}
 	try {
+		console.log(req.body);
+		
 		let battles = await Battle.find({ day: req.body.day })
 		let leaderboard = await Leaderboard.findOne()
 		let schedule = await Schedule.find()

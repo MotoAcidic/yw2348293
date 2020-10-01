@@ -20,6 +20,8 @@ day = getDay()
 
 function getDay() {
 	let day = Math.floor(((Date.now() - 1601395200) / 86400) + 1)
+	console.log(day);
+	
 	return day
 }
 
@@ -75,7 +77,7 @@ router.post('/vote', async (req, res) => {
 			vote: req.body.vote
 		}
 		const signingAddress = web3.eth.accounts.recover(JSON.stringify(s), req.body.sig);
-		let day = ((Date.now() - 1601395200) / 86400) + 1
+		let day = 3
 		let votes = new BigNumber(await contract.methods.balanceOf(req.body.address).call()).dividedBy(10 ** 18).toFixed(18)
 		console.log(votes);
 
@@ -112,7 +114,7 @@ router.post('/status', async (req, res) => {
 	// console.log(req.body.address);
 
 	try {
-		let day = ((Date.now() - 1601395200) / 86400) + 1
+		let day = 3
 		let battles = await Battle.find({ day: day })
 		let battle1 = battles[0]
 		let battle2 = battles[1]
@@ -135,7 +137,7 @@ router.post('/status', async (req, res) => {
 
 router.get('/battles', async (req, res) => {
 	try {
-		let day = ((Date.now() - 1601395200) / 86400) + 1
+		let day = 3
 
 		let battles = await Battle.find({ day: day })
 		for (let i = 0; i < battles.length; i++) {
@@ -164,9 +166,7 @@ router.post('/previous-battles', async (req, res) => {
 		console.log(req.body);
 		
 		let battles = await Battle.find({ day: req.body.day })
-		let leaderboard = await Leaderboard.findOne()
-		let schedule = await Schedule.find()
-		res.send({ battles, leaderboard, schedule })
+		res.send(battles)
 	} catch (error) {
 		console.log(error);
 

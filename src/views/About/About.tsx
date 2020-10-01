@@ -98,7 +98,7 @@ const About: React.FC = () => {
               <RecDesc>There are 2,800,000 WAR Tokens distributed over the course of 30 days, with 50% in Farming and Liquidity Pools, 40% in Seasons 1 + 2 as Battle Rewards, and 10% in team rewards, distributed equally with other token distributions, and not to ever be sold for more than 10% per daily volume. </RecDesc>
             </Rectangle>
             <Rectangle>
-              <RecTitle>WWhat was the reason for launching YieldWars?</RecTitle>
+              <RecTitle>What was the reason for launching YieldWars?</RecTitle>
               <RecDesc>We were looking at current DeFi projects and thought things were pretty lame. We wanted to build a DeFi game that would bring all the communities together and incentive users to engage in daily voting, first in YieldWars, and eventually on our governance platform to build the future of YieldWars with us.</RecDesc>
             </Rectangle>
             <Rectangle>

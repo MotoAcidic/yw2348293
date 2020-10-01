@@ -81,54 +81,131 @@ const About: React.FC = () => {
             <DisplayItem>$War Price: ${currentPrice ? Number(currentPrice).toLocaleString(undefined, { minimumFractionDigits: 4, maximumFractionDigits: 4 }) : '-'}</DisplayItem>
             <DisplayItem>Supply: 2,800,000</DisplayItem>
           </TopDisplayContainer>
-          <Title>When the battles begin, this is how staking works:</Title>
-          <StyledContainer>
-            <StyledCard>
-              <StyledCardContent>
-                <StyledText>
-                  1. Acquire WAR tokens through farming or buying on Uniswap.
-                </StyledText>
-                <img src={FAQ1} width='90%' />
-                <StyledText>
-                  2. Go to the Battle page and stake your WAR tokens. You only need to stake one time.
-                </StyledText>
-                <img src={FAQ2} width='90%' />
-                <StyledText>
-                  3. Once your tokens are staked, you’ll be able to choose which teams you want to
-                  support for that day.
-                </StyledText>
-                <img src={FAQ3} width='90%' />
-                <StyledText>
-                  4. You must pick two teams in order to lock your vote in.
-                </StyledText>
-                <StyledText>
-                  5. Confirm your vote and approve the transaction in your wallet for no fee. Your vote
-                  is encrypted and recorded.
-                </StyledText>
-                <StyledText>
-                  6. Votes take place over a 24 hour period starting at 16:00 UTC each day. The earlier
-                  you vote the more yield you earn. Vote counts will not be made public during battle.
-                  After 24 hours, whichever two teams win by majority eats 50% of the losers yield
-                  and advances to the next round. Winners all share the spoils.
-                </StyledText>
-                <StyledText>
-                  7. In order to battle the next day, you must submit your vote again.
-                </StyledText>
-                <StyledText>
-                  8. Once you are staked in WAR, there is a 1.5% unstaking fee. This fee goes directly to
-                  the people still staked in WAR.
-                </StyledText>
-                <StyledText>
-                  9. Once you vote, you are locked in with your teams for the day. If you stake more tokens later in the day, they will be available for the next battle.
-                </StyledText>
-              </StyledCardContent>
-            </StyledCard>
-          </StyledContainer>
+          <Title>Frequently Asked Questions</Title>
+          <FAQSection>
+            <Rectangle>
+              <RecTitle>What is YieldWars?</RecTitle>
+              <RecDesc>YieldWars is an experiment on degen game design, governance, and community building. It is the ultimate battle royale to determine which crypto community is the strongest. </RecDesc>
+            </Rectangle>
+            <Rectangle>
+              <RecTitle>What are $WAR tokens used for?</RecTitle>
+              <RecDesc>
+                WAR tokens are staked in YieldWars to allow token holders to vote, earn yield, and wage war on crypto communities. They will also be used for our future governance platform to decide future versions of YieldWars.
+              </RecDesc>
+            </Rectangle>
+            <Rectangle>
+              <RecTitle>$WAR Tokenomics</RecTitle>
+              <RecDesc>There are 2,800,000 WAR Tokens distributed over the course of 30 days, with 50% in Farming and Liquidity Pools, 40% in Seasons 1 + 2 as Battle Rewards, and 10% in team rewards, distributed equally with other token distributions, and not to ever be sold for more than 10% per daily volume. </RecDesc>
+            </Rectangle>
+            <Rectangle>
+              <RecTitle>WWhat was the reason for launching YieldWars?</RecTitle>
+              <RecDesc>We were looking at current DeFi projects and thought things were pretty lame. We wanted to build a DeFi game that would bring all the communities together and incentive users to engage in daily voting, first in YieldWars, and eventually on our governance platform to build the future of YieldWars with us.</RecDesc>
+            </Rectangle>
+            <Rectangle>
+              <RecTitle>What is the Future Roadmap?</RecTitle>
+              <RecDesc>Season 1 is about growing the community and introducing everyone to the right game mechanics. In Season 2 we will go ham and expand the teams from 16 to 32 and really try to bring the overall crypto community together in this. We have some big plans for after that, but we would like the community to voice in and decide what we do to evolve things after Season 2, but we can see it going a lot of ways. Think of this as like watching Sports for Degens. </RecDesc>
+            </Rectangle>
+          </FAQSection>
+          <Title>Official Medium Posts</Title>
+          <MediumSection>
+            <TextSection>
+              <LinkSection>
+                <a style={{color: 'white'}} href="https://medium.com/@yieldwars/war-liquidity-has-been-unleashed-prepare-for-battle-yieldwars-battle-directions-inside-e0db48b58306">Liquidity Pool Rewards Unleashed</a>
+                Sep 28
+              </LinkSection>
+              <LinkSection>
+                <a style={{color: 'white'}} href="https://medium.com/@yieldwars/yieldwars-day-1-recap-and-future-plans-aa88082379b8">Day 1 Recap</a>
+                Sep 25
+              </LinkSection>
+              <LinkSection>
+                <a style={{color: 'white'}} href="https://medium.com/@yieldwars/welcome-to-yieldwars-%EF%B8%8F-d3e8b388966a">Welcome to YieldWars</a>
+                Sep 16
+              </LinkSection>
+              <LinkSection>
+                <a style={{color: 'white'}} href="https://medium.com/@yieldwars/an-open-letter-to-every-humble-farmer-9cfd97b4dfe9">An Open Letter to Every Humble 👨🏻‍🌾</a>
+                Aug 29
+              </LinkSection>
+            </TextSection>
+          </MediumSection>
         </Page>
       </ContentContainer>
     </StyledCanvas>
   )
 }
+
+const TextSection = styled.div`
+padding: 20px;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+height: 80%;
+`
+
+const LinkSection = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+font-family: Alegreya;
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+`
+
+const MediumSection = styled.div`
+margin-top: 3vh;
+width: 780px;
+  height: 220px;
+  border-radius: 8px;
+  border: solid 2px #0095f0;
+  background-color: #003677;
+
+`
+
+const FAQSection = styled.div`
+display: flex;
+flex-direction: column;
+align-content: center;
+justify-content: space-evenly;
+height: 1100px;
+margin-bottom: 6vh;
+`
+
+const RecDesc = styled.div`
+font-family: Alegreya;
+font-size: 18px;
+font-weight: normal;
+font-stretch: normal;
+font-style: normal;
+line-height: 1.56;
+letter-spacing: normal;
+color: #ffffff;
+padding: 30px;
+padding-top: 10px
+`
+
+const RecTitle = styled.div`
+font-family: Alegreya;
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+padding: 30px;
+padding-bottom: 10px;
+`
+
+const Rectangle = styled.div`
+width: 780px;
+  border-radius: 8px;
+  border: solid 2px #0095f0;
+  background-color: #003677;
+`
 
 const DisplayItem = styled.div`
 color: white;

@@ -15,20 +15,38 @@ const contract = new web3.eth.Contract(abi.abi, '0xa9CDb5e3C911884Ca6D4b32273c21
 const fs = require('fs');
 
 
-let previousday = 0
 let day = 0
 day = getDay()
 
 function getDay() {
-	let day = contract.methods.battleDay().call()
-	// console.log('hi', day);
-	Promise.resolve(day).then(res => {
-		console.log('day', res);
-		// console.log(value);
-
-		return res
-	})
+	let day = Math.floor(((Date.now() - 1601395200) / 86400) + 1)
+	return day
 }
+
+cron.schedule('0 1 */1 * *', async () => {
+	let today = getDay()
+	let tomorrow = Math.floor(((Date.now() + 3600 - 1601395200) / 86400) + 1)
+	console.log(today, tomorrow);
+
+	if (tomorrow > today) {
+		finishBattle(today)
+		setTimeout(() => {
+			let schedule = await Schedule.find({ day: tomorrow })
+			schedule.forEach(async match => {
+				let battle = new Battle({
+					day: match.day,
+					pool1: {
+						name: match.pool1
+					},
+					pool2: {
+						name: match.pool2
+					}
+				})
+				await battle.save()
+			})
+		}, 3600000);
+	}
+});
 
 async function finishBattle(day) {
 	let battles = await Battle.find({ day: day })
@@ -46,28 +64,6 @@ async function finishBattle(day) {
 	await battles.save()
 }
 
-cron.schedule('* * */1 * *', async () => {
-	let today = await getDay()
-	if (today > day) {
-		finishBattle(day)
-		previousday = day
-		day = today
-		let schedule = await Schedule.find({ day: day })
-		schedule.forEach(async match => {
-			let battle = new Battle({
-				day: match.day,
-				pool1: {
-					name: match.pool1
-				},
-				pool2: {
-					name: match.pool2
-				}
-			})
-			await battle.save()
-		})
-	}
-});
-
 router.post('/vote', async (req, res) => {
 	if (!req.body) {
 		res.sendStatus(500)
@@ -79,7 +75,7 @@ router.post('/vote', async (req, res) => {
 			vote: req.body.vote
 		}
 		const signingAddress = web3.eth.accounts.recover(JSON.stringify(s), req.body.sig);
-		let day = await contract.methods.battleDay().call()
+		let day = ((Date.now() - 1601395200) / 86400) + 1
 		let votes = new BigNumber(await contract.methods.balanceOf(req.body.address).call()).dividedBy(10 ** 18).toFixed(18)
 		console.log(votes);
 
@@ -88,9 +84,6 @@ router.post('/vote', async (req, res) => {
 			return
 		}
 		req.body.vote.forEach(async r => {
-			if (r.vote === 'MEME') {
-				r.vote === 'COMP'
-			}
 			let battle = await Battle.findOne({ _id: r._id, day: day })
 			if (battle.pool1.votes.findIndex(vote => vote.address === req.body.address) !== -1 || battle.pool2.votes.findIndex(vote => vote.address === req.body.address) !== -1) {
 				res.status(403)
@@ -119,7 +112,7 @@ router.post('/status', async (req, res) => {
 	// console.log(req.body.address);
 
 	try {
-		let day = await contract.methods.battleDay().call()
+		let day = ((Date.now() - 1601395200) / 86400) + 1
 		let battles = await Battle.find({ day: day })
 		let battle1 = battles[0]
 		let battle2 = battles[1]
@@ -142,7 +135,7 @@ router.post('/status', async (req, res) => {
 
 router.get('/battles', async (req, res) => {
 	try {
-		let day = await contract.methods.battleDay().call()
+		let day = ((Date.now() - 1601395200) / 86400) + 1
 
 		let battles = await Battle.find({ day: day })
 		for (let i = 0; i < battles.length; i++) {
@@ -161,24 +154,19 @@ router.get('/battles', async (req, res) => {
 	}
 })
 
-// async function results(){
-// 	try {
-// 		let day = await contract.methods.battleDay().call()
-	
-// 		let battles = await Battle.find({ day: day })
-	
-// 		let leaderboard = await Leaderboard.findOne()
-// 		let schedule = await Schedule.find()
-// 		fs.writeFile("data.txt", JSON.stringify({ battles, leaderboard, schedule }), function(err) {
-// 			if (err) {
-// 				console.log(err);
-// 			}
-// 		});
-// 	} catch (error) {
-// 		console.log(error);
-	
-// 	}
-// }
-// results()
+router.get('/yesterdays-battles', async (req, res) => {
+	try {
+		let day = ((Date.now() - 1601395200) / 86400)
+
+		let battles = await Battle.find({ day: day })
+		let leaderboard = await Leaderboard.findOne()
+		let schedule = await Schedule.find()
+		res.send({ battles, leaderboard, schedule })
+	} catch (error) {
+		console.log(error);
+
+		res.status(500).send('error retrieving info')
+	}
+})
 
 module.exports = router

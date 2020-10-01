@@ -30,9 +30,6 @@ import { getStats } from './utils'
 import Cookie from 'universal-cookie'
 import VersusCard from './VersusCard.jsx'
 
-import CountDown from './CountDown'
-
-const cookie = new Cookie()
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -43,37 +40,12 @@ function isMobile() {
   }
 }
 
-let vs = [{
-  pool1: 'FARM',
-  pool2: 'UNI'
-}, {
-  pool1: 'UNI',
-  pool2: 'FARM'
-}]
-
-let leaderboard = ['FARM', 'UNI', 'FARM', 'UNI', 'FARM']
-
-let schedule = [{
-  date: 1,
-  v1: {
-    pool1: 'FARM',
-    pool2: 'UNI'
-  },
-  v2: {
-    pool1: 'FARM',
-    pool2: 'UNI'
+function getServerURI() {
+  if (window.location.hostname === 'localhost') {
+    return 'http://localhost:5000'
   }
-}, {
-  date: 2,
-  v1: {
-    pool1: 'FARM',
-    pool2: 'UNI'
-  },
-  v2: {
-    pool1: 'FARM',
-    pool2: 'UNI'
-  }
-}]
+  return 'https://yieldwars-api.herokuapp.com'
+}
 
 export interface OverviewData {
   circSupply?: string,
@@ -120,7 +92,7 @@ const Battle: React.FC = () => {
       fetchTotalValue(farms)
     }
     if (battles.length === 0) {
-      axios.get('https://yieldwars-api.herokuapp.com/api/battles').then(res => {
+      axios.get(`${getServerURI()}/api/battles`).then(res => {
         console.log(res.data);
         let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
           return a.votes - b.votes;
@@ -160,23 +132,23 @@ const Battle: React.FC = () => {
       )
     })
 
-    scheduleContent = schedule.map((item, index) => {
-      return (
-        <ScheduleItem>
-          Oct {item.date}
-          <Versus>
-            {item.v1.pool1}
-                  VS
-            {item.v1.pool2}
-          </Versus>
-          <Versus>
-            {item.v2.pool1}
-                  VS
-            {item.v2.pool2}
-          </Versus>
-        </ScheduleItem>
-      )
-    })
+    // scheduleContent = schedule.map((item, index) => {
+    //   return (
+    //     <ScheduleItem>
+    //       Oct {item.date}
+    //       <Versus>
+    //         {item.v1.pool1}
+    //               VS
+    //         {item.v1.pool2}
+    //       </Versus>
+    //       <Versus>
+    //         {item.v2.pool1}
+    //               VS
+    //         {item.v2.pool2}
+    //       </Versus>
+    //     </ScheduleItem>
+    //   )
+    // })
   }
 
   let currentPrice = 0

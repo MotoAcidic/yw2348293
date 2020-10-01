@@ -15,6 +15,73 @@ const contract = new web3.eth.Contract(abi.abi, '0xa9CDb5e3C911884Ca6D4b32273c21
 const fs = require('fs');
 
 
+let leaderboard = new Leaderboard({
+	leaderboard: [
+		{
+			pool: "mbBASED",
+			votes: 0
+		},
+		{
+			pool: "FARM",
+			votes: 0
+		},
+		{
+			pool: "LINK",
+			votes: 0
+		},
+		{
+			pool: "SNX",
+			votes: 0
+		},
+		{
+			pool: "YFI",
+			votes: 0
+		},
+		{
+			pool: "COMP",
+			votes: 0
+		},
+		{
+			pool: "BZRX",
+			votes: 0
+		},
+		{
+			pool: "UNI",
+			votes: 0
+		},
+		{
+			pool: "AAVE",
+			votes: 0
+		},
+		{
+			pool: "WNXM",
+			votes: 0
+		},
+		{
+			pool: "MKR",
+			votes: 0
+		},
+		{
+			pool: "SRM",
+			votes: 0
+		},
+		{
+			pool: "MEME",
+			votes: 0
+		},
+		{
+			pool: "PICKLE",
+			votes: 0
+		},
+		{
+			pool: "YAM",
+			votes: 0
+		}
+	]
+})
+leaderboard.save()
+
+
 let day = 0
 day = getDay()
 

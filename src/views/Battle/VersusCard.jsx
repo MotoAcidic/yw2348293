@@ -38,6 +38,13 @@ function isMobile() {
 	}
 }
 
+function getServerURI() {
+	if (window.location.hostname === 'localhost') {
+		return 'http://localhost:5000'
+	}
+	return 'https://yieldwars-api.herokuapp.com'
+}
+
 let cookie = new Cookie()
 
 
@@ -101,7 +108,7 @@ const Versus = ({ battles }) => {
 			]
 		}), account).catch(err => console.log(err))
 		console.log(signature);
-		axios.post('https://yieldwars-api.herokuapp.com/api/vote', {
+		axios.post(`${getServerURI()}/api/vote`, {
 			address: account,
 			vote: [
 				{
@@ -124,7 +131,7 @@ const Versus = ({ battles }) => {
 
 	useEffect(() => {
 		if (account) {
-			axios.post('https://yieldwars-api.herokuapp.com/api/status', {
+			axios.post(`${getServerURI()}/api/status`, {
 				address: account,
 			}).then(res => {
 				console.log(res.data);

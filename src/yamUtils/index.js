@@ -458,6 +458,9 @@ export const getRewardRate = async (pool) => {
 }
 
 export const getTotalSupply = async (pool) => {
+  if (!pool.contract) {
+    return 0
+  }
   let totalSupply = new BigNumber(await pool.contract.methods.totalSupply().call());
   if (pool.id == "SRM") { // SRM has 6 decimals
     totalSupply = totalSupply.div(10 ** 6);
@@ -497,15 +500,17 @@ export const getTotalValue = async (pools, yam) => {
   if (pools && pools[0].contract) {
     for (let i = 0; i < pools.length; i++) {
       let pool = pools[i]
-      let supply = new BigNumber(await getTotalSupply(pool))
-      let prices = await getAssetPrices(yam)
-      prices = prices[pool.id]
-      poolValues[pool.contract._address] = supply.multipliedBy(prices) //await pool.contract.methods.totalSupply().call())
-      totalValue = totalValue.plus(supply.multipliedBy(prices))
-      //console.log(pool.id, supply.multipliedBy(prices).toString())
+      if (pool.contract) {
+        let supply = new BigNumber(await getTotalSupply(pool))
+        let prices = await getAssetPrices(yam)
+        prices = prices[pool.id]
+        poolValues[pool.contract._address] = supply.multipliedBy(prices) //await pool.contract.methods.totalSupply().call())
+        totalValue = totalValue.plus(supply.multipliedBy(prices))
+        //console.log(pool.id, supply.multipliedBy(prices).toString())
 
-      if (i === (pools.length - 1)) {
-        return { totalValue, poolValues };
+        if (i === (pools.length - 1)) {
+          return { totalValue, poolValues };
+        }
       }
     }
   }
@@ -573,7 +578,7 @@ export const getAssetPrices = async (yam) => {
 
     let priceData = {};
     keys.forEach((key, i) => priceData[key] = yam.toBigN(priceArr[i]).div(10 ** 6).toFixed(4));
-    
+
     priceData["UNIPOOL"] = 35;
     priceData["BATTLEPOOL"] = priceData["WAR"];
     assetPrices = priceData;

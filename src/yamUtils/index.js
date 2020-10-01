@@ -458,6 +458,7 @@ export const getRewardRate = async (pool) => {
 }
 
 export const getTotalSupply = async (pool) => {
+  //console.log(`pool`,pool);
   let totalSupply = new BigNumber(await pool.contract.methods.totalSupply().call());
   if (pool.id == "SRM") { // SRM has 6 decimals
     totalSupply = totalSupply.div(10 ** 6);
@@ -504,6 +505,9 @@ export const getTotalValue = async (pools, yam) => {
   if (pools && pools[0].contract) {
     for (let i = 0; i < pools.length; i++) {
       let pool = pools[i]
+      if (!pool || !pool.contract) {
+        continue;
+      }
       let supply = new BigNumber(await getTotalSupply(pool))
       let prices = await getAssetPrices(yam)
       prices = prices[pool.id]

@@ -154,11 +154,14 @@ router.get('/battles', async (req, res) => {
 	}
 })
 
-router.get('/yesterdays-battles', async (req, res) => {
+router.post('/previous-battles', async (req, res) => {
+	let day = ((Date.now() - 1601395200) / 86400)
+	if (req.body.day >= day) {
+		res.sendStatus(403)
+		return
+	}
 	try {
-		let day = ((Date.now() - 1601395200) / 86400)
-
-		let battles = await Battle.find({ day: day })
+		let battles = await Battle.find({ day: req.body.day })
 		let leaderboard = await Leaderboard.findOne()
 		let schedule = await Schedule.find()
 		res.send({ battles, leaderboard, schedule })

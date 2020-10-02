@@ -61,9 +61,9 @@ async function finishBattle(day) {
 	})
 	for (let i = 0; i < battles.length; i++) {
 		battles[i].finished = true
+		await battles[i].save()
 	}
 	await leaderboard.save()
-	await battles.save()
 }
 
 router.post('/previous-battles', async (req, res) => {

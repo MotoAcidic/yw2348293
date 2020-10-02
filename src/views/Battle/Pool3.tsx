@@ -40,6 +40,7 @@ import useTokenBalance from '../../hooks/useTokenBalance'
 import useUnstake from '../../hooks/useUnstake'
 import useFarms from '../../hooks/useFarms'
 //import { getWarAPR, getPoolEndTime } from '../../yamUtils'
+import alert from './unstakeAlert.js'
 
 
 function isMobile() {
@@ -122,6 +123,11 @@ const WarPool: React.FC = () => {
 		/>
 	)
 
+	const unstake = () => {
+		alert()
+		onPresentUnstake()
+	}
+
 	const handleApprove = useCallback(async () => {
 		try {
 			setRequestedApproval(true)
@@ -171,7 +177,7 @@ const WarPool: React.FC = () => {
 								<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
 								<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
 								<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
-								<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>
+								{/* <Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button> */}
 								{/* <Button size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</Button>
 								<Button size='lg' onClick={onReward} disabled={true}>Claim Rewards</Button>
 								<Button size='lg' onClick={onPresentUnstake} disabled={true}>Unstake Tokens</Button>
@@ -219,7 +225,7 @@ const WarPool: React.FC = () => {
 						<>
 							<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
 							<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
-							<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
+							<Button size='lg' onClick={unstake}>Unstake Tokens</Button>
 							{/*<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>*/}
 							{/* <Button size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</Button>
 							<Button size='lg' onClick={onReward} disabled={true}>Claim Rewards</Button>

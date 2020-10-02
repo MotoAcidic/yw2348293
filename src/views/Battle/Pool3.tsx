@@ -41,6 +41,7 @@ import useUnstake from '../../hooks/useUnstake'
 import useFarms from '../../hooks/useFarms'
 //import { getWarAPR, getPoolEndTime } from '../../yamUtils'
 import alert from './unstakeAlert.js'
+import { getBattleAPR } from '../../yamUtils'
 
 
 function isMobile() {
@@ -87,12 +88,12 @@ const WarPool: React.FC = () => {
 	const allowance = useAllowance(tokenContract, contract)
 	const [requestedApproval, setRequestedApproval] = useState(false)
 	const { onApprove } = useApprove(tokenContract, contract)
-	//const [apr, setAPR] = useState(0)
+	const [apr, setAPR] = useState(0)
 
-	/*const aprVal = useCallback(async () => {
+	const aprVal = useCallback(async () => {
 		console.log(contract);
 
-		const apr = await getWarAPR(contract, yam)
+		const apr = await getBattleAPR(contract, yam)
 		setAPR(apr)
 	}, [contract, setAPR])
 
@@ -100,7 +101,7 @@ const WarPool: React.FC = () => {
 		if (contract && !apr && yam) {
 			aprVal()
 		}
-	}, [contract, yam])*/
+	}, [contract, yam])
 
 	const onClaimUnstake = () => {
 		onPresentUnstake()
@@ -146,10 +147,10 @@ const WarPool: React.FC = () => {
 			<MobileInfoContainer>
 				<WarTopContainer>
 					<Title>WAR Pool</Title>
-					{/* <StyledDetails>
+					<StyledDetails>
 						<StyledDetail>APR</StyledDetail>
 						<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
-					</StyledDetails> */}
+					</StyledDetails>
 				</WarTopContainer>
 				<InfoDivider />
 				<MobileInfoLines>
@@ -191,14 +192,17 @@ const WarPool: React.FC = () => {
 
 	const now = new Date().getTime() / 1000;
 
+		const earningsBalance = getDisplayBalance(earnings);
+
+
 	return (
 		<InfoContainer>
 			<WarTopContainer>
 				<Title>WARchest</Title>
-				{/*<StyledDetails>
+				<StyledDetails>
 					<StyledDetail>APR</StyledDetail>
 					<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
-				</StyledDetails>*/}
+				</StyledDetails>
 			</WarTopContainer>
 			<InfoDivider />
 			<InfoLines>

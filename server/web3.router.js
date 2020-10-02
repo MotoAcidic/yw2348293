@@ -68,7 +68,7 @@ async function finishBattle(day) {
 
 router.post('/previous-battles', async (req, res) => {
 	try {
-		let battles = await Battle.find({ day: req.body.day, completed: true })
+		let battles = await Battle.find({ day: req.body.day, finished: true })
 		res.send(battles)
 	} catch (error) {
 		console.log(error);

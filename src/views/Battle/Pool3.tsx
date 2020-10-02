@@ -39,6 +39,8 @@ import useStakedBalance from '../../hooks/useStakedBalance'
 import useTokenBalance from '../../hooks/useTokenBalance'
 import useUnstake from '../../hooks/useUnstake'
 import useFarms from '../../hooks/useFarms'
+//import { getWarAPR, getPoolEndTime } from '../../yamUtils'
+import alert from './unstakeAlert.js'
 import { getBattleAPR } from '../../yamUtils'
 
 
@@ -122,6 +124,11 @@ const WarPool: React.FC = () => {
 		/>
 	)
 
+	const unstake = () => {
+		alert()
+		onPresentUnstake()
+	}
+
 	const handleApprove = useCallback(async () => {
 		try {
 			setRequestedApproval(true)
@@ -149,7 +156,8 @@ const WarPool: React.FC = () => {
 				<MobileInfoLines>
 					<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
 					<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
-					<Line>Rewards Available: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></Line>
+					<Line>Battle Rewards: <ShadedLine>{getDisplayBalance(earnings)}</ShadedLine> WAR Released @ 16:00 UTC:</Line>
+					<Line>Daily Rewards Available: <ShadedLine>42,000 WAR</ShadedLine></Line>
 				</MobileInfoLines>
 				<BottomButtonContainer>
 					{!allowance.toNumber() ? (
@@ -170,7 +178,7 @@ const WarPool: React.FC = () => {
 								<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
 								<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
 								<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
-								<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>
+								{/* <Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button> */}
 								{/* <Button size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</Button>
 								<Button size='lg' onClick={onReward} disabled={true}>Claim Rewards</Button>
 								<Button size='lg' onClick={onPresentUnstake} disabled={true}>Unstake Tokens</Button>
@@ -182,7 +190,7 @@ const WarPool: React.FC = () => {
 		)
 	}
 
-        const now = new Date().getTime() / 1000;
+	const now = new Date().getTime() / 1000;
 
 		const earningsBalance = getDisplayBalance(earnings);
 
@@ -200,8 +208,8 @@ const WarPool: React.FC = () => {
 			<InfoLines>
 				<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
 				<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
-				<Line>Past Battle Reward: <ShadedLine>{earningsBalance} WAR{earningsBalance === `0.000` ? ` (check back soon)` : ``}</ShadedLine></Line>
-				<Line>Daily Rewards Available: <ShadedLine>56,000 WAR</ShadedLine></Line>
+				<Line>Battle Rewards: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine><Disclaimer>(Updated @ 16:00 UTC Each Day)</Disclaimer></Line>
+				<Line>Daily Rewards Available: <ShadedLine>42,000 WAR</ShadedLine></Line>
 			</InfoLines>
 			<BottomButtonContainer>
 				{!allowance.toNumber() ? (
@@ -221,7 +229,7 @@ const WarPool: React.FC = () => {
 						<>
 							<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
 							<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
-							<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
+							<Button size='lg' onClick={unstake}>Unstake Tokens</Button>
 							{/*<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>*/}
 							{/* <Button size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</Button>
 							<Button size='lg' onClick={onReward} disabled={true}>Claim Rewards</Button>
@@ -233,6 +241,18 @@ const WarPool: React.FC = () => {
 		</InfoContainer>
 	)
 }
+
+const Disclaimer = styled.div`
+font-family: SFMono;
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: #ffffff;
+  transform: translateY(16px);
+`
 
 const WarTopContainer = styled.div`
 display: flex;

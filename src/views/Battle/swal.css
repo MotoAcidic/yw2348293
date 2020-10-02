@@ -1,0 +1,42 @@
+.title-class {
+	font-family: Alegreya;
+	font-size: 23px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.75;
+	letter-spacing: normal;
+	text-align: center;
+	color: #003677;
+}
+
+.text-class {
+	font-family: Alegreya;
+	font-size: 18px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.75;
+	letter-spacing: normal;
+	text-align: center;
+	color: #003677;
+}
+
+.container-class {
+	padding: 0px;
+}
+
+.confirm-button-class {
+	width: 135px;
+	height: 40px;
+	border-radius: 8px;
+	border: solid 2px #0095f0;
+	font-family: Alegreya;
+	font-size: 20px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1;
+	letter-spacing: normal;
+	color: white;
+}

@@ -28,6 +28,8 @@ import useFarm from '../../hooks/useFarm'
 import { Farm } from '../../contexts/Farms'
 import Cookie from 'universal-cookie'
 import axios from 'axios'
+import Swal from 'sweetalert2'
+import './swal.css'
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -36,6 +38,13 @@ function isMobile() {
 	else {
 		return false
 	}
+}
+
+function getServerURI() {
+	if (window.location.hostname === 'localhost') {
+		return 'http://localhost:5000'
+	}
+	return 'https://yieldwars-api.herokuapp.com'
 }
 
 let cookie = new Cookie()
@@ -101,7 +110,7 @@ const Versus = ({ battles }) => {
 			]
 		}), account).catch(err => console.log(err))
 		console.log(signature);
-		axios.post('https://yieldwars-api.herokuapp.com/api/vote', {
+		axios.post(`${getServerURI()}/api/vote`, {
 			address: account,
 			vote: [
 				{
@@ -117,14 +126,62 @@ const Versus = ({ battles }) => {
 		}).then(res => {
 			console.log(res);
 			setVoted(true)
+			Swal.fire({
+				title: 'Your votes have been recorded successfully!',
+				text: 'Check back tomorrow to see the victors and rewards',
+				width: '600',
+				height: '465',
+				padding: '10',
+				customClass: {
+					container: 'container-class',
+					// popup: 'popup-class',
+					// header: 'header-class',
+					title: 'title-class',
+					// text: 'text-class',
+					// closeButton: 'close-button-class',
+					// icon: 'icon-class',
+					// image: 'image-class',
+					content: 'text-class',
+					// input: 'input-class',
+					// actions: 'actions-class',
+					confirmButton: 'confirm-button-class',
+					// denyButton: 'confirm-button-class',
+					// cancelButton: 'cancel-button-class',
+					// footer: 'footer-class'
+				}
+			})
 		}).catch(err => {
 			console.log(err);
+			Swal.fire({
+				title: 'Error submitting your votes',
+				text: `Please let us know and we'll take care of it. ${err.status}`,
+				width: '600',
+				height: '465',
+				padding: '10',
+				customClass: {
+					container: 'container-class',
+					// popup: 'popup-class',
+					// header: 'header-class',
+					title: 'title-class',
+					// text: 'text-class',
+					// closeButton: 'close-button-class',
+					// icon: 'icon-class',
+					// image: 'image-class',
+					content: 'text-class',
+					// input: 'input-class',
+					// actions: 'actions-class',
+					confirmButton: 'confirm-button-class',
+					// denyButton: 'confirm-button-class',
+					// cancelButton: 'cancel-button-class',
+					// footer: 'footer-class'
+				}
+			})
 		})
 	}
 
 	useEffect(() => {
 		if (account) {
-			axios.post('https://yieldwars-api.herokuapp.com/api/status', {
+			axios.post(`${getServerURI()}/api/status`, {
 				address: account,
 			}).then(res => {
 				console.log(res.data);
@@ -136,7 +193,7 @@ const Versus = ({ battles }) => {
 		}
 	}, [account])
 
-	console.log(battle2);
+
 
 	return (
 		<>
@@ -209,7 +266,7 @@ const Versus = ({ battles }) => {
 				</VersusItem>
 			</VSContentContainer>
 			{account && <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button>}
-			<Title>How the battles work  </Title>
+			<Title style={{ marginTop: '6vh' }}>How the battles work </Title>
 			<StyledContainer>
 				<StyledCard>
 					<StyledCardContent>

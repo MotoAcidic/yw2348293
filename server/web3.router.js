@@ -19,34 +19,34 @@ let day = 0
 day = getDay()
 
 function getDay() {
-	let day = Math.floor(((Date.now() - 1601395200) / 86400) + 1)
+	let day = Math.floor(((Date.now()/ 1000 - 1601395200) / 86400) + 1)
 	console.log(day);
 	
 	return day
 }
 
-cron.schedule('0 1 */1 * *', async () => {
+cron.schedule('0 * * * *', async () => {
 	let today = getDay()
-	let tomorrow = Math.floor(((Date.now() + 3600 - 1601395200) / 86400) + 1)
+	let tomorrow = Math.floor(((Date.now()/1000 + 3600 - 1601395200) / 86400) + 1)
 	console.log(today, tomorrow);
 
 	if (tomorrow > today) {
 		finishBattle(today)
-		setTimeout(async () => {
-			let schedule = await Schedule.find({ day: tomorrow })
-			schedule.forEach(async match => {
-				let battle = new Battle({
-					day: match.day,
-					pool1: {
-						name: match.pool1
-					},
-					pool2: {
-						name: match.pool2
-					}
-				})
-				await battle.save()
-			})
-		}, 3600000);
+		// setTimeout(async () => {
+		// 	let schedule = await Schedule.find({ day: tomorrow })
+		// 	schedule.forEach(async match => {
+		// 		let battle = new Battle({
+		// 			day: match.day,
+		// 			pool1: {
+		// 				name: match.pool1
+		// 			},
+		// 			pool2: {
+		// 				name: match.pool2
+		// 			}
+		// 		})
+		// 		await battle.save()
+		// 	})
+		// }, 3600000);
 	}
 });
 
@@ -61,10 +61,21 @@ async function finishBattle(day) {
 	})
 	for (let i = 0; i < battles.length; i++) {
 		battles[i].finished = true
+		await battles[i].save()
 	}
 	await leaderboard.save()
-	await battles.save()
 }
+
+router.post('/previous-battles', async (req, res) => {
+	try {
+		let battles = await Battle.find({ day: req.body.day, finished: true })
+		res.send(battles)
+	} catch (error) {
+		console.log(error);
+
+		res.status(500).send('error retrieving info')
+	}
+})
 
 router.post('/vote', async (req, res) => {
 	if (!req.body) {
@@ -77,7 +88,7 @@ router.post('/vote', async (req, res) => {
 			vote: req.body.vote
 		}
 		const signingAddress = web3.eth.accounts.recover(JSON.stringify(s), req.body.sig);
-		let day = 3
+		let day = getDay()
 		let votes = new BigNumber(await contract.methods.balanceOf(req.body.address).call()).dividedBy(10 ** 18).toFixed(18)
 		console.log(votes);
 
@@ -86,7 +97,7 @@ router.post('/vote', async (req, res) => {
 			return
 		}
 		req.body.vote.forEach(async r => {
-			let battle = await Battle.findOne({ _id: r._id, day: day })
+			let battle = await Battle.findOne({ _id: r._id, day: day, finished: false })
 			if (battle.pool1.votes.findIndex(vote => vote.address === req.body.address) !== -1 || battle.pool2.votes.findIndex(vote => vote.address === req.body.address) !== -1) {
 				res.status(403)
 				return
@@ -114,7 +125,7 @@ router.post('/status', async (req, res) => {
 	// console.log(req.body.address);
 
 	try {
-		let day = 3
+		let day = getDay()
 		let battles = await Battle.find({ day: day })
 		let battle1 = battles[0]
 		let battle2 = battles[1]
@@ -137,9 +148,9 @@ router.post('/status', async (req, res) => {
 
 router.get('/battles', async (req, res) => {
 	try {
-		let day = 3
+		let day = getDay()
 
-		let battles = await Battle.find({ day: day })
+		let battles = await Battle.find({ day: day, finished: false })
 		for (let i = 0; i < battles.length; i++) {
 			battles[i].pool1.votes = null
 			battles[i].pool1.totalVotes = null
@@ -156,22 +167,6 @@ router.get('/battles', async (req, res) => {
 	}
 })
 
-router.post('/previous-battles', async (req, res) => {
-	let day = ((Date.now() - 1601395200) / 86400)
-	if (req.body.day >= day) {
-		res.sendStatus(403)
-		return
-	}
-	try {
-		console.log(req.body);
-		
-		let battles = await Battle.find({ day: req.body.day })
-		res.send(battles)
-	} catch (error) {
-		console.log(error);
 
-		res.status(500).send('error retrieving info')
-	}
-})
 
 module.exports = router

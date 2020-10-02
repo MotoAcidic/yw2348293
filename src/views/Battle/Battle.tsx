@@ -30,9 +30,6 @@ import { getStats } from './utils'
 import Cookie from 'universal-cookie'
 import VersusCard from './VersusCard.jsx'
 
-import CountDown from './CountDown'
-
-const cookie = new Cookie()
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -43,37 +40,12 @@ function isMobile() {
   }
 }
 
-let vs = [{
-  pool1: 'FARM',
-  pool2: 'UNI'
-}, {
-  pool1: 'UNI',
-  pool2: 'FARM'
-}]
-
-let leaderboard = ['FARM', 'UNI', 'FARM', 'UNI', 'FARM']
-
-let schedule = [{
-  date: 1,
-  v1: {
-    pool1: 'FARM',
-    pool2: 'UNI'
-  },
-  v2: {
-    pool1: 'FARM',
-    pool2: 'UNI'
+function getServerURI() {
+  if (window.location.hostname === 'localhost') {
+    return 'http://localhost:5000'
   }
-}, {
-  date: 2,
-  v1: {
-    pool1: 'FARM',
-    pool2: 'UNI'
-  },
-  v2: {
-    pool1: 'FARM',
-    pool2: 'UNI'
-  }
-}]
+  return 'https://yieldwars-api.herokuapp.com'
+}
 
 export interface OverviewData {
   circSupply?: string,
@@ -120,10 +92,9 @@ const Battle: React.FC = () => {
       fetchTotalValue(farms)
     }
     if (battles.length === 0) {
-      axios.get('https://yieldwars-api.herokuapp.com/api/battles').then(res => {
-        console.log(res.data);
+      axios.get(`${getServerURI()}/api/battles`).then(res => {
         let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
-          return a.votes - b.votes;
+          return b.votes - a.votes;
         })
         console.log(lb);
         setLeaderboard(lb)
@@ -153,30 +124,31 @@ const Battle: React.FC = () => {
         <LeaderBoardItem key={index}>
           <StyledContent>
             {index + 1}{rank}
-            <CardIcon>{pool.icon}</CardIcon>
-            <StyledTitle>{pool.id}</StyledTitle>
+            <StyledCardIcon>{pool.icon}</StyledCardIcon>
+            <StyledTitle>{pool.name}</StyledTitle>
+            <StyledVotes>{item.votes} votes</StyledVotes>
           </StyledContent>
         </LeaderBoardItem>
       )
     })
 
-    scheduleContent = schedule.map((item, index) => {
-      return (
-        <ScheduleItem>
-          Oct {item.date}
-          <Versus>
-            {item.v1.pool1}
-                  VS
-            {item.v1.pool2}
-          </Versus>
-          <Versus>
-            {item.v2.pool1}
-                  VS
-            {item.v2.pool2}
-          </Versus>
-        </ScheduleItem>
-      )
-    })
+    // scheduleContent = schedule.map((item, index) => {
+    //   return (
+    //     <ScheduleItem>
+    //       Oct {item.date}
+    //       <Versus>
+    //         {item.v1.pool1}
+    //               VS
+    //         {item.v1.pool2}
+    //       </Versus>
+    //       <Versus>
+    //         {item.v2.pool1}
+    //               VS
+    //         {item.v2.pool2}
+    //       </Versus>
+    //     </ScheduleItem>
+    //   )
+    // })
   }
 
   let currentPrice = 0
@@ -203,7 +175,7 @@ const Battle: React.FC = () => {
             <Pool3 />
             <Title style={{ marginTop: '4vh' }}>Step 2: Vote for the armies you will fight for</Title>
             {battles.length > 0 && <VersusCard battles={battles} />}
-            <Title>Leaderboard</Title>
+            <Title style={{marginTop: '5vh'}}>Leaderboard</Title>
             {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}
 
             {/* <Title>Schedule</Title>
@@ -230,6 +202,17 @@ width: 595px;
   color: #ffffff;
 `
 
+const StyledCardIcon = styled.div`
+  background-color: #002450;
+  font-size: 36px;
+  height: 80px;
+  width: 80px;
+  border-radius: 40px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  box-shadow: rgb(226, 214, 207) 4px 4px 8px inset, rgb(247, 244, 242) -6px -6px 12px inset;
+`
 
 
 const ScheduleVSCard = styled.div`
@@ -278,7 +261,7 @@ width: 65%;
 const LeaderBoardItem = styled.div`
 text-align: center;
 width: 175px;
-  height: 187px;
+  height: 200px;
   border-radius: 8px;
   border: solid 2px #0095f0;
   background-color: #003677;
@@ -311,10 +294,24 @@ flex-direction: column;
 justify-content: space-evenly;
 `
 
+const StyledVotes = styled.h4`
+margin: 0;
+font-family: Alegreya;
+font-size: 16px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+color: #ffffff;
+  padding: 0;
+`
+
 const StyledTitle = styled.h4`
 margin: 0;
 font-family: Alegreya;
-font-size: 25px;
+font-size: 20px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
@@ -438,7 +435,7 @@ font-family: Alegreya;
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
-  margin-top: 1%;
+  margin-top: 1vh;
 `
 
 const InfoDivider = styled.div`

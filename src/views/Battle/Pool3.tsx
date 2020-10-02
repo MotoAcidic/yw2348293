@@ -41,7 +41,7 @@ import useUnstake from '../../hooks/useUnstake'
 import useFarms from '../../hooks/useFarms'
 //import { getWarAPR, getPoolEndTime } from '../../yamUtils'
 import alert from './unstakeAlert.js'
-import { getBattleAPR } from '../../yamUtils'
+import { harvest, getBattleAPR } from '../../yamUtils'
 
 
 function isMobile() {
@@ -78,7 +78,7 @@ const WarPool: React.FC = () => {
 		return getContract(ethereum as provider, depositTokenAddress)
 	}, [ethereum, depositTokenAddress])
 
-
+	
 	const { onReward } = useReward(contract)
 	const earnings = useEarnings(contract)
 	const tokenBalance = useTokenBalance(depositTokenAddress)
@@ -103,9 +103,14 @@ const WarPool: React.FC = () => {
 		}
 	}, [contract, yam])
 
-	const onClaimUnstake = () => {
+	/*const onClaimUnstake = () => {
 		onPresentUnstake()
 		onReward();
+	}*/
+
+	const onClaimRestake = async () => {
+		onStake(earnings.dividedBy(10**18).toString());
+		harvest(contract, account);
 	}
 
 	const [onPresentStake] = useModal(
@@ -177,8 +182,9 @@ const WarPool: React.FC = () => {
 							<MobileButtons>
 								<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
 								<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
+								<Button size='lg' onClick={onClaimRestake} disabled={!earnings.toNumber()}>Claim & Restake</Button>
 								<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
-								{/* <Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button> */}
+								{/*<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>*/}
 								{/* <Button size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</Button>
 								<Button size='lg' onClick={onReward} disabled={true}>Claim Rewards</Button>
 								<Button size='lg' onClick={onPresentUnstake} disabled={true}>Unstake Tokens</Button>
@@ -229,6 +235,7 @@ const WarPool: React.FC = () => {
 						<>
 							<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
 							<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
+							<Button size='lg' onClick={onClaimRestake} disabled={!earnings.toNumber()}>Claim & Restake</Button>
 							<Button size='lg' onClick={unstake}>Unstake Tokens</Button>
 							{/*<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>*/}
 							{/* <Button size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</Button>

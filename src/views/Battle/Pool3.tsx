@@ -149,7 +149,8 @@ const WarPool: React.FC = () => {
 				<MobileInfoLines>
 					<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
 					<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
-					<Line>Rewards Available: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></Line>
+					<Line>Battle Rewards: <ShadedLine>{getDisplayBalance(earnings)}</ShadedLine> WAR Released @ 16:00 UTC:</Line>
+					<Line>Daily Rewards Available: <ShadedLine>42,000 WAR</ShadedLine></Line>
 				</MobileInfoLines>
 				<BottomButtonContainer>
 					{!allowance.toNumber() ? (
@@ -182,7 +183,7 @@ const WarPool: React.FC = () => {
 		)
 	}
 
-        const now = new Date().getTime() / 1000;
+	const now = new Date().getTime() / 1000;
 
 	return (
 		<InfoContainer>
@@ -197,7 +198,7 @@ const WarPool: React.FC = () => {
 			<InfoLines>
 				<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
 				<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
-				<Line>Past Battle Reward: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></Line>
+				<Line>Battle Rewards: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine><Disclaimer>(Updated @ 16:00 UTC Each Day)</Disclaimer></Line>
 				<Line>Daily Rewards Available: <ShadedLine>42,000 WAR</ShadedLine></Line>
 			</InfoLines>
 			<BottomButtonContainer>
@@ -230,6 +231,18 @@ const WarPool: React.FC = () => {
 		</InfoContainer>
 	)
 }
+
+const Disclaimer = styled.div`
+font-family: SFMono;
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: #ffffff;
+  transform: translateY(16px);
+`
 
 const WarTopContainer = styled.div`
 display: flex;

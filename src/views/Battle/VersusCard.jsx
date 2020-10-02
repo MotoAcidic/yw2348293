@@ -216,7 +216,7 @@ const Versus = ({ battles }) => {
 				</VersusItem>
 			</VSContentContainer>
 			{account && <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button>}
-			<Title>How the battles work  </Title>
+			<Title style={{marginTop: '6vh'}}>How the battles work </Title>
 			<StyledContainer>
 				<StyledCard>
 					<StyledCardContent>

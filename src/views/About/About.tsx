@@ -99,7 +99,7 @@ const About: React.FC = () => {
             </Rectangle>
             <Rectangle>
               <RecTitle>What was the reason for launching YieldWars?</RecTitle>
-              <RecDesc>We were looking at current DeFi projects and thought things were pretty lame. We wanted to build a DeFi game that would bring all the communities together and incentive users to engage in daily voting, first in YieldWars, and eventually on our governance platform to build the future of YieldWars with us.</RecDesc>
+              <RecDesc>We were looking at current DeFi projects and thought things were pretty lame. We wanted to build a DeFi game that would bring all the communities together and incentivize users to engage in daily voting, first in YieldWars, and eventually on our governance platform to build the future of YieldWars with us.</RecDesc>
             </Rectangle>
             <Rectangle>
               <RecTitle>What is the Future Roadmap?</RecTitle>

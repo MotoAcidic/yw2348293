@@ -184,6 +184,39 @@ const Farms: React.FC = ({ children }) => {
         id: "CHADS",
         sort: 9
       },
+      {
+        contract: undefined,
+        name: "PICKLE Ricks",
+        depositToken: "PICKLE",
+        depositTokenAddress: undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "🥒",
+        id: "PICKLE",
+        sort: 9
+      },
+      {
+        contract: undefined,
+        name: "MEME Pineapples",
+        depositToken: "MEME",
+        depositTokenAddress: undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "🍍",
+        id: "MEME",
+        sort: 9
+      },
+      {
+        contract: undefined,
+        name: "YAM Yahoos",
+        depositToken: "YAM",
+        depositTokenAddress:  undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "🍠",
+        id: "YAM",
+        sort: 9
+      },
 
       {
         contract: pools ? pools["unipool_pool"] : undefined,
@@ -192,8 +225,20 @@ const Farms: React.FC = ({ children }) => {
         depositTokenAddress: tokens ? tokens["unipool_token"].options.address : undefined,
         earnToken: 'WAR',
         earnTokenAddress: yamAddress,
-        icon: "🦍",
+        icon: "",
         id: "UNIPOOL",
+        sort: 9
+      },
+
+      {
+        contract: pools ? pools["battlepool_pool"] : undefined,
+        name: "",
+        depositToken: "WAR",
+        depositTokenAddress: tokens ? tokens["battlepool_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "",
+        id: "BATTLEPOOL",
         sort: 9
       },
     ]

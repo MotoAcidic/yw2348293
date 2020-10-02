@@ -12,7 +12,7 @@ import useFarms from '../../../hooks/useFarms'
 
 import { Farm } from '../../../contexts/Farms'
 
-import { getAPR, getPoolEndTime } from '../../../yamUtils'
+//import { getAPR, getPoolEndTime } from '../../../yamUtils'
 import useYam from '../../../hooks/useYam'
 
 function isMobile() {
@@ -83,7 +83,7 @@ const WARNING_TIMESTAMP = 1598000400000
 const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   // const [startTime, setStartTime] = useState(0)
   // const [endTime, setEndTime] = useState(0)
-  const [apr, setAPR] = useState(0)
+  //const [apr, setAPR] = useState(0)
   const yam = useYam()
 
   // const getStartTime = useCallback(async () => {
@@ -118,8 +118,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   // const poolActive = ((startTime * 1000)) - Date.now() <= 0
   // console.log(farm);
 
-  const aprVal = useCallback(async () => {
-    const apr = farm.id !== `CHADS` && farm.id !== `UNIPOOL` ? await getAPR(farm, yam) : 0;
+  /*const aprVal = useCallback(async () => {
+    const apr = farm.id !== `CHADS` && farm.id !== `UNIPOOL` && farm.id !== `BATTLEPOOL` ? await getAPR(farm, yam) : 0;
     setAPR(apr)
   }, [farm, setAPR])
 
@@ -127,11 +127,11 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
     if (farm.contract && !apr && yam) {
       aprVal()
     }
-  }, [farm, yam])
+  }, [farm, yam])*/
 
   // console.log(farm);
   
-  if (farm.id === `UNIPOOL`) {
+  if (farm.id === `UNIPOOL` || farm.id === `BATTLEPOOL` || farm.id === `YAM` || farm.id === `MEME` || farm.id === `PICKLE`) {
     return null;
   }
 
@@ -153,12 +153,12 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
               to={`/farms/${farm.id}`}
               size='xlg'
             />
-            {apr !== 0 && (
+            {/*apr !== 0 && (
             <StyledDetails>
               <StyledDetail>APR</StyledDetail>
               <StyledDetail>{apr ? `${apr.toFixed(2)}%*` : 'Coming soon'}</StyledDetail>
             </StyledDetails>
-            )}
+            )*/}
           </StyledContent>
         </CardContent>
       </Card>

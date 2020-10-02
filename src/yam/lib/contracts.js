@@ -37,7 +37,7 @@ export class Contracts {
     this.uni_fact = new this.web3.eth.Contract(UNIFactJson);
     this.UNIAmpl = new this.web3.eth.Contract(ERC20Json.abi);
 
-    this.war = new this.web3.eth.Contract(WARJson.abi);
+    this.war = new this.web3.eth.Contract(ERC20Json.abi);
 
     this.pricing = new this.web3.eth.Contract(PricingJson.abi);
 

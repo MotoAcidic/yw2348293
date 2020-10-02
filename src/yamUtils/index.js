@@ -93,6 +93,7 @@ export const redeem = async (poolContract, account) => {
 }
 
 export const approve = async (tokenContract, poolContract, account) => {
+
   return tokenContract.methods
     .approve(poolContract.options.address, ethers.constants.MaxUint256)
     .send({ from: account, gas: 80000 })
@@ -457,6 +458,9 @@ export const getRewardRate = async (pool) => {
 }
 
 export const getTotalSupply = async (pool) => {
+  if (!pool.contract) {
+    return 0
+  }
   let totalSupply = new BigNumber(await pool.contract.methods.totalSupply().call());
   if (pool.id == "SRM") { // SRM has 6 decimals
     totalSupply = totalSupply.div(10 ** 6);
@@ -489,6 +493,13 @@ export const getWarAPR = async (contract, yam) => {
   return apy
 }
 
+export const getBattleAPR = async (contract, yam) => {
+  let rewardPerYear = new BigNumber(56000).multipliedBy(365);
+  const totalSupply = new BigNumber(await contract.methods.totalSupply().call()).div(10 ** 18);
+  let apy = rewardPerYear.dividedBy(totalSupply).multipliedBy(100).toNumber()
+  return apy
+}
+
 export const getTotalValue = async (pools, yam) => {
   let totalValue = new BigNumber(0)
   let poolValues = {}
@@ -496,15 +507,17 @@ export const getTotalValue = async (pools, yam) => {
   if (pools && pools[0].contract) {
     for (let i = 0; i < pools.length; i++) {
       let pool = pools[i]
-      let supply = new BigNumber(await getTotalSupply(pool))
-      let prices = await getAssetPrices(yam)
-      prices = prices[pool.id]
-      poolValues[pool.contract._address] = supply.multipliedBy(prices) //await pool.contract.methods.totalSupply().call())
-      totalValue = totalValue.plus(supply.multipliedBy(prices))
-      //console.log(pool.id, supply.multipliedBy(prices).toString())
+      if (pool.contract) {
+        let supply = new BigNumber(await getTotalSupply(pool))
+        let prices = await getAssetPrices(yam)
+        prices = prices[pool.id]
+        poolValues[pool.contract._address] = supply.multipliedBy(prices) //await pool.contract.methods.totalSupply().call())
+        totalValue = totalValue.plus(supply.multipliedBy(prices))
+        //console.log(pool.id, supply.multipliedBy(prices).toString())
 
-      if (i === (pools.length - 1)) {
-        return { totalValue, poolValues };
+        if (i === (pools.length - 1)) {
+          return { totalValue, poolValues };
+        }
       }
     }
   }
@@ -572,8 +585,9 @@ export const getAssetPrices = async (yam) => {
 
     let priceData = {};
     keys.forEach((key, i) => priceData[key] = yam.toBigN(priceArr[i]).div(10 ** 6).toFixed(4));
-    
+
     priceData["UNIPOOL"] = 35;
+    priceData["BATTLEPOOL"] = priceData["WAR"];
     assetPrices = priceData;
     return priceData;
   }

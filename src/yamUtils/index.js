@@ -494,7 +494,7 @@ export const getWarAPR = async (contract, yam) => {
 }
 
 export const getBattleAPR = async (contract, yam) => {
-  let rewardPerYear = new BigNumber(56000).multipliedBy(365);
+  let rewardPerYear = new BigNumber(28000).multipliedBy(365);
   const totalSupply = new BigNumber(await contract.methods.totalSupply().call()).div(10 ** 18);
   let apy = rewardPerYear.dividedBy(totalSupply).multipliedBy(100).toNumber()
   return apy

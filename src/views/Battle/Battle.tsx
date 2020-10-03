@@ -177,7 +177,7 @@ const Battle: React.FC = () => {
             {battles.length > 0 && <VersusCard battles={battles} />}
             <Title style={{marginTop: '5vh'}}>Leaderboard</Title>
             {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}
-
+            <Title style={{marginTop: '5vh'}}>Previous Battles</Title>
             {/* <Title>Schedule</Title>
             <Schedule>
               {scheduleContent}

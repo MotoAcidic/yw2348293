@@ -138,7 +138,7 @@ const Farms: React.FC = () => {
               )}
               <WarPool />
               <Disclaimer>
-              The pools below in pool 1 are CLOSED. do not stake in them, you will not earn any yield. New pools will open up on Oct 9th for Season 2
+              The pools below in pool 1 are CLOSED. Do not stake in them, you will not earn any yield. New pools will open up on Oct 9th for Season 2.
               </Disclaimer>
               <FarmCards />
               {/*<SectionDivider />

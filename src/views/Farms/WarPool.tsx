@@ -45,7 +45,6 @@ import useUnstake from '../../hooks/useUnstake'
 import useFarms from '../../hooks/useFarms'
 import { getWarAPR, getPoolEndTime } from '../../yamUtils'
 
-
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
 		return true
@@ -105,10 +104,10 @@ const WarPool: React.FC = () => {
 		}
 	}, [contract, yam])
 
-	const onClaimUnstake = () => {
+	/*const onClaimUnstake = () => {
 		onPresentUnstake()
 		onReward();
-	}
+	}*/
 
 	const [onPresentStake] = useModal(
 		<StakeModal
@@ -174,7 +173,7 @@ const WarPool: React.FC = () => {
 								<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
 								<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
 								<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
-								<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>
+								{/*<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>*/}
 								{/* <Button size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</Button>
 								<Button size='lg' onClick={onReward} disabled={true}>Claim Rewards</Button>
 								<Button size='lg' onClick={onPresentUnstake} disabled={true}>Unstake Tokens</Button>

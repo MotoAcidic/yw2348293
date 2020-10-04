@@ -133,6 +133,9 @@ const Farms: React.FC = () => {
                 </DisplayItem>
                 <DisplayItem>Supply: 2,800,000</DisplayItem>
               </TopDisplayContainer>
+              {/*<HelloBar>YieldWars Battle page will launch at 5pm PT today!!
+              Official statement on our telegram here: <a style={{color: 'white'}} href="https://t.me/YieldWarsOfficial/4548">https://t.me/YieldWarsOfficial/4548</a>
+              </HelloBar>*/}
               <TextContainer>
                 <StyledA
                   href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
@@ -155,9 +158,9 @@ const Farms: React.FC = () => {
               )}
               <WarPool />
               <Disclaimer>
-                The pools below in pool 1 are CLOSED. do not stake in them, you
+                The pools below in pool 1 are CLOSED. Do not stake in them, you
                 will not earn any yield. New pools will open up on Oct 9th for
-                Season 2
+                Season 2.
               </Disclaimer>
               <FarmCards />
               {/*<SectionDivider />

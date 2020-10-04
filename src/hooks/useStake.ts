@@ -9,6 +9,7 @@ const useStake = (poolContract: Contract) => {
   const { account } = useWallet()
 
   const handleStake = useCallback(async (amount: string) => {
+    console.log(amount);
     const txHash = await stake(poolContract, amount, account)
     console.log(txHash)
   }, [account, poolContract])

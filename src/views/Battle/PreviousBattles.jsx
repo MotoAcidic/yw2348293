@@ -55,6 +55,9 @@ const Versus = ({ history }) => {
 	let [farms] = useFarms()
 	const yam = useYam()
 	const { account, connect } = useWallet()
+	if (!history.length) {
+		return null
+	}
 	let formattedHistory = []
 	for (let i = 0; i < history.length / 2; i++) {
 		formattedHistory.push(history.filter(item => item.day - 1 === i))

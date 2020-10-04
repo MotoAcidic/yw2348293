@@ -62,13 +62,18 @@ const Versus = ({ history }) => {
 	for (let i = 0; i < history.length / 2; i++) {
 		formattedHistory.push(history.filter(item => item.day - 1 === i))
 	}
+	formattedHistory.reverse()
 	formattedHistory = formattedHistory.map(item => {
 		let pool1 = farms.find(farm => farm.id === item[0].pool1.name)
 		let pool2 = farms.find(farm => farm.id === item[0].pool2.name)
 		let pool3 = farms.find(farm => farm.id === item[1].pool1.name)
 		let pool4 = farms.find(farm => farm.id === item[1].pool2.name)
+		if (!pool1 || !pool2 || !pool3 || !pool4) {
+			return null
+		}
 		let winner1 = item[0].pool1.totalVotes - item[0].pool2.totalVotes > 0 ? 1 : 2
 		let winner2 = item[1].pool1.totalVotes - item[1].pool2.totalVotes > 0 ? 1 : 2
+
 
 		console.log(item[0].pool1.totalVotes);
 		return (

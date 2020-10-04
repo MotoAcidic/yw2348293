@@ -56,7 +56,7 @@ const Versus = ({ schedule }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	if (!schedule || !schedule.length) {
-		return null
+		return <StyledTitle style={{marginTop: '3vh'}}>Check Back Later</StyledTitle>
 	}
 	let offset = schedule[0].day
 	for (let i = 0; i < schedule.length; i++) {
@@ -75,6 +75,9 @@ const Versus = ({ schedule }) => {
 		let pool2 = farms.find(farm => farm.id === item[0].pool2.name)
 		let pool3 = farms.find(farm => farm.id === item[1].pool1.name)
 		let pool4 = farms.find(farm => farm.id === item[1].pool2.name)
+		if (!pool1 || !pool2 || !pool3 || !pool4) {
+			return null
+		}
 
 		return (
 			<VSContentContainer>

@@ -29,7 +29,8 @@ import { getTotalValue } from '../../yamUtils'
 import { getStats } from './utils'
 import Cookie from 'universal-cookie'
 import VersusCard from './VersusCard.jsx'
-
+import BattleHistory from './PreviousBattles'
+import Schedule from './Schedule'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -62,7 +63,8 @@ const Battle: React.FC = () => {
   const { account, connect } = useWallet()
   let [battles, setBattles] = useState([])
   let [leaderboard, setLeaderboard] = useState([])
-  // let [voted, setVoted] = useState(cookie.get('voted'))
+  let [previousBattles, setPreviousBattles] = useState([])
+  let [schedule, setSchedule] = useState([])
 
   const [{
     circSupply,
@@ -98,8 +100,11 @@ const Battle: React.FC = () => {
         })
         console.log(lb);
         setLeaderboard(lb)
+        console.log(res.data);
+        
+        setPreviousBattles(res.data.history)
         setBattles(res.data.battles)
-
+        setSchedule(res.data.schedule)
       }).catch(err => {
         console.log(err);
 
@@ -109,7 +114,6 @@ const Battle: React.FC = () => {
 
 
   let leaderboardContent;
-  let scheduleContent;
 
   if (farms[0]) {
     leaderboard = leaderboard.slice(0, 5)
@@ -126,29 +130,11 @@ const Battle: React.FC = () => {
             {index + 1}{rank}
             <StyledCardIcon>{pool.icon}</StyledCardIcon>
             <StyledTitle>{pool.name}</StyledTitle>
-            <StyledVotes>{item.votes} votes</StyledVotes>
+            <StyledVotes>{item.votes.toFixed(2)} votes</StyledVotes>
           </StyledContent>
         </LeaderBoardItem>
       )
     })
-
-    // scheduleContent = schedule.map((item, index) => {
-    //   return (
-    //     <ScheduleItem>
-    //       Oct {item.date}
-    //       <Versus>
-    //         {item.v1.pool1}
-    //               VS
-    //         {item.v1.pool2}
-    //       </Versus>
-    //       <Versus>
-    //         {item.v2.pool1}
-    //               VS
-    //         {item.v2.pool2}
-    //       </Versus>
-    //     </ScheduleItem>
-    //   )
-    // })
   }
 
   let currentPrice = 0
@@ -177,11 +163,10 @@ const Battle: React.FC = () => {
             {battles.length > 0 && <VersusCard battles={battles} />}
             <Title style={{marginTop: '5vh'}}>Leaderboard</Title>
             {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}
+            <Title>Schedule</Title>
+            <Schedule schedule={schedule}/>
             <Title style={{marginTop: '5vh'}}>Previous Battles</Title>
-            {/* <Title>Schedule</Title>
-            <Schedule>
-              {scheduleContent}
-            </Schedule> */}
+            <BattleHistory history={previousBattles} />
           </Page>
         </ContentContainer>
       </StyledCanvas>
@@ -248,14 +233,6 @@ font-family: Alegreya;
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
-`
-
-const Schedule = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: space-evenly;
-height: 60vh;
-width: 65%;
 `
 
 const LeaderBoardItem = styled.div`
@@ -536,7 +513,7 @@ const AuthContainer = styled.div`
 
 const StyledSky = styled.div`
   width: 100%;
-  height: 270vh;
+  height: 370vh;
   background-image: url(${TallSky});
   background-size: 100% 100%;
   background-repeat: repeat-x;

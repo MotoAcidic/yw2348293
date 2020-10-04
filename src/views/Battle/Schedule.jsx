@@ -51,12 +51,19 @@ function getServerURI() {
 let cookie = new Cookie()
 
 
-const Versus = ({ history }) => {
+const Versus = ({ schedule }) => {
 	let [farms] = useFarms()
 	const yam = useYam()
 	const { account, connect } = useWallet()
+	let offset = schedule[0].day
+	for (let i = 0; i < schedule.length; i++) {
+		if (schedule[i].day ) {
+			
+		}
+		
+	}
 	let formattedHistory = []
-	for (let i = 0; i < history.length / 2; i++) {
+	for (let i = 0; i < schedule.length / 2; i++) {
 		formattedHistory.push(history.filter(item => item.day - 1 === i))
 	}
 	formattedHistory = formattedHistory.map(item => {

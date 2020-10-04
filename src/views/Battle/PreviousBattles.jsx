@@ -263,6 +263,7 @@ font-family: Alegreya;
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
+  margin-bottom: 20px;
 `
 
 const StyledContent = styled.div`
@@ -289,7 +290,7 @@ color: #ffffff;
 `
 
 const StyledTitle = styled.h4`
-width: 20%;
+width: 50%;
 margin: 0;
 font-family: Alegreya;
 font-size: 16px;
@@ -301,7 +302,6 @@ letter-spacing: normal;
 text-align: center;
 color: #ffffff;
   padding: 0;
-  transform: translateX(-20px);
 `
 
 const VersusCard = styled.div`

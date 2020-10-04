@@ -587,7 +587,7 @@ const StyledSky = !isMobile()
     `
   : styled.div`
       width: 100%;
-      height: 360vh;
+      height: 650vh;
       background-image: url(${TallSky});
       background-size: 100% 100%;
       background-repeat: repeat-x;

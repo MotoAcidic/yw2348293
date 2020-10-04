@@ -95,6 +95,7 @@ const Versus = ({ schedule }) => {
 							</StyledContent>
 						</VersusCard>
 					</VersusItem>
+					<Divider />
 					<VersusItem>
 						<VersusCard>
 							<StyledContent>
@@ -132,8 +133,8 @@ font-family: Alegreya;
   color: #ffffff;
 `
 
-const Divider = styled.div`
-margin-left: 10%;
+const Divider = !isMobile() ? styled.div`` : styled.div`
+margin: 20px 0 20px 10%;
 width: 80%;
   height: 2px;
   opacity: 0.5;
@@ -221,20 +222,33 @@ letter-spacing: normal;
 color: #ffffff;
 `
 
-const ScheduleContainer = styled.div`
+const ScheduleContainer = !isMobile() ? styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
 width: 1100px;
 margin-top: 3vh;
-`
+` : styled.div`
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-evenly;
+width: 80vw;
+margin-top: 3vh;
+`;
 
-const Container = styled.div`
+const Container = !isMobile() ? styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
+` : styled.div`
+flex-wrap: wrap;
+justify-content: space-around;
+flex-direction: row;
 `
-const VSContentContainer = styled.div`
+
+
+const VSContentContainer = !isMobile() ? styled.div`
 width: 499px;
   height: 189px;
   border-radius: 8px;
@@ -251,7 +265,25 @@ font-family: Alegreya;
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
-`
+` : styled.div`
+width: 100%;
+  border-radius: 8px;
+  border: solid 2px #0095f0;
+  background-color: #003677;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+font-family: Alegreya;
+  font-size: 25px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  margin-bottom: 20px;
+  padding: 20px 0 20px 0;
+`;
 
 const StyledContent = styled.div`
   align-items: center;

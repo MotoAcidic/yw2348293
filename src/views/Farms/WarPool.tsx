@@ -23,7 +23,6 @@ import { Contract } from 'web3-eth-contract'
 
 
 import Icon from '../../assets/img/icon.png'
-import Landscape from '../../assets/img/landscapebig.png'
 import TallSky from '../../assets/img/tallsky.png'
 import Sky from '../../assets/img/skybig.png'
 import StakeModal from './StakeModal'
@@ -241,7 +240,7 @@ flex-direction: row;
 justify-content: center;
 `
 
-const StyledDetails = styled.div`
+const StyledDetails = !isMobile() ? styled.div`
 position: absolute;
 display: flex;
 -webkit-box-pack: justify;
@@ -258,7 +257,21 @@ font-size: 13px;
 border: 1px solid rgb(230, 220, 213);
 text-align: center;
 padding: 0px 12px;
-`
+` : styled.div`
+position: absolute;
+display: flex;
+-webkit-box-pack: justify;
+justify-content: space-between;
+box-sizing: border-box;
+border-radius: 8px;
+background: rgb(20,91,170);
+color: rgb(170, 149, 132);
+width: 200px;
+margin-top: 50px;
+font-size: 13px;
+border: 1px solid rgb(230, 220, 213);
+text-align: center;
+padding: 0px 12px;`
 
 const StyledDetail = styled.div`
 font-family: Alegreya;
@@ -327,13 +340,13 @@ font-family: SFMono;
 `
 
 const MobileInfoLines = styled.div`
-width: 100%;
-height: 50%;
+width: 80%;
+height: 60%;
 display: flex;
 flex-direction: column;
 justify-content: space-evenly;
 text-align: left;
-margin: 3%;
+padding: 10% 10% 0% 10%;
 font-family: SFMono;
   font-size: 18px;
   font-weight: 600;
@@ -474,14 +487,6 @@ const StyledSky = styled.div`
   background-image: url(${Sky});
   background-size: 100% 100%;
   background-repeat: repeat-x;
-`
-
-const StyledLandscape = styled.div`
-  width: 100vw;
-  height: 45vh;
-  background-image: url(${Landscape});
-  background-size: cover;
-  transform: translateY(-1px)
 `
 
 const BackgroundSection = styled.div`

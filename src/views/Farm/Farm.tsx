@@ -143,15 +143,21 @@ const MobileStyledCardsWrapper = styled.div`
   display: flex;
   flex-direction: column-reverse;
   justify-content: space-evenly;
-  margin-bottom: 10vh;
 `
 
-const StyledCardWrapper = styled.div`
+const StyledCardWrapper = !isMobile() ? styled.div`
   display: flex;
   width: 300px;
   height: 350px;
-
-`
+` : styled.div`
+display: flex;
+width: 80vw;
+height: 300px;
+border-radius: 8px;
+border: solid 2px #0095f0;
+background-color: #003677;
+margin-bottom: 50px;
+`;
 
 const MobileStyledCardWrapper = styled.div`
   display: flex;
@@ -180,7 +186,7 @@ const StyledCanvas = styled.div`
 
 const StyledSky = styled.div`
   position: absolute;
-  width: 100vw;
+  width: 100%;
   height: 60%;
   background-image: url(${Sky});
   background-size: 100% 100%;
@@ -189,8 +195,8 @@ const StyledSky = styled.div`
 
 const MobileStyledSky = styled.div`
   position: absolute;
-  width: 100vw;
-  height: 200vh;
+  width: 100%;
+  height: 150vh;
   background-image: url(${Sky});
   background-size: 100% 100%;
   background-repeat: repeat-x;
@@ -209,7 +215,7 @@ const MobileStyledLandscape = styled.div`
 position: absolute;
   width: 100%;
   height: 45%;
-  top: 200vh;
+  top: 150vh;
   background-image: url(${Landscape});
   background-size: cover;
 `
@@ -220,7 +226,7 @@ const BackgroundSection = styled.div`
 
 const ContentContainer = styled.div`
   position: absolute;
-  width: 100vw;
+  width: 100%;
   text-align: center;
 `
 

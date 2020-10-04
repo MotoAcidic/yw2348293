@@ -505,7 +505,7 @@ const StyledSky = styled.div`
 `
 
 const StyledLandscape = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 45vh;
   background-image: url(${Landscape});
   background-size: cover;

@@ -231,7 +231,7 @@ margin-top: 3vh;
 
 const MobileStyledCards = styled.div`
 margin-top: 3vh;
-  width: 100vw;
+  width: 100%;
 `
 
 const StyledLoadingWrapper = styled.div`

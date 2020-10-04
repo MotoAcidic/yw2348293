@@ -172,7 +172,7 @@ const Farms: React.FC = () => {
   );
 };
 
-const StyledA = styled.a`
+const StyledA = !isMobile() ? styled.a`
   align-items: center;
   border: 0;
   border-radius: 18px;
@@ -199,7 +199,34 @@ const StyledA = styled.a`
   letter-spacing: normal;
   color: white;
   margin-bottom: 20px;
-`;
+` : styled.a`
+align-items: center;
+border: 0;
+border-radius: 18px;
+cursor: pointer;
+display: flex;
+font-size: 16px;
+border-radius: 8px;
+box-shadow: rgb(0, 34, 79) 6px 6px 12px, rgb(0, 54, 119) -12px -12px 24px -2px;
+background-image: url(${Uniswap});
+background-size: cover;
+min-height: 50px;
+justify-content: center;
+outline: none;
+padding-left: 10px;
+padding-right: 10px;
+opacity: 1;
+width: 180px;
+font-family: Alegreya;
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: white;
+margin-bottom: 20px;
+`
 
 const Disclaimer = styled.div`
   margin: 30px;
@@ -421,7 +448,7 @@ const StyledLandscape = styled.div`
 
 const MobileTallStyledSky = styled.div`
   width: 100%;
-  height: 850vh;
+  height: 900vh;
   background-image: url(${TallSky});
   background-size: 100% 100%;
   background-repeat: repeat-x;

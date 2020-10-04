@@ -7,6 +7,15 @@ interface PageHeaderProps {
   title?: string,
 }
 
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) {
+    return true
+  }
+  else {
+    return false
+  }
+}
+
 const PageHeader: React.FC<PageHeaderProps> = ({ icon, subtitle, title }) => {
   return (
     <StyledPageHeader>
@@ -26,13 +35,20 @@ const StyledPageHeader = styled.div`
   padding-top: ${props => props.theme.spacing[6]}px;
 `
 
-const StyledIcon = styled.div`
+const StyledIcon = !isMobile() ? styled.div`
   font-size: 96px;
   height: 96px;
   line-height: 96px;
   text-align: center;
   width: 96px;
-`
+` : styled.div`
+font-size: 96px;
+height: 96px;
+line-height: 96px;
+text-align: center;
+width: 96px;
+margin-bottom: 30px;
+`;
 
 const StyledTitle = styled.h1`
 font-family: Alegreya;

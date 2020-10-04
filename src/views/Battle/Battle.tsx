@@ -608,13 +608,21 @@ const AuthContainer = styled.div`
   justify-content: space-around;
 `;
 
-const StyledSky = styled.div`
-  width: 100%;
-  height: 360vh;
-  background-image: url(${TallSky});
-  background-size: 100% 100%;
-  background-repeat: repeat-x;
-`;
+const StyledSky = !isMobile()
+  ? styled.div`
+      width: 100%;
+      height: 270vh;
+      background-image: url(${TallSky});
+      background-size: 100% 100%;
+      background-repeat: repeat-x;
+    `
+  : styled.div`
+      width: 100%;
+      height: 360vh;
+      background-image: url(${TallSky});
+      background-size: 100% 100%;
+      background-repeat: repeat-x;
+    `;
 
 const StyledLandscape = styled.div`
   width: 100%;

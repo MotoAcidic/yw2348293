@@ -29,6 +29,7 @@ import { getTotalValue } from '../../yamUtils'
 import { getStats } from './utils'
 import Cookie from 'universal-cookie'
 import VersusCard from './VersusCard.jsx'
+import SingleVersusCard from './SingleVersusCard'
 import BattleHistory from './PreviousBattles'
 import Schedule from './Schedule'
 
@@ -160,7 +161,8 @@ const Battle: React.FC = () => {
             <Title>Step 1: Stake $WAR to enter the battle</Title>
             <Pool3 />
             <Title style={{ marginTop: '4vh' }}>Step 2: Vote for the armies you will fight for</Title>
-            {battles.length > 0 && <VersusCard battles={battles} />}
+            {battles.length === 2 && <VersusCard battles={battles} />}
+            {battles.length === 1 && <SingleVersusCard battles={battles} />}
             <Title style={{marginTop: '5vh'}}>Leaderboard</Title>
             {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}
             <Title>Schedule</Title>

@@ -35,3 +35,8 @@ code {
     background-position: 0% 50%;
   }
 }
+
+.medium-link {
+  max-width: 60%;
+  margin-bottom: 5px;
+}

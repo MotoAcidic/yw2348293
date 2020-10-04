@@ -180,7 +180,7 @@ const StyledCanvas = styled.div`
 
 const StyledSky = styled.div`
   position: absolute;
-  width: 100vw;
+  width: 100%;
   height: 60%;
   background-image: url(${Sky});
   background-size: 100% 100%;
@@ -189,7 +189,7 @@ const StyledSky = styled.div`
 
 const MobileStyledSky = styled.div`
   position: absolute;
-  width: 100vw;
+  width: 100%;
   height: 200vh;
   background-image: url(${Sky});
   background-size: 100% 100%;
@@ -220,7 +220,7 @@ const BackgroundSection = styled.div`
 
 const ContentContainer = styled.div`
   position: absolute;
-  width: 100vw;
+  width: 100%;
   text-align: center;
 `
 

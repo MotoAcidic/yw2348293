@@ -156,7 +156,8 @@ const WarPool: React.FC = () => {
 				<MobileInfoLines>
 					<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
 					<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
-					<Line>Battle Rewards: <ShadedLine>{getDisplayBalance(earnings)}</ShadedLine> WAR Released @ 16:00 UTC:</Line>
+					<Line>Battle Rewards: <ShadedLine>{getDisplayBalance(earnings)}</ShadedLine> </Line>
+					<MobileDisclaimer>(Updated @ 16:00 UTC Each Day)</MobileDisclaimer>
 					<Line>Daily Rewards Available: <ShadedLine>42,000 WAR</ShadedLine></Line>
 				</MobileInfoLines>
 				<BottomButtonContainer>
@@ -253,6 +254,17 @@ font-family: SFMono;
   color: #ffffff;
   transform: translateY(16px);
 `
+const MobileDisclaimer = styled.div`
+font-family: SFMono;
+  font-size: 12px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: 1px;
+  color: #ffffff;
+  transform: translateY(16px);
+  margin-top: -50px;
+`
 
 const WarTopContainer = styled.div`
 display: flex;
@@ -260,7 +272,7 @@ flex-direction: row;
 justify-content: center;
 `
 
-const StyledDetails = styled.div`
+const StyledDetails = !isMobile() ? styled.div`
 position: absolute;
 display: flex;
 -webkit-box-pack: justify;
@@ -277,7 +289,21 @@ font-size: 13px;
 border: 1px solid rgb(230, 220, 213);
 text-align: center;
 padding: 0px 12px;
-`
+` : styled.div`
+position: absolute;
+display: flex;
+-webkit-box-pack: justify;
+justify-content: space-between;
+box-sizing: border-box;
+border-radius: 8px;
+background: rgb(20,91,170);
+color: rgb(170, 149, 132);
+width: 200px;
+margin-top: 50px;
+font-size: 13px;
+border: 1px solid rgb(230, 220, 213);
+text-align: center;
+padding: 0px 12px;`
 
 const StyledDetail = styled.div`
 font-family: Alegreya;
@@ -346,13 +372,13 @@ font-family: SFMono;
 `
 
 const MobileInfoLines = styled.div`
-width: 100%;
-height: 50%;
+width: 80%;
+height: 60%;
 display: flex;
 flex-direction: column;
 justify-content: space-evenly;
 text-align: left;
-margin: 3%;
+padding: 10% 10% 0% 10%;
 font-family: SFMono;
   font-size: 18px;
   font-weight: 600;
@@ -496,7 +522,7 @@ const StyledSky = styled.div`
 `
 
 const StyledLandscape = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 45vh;
   background-image: url(${Landscape});
   background-size: cover;

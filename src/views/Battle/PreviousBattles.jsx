@@ -55,7 +55,7 @@ const Versus = ({ history }) => {
 	let [farms] = useFarms()
 	const yam = useYam()
 	const { account, connect } = useWallet()
-	if (!history.length) {
+	if (!history || !history.length) {
 		return null
 	}
 	let formattedHistory = []
@@ -106,8 +106,8 @@ const Versus = ({ history }) => {
 							{winner2 === 1 ? <WinningCardIcon>{pool3.icon}</WinningCardIcon> : <StyledCardIcon>{pool3.icon}</StyledCardIcon>}
 							<StyledTitle>{pool3.name}</StyledTitle>
 							<Percent>{
-								((parseInt(item[0].pool1.totalVotes, 10) /
-									(parseInt(item[0].pool1.totalVotes, 10) + parseInt(item[0].pool2.totalVotes, 10)))
+								((parseInt(item[1].pool1.totalVotes, 10) /
+									(parseInt(item[1].pool1.totalVotes, 10) + parseInt(item[1].pool2.totalVotes, 10)))
 									* 100).toFixed(0)
 							}%</Percent>
 						</StyledContent>
@@ -118,8 +118,8 @@ const Versus = ({ history }) => {
 							{winner2 === 2 ? <WinningCardIcon>{pool4.icon}</WinningCardIcon> : <StyledCardIcon>{pool4.icon}</StyledCardIcon>}
 							<StyledTitle>{pool4.name}</StyledTitle>
 							<Percent>{
-								((parseInt(item[0].pool2.totalVotes, 10) /
-									(parseInt(item[0].pool1.totalVotes, 10) + parseInt(item[0].pool2.totalVotes, 10)))
+								((parseInt(item[1].pool2.totalVotes, 10) /
+									(parseInt(item[1].pool1.totalVotes, 10) + parseInt(item[1].pool2.totalVotes, 10)))
 									* 100).toFixed(0)
 							}%</Percent>
 						</StyledContent>

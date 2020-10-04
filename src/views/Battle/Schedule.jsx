@@ -55,86 +55,68 @@ const Versus = ({ schedule }) => {
 	let [farms] = useFarms()
 	const yam = useYam()
 	const { account, connect } = useWallet()
+	if (!schedule.length) {
+		return null
+	}
 	let offset = schedule[0].day
 	for (let i = 0; i < schedule.length; i++) {
-		if (schedule[i].day ) {
-			
+		if (schedule[i].day < offset) {
+			offset = schedule[i].day
 		}
-		
 	}
-	let formattedHistory = []
+	let formattedSchedule = []
 	for (let i = 0; i < schedule.length / 2; i++) {
-		formattedHistory.push(history.filter(item => item.day - 1 === i))
+		formattedSchedule.push(schedule.filter(item => item.day === i + offset))
 	}
-	formattedHistory = formattedHistory.map(item => {
+	console.log(formattedSchedule);
+
+	formattedSchedule = formattedSchedule.map(item => {
 		let pool1 = farms.find(farm => farm.id === item[0].pool1.name)
 		let pool2 = farms.find(farm => farm.id === item[0].pool2.name)
 		let pool3 = farms.find(farm => farm.id === item[1].pool1.name)
 		let pool4 = farms.find(farm => farm.id === item[1].pool2.name)
-		let winner1 = item[0].pool1.totalVotes - item[0].pool2.totalVotes > 0 ? 1 : 2
-		let winner2 = item[1].pool1.totalVotes - item[1].pool2.totalVotes > 0 ? 1 : 2
 
-		console.log(item[0].pool1.totalVotes);
 		return (
 			<VSContentContainer>
-				{item[0].day - 1 ? <div>Oct {item[0].day - 1}</div> : <div>Sept 30th</div>}
-				<VersusItem>
-					<VersusCard>
-						<StyledContent>
-							{winner1 === 1 ? <WinningCardIcon>{pool1.icon}</WinningCardIcon> : <StyledCardIcon>{pool1.icon}</StyledCardIcon>}
-							<StyledTitle>{pool1.name}</StyledTitle>
-							<Percent>{
-								((parseInt(item[0].pool1.totalVotes, 10) /
-									(parseInt(item[0].pool1.totalVotes, 10) + parseInt(item[0].pool2.totalVotes, 10)))
-									* 100).toFixed(0)
-							}%</Percent>
-						</StyledContent>
-					</VersusCard>
+				<div>Oct {item[0].day - 1}</div>
+				<Container>
+					<VersusItem>
+						<VersusCard>
+							<StyledContent>
+								<StyledCardIcon>{pool1.icon}</StyledCardIcon>
+								<StyledTitle>{pool1.name}</StyledTitle>
+							</StyledContent>
+						</VersusCard>
                     VS
 					<VersusCard>
-						<StyledContent>
-							{winner1 === 2 ? <WinningCardIcon>{pool2.icon}</WinningCardIcon> : <StyledCardIcon>{pool2.icon}</StyledCardIcon>}
-							<StyledTitle>{pool2.name}</StyledTitle>
-							<Percent>{
-								((parseInt(item[0].pool1.totalVotes, 10) /
-									(parseInt(item[0].pool1.totalVotes, 10) + parseInt(item[0].pool2.totalVotes, 10)))
-									* 100).toFixed(0)
-							}%</Percent>
-						</StyledContent>
-					</VersusCard>
-				</VersusItem>
-				<Divider />
-				<VersusItem>
-					<VersusCard>
-						<StyledContent>
-							{winner2 === 1 ? <WinningCardIcon>{pool3.icon}</WinningCardIcon> : <StyledCardIcon>{pool3.icon}</StyledCardIcon>}
-							<StyledTitle>{pool3.name}</StyledTitle>
-							<Percent>{
-								((parseInt(item[0].pool1.totalVotes, 10) /
-									(parseInt(item[0].pool1.totalVotes, 10) + parseInt(item[0].pool2.totalVotes, 10)))
-									* 100).toFixed(0)
-							}%</Percent>
-						</StyledContent>
-					</VersusCard>
+							<StyledContent>
+								<StyledCardIcon>{pool2.icon}</StyledCardIcon>
+								<StyledTitle>{pool2.name}</StyledTitle>
+							</StyledContent>
+						</VersusCard>
+					</VersusItem>
+					<VersusItem>
+						<VersusCard>
+							<StyledContent>
+								<StyledCardIcon>{pool3.icon}</StyledCardIcon>
+								<StyledTitle>{pool3.name}</StyledTitle>
+							</StyledContent>
+						</VersusCard>
                     VS
 					<VersusCard>
-						<StyledContent>
-							{winner2 === 2 ? <WinningCardIcon>{pool4.icon}</WinningCardIcon> : <StyledCardIcon>{pool4.icon}</StyledCardIcon>}
-							<StyledTitle>{pool4.name}</StyledTitle>
-							<Percent>{
-								((parseInt(item[0].pool1.totalVotes, 10) /
-									(parseInt(item[0].pool1.totalVotes, 10) + parseInt(item[0].pool2.totalVotes, 10)))
-									* 100).toFixed(0)
-							}%</Percent>
-						</StyledContent>
-					</VersusCard>
-				</VersusItem>
+							<StyledContent>
+								<StyledCardIcon>{pool4.icon}</StyledCardIcon>
+								<StyledTitle>{pool4.name}</StyledTitle>
+							</StyledContent>
+						</VersusCard>
+					</VersusItem>
+				</Container>
 			</VSContentContainer>
 		)
 	})
 
 	return (
-		<Container>{formattedHistory}</Container>
+		<ScheduleContainer>{formattedSchedule}</ScheduleContainer>
 	)
 }
 
@@ -185,14 +167,6 @@ box-shadow: rgb(226, 214, 207) 4px 4px 8px inset, rgb(247, 244, 242) -6px -6px 1
 border: solid 2px #ffd500;
 
 margin: 2px;
-`
-
-const Container = styled.div`
-display: flex;
-flex-wrap: wrap;
-justify-content: space-around;
-width: 1200px;
-margin-top: 3vh;
 `
 
 const Title = styled.div`
@@ -247,12 +221,22 @@ letter-spacing: normal;
 color: #ffffff;
 `
 
-const ButtonContainer = styled.div`
+const ScheduleContainer = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+width: 1100px;
+margin-top: 3vh;
+`
 
+const Container = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
 `
 const VSContentContainer = styled.div`
-width: 332px;
-  height: 398px;
+width: 499px;
+  height: 189px;
   border-radius: 8px;
   border: solid 2px #0095f0;
   background-color: #003677;
@@ -292,8 +276,8 @@ letter-spacing: normal;
 color: #ffffff;
 `
 
-const StyledTitle = styled.h4`
-width: 20%;
+const StyledTitle = styled.div`
+width: 50%;
 margin: 0;
 font-family: Alegreya;
 font-size: 16px;
@@ -305,7 +289,6 @@ letter-spacing: normal;
 text-align: center;
 color: #ffffff;
   padding: 0;
-  transform: translateX(-20px);
 `
 
 const VersusCard = styled.div`

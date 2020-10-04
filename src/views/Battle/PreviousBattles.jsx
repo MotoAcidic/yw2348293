@@ -89,7 +89,7 @@ const Versus = ({ history }) => {
 							{winner1 === 2 ? <WinningCardIcon>{pool2.icon}</WinningCardIcon> : <StyledCardIcon>{pool2.icon}</StyledCardIcon>}
 							<StyledTitle>{pool2.name}</StyledTitle>
 							<Percent>{
-								((parseInt(item[0].pool1.totalVotes, 10) /
+								((parseInt(item[0].pool2.totalVotes, 10) /
 									(parseInt(item[0].pool1.totalVotes, 10) + parseInt(item[0].pool2.totalVotes, 10)))
 									* 100).toFixed(0)
 							}%</Percent>
@@ -115,7 +115,7 @@ const Versus = ({ history }) => {
 							{winner2 === 2 ? <WinningCardIcon>{pool4.icon}</WinningCardIcon> : <StyledCardIcon>{pool4.icon}</StyledCardIcon>}
 							<StyledTitle>{pool4.name}</StyledTitle>
 							<Percent>{
-								((parseInt(item[0].pool1.totalVotes, 10) /
+								((parseInt(item[0].pool2.totalVotes, 10) /
 									(parseInt(item[0].pool1.totalVotes, 10) + parseInt(item[0].pool2.totalVotes, 10)))
 									* 100).toFixed(0)
 							}%</Percent>

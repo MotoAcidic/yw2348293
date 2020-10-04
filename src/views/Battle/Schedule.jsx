@@ -55,7 +55,7 @@ const Versus = ({ schedule }) => {
 	let [farms] = useFarms()
 	const yam = useYam()
 	const { account, connect } = useWallet()
-	if (!schedule.length) {
+	if (!schedule || !schedule.length) {
 		return null
 	}
 	let offset = schedule[0].day

@@ -55,7 +55,7 @@ const Versus = ({ history }) => {
 	let [farms] = useFarms()
 	const yam = useYam()
 	const { account, connect } = useWallet()
-	if (!history.length) {
+	if (!history || !history.length) {
 		return null
 	}
 	let formattedHistory = []

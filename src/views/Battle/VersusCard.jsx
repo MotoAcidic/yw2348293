@@ -22,6 +22,7 @@ import Landscape from '../../assets/img/landscapebig.png'
 import Sky from '../../assets/img/skybig.png'
 import TallSky from '../../assets/img/tallsky.png'
 import FightInstructions from '../../assets/img/flightinstructions.png'
+import DailyQuestion from "./DailyQuestion.jsx";
 
 import useFarms from '../../hooks/useFarms'
 import useFarm from '../../hooks/useFarm'
@@ -50,7 +51,7 @@ function getServerURI() {
 let cookie = new Cookie()
 
 
-const Versus = ({ battles }) => {
+const Versus = ({ battles, question }) => {
 	let [farms] = useFarms()
 	const yam = useYam()
 	const { account, connect } = useWallet()
@@ -58,6 +59,7 @@ const Versus = ({ battles }) => {
 	const [voted, setVoted] = useState(false)
 	const [checked1, setChecked1] = useState(cookie.get(battles[0]._id))
 	const [checked2, setChecked2] = useState(cookie.get(battles[1]._id))
+	const [questionResponse, setQuestionResponse] = useState("");
 	const farmTemplate = {
 		icon: "🤔",
 		name: "THINKING Errors"
@@ -85,7 +87,7 @@ const Versus = ({ battles }) => {
 		let vote1
 		let vote2
 		console.log(checked1, checked2);
-		if (!checked1 || !checked2)
+		if (!checked1 || !checked2 || !questionResponse)
 			return
 		if (checked1 == 1)
 			vote1 = battle1.farm1.id
@@ -107,7 +109,8 @@ const Versus = ({ battles }) => {
 					vote: vote2,
 					_id: battles[1]._id,
 				}
-			]
+			],
+			questionResponse,
 		}), account).catch(err => console.log(err))
 		console.log(signature);
 		axios.post(`${getServerURI()}/api/vote`, {
@@ -122,6 +125,7 @@ const Versus = ({ battles }) => {
 					_id: battles[1]._id,
 				}
 			],
+			questionResponse,
 			sig: signature
 		}).then(res => {
 			console.log(res);
@@ -188,12 +192,12 @@ const Versus = ({ battles }) => {
 				setVoted(res.data)
 			}).catch(err => {
 				console.log(err);
-
 			})
 		}
-	}, [account])
-
-
+		if (question) {
+			setQuestionResponse(cookie.get(question[0]._id));
+		}
+	}, [account, question])
 
 	return (
 		<>
@@ -265,12 +269,16 @@ const Versus = ({ battles }) => {
 					</VersusCard>
 				</VersusItem>
 			</VSContentContainer>
+			{question &&
+				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} voted={voted} />
+			}
+
 			{account && <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button>}
 			<Title style={{ marginTop: '6vh' }}>How the battles work </Title>
 			<StyledContainer>
-					<StyledCardContent>
-						<img src={FightInstructions} width="100%" />
-					</StyledCardContent>
+				<StyledCardContent>
+					<img src={FightInstructions} width="100%" />
+				</StyledCardContent>
 			</StyledContainer>
 		</>
 	)
@@ -332,7 +340,7 @@ const ButtonContainer = styled.div`
 `
 const VSContentContainer = !isMobile() ? styled.div`
 margin-top: 1vh;
-width: 600px;
+width: 540px;
 height: 600px;
 display: flex;
 flex-direction: column;
@@ -424,7 +432,7 @@ const VersusItem = !isMobile() ? styled.div`
 width: 100%;
 display: flex;
 flex-direction: row;
-justify-content: space-evenly;
+justify-content: space-between;
 align-items: center;
 font-size: 30px;
 ` : styled.div`

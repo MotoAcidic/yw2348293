@@ -61,6 +61,7 @@ const Battle: React.FC = () => {
   let [leaderboard, setLeaderboard] = useState([])
   let [previousBattles, setPreviousBattles] = useState([])
   let [schedule, setSchedule] = useState([])
+  let [dailyQuestion, setDailyQuestion] = useState();
 
   const [
     {
@@ -100,11 +101,13 @@ const Battle: React.FC = () => {
         let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
           return b.votes - a.votes;
         });
+        console.log("battles", res.data);
         console.log(lb);
         setLeaderboard(lb);
         setPreviousBattles(res.data.history)
         setBattles(res.data.battles)
         setSchedule(res.data.schedule)
+        setDailyQuestion(res.data.dailyQuestion);
       }).catch(err => {
         console.log(err);
 
@@ -174,8 +177,8 @@ const Battle: React.FC = () => {
             <Title>Step 1: Stake $WAR to enter the battle</Title>
             <Pool3 />
             <Title style={{ marginTop: '4vh' }}>Step 2: Vote for the armies you will fight for</Title>
-            {battles.length === 2 && <VersusCard battles={battles} />}
-            {battles.length === 1 && <SingleVersusCard battles={battles} />}
+            {battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion}/>}
+            {battles.length === 1 && <SingleVersusCard battles={battles} question={dailyQuestion}/>}
             <Title style={{ marginTop: '5vh' }}>Leaderboard</Title>
             {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}
             <Title>Schedule</Title>

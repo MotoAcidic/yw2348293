@@ -22,6 +22,7 @@ import Landscape from '../../assets/img/landscapebig.png'
 import Sky from '../../assets/img/skybig.png'
 import TallSky from '../../assets/img/tallsky.png'
 import FightInstructions from '../../assets/img/flightinstructions.png'
+import DailyQuestion from "./DailyQuestion.jsx";
 
 import useFarms from '../../hooks/useFarms'
 import useFarm from '../../hooks/useFarm'
@@ -50,7 +51,7 @@ function getServerURI() {
 let cookie = new Cookie()
 
 
-const Versus = ({ battles }) => {
+const Versus = ({ battles, question }) => {
 	battles = battles[0]
 	let [farms] = useFarms()
 	const yam = useYam()
@@ -58,6 +59,7 @@ const Versus = ({ battles }) => {
 	console.log(battles);
 	const [voted, setVoted] = useState(false)
 	const [checked, setChecked] = useState(cookie.get(battles._id))
+	const [questionResponse, setQuestionResponse] = useState("");
 	const farmTemplate = {
 		icon: "🤔",
 		name: "THINKING Errors"
@@ -74,7 +76,7 @@ const Versus = ({ battles }) => {
 
 	const castVote = async () => {
 		let vote
-		if (!checked)
+		if (!checked|| !questionResponse)
 			return
 		if (checked == 1)
 			vote = battle.farm1.id
@@ -164,9 +166,10 @@ const Versus = ({ battles }) => {
 				console.log(err);
 			})
 		}
-	}, [account])
-
-
+		if (question) {
+			setQuestionResponse(cookie.get(question[0]._id));
+		}
+	}, [account, question])
 
 	return (
 		<>
@@ -205,6 +208,10 @@ const Versus = ({ battles }) => {
 					</VersusCard>
 				</VersusItem>
 			</VSContentContainer>
+			{question &&
+				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} />
+			}
+
 			{account && <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button>}
 			<Title style={{ marginTop: '6vh' }}>How the battles work </Title>
 			<StyledContainer>

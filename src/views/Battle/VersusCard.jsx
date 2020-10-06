@@ -52,6 +52,7 @@ let cookie = new Cookie()
 
 
 const Versus = ({ battles, question }) => {
+	console.log(question);
 	let [farms] = useFarms()
 	const yam = useYam()
 	const { account, connect } = useWallet()
@@ -59,7 +60,7 @@ const Versus = ({ battles, question }) => {
 	const [voted, setVoted] = useState(false)
 	const [checked1, setChecked1] = useState(cookie.get(battles[0]._id))
 	const [checked2, setChecked2] = useState(cookie.get(battles[1]._id))
-	const [questionResponse, setQuestionResponse] = useState("");
+	const [questionResponse, setQuestionResponse] = useState(null);
 	const farmTemplate = {
 		icon: "🤔",
 		name: "THINKING Errors"
@@ -87,7 +88,7 @@ const Versus = ({ battles, question }) => {
 		let vote1
 		let vote2
 		console.log(checked1, checked2);
-		if (!checked1 || !checked2 || !questionResponse)
+		if (!checked1 || !checked2 || (question && !questionResponse))
 			return
 		if (checked1 == 1)
 			vote1 = battle1.farm1.id
@@ -271,7 +272,6 @@ const Versus = ({ battles, question }) => {
 			{question &&
 				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} voted={voted} />
 			}
-
 			{account && <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button>}
 			<Title style={{ marginTop: '6vh' }}>How the battles work </Title>
 			<StyledContainer>

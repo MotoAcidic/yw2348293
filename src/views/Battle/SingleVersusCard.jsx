@@ -99,6 +99,7 @@ const Versus = ({ battles, question }) => {
 					_id: battles._id,
 				}
 			],
+			questionResponse,
 			sig: signature
 		}).then(res => {
 			setVoted(true)
@@ -127,10 +128,9 @@ const Versus = ({ battles, question }) => {
 				}
 			})
 		}).catch(err => {
-			console.log(err);
 			Swal.fire({
-				title: 'Error submitting your votes',
-				text: `Please let us know and we'll take care of it. ${err.status}`,
+				title: `Error submitting your votes: ${err.response.status}`,
+				text: `Response: ${err.response.data}\n Please let us know and we'll take care of it.`,
 				width: '600',
 				height: '465',
 				padding: '10',
@@ -167,7 +167,7 @@ const Versus = ({ battles, question }) => {
 			})
 		}
 		if (question) {
-			setQuestionResponse(cookie.get(question[0]._id));
+			setQuestionResponse(cookie.get(question._id));
 		}
 	}, [account, question])
 
@@ -283,7 +283,7 @@ const ButtonContainer = styled.div`
 const VSContentContainer = styled.div`
 margin-top: 1vh;
 width: 600px;
-height: 600px;
+margin: 40px 0 40px 0;
 display: flex;
 flex-direction: column;
 justify-content: space-evenly;

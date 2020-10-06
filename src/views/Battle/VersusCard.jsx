@@ -157,8 +157,8 @@ const Versus = ({ battles, question }) => {
 		}).catch(err => {
 			console.log(err);
 			Swal.fire({
-				title: 'Error submitting your votes',
-				text: `Please let us know and we'll take care of it. ${err.status}`,
+				title: `Error submitting your votes: ${err.response.status}`,
+				text: `Response: ${err.response.data}\n Please let us know and we'll take care of it.`,
 				width: '600',
 				height: '465',
 				padding: '10',

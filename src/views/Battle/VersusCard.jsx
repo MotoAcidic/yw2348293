@@ -109,8 +109,7 @@ const Versus = ({ battles, question }) => {
 					vote: vote2,
 					_id: battles[1]._id,
 				}
-			],
-			questionResponse,
+			]
 		}), account).catch(err => console.log(err))
 		console.log(signature);
 		axios.post(`${getServerURI()}/api/vote`, {

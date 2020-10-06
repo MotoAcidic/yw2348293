@@ -298,10 +298,9 @@ const TextSection = !isMobile()
     `;
 
 const LinkSection = styled.div`
-  display: flex;
-  align-items: flex-start;
   font-family: Alegreya;
   font-size: 18px;
+  margin-bottom: 10px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -382,7 +381,7 @@ const Rectangle = !isMobile()
       background-color: #003677;
     `
   : styled.div`
-      width: 100%;
+      width: 90vw;
       border-radius: 8px;
       border: solid 2px #0095f0;
       background-color: #003677;
@@ -472,13 +471,13 @@ const StyledCard = styled.div`
 
 const StyledSky = !isMobile() ? styled.div`
   width: 100%;
-  height: 80vh;
+  height: 200vh;
   background-image: url(${TallSky});
   background-size: 100% 100%;
   background-repeat: repeat-x;
 ` : styled.div`
 width: 100%;
-height: 420vh;
+height: 320vh;
 background-image: url(${TallSky});
 background-size: 100% 100%;
 background-repeat: repeat-x;`

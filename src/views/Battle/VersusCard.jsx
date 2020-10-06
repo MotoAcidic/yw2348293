@@ -195,7 +195,7 @@ const Versus = ({ battles, question }) => {
 			})
 		}
 		if (question) {
-			setQuestionResponse(cookie.get(question[0]._id));
+			setQuestionResponse(cookie.get(question._id));
 		}
 	}, [account, question])
 

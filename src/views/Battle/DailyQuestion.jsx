@@ -52,19 +52,19 @@ function getServerURI() {
 let cookie = new Cookie()
 
 const Question = ({ question, setResponse, voted }) => {
-	const [checked, setChecked] = useState(cookie.get(question[0]._id))
+	const [checked, setChecked] = useState(cookie.get(question._id))
 
 	const pick = (g) => {
 		if (voted) { 
 			return;
 		}
-		cookie.set(question[0]._id, g);
+		cookie.set(question._id, g);
 		setChecked(g);
 		setResponse(g)
 	}
 
 	let questionOptions = [];
-	question[0].options.forEach((option) => {
+	question.options.forEach((option) => {
 		questionOptions.push(
 			<StyledContent>
 				<StyledTitle>{option.name}</StyledTitle>
@@ -87,7 +87,7 @@ const Question = ({ question, setResponse, voted }) => {
 			<RecDesc>
 				Community question
       </RecDesc>
-			<RecTitle>{question[0].description}</RecTitle>
+			<RecTitle>{question.description}</RecTitle>
 			{questionOptions}
 		</VersusCard>
 

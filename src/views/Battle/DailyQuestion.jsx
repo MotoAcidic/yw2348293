@@ -165,6 +165,7 @@ padding: 30px;
   border: solid 2px #0095f0;
 	background-color: #003677;
 	margin-bottom: 20px;
+	margin-top: 40px;
 ` : styled.div`
 width: 80vw;
 display: flex;

@@ -58,15 +58,20 @@ const Versus = ({ battles, question }) => {
 	const { account, connect } = useWallet()
 	console.log(battles);
 	const [voted, setVoted] = useState(false)
-	const [checked, setChecked] = useState(cookie.get(battles._id))
+	const [checked, setChecked] = useState(false);
 	const [questionResponse, setQuestionResponse] = useState("");
 	const farmTemplate = {
 		icon: "🤔",
 		name: "THINKING Errors"
 	}
-	const battle = {
-		farm1: farms.find(farm => farm.id === battles.pool1.name) || farmTemplate,
-		farm2: farms.find(farm => farm.id === battles.pool2.name) || farmTemplate
+
+	let battle;
+	if (battles) {
+
+		battle = {
+			farm1: farms.find(farm => farm.id === battles.pool1.name) || farmTemplate,
+			farm2: farms.find(farm => farm.id === battles.pool2.name) || farmTemplate
+		}
 	}
 
 	const pick = (g) => {
@@ -75,9 +80,16 @@ const Versus = ({ battles, question }) => {
 	}
 
 	const castVote = async () => {
-		let vote
-		if (!checked|| !questionResponse)
+		let vote;
+		if (!checked && !questionResponse)
 			return
+
+		if (!battles) {
+			battles = {
+				_id: null
+			}
+		}
+
 		if (checked == 1)
 			vote = battle.farm1.id
 		if (checked == 2)
@@ -103,6 +115,7 @@ const Versus = ({ battles, question }) => {
 			sig: signature
 		}).then(res => {
 			setVoted(true)
+			cookie.set(question._id + "1", true);
 			Swal.fire({
 				title: 'Your votes have been recorded successfully!',
 				text: 'Check back tomorrow to see the victors and rewards',
@@ -156,11 +169,15 @@ const Versus = ({ battles, question }) => {
 	}
 
 	useEffect(() => {
+		const questionVoted = cookie.get(question._id + "1");
+		if (questionVoted) {
+			setVoted(true);
+		}
 		if (account) {
 			axios.post(`${getServerURI()}/api/status`, {
 				address: account,
 			}).then(res => {
-				console.log(res.data);
+				console.log("here", res.data);
 				setVoted(res.data)
 			}).catch(err => {
 				console.log(err);
@@ -169,45 +186,51 @@ const Versus = ({ battles, question }) => {
 		if (question) {
 			setQuestionResponse(cookie.get(question._id));
 		}
-	}, [account, question])
+		if (battles) {
+			setChecked(cookie.get(battles._id))
+		}
+	}, [account, question, battles])
 
 	return (
 		<>
-			<VSContentContainer>
-				<VersusItem>
-					<VersusCard>
-						<StyledContent>
-							<CardIcon>{battle.farm1.icon}</CardIcon>
-							<StyledTitle>{battle.farm1.name}</StyledTitle>
-							{checked == 1 ? (
-								<ButtonContainer onClick={() => pick(1)}>
-									<img src={checkedIcon} width="40%" />
-								</ButtonContainer>
-							) : (
+			{battles &&
+				<VSContentContainer>
+					<VersusItem>
+						<VersusCard>
+							<StyledContent>
+								<CardIcon>{battle.farm1.icon}</CardIcon>
+								<StyledTitle>{battle.farm1.name}</StyledTitle>
+								{checked == 1 ? (
 									<ButtonContainer onClick={() => pick(1)}>
-										<img src={uncheckedIcon} width="40%" />
+										<img src={checkedIcon} width="40%" />
 									</ButtonContainer>
-								)}
-						</StyledContent>
-					</VersusCard>
+								) : (
+										<ButtonContainer onClick={() => pick(1)}>
+											<img src={uncheckedIcon} width="40%" />
+										</ButtonContainer>
+									)}
+							</StyledContent>
+						</VersusCard>
                     VS
 					<VersusCard>
-						<StyledContent>
-							<CardIcon>{battle.farm2.icon}</CardIcon>
-							<StyledTitle>{battle.farm2.name}</StyledTitle>
-							{checked == 2 ? (
-								<ButtonContainer onClick={() => pick(2)}>
-									<img src={checkedIcon} width="40%" />
-								</ButtonContainer>
-							) : (
+							<StyledContent>
+								<CardIcon>{battle.farm2.icon}</CardIcon>
+								<StyledTitle>{battle.farm2.name}</StyledTitle>
+								{checked == 2 ? (
 									<ButtonContainer onClick={() => pick(2)}>
-										<img src={uncheckedIcon} width="40%" />
+										<img src={checkedIcon} width="40%" />
 									</ButtonContainer>
-								)}
-						</StyledContent>
-					</VersusCard>
-				</VersusItem>
-			</VSContentContainer>
+								) : (
+										<ButtonContainer onClick={() => pick(2)}>
+											<img src={uncheckedIcon} width="40%" />
+										</ButtonContainer>
+									)}
+							</StyledContent>
+						</VersusCard>
+					</VersusItem>
+				</VSContentContainer>
+			}
+
 			{question &&
 				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} />
 			}
@@ -215,9 +238,9 @@ const Versus = ({ battles, question }) => {
 			{account && <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button>}
 			<Title style={{ marginTop: '6vh' }}>How the battles work </Title>
 			<StyledContainer>
-					<StyledCardContent>
-						<img src={FightInstructions} width="100%" />
-					</StyledCardContent>
+				<StyledCardContent>
+					<img src={FightInstructions} width="100%" />
+				</StyledCardContent>
 			</StyledContainer>
 		</>
 	)

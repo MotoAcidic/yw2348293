@@ -40,3 +40,7 @@ code {
   max-width: 60%;
   margin-bottom: 5px;
 }
+
+.milestone-image {
+  width: 30px;
+}

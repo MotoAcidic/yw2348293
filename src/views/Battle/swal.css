@@ -20,6 +20,7 @@
 	letter-spacing: normal;
 	text-align: center;
 	color: #003677;
+	white-space: pre-line;
 }
 
 .container-class {

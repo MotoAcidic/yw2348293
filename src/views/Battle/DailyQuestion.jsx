@@ -55,7 +55,7 @@ const Question = ({ question, setResponse, voted }) => {
 	const [checked, setChecked] = useState(cookie.get(question._id))
 
 	const pick = (g) => {
-		if (voted) { 
+		if (voted) {
 			return;
 		}
 		cookie.set(question._id, g);
@@ -88,6 +88,13 @@ const Question = ({ question, setResponse, voted }) => {
 				Community question
       </RecDesc>
 			<RecTitle>{question.description}</RecTitle>
+			{question.link &&
+				<a href={question.link.url} target="_blank" style={{ textDecoration: "none" }}>
+					<RecDesc>
+						{question.link.text} »
+      </RecDesc>
+				</a>
+			}
 			{questionOptions}
 		</VersusCard>
 
@@ -103,11 +110,11 @@ font-family: Alegreya;
   line-height: 1;
   letter-spacing: normal;
 	color: #ffffff;
-	margin-bottom: 20px;
 `;
 
 const RecTitle = styled.div`
 font-family: Alegreya;
+margin: 20px 0 20px 0;
   font-size: 25px;
   font-weight: bold;
   font-stretch: normal;

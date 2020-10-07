@@ -99,6 +99,7 @@ const Versus = ({ battles, question }) => {
 					_id: battles._id,
 				}
 			],
+			questionResponse,
 			sig: signature
 		}).then(res => {
 			setVoted(true)
@@ -127,10 +128,9 @@ const Versus = ({ battles, question }) => {
 				}
 			})
 		}).catch(err => {
-			console.log(err);
 			Swal.fire({
-				title: 'Error submitting your votes',
-				text: `Please let us know and we'll take care of it. ${err.status}`,
+				title: `Error submitting your votes: ${err.response.status}`,
+				text: `Response: ${err.response.data}\n Please let us know and we'll take care of it.`,
 				width: '600',
 				height: '465',
 				padding: '10',
@@ -167,7 +167,7 @@ const Versus = ({ battles, question }) => {
 			})
 		}
 		if (question) {
-			setQuestionResponse(cookie.get(question[0]._id));
+			setQuestionResponse(cookie.get(question._id));
 		}
 	}, [account, question])
 
@@ -215,11 +215,9 @@ const Versus = ({ battles, question }) => {
 			{account && <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button>}
 			<Title style={{ marginTop: '6vh' }}>How the battles work </Title>
 			<StyledContainer>
-				<StyledCard>
 					<StyledCardContent>
 						<img src={FightInstructions} width="100%" />
 					</StyledCardContent>
-				</StyledCard>
 			</StyledContainer>
 		</>
 	)
@@ -249,8 +247,8 @@ const StyledContainer = styled.div`
   box-sizing: border-box;
   margin: 0 auto;
   margin-top: 3vh;
-  max-width: 730px;
-  height: 570px;
+	max-width: 730px;
+	margin-bottom: 60px;
   width: 100%;
 `
 
@@ -280,10 +278,23 @@ color: #ffffff;
 const ButtonContainer = styled.div`
 
 `
-const VSContentContainer = styled.div`
-margin-top: 1vh;
-width: 600px;
-height: 600px;
+const VSContentContainer = !isMobile() ? styled.div`
+margin: 40px 0 40px 0;
+width: 540px;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+font-family: Alegreya;
+  font-size: 25px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+` : styled.div`
+margin: 40px 0 40px 0;
+width: 100%;
 display: flex;
 flex-direction: column;
 justify-content: space-evenly;
@@ -334,12 +345,17 @@ color: #ffffff;
   padding: 0;
 `
 
-const VersusCard = styled.div`
+const VersusCard = !isMobile() ? styled.div`
 width: 220px;
   height: 247px;
   border-radius: 8px;
   border: solid 2px #0095f0;
-  background-color: #003677
+  background-color: #003677;
+` : styled.div`width: 40%;
+height: 247px;
+border-radius: 8px;
+border: solid 2px #0095f0;
+background-color: #003677;
 `
 
 const VersusItem = styled.div`

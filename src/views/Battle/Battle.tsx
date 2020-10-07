@@ -583,14 +583,14 @@ const AuthContainer = styled.div`
 const StyledSky = !isMobile()
   ? styled.div`
       width: 100%;
-      height: 380vh;
+      height: 420vh;
       background-image: url(${TallSky});
       background-size: 100% 100%;
       background-repeat: repeat-x;
     `
   : styled.div`
       width: 100%;
-      height: 650vh;
+      height: 900vh;
       background-image: url(${TallSky});
       background-size: 100% 100%;
       background-repeat: repeat-x;

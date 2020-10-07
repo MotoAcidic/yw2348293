@@ -24,6 +24,8 @@ import Farm from './views/Farm'
 import Splash from './views/Splash/Splash'
 import Battle from './views/Battle/Battle'
 import About from './views/About/About'
+import Roadmap from './views/Roadmap/Roadmap'
+
 
 import theme from './theme'
 
@@ -54,6 +56,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/faq" exact>
               <About />
+            </Route>
+            <Route path="/roadmap" exact>
+              <Roadmap />
             </Route>
           </Switch>
         </Router>

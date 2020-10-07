@@ -178,7 +178,7 @@ const Battle: React.FC = () => {
             <Pool3 />
             <Title style={{ marginTop: '4vh' }}>Step 2: Vote for the armies you will fight for</Title>
             {battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion}/>}
-            {battles.length === 1 && <SingleVersusCard battles={battles} question={dailyQuestion}/>}
+            {(battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion}/>}
             <Title style={{ marginTop: '5vh' }}>Leaderboard</Title>
             {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}
             <Title>Schedule</Title>

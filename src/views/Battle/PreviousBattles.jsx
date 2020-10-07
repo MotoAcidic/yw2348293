@@ -62,6 +62,7 @@ const Versus = ({ history }) => {
 	for (let i = 0; i < history.length / 2; i++) {
 		formattedHistory.push(history.filter(item => item.day - 1 === i))
 	}
+	formattedHistory.reverse()
 	formattedHistory = formattedHistory.map(item => {
 		let pool1, pool2, pool3, pool4, winner1, winner2
 		if (item.length === 2) {

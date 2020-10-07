@@ -250,7 +250,7 @@ const TopDisplayContainer = !isMobile()
       flex-direction: row;
       align-content: center;
       justify-content: space-evenly;
-      margin-top: 4vh;
+      margin-top: 30px;
     `
   : styled.div`
       width: 40vw;
@@ -259,7 +259,7 @@ const TopDisplayContainer = !isMobile()
       flex-direction: row;
       align-content: center;
       justify-content: space-evenly;
-      margin-top: 4vh;
+      margin-top: 30px;
       display: flex;
       flex-wrap: wrap;
     `;

@@ -22,6 +22,7 @@ import Landscape from '../../assets/img/landscapebig.png'
 import Sky from '../../assets/img/skybig.png'
 import TallSky from '../../assets/img/tallsky.png'
 import FightInstructions from '../../assets/img/flightinstructions.png'
+import DailyQuestion from "./DailyQuestion.jsx";
 
 import useFarms from '../../hooks/useFarms'
 import useFarm from '../../hooks/useFarm'
@@ -50,7 +51,7 @@ function getServerURI() {
 let cookie = new Cookie()
 
 
-const Versus = ({ battles }) => {
+const Versus = ({ battles, question }) => {
 	battles = battles[0]
 	let [farms] = useFarms()
 	const yam = useYam()
@@ -58,6 +59,7 @@ const Versus = ({ battles }) => {
 	console.log(battles);
 	const [voted, setVoted] = useState(false)
 	const [checked, setChecked] = useState(cookie.get(battles._id))
+	const [questionResponse, setQuestionResponse] = useState("");
 	const farmTemplate = {
 		icon: "🤔",
 		name: "THINKING Errors"
@@ -74,7 +76,7 @@ const Versus = ({ battles }) => {
 
 	const castVote = async () => {
 		let vote
-		if (!checked)
+		if (!checked|| !questionResponse)
 			return
 		if (checked == 1)
 			vote = battle.farm1.id
@@ -97,6 +99,7 @@ const Versus = ({ battles }) => {
 					_id: battles._id,
 				}
 			],
+			questionResponse,
 			sig: signature
 		}).then(res => {
 			setVoted(true)
@@ -125,10 +128,9 @@ const Versus = ({ battles }) => {
 				}
 			})
 		}).catch(err => {
-			console.log(err);
 			Swal.fire({
-				title: 'Error submitting your votes',
-				text: `Please let us know and we'll take care of it. ${err.status}`,
+				title: `Error submitting your votes: ${err.response.status}`,
+				text: `Response: ${err.response.data}\n Please let us know and we'll take care of it.`,
 				width: '600',
 				height: '465',
 				padding: '10',
@@ -164,9 +166,10 @@ const Versus = ({ battles }) => {
 				console.log(err);
 			})
 		}
-	}, [account])
-
-
+		if (question) {
+			setQuestionResponse(cookie.get(question._id));
+		}
+	}, [account, question])
 
 	return (
 		<>
@@ -205,14 +208,16 @@ const Versus = ({ battles }) => {
 					</VersusCard>
 				</VersusItem>
 			</VSContentContainer>
+			{question &&
+				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} />
+			}
+
 			{account && <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button>}
 			<Title style={{ marginTop: '6vh' }}>How the battles work </Title>
 			<StyledContainer>
-				<StyledCard>
 					<StyledCardContent>
 						<img src={FightInstructions} width="100%" />
 					</StyledCardContent>
-				</StyledCard>
 			</StyledContainer>
 		</>
 	)
@@ -242,8 +247,8 @@ const StyledContainer = styled.div`
   box-sizing: border-box;
   margin: 0 auto;
   margin-top: 3vh;
-  max-width: 730px;
-  height: 570px;
+	max-width: 730px;
+	margin-bottom: 60px;
   width: 100%;
 `
 
@@ -273,10 +278,23 @@ color: #ffffff;
 const ButtonContainer = styled.div`
 
 `
-const VSContentContainer = styled.div`
-margin-top: 1vh;
-width: 600px;
-height: 600px;
+const VSContentContainer = !isMobile() ? styled.div`
+margin: 40px 0 40px 0;
+width: 540px;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+font-family: Alegreya;
+  font-size: 25px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+` : styled.div`
+margin: 40px 0 40px 0;
+width: 100%;
 display: flex;
 flex-direction: column;
 justify-content: space-evenly;
@@ -327,12 +345,17 @@ color: #ffffff;
   padding: 0;
 `
 
-const VersusCard = styled.div`
+const VersusCard = !isMobile() ? styled.div`
 width: 220px;
   height: 247px;
   border-radius: 8px;
   border: solid 2px #0095f0;
-  background-color: #003677
+  background-color: #003677;
+` : styled.div`width: 40%;
+height: 247px;
+border-radius: 8px;
+border: solid 2px #0095f0;
+background-color: #003677;
 `
 
 const VersusItem = styled.div`

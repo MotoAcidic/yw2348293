@@ -62,13 +62,22 @@ const Versus = ({ history }) => {
 	for (let i = 0; i < history.length / 2; i++) {
 		formattedHistory.push(history.filter(item => item.day - 1 === i))
 	}
+	formattedHistory.reverse()
 	formattedHistory = formattedHistory.map(item => {
-		let pool1 = farms.find(farm => farm.id === item[0].pool1.name)
-		let pool2 = farms.find(farm => farm.id === item[0].pool2.name)
-		let pool3 = farms.find(farm => farm.id === item[1].pool1.name)
-		let pool4 = farms.find(farm => farm.id === item[1].pool2.name)
-		let winner1 = item[0].pool1.totalVotes - item[0].pool2.totalVotes > 0 ? 1 : 2
-		let winner2 = item[1].pool1.totalVotes - item[1].pool2.totalVotes > 0 ? 1 : 2
+		let pool1, pool2, pool3, pool4, winner1, winner2
+		if (item.length === 2) {
+			pool1 = farms.find(farm => farm.id === item[0].pool1.name)
+			pool2 = farms.find(farm => farm.id === item[0].pool2.name)
+			pool3 = farms.find(farm => farm.id === item[1].pool1.name)
+			pool4 = farms.find(farm => farm.id === item[1].pool2.name)
+			winner1 = item[0].pool1.totalVotes - item[0].pool2.totalVotes > 0 ? 1 : 2
+			winner2 = item[1].pool1.totalVotes - item[1].pool2.totalVotes > 0 ? 1 : 2
+		} else {
+			pool1 = farms.find(farm => farm.id === item[0].pool1.name)
+			pool2 = farms.find(farm => farm.id === item[0].pool2.name)
+			winner1 = item[0].pool1.totalVotes - item[0].pool2.totalVotes > 0 ? 1 : 2
+		}
+
 
 		console.log(item[0].pool1.totalVotes);
 		return (
@@ -99,32 +108,36 @@ const Versus = ({ history }) => {
 						</StyledContent>
 					</VersusCard>
 				</VersusItem>
-				<Divider />
-				<VersusItem>
-					<VersusCard>
-						<StyledContent>
-							{winner2 === 1 ? <WinningCardIcon>{pool3.icon}</WinningCardIcon> : <StyledCardIcon>{pool3.icon}</StyledCardIcon>}
-							<StyledTitle>{pool3.name}</StyledTitle>
-							<Percent>{
-								((parseInt(item[0].pool1.totalVotes, 10) /
-									(parseInt(item[0].pool1.totalVotes, 10) + parseInt(item[0].pool2.totalVotes, 10)))
-									* 100).toFixed(0)
-							}%</Percent>
-						</StyledContent>
-					</VersusCard>
+				{item.length === 2 && (
+					<>
+						<Divider />
+						<VersusItem>
+							<VersusCard>
+								<StyledContent>
+									{winner2 === 1 ? <WinningCardIcon>{pool3.icon}</WinningCardIcon> : <StyledCardIcon>{pool3.icon}</StyledCardIcon>}
+									<StyledTitle>{pool3.name}</StyledTitle>
+									<Percent>{
+										((parseInt(item[0].pool1.totalVotes, 10) /
+											(parseInt(item[0].pool1.totalVotes, 10) + parseInt(item[0].pool2.totalVotes, 10)))
+											* 100).toFixed(0)
+									}%</Percent>
+								</StyledContent>
+							</VersusCard>
                     VS
 					<VersusCard>
-						<StyledContent>
-							{winner2 === 2 ? <WinningCardIcon>{pool4.icon}</WinningCardIcon> : <StyledCardIcon>{pool4.icon}</StyledCardIcon>}
-							<StyledTitle>{pool4.name}</StyledTitle>
-							<Percent>{
-								((parseInt(item[0].pool2.totalVotes, 10) /
-									(parseInt(item[0].pool1.totalVotes, 10) + parseInt(item[0].pool2.totalVotes, 10)))
-									* 100).toFixed(0)
-							}%</Percent>
-						</StyledContent>
-					</VersusCard>
-				</VersusItem>
+								<StyledContent>
+									{winner2 === 2 ? <WinningCardIcon>{pool4.icon}</WinningCardIcon> : <StyledCardIcon>{pool4.icon}</StyledCardIcon>}
+									<StyledTitle>{pool4.name}</StyledTitle>
+									<Percent>{
+										((parseInt(item[0].pool2.totalVotes, 10) /
+											(parseInt(item[0].pool1.totalVotes, 10) + parseInt(item[0].pool2.totalVotes, 10)))
+											* 100).toFixed(0)
+									}%</Percent>
+								</StyledContent>
+							</VersusCard>
+						</VersusItem>
+					</>
+				)}
 			</VSContentContainer>
 		)
 	})

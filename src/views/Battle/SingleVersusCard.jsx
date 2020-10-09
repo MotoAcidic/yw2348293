@@ -275,29 +275,6 @@ const StyledContainer = styled.div`
   width: 100%;
 `
 
-const StyledCard = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 0;
-  border-radius: 8px;
-    background-color: #003677;
-`
-
-const StyledText = styled.p`
-font-family: Alegreya;
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: #ffffff;
-`
-
 const ButtonContainer = styled.div`
 
 `
@@ -337,21 +314,6 @@ const StyledContent = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   height: 100%;
-`
-
-const StyledDetails = styled.div`
-  text-align: center;
-`
-
-const StyledDetail = styled.div`
-font-family: Alegreya;
-font-size: 20px;
-font-weight: normal;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: #ffffff;
 `
 
 const StyledTitle = styled.h4`

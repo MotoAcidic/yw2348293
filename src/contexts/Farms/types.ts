@@ -9,7 +9,9 @@ export interface Farm {
   earnTokenAddress: string,
   icon: React.ReactNode,
   id: string,
-  sort: number
+  sort: number,
+  season: number,
+  link: string,
 }
 
 export interface FarmsContext {

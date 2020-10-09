@@ -39,8 +39,111 @@ const Farms: React.FC = ({ children }) => {
       tokens = await getPoolTokenContracts(yam);
     }
 
-
     let farmsArr = [
+      {
+        contract: pools ? pools["mbbased_pool"] : undefined,
+        name: "SEND Senders",
+        depositToken: "SEND",
+        depositTokenAddress: tokens ? tokens["mbbased_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "✉️",
+        id: "SEND",
+        sort: 9,
+        season: 2,
+        link: "https://yieldwars.com/"
+      },
+      {
+        contract: pools ? pools["farm_pool"] : undefined,
+        name: "HATE Drapes",
+        depositToken: "HATE",
+        depositTokenAddress: tokens ? tokens["farm_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "🟪",
+        id: "HATE",
+        sort: 9,
+        season: 2,
+        link: "https://yieldwars.com/"
+      },
+      {
+        contract: pools ? pools["link_pool"] : undefined,
+        name: "STBU Robots",
+        depositToken: "STBU",
+        depositTokenAddress: tokens ? tokens["link_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "🤖",
+        id: "STBU",
+        sort: 9,
+        season: 2,
+        link: "https://yieldwars.com/"
+      },
+      {
+        contract: pools ? pools["snx_pool"] : undefined,
+        name: "YFL Mariners",
+        depositToken: "YFL",
+        depositTokenAddress: tokens ? tokens["snx_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "⚓",
+        id: "YFL",
+        sort: 9,
+        season: 2,
+        link: "https://yieldwars.com/"
+      },
+      {
+        contract: pools ? pools["yfi_pool"] : undefined,
+        name: "ROPE Rats",
+        depositToken: "ROPE",
+        depositTokenAddress: tokens ? tokens["yfi_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "🐀",
+        id: "ROPE",
+        sort: 9,
+        season: 2,
+        link: "https://yieldwars.com/"
+      },
+      {
+        contract: pools ? pools["comp_pool"] : undefined,
+        name: "Y Yaughts",
+        depositToken: "Y",
+        depositTokenAddress: tokens ? tokens["comp_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "⛵",
+        id: "Y",
+        sort: 9,
+        season: 2,
+        link: "https://yieldwars.com/"
+      },
+      {
+        contract: pools ? pools["bzrx_pool"] : undefined,
+        name: "CORE Heat",
+        depositToken: "CORE",
+        depositTokenAddress: tokens ? tokens["bzrx_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "🔥",
+        id: "CORE",
+        sort: 9,
+        season: 2,
+        link: "https://yieldwars.com/"
+      },
+      {
+        contract: pools ? pools["uni_pool"] : undefined,
+        name: "VALUE Goats",
+        depositToken: "VALUE",
+        depositTokenAddress: tokens ? tokens["uni_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "🐐",
+        id: "VALUE",
+        sort: 9,
+        season: 2,
+        link: "https://yieldwars.com/"
+      },
       {
         contract: pools ? pools["mbbased_pool"] : undefined,
         name: "mbBASED Ghouls",
@@ -50,7 +153,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "💀",
         id: "mbBASED",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
       {
         contract: pools ? pools["farm_pool"] : undefined,
@@ -61,7 +166,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🚜",
         id: "FARM",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
       {
         contract: pools ? pools["link_pool"] : undefined,
@@ -72,7 +179,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🛥️",
         id: "LINK",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
       {
         contract: pools ? pools["snx_pool"] : undefined,
@@ -83,7 +192,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🛡️",
         id: "SNX",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
       {
         contract: pools ? pools["yfi_pool"] : undefined,
@@ -94,7 +205,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "👧",
         id: "YFI",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
       {
         contract: pools ? pools["comp_pool"] : undefined,
@@ -105,7 +218,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "👑",
         id: "COMP",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
       {
         contract: pools ? pools["bzrx_pool"] : undefined,
@@ -116,7 +231,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🪓",
         id: "BZRX",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
       {
         contract: pools ? pools["uni_pool"] : undefined,
@@ -127,7 +244,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🦄",
         id: "UNI",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
       {
         contract: pools ? pools["lend_pool"] : undefined,
@@ -138,7 +257,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🏹",
         id: "AAVE",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
       {
         contract: pools ? pools["wnxm_pool"] : undefined,
@@ -149,7 +270,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "👾", // BASED Ghouls 💀
         id: "WNXM",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
       {
         contract: pools ? pools["mkr_pool"] : undefined,
@@ -160,7 +283,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "👷",
         id: "MKR",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
       {
         contract: pools ? pools["srm_pool"] : undefined,
@@ -171,7 +296,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🧙‍♂️",
         id: "SRM",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
       {
         contract: pools ? pools["chads_pool"] : undefined,
@@ -182,7 +309,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🦍",
         id: "CHADS",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
       {
         contract: undefined,
@@ -193,7 +322,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🥒",
         id: "PICKLE",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
       {
         contract: undefined,
@@ -204,7 +335,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🍍",
         id: "MEME",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
       {
         contract: undefined,
@@ -215,9 +348,10 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🍠",
         id: "YAM",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: "https://yieldwars.com/"
       },
-
       {
         contract: pools ? pools["unipool_pool"] : undefined,
         name: "",
@@ -227,9 +361,10 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "",
         id: "UNIPOOL",
-        sort: 9
+        sort: 9,
+        season: null,
+        link: ""
       },
-
       {
         contract: pools ? pools["battlepool_pool"] : undefined,
         name: "",
@@ -239,7 +374,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "",
         id: "BATTLEPOOL",
-        sort: 9
+        sort: 9,
+        season: null,
+        link: ""
       },
     ]
 

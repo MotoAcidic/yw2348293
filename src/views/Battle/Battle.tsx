@@ -543,13 +543,12 @@ const TextContainer = styled.div`
 
 const TopDisplayContainer = !isMobile()
   ? styled.div`
-      width: 40%;
+      width: 40vw;
       display: flex;
       flex-direction: row;
       align-content: center;
       justify-content: space-evenly;
-      margin-top: 4vh;
-      margin-bottom: 6vh;
+      margin: 16px auto 80px auto;
     `
   : styled.div`
       width: 40vw;
@@ -558,11 +557,10 @@ const TopDisplayContainer = !isMobile()
       flex-direction: row;
       align-content: center;
       justify-content: space-evenly;
-      margin-top: 4vh;
+      margin: 60px auto 40px auto;
       display: flex;
       flex-wrap: wrap;
     `;
-
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;

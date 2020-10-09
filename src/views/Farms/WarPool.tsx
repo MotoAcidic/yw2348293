@@ -322,7 +322,7 @@ display: flex;
 flex-direction: column;
 justify-content: space-evenly;
 text-align: left;
-padding: 10% 10% 0% 10%;
+padding: 50px 10% 0% 10%;
 font-family: SFMono;
   font-size: 18px;
   font-weight: 600;
@@ -352,13 +352,20 @@ margin-top: 1%;
   background-color: #97d5ff;
 `
 
-const InfoContainer = styled.div`
+const InfoContainer = !isMobile() ? styled.div`
 width: 1000px;
   height: 375px;
   border-radius: 8px;
   border: solid 4px #97d5ff;
 	background-color: #003677;
 	margin: 80px auto 80px auto;
+`: styled.div`
+width: 300px;
+  height: 450px;
+  border-radius: 8px;
+  border: solid 4px #97d5ff;
+  background-color: #003677;
+	margin: 60px auto 60px auto;
 `
 
 const MobileInfoContainer = styled.div`
@@ -368,7 +375,6 @@ width: 300px;
   border: solid 4px #97d5ff;
   background-color: #003677;
 	margin: 60px auto 60px auto;
-
 `
 
 const CountDownText = styled.div`

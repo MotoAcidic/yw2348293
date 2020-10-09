@@ -229,18 +229,6 @@ color: white;
 margin-bottom: 20px;
 `
 
-const Disclaimer = styled.div`
-  margin: 30px;
-  color: white;
-  font-family: Alegreya;
-  font-size: 18px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.4;
-  color: #ffffff;
-`;
-
 const TopDisplayContainer = !isMobile()
   ? styled.div`
       width: 40vw;
@@ -340,26 +328,10 @@ const CardContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-const AuthContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  height: 35vh;
-  justify-content: space-around;
-`;
-
 const TallStyledSky = styled.div`
   width: 100%;
   height: 450vh;
   background-image: url(${TallSky});
-  background-size: 100% 100%;
-  background-repeat: repeat-x;
-`;
-
-const StyledSky = styled.div`
-  width: 100%;
-  height: 60vh;
-  background-image: url(${Sky});
   background-size: 100% 100%;
   background-repeat: repeat-x;
 `;

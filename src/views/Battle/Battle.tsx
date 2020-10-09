@@ -154,7 +154,7 @@ const Battle: React.FC = () => {
         <ContentContainer>
           <Page>
             <TopDisplayContainer>
-              {/*<DisplayItem>
+              <DisplayItem>
                 TVL: $
                 {tvl && !tvl.totalValue.eq(0)
                   ? Number(tvl.totalValue.toFixed(2)).toLocaleString(
@@ -162,7 +162,7 @@ const Battle: React.FC = () => {
                     { minimumFractionDigits: 2, maximumFractionDigits: 2 }
                   )
                   : "-"}
-              </DisplayItem>*/}
+              </DisplayItem>
               <DisplayItem>
                 $War Price: $
                 {currentPrice
@@ -543,12 +543,13 @@ const TextContainer = styled.div`
 
 const TopDisplayContainer = !isMobile()
   ? styled.div`
-      width: 40vw;
+      width: 40%;
       display: flex;
       flex-direction: row;
       align-content: center;
       justify-content: space-evenly;
-      margin: 16px auto 80px auto;
+      margin-top: 4vh;
+      margin-bottom: 6vh;
     `
   : styled.div`
       width: 40vw;
@@ -557,10 +558,11 @@ const TopDisplayContainer = !isMobile()
       flex-direction: row;
       align-content: center;
       justify-content: space-evenly;
-      margin: 60px auto 40px auto;
+      margin-top: 4vh;
       display: flex;
       flex-wrap: wrap;
     `;
+
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;

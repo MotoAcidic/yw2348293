@@ -27,9 +27,6 @@ function isMobile() {
 const FarmCards: React.FC = () => {
   let [farms] = useFarms()
 
-
-  console.log("igotdafarmz", farms);
-
   const old_farms = farms.filter(farm => farm.season === 1);
   const current_farms = farms.filter(item => item.season === 2);
 
@@ -58,7 +55,7 @@ const FarmCards: React.FC = () => {
 
   return (
     <FarmCardsContainer>
-      <CardIcon><FarmIcon src={farmIcon}></FarmIcon></CardIcon>
+      <FarmIcon src={farmIcon}></FarmIcon>
       <LargeText>New Season 2 Farms</LargeText>
       <DisclaimerLink href="https://medium.com/@yieldwars/yieldwars-season-2-farms-are-upon-us-heres-how-to-participate-bal-pool-tutorial-included-78a30028f61">
         Learn how to setup Balancer Pools
@@ -151,7 +148,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   }, [farm, yam, account])
 
 
-  if (farm.id === `UNIPOOL` || farm.id === `BATTLEPOOL` || farm.id === `YAM` || farm.id === `MEME` || farm.id === `PICKLE`) {
+  if (farm.id === `UNIPOOL` || farm.id === `BATTLEPOOL` || farm.id === `YAM` || farm.id === `MEME` || farm.id === `PICKLE` || farm.id === 'WBTC') {
     return null;
   }
 
@@ -217,8 +214,8 @@ font-family: Alegreya;
 `;
 
 const FarmIcon = styled.img`
-width: 100%;
-height: 100%;`
+width: 80px;
+height: 80px;`
 
 const SmallSpace = styled.div`
   height: 60px;

@@ -134,6 +134,19 @@ const Farms: React.FC = ({ children }) => {
         link: tokens ? balancerURL.concat(tokens["cream_token"].options.address,"/") : undefined
       },
       {
+        contract: undefined,
+        name: "WBTC Maximalists",
+        depositToken: "",
+        depositTokenAddress:  undefined,
+        earnToken: '',
+        earnTokenAddress: yamAddress,
+        icon: "💰",
+        id: "WBTC",
+        sort: 9,
+        season: 2,
+        link: undefined
+      },
+      {
         contract: pools ? pools["value_pool"] : undefined,
         name: "VALUE Goats",
         depositToken: "VALUE-WAR BPT",

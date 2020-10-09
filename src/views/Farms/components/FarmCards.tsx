@@ -60,6 +60,9 @@ const FarmCards: React.FC = () => {
     <FarmCardsContainer>
       <CardIcon><FarmIcon src={farmIcon}></FarmIcon></CardIcon>
       <LargeText>New Season 2 Farms</LargeText>
+      <DisclaimerLink href="https://medium.com/@yieldwars/yieldwars-season-2-farms-are-upon-us-heres-how-to-participate-bal-pool-tutorial-included-78a30028f61">
+        Learn how to setup Balancer Pools
+      </DisclaimerLink>
       <StyledCards>
         {!!current_rows[0].length && current_rows.map((farmRow, i) => (
           <StyledRow key={i}>
@@ -270,6 +273,18 @@ const LargeText = styled.div`
 `;
 
 const Disclaimer = styled.div`
+  margin: 30px;
+  color: white;
+  font-family: Alegreya;
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.4;
+  color: #ffffff;
+`;
+
+const DisclaimerLink = styled.a`
   margin: 30px;
   color: white;
   font-family: Alegreya;

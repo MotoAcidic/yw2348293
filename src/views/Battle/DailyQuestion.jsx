@@ -88,7 +88,8 @@ const Question = ({ question, setResponse, voted }) => {
 				Community question
       </RecDesc>
 			<RecTitle>{question.description}</RecTitle>
-			{question.link &&
+			{(question.link && question.link.text) &&
+
 				<a href={question.link.url} target="_blank" style={{ textDecoration: "none" }}>
 					<RecDesc>
 						{question.link.text} »

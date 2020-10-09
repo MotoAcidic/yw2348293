@@ -331,18 +331,16 @@ const DisplayItem = !isMobile()
     `;
 
 const Title = styled.div`
-  font-family: Alegreya;
-  font-size: 25px;
+font-family: Alegreya;
+  font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
-  margin-top: 1vh;
   max-width: 80vw;
 `;
-
 
 const TopDisplayContainer = !isMobile()
   ? styled.div`
@@ -364,6 +362,7 @@ const TopDisplayContainer = !isMobile()
       display: flex;
       flex-wrap: wrap;
     `;
+
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;

@@ -50,7 +50,6 @@ function getServerURI() {
 
 let cookie = new Cookie()
 
-
 const Versus = ({ battles, question }) => {
 	battles = battles[0]
 	let [farms] = useFarms()
@@ -169,9 +168,11 @@ const Versus = ({ battles, question }) => {
 	}
 
 	useEffect(() => {
-		const questionVoted = cookie.get(question._id + "1");
-		if (questionVoted) {
-			setVoted(true);
+		if (question) {
+			const questionVoted = cookie.get(question._id + "1");
+			if (questionVoted) {
+				setVoted(true);
+			}
 		}
 		if (account) {
 			axios.post(`${getServerURI()}/api/status`, {

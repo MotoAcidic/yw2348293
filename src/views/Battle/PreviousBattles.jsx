@@ -58,12 +58,43 @@ const Versus = ({ history }) => {
 	if (!history.length) {
 		return null
 	}
-	let formattedHistory = []
-	for (let i = 0; i < history.length / 2; i++) {
-		formattedHistory.push(history.filter(item => item.day - 1 === i))
+
+	let prevSeasonHistory = []
+	let currSeasonHistory = []
+
+	const sortedHistory = history.sort((a, b) => {
+		return a.day - b.day
+	})
+	for (let i = 0; i < sortedHistory.length; i++) {
+		if (sortedHistory[i].season < 2) {
+			// checks if another battle exists in array, then adds as group
+			// if it was on the same day
+			if (i + 1 < sortedHistory.length && sortedHistory[i].day === sortedHistory[i + 1].day) {
+				prevSeasonHistory.push([sortedHistory[i], sortedHistory[i + 1]]);
+				i++;
+			} else {
+				prevSeasonHistory.push([sortedHistory[i]]);
+			}
+		} else {
+			if (i + 1 < sortedHistory.length && sortedHistory[i].day === sortedHistory[i + 1].day) {
+				currSeasonHistory.push([sortedHistory[i], sortedHistory[i + 1]]);
+				i++;
+			} else {
+				currSeasonHistory.push([sortedHistory[i]]);
+			}
+		}
 	}
-	formattedHistory.reverse()
-	formattedHistory = formattedHistory.map(item => {
+
+	// for (let i = 0; i < history.length / 2; i++) {
+	// 	prevSeasonHistory.push(history.filter(item => item.day - 1 === i))
+	// }
+
+	prevSeasonHistory.reverse()
+	currSeasonHistory.reverse()
+
+	console.log("prev: ", prevSeasonHistory, "\ncurr: ", currSeasonHistory);
+
+	currSeasonHistory = currSeasonHistory.map(item => {
 		let pool1, pool2, pool3, pool4, winner1, winner2
 		if (item.length === 0) {
 			return null
@@ -81,6 +112,86 @@ const Versus = ({ history }) => {
 			winner1 = item[0].pool1.totalVotes - item[0].pool2.totalVotes > 0 ? 1 : 2
 		}
 
+		console.log(item[0].pool1.totalVotes);
+		return (
+			<VSContentContainer>
+				<div>Oct {item[0].day - 1}</div>
+				<VersusItem>
+					<VersusCard>
+						<StyledContent>
+							{winner1 === 1 ? <WinningCardIcon>{pool1.icon}</WinningCardIcon> : <StyledCardIcon>{pool1.icon}</StyledCardIcon>}
+							<StyledTitle>{pool1.name}</StyledTitle>
+							<Percent>{
+								((parseInt(item[0].pool1.totalVotes, 10) /
+									(parseInt(item[0].pool1.totalVotes, 10) + parseInt(item[0].pool2.totalVotes, 10)))
+									* 100).toFixed(0)
+							}%</Percent>
+						</StyledContent>
+					</VersusCard>
+                    VS
+					<VersusCard>
+						<StyledContent>
+							{winner1 === 2 ? <WinningCardIcon>{pool2.icon}</WinningCardIcon> : <StyledCardIcon>{pool2.icon}</StyledCardIcon>}
+							<StyledTitle>{pool2.name}</StyledTitle>
+							<Percent>{
+								((parseInt(item[0].pool2.totalVotes, 10) /
+									(parseInt(item[0].pool1.totalVotes, 10) + parseInt(item[0].pool2.totalVotes, 10)))
+									* 100).toFixed(0)
+							}%</Percent>
+						</StyledContent>
+					</VersusCard>
+				</VersusItem>
+				{item.length === 2 && (
+					<>
+						<Divider />
+						<VersusItem>
+							<VersusCard>
+								<StyledContent>
+									{winner2 === 1 ? <WinningCardIcon>{pool3.icon}</WinningCardIcon> : <StyledCardIcon>{pool3.icon}</StyledCardIcon>}
+									<StyledTitle>{pool3.name}</StyledTitle>
+									<Percent>{
+										((parseInt(item[1].pool1.totalVotes, 10) /
+											(parseInt(item[1].pool1.totalVotes, 10) + parseInt(item[1].pool2.totalVotes, 10)))
+											* 100).toFixed(0)
+									}%</Percent>
+								</StyledContent>
+							</VersusCard>
+              		VS
+							<VersusCard>
+								<StyledContent>
+									{winner2 === 2 ? <WinningCardIcon>{pool4.icon}</WinningCardIcon> : <StyledCardIcon>{pool4.icon}</StyledCardIcon>}
+									<StyledTitle>{pool4.name}</StyledTitle>
+									<Percent>{
+										((parseInt(item[1].pool2.totalVotes, 10) /
+											(parseInt(item[1].pool1.totalVotes, 10) + parseInt(item[1].pool2.totalVotes, 10)))
+											* 100).toFixed(0)
+									}%</Percent>
+								</StyledContent>
+							</VersusCard>
+						</VersusItem>
+					</>
+				)}
+			</VSContentContainer>
+		)
+	})
+
+	prevSeasonHistory = prevSeasonHistory.map(item => {
+		let pool1, pool2, pool3, pool4, winner1, winner2
+		if (item.length === 0) {
+			return null
+		}
+		if (item.length === 2) {
+			pool1 = farms.find(farm => farm.id === item[0].pool1.name)
+			pool2 = farms.find(farm => farm.id === item[0].pool2.name)
+			pool3 = farms.find(farm => farm.id === item[1].pool1.name)
+			pool4 = farms.find(farm => farm.id === item[1].pool2.name)
+			winner1 = item[0].pool1.totalVotes - item[0].pool2.totalVotes > 0 ? 1 : 2
+			winner2 = item[1].pool1.totalVotes - item[1].pool2.totalVotes > 0 ? 1 : 2
+		} else {
+			pool1 = farms.find(farm => farm.id === item[0].pool1.name)
+			pool2 = farms.find(farm => farm.id === item[0].pool2.name)
+			winner1 = item[0].pool1.totalVotes - item[0].pool2.totalVotes > 0 ? 1 : 2
+		}
 
 		console.log(item[0].pool1.totalVotes);
 		return (
@@ -126,8 +237,8 @@ const Versus = ({ history }) => {
 									}%</Percent>
 								</StyledContent>
 							</VersusCard>
-                    VS
-					<VersusCard>
+              		VS
+							<VersusCard>
 								<StyledContent>
 									{winner2 === 2 ? <WinningCardIcon>{pool4.icon}</WinningCardIcon> : <StyledCardIcon>{pool4.icon}</StyledCardIcon>}
 									<StyledTitle>{pool4.name}</StyledTitle>
@@ -146,9 +257,44 @@ const Versus = ({ history }) => {
 	})
 
 	return (
-		<Container>{formattedHistory}</Container>
+		<Container>
+			<SeasonContainer>
+				{currSeasonHistory}
+			</SeasonContainer>
+			<Title>Season 1</Title>
+			<SeasonContainer>
+				{prevSeasonHistory}
+			</SeasonContainer>
+		</Container>
 	)
 }
+
+const SeasonContainer = !isMobile() ? styled.div`
+display: flex;
+flex-wrap: wrap;
+justify-content: space-around;
+width: 1200px;
+margin-top: 3vh;
+` : styled.div`
+display: flex;
+flex-wrap: wrap;
+justify-content: space-around;
+width: 90vw;
+margin-top: 3vh;
+`
+
+const Container = !isMobile() ? styled.div`
+display: flex;
+flex-direction: column;
+width: 1200px;
+margin-top: 3vh;
+` : styled.div`
+display: flex;
+flex-wrap: wrap;
+justify-content: space-around;
+width: 90vw;
+margin-top: 3vh;
+`
 
 const Percent = styled.div`
 width: 20%;
@@ -199,23 +345,9 @@ border: solid 2px #ffd500;
 margin: 2px;
 `
 
-const Container = !isMobile() ? styled.div`
-display: flex;
-flex-wrap: wrap;
-justify-content: space-around;
-width: 1200px;
-margin-top: 3vh;
-` : styled.div`
-display: flex;
-flex-wrap: wrap;
-justify-content: space-around;
-width: 90vw;
-margin-top: 3vh;
-`
-
 const Title = styled.div`
 font-family: Alegreya;
-  font-size: 25px;
+  font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -266,7 +398,6 @@ color: #ffffff;
 `
 
 const ButtonContainer = styled.div`
-
 `
 const VSContentContainer = styled.div`
 width: 332px;

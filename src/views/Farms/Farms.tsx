@@ -247,7 +247,7 @@ const TopDisplayContainer = !isMobile()
       flex-direction: row;
       align-content: center;
       justify-content: space-evenly;
-      margin-top: 30px;
+      margin: 16px auto 80px auto;
     `
   : styled.div`
       width: 40vw;
@@ -256,7 +256,7 @@ const TopDisplayContainer = !isMobile()
       flex-direction: row;
       align-content: center;
       justify-content: space-evenly;
-      margin-top: 30px;
+      margin-top: 16px auto 80px auto;
       display: flex;
       flex-wrap: wrap;
     `;
@@ -287,43 +287,6 @@ const DisplayItem = !isMobile()
       color: #ffffff;
     `;
 
-const BottomButtonContainer = styled.div`
-  width: 84%;
-  margin-left: 8%;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  justify-content: space-evenly;
-`;
-
-const ShadedLine = styled.div`
-  margin-left: 20px;
-  color: #97d5ff;
-`;
-
-const Line = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const InfoLines = styled.div`
-  width: 100%;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  text-align: left;
-  margin: 3%;
-  font-family: SFMono;
-  font-size: 40px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: 1px;
-  color: #ffffff;
-`;
-
 const Title = styled.div`
   font-family: Alegreya;
   font-size: 25px;
@@ -336,42 +299,6 @@ const Title = styled.div`
   margin-top: 1%;
 `;
 
-const InfoDivider = styled.div`
-  margin-top: 1%;
-  width: 100%;
-  height: 5px;
-  background-color: #97d5ff;
-`;
-
-const InfoContainer = styled.div`
-  width: 1000px;
-  height: 375px;
-  border-radius: 8px;
-  border: solid 4px #97d5ff;
-  background-color: #003677;
-  margin-top: 6vh;
-  margin-bottom: 6vh;
-`;
-
-const CountDownText = styled.div`
-  margin-top: 6vh;
-  font-family: Alegreya;
-  font-size: 30px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-`;
-
-const SectionDivider = styled.div`
-  width: 1100px;
-  height: 2px;
-  background-color: #00a1ff;
-  margin-top: 6vh;
-`;
-
 const LargeText = styled.div`
   font-family: Alegreya;
   font-size: 30px;
@@ -381,6 +308,7 @@ const LargeText = styled.div`
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
+  margin-bottom: 20px;
 `;
 
 const SmallText = styled.div`
@@ -396,13 +324,10 @@ const SmallText = styled.div`
 
 const TextContainer = styled.div`
   width: 80vw;
-  height: 20vh;
   display: flex;
   flex-direction: column;
   align-content: center;
   align-items: center;
-  justify-content: space-evenly;
-  margin-top: 3vh;
 `;
 
 const CardContainer = styled.div`

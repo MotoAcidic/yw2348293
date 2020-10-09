@@ -45,7 +45,7 @@ const Farms: React.FC = ({ children }) => {
       {
         contract: pools ? pools["send_pool"] : undefined,
         name: "SEND Senders",
-        depositToken: "SEND",
+        depositToken: "SEND-WAR BPT",
         depositTokenAddress: tokens ? tokens["send_token"].options.address : undefined,
         earnToken: 'WAR',
         earnTokenAddress: yamAddress,
@@ -58,7 +58,7 @@ const Farms: React.FC = ({ children }) => {
       {
         contract: pools ? pools["hate_pool"] : undefined,
         name: "HATE Drapes",
-        depositToken: "HATE",
+        depositToken: "HATE-WAR BPT",
         depositTokenAddress: tokens ? tokens["hate_token"].options.address : undefined,
         earnToken: 'WAR',
         earnTokenAddress: yamAddress,
@@ -71,7 +71,7 @@ const Farms: React.FC = ({ children }) => {
       {
         contract: pools ? pools["stbu_pool"] : undefined,
         name: "STBU Robots",
-        depositToken: "STBU",
+        depositToken: "STBU-WAR BPT",
         depositTokenAddress: tokens ? tokens["stbu_token"].options.address : undefined,
         earnToken: 'WAR',
         earnTokenAddress: yamAddress,
@@ -84,7 +84,7 @@ const Farms: React.FC = ({ children }) => {
       {
         contract: pools ? pools["yfl_pool"] : undefined,
         name: "YFL Mariners",
-        depositToken: "YFL",
+        depositToken: "YFL-WAR BPT",
         depositTokenAddress: tokens ? tokens["yfl_token"].options.address : undefined,
         earnToken: 'WAR',
         earnTokenAddress: yamAddress,
@@ -97,7 +97,7 @@ const Farms: React.FC = ({ children }) => {
       {
         contract: pools ? pools["rope_pool"] : undefined,
         name: "ROPE Rats",
-        depositToken: "ROPE",
+        depositToken: "ROPE-WAR BPT",
         depositTokenAddress: tokens ? tokens["rope_token"].options.address : undefined,
         earnToken: 'WAR',
         earnTokenAddress: yamAddress,
@@ -110,7 +110,7 @@ const Farms: React.FC = ({ children }) => {
       {
         contract: pools ? pools["z_pool"] : undefined,
         name: "Z Yaughts",
-        depositToken: "Z",
+        depositToken: "Z-WAR BPT",
         depositTokenAddress: tokens ? tokens["z_token"].options.address : undefined,
         earnToken: 'WAR',
         earnTokenAddress: yamAddress,
@@ -123,7 +123,7 @@ const Farms: React.FC = ({ children }) => {
       {
         contract: pools ? pools["cream_pool"] : undefined,
         name: "CREAM Pies",
-        depositToken: "CREAM",
+        depositToken: "CREAM-WAR BPT",
         depositTokenAddress: tokens ? tokens["cream_token"].options.address : undefined,
         earnToken: 'CREAM',
         earnTokenAddress: yamAddress,
@@ -136,7 +136,7 @@ const Farms: React.FC = ({ children }) => {
       {
         contract: pools ? pools["value_pool"] : undefined,
         name: "VALUE Goats",
-        depositToken: "VALUE",
+        depositToken: "VALUE-WAR BPT",
         depositTokenAddress: tokens ? tokens["value_token"].options.address : undefined,
         earnToken: 'WAR',
         earnTokenAddress: yamAddress,

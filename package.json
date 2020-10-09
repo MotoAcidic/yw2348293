@@ -36,7 +36,7 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "client": "react-scripts start",
+    "client": "cross-env-shell NODE_OPTIONS=--max_old_space_size=4096 \"react-scripts start\"",
     "server": "node server/server.js",
     "build": "CI= GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
@@ -61,6 +61,7 @@
     "@types/numeral": "0.0.28",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
-    "@types/styled-components": "^5.1.2"
+    "@types/styled-components": "^5.1.2",
+    "cross-env": "^7.0.2"
   }
 }

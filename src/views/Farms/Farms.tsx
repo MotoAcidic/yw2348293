@@ -110,7 +110,7 @@ const Farms: React.FC = () => {
           <Page>
             <CardContainer>
               <TopDisplayContainer>
-                <DisplayItem>
+                {/*<DisplayItem>
                   TVL: $
                   {tvl && !tvl.totalValue.eq(0)
                     ? Number(tvl.totalValue.toFixed(2)).toLocaleString(
@@ -121,7 +121,7 @@ const Farms: React.FC = () => {
                       }
                     )
                     : "-"}
-                </DisplayItem>
+                </DisplayItem>*/}
                 <DisplayItem>
                   $War Price: $
                   {currentPrice

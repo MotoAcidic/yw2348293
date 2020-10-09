@@ -154,7 +154,7 @@ const Battle: React.FC = () => {
         <ContentContainer>
           <Page>
             <TopDisplayContainer>
-              <DisplayItem>
+              {/*<DisplayItem>
                 TVL: $
                 {tvl && !tvl.totalValue.eq(0)
                   ? Number(tvl.totalValue.toFixed(2)).toLocaleString(
@@ -162,7 +162,7 @@ const Battle: React.FC = () => {
                     { minimumFractionDigits: 2, maximumFractionDigits: 2 }
                   )
                   : "-"}
-              </DisplayItem>
+              </DisplayItem>*/}
               <DisplayItem>
                 $War Price: $
                 {currentPrice

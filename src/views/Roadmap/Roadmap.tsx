@@ -107,7 +107,7 @@ const Roadmap: React.FC = () => {
       <ContentContainer>
         <Page>
           <TopDisplayContainer>
-            <DisplayItem>
+            {/*<DisplayItem>
               TVL: $
               {tvl && !tvl.totalValue.eq(0)
                 ? Number(tvl.totalValue.toFixed(2)).toLocaleString(undefined, {
@@ -115,7 +115,7 @@ const Roadmap: React.FC = () => {
                   maximumFractionDigits: 2
                 })
                 : "-"}
-            </DisplayItem>
+            </DisplayItem>*/}
             <DisplayItem>
               $War Price: $
               {currentPrice

@@ -10,7 +10,6 @@ const Nav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/battle">Battle</StyledLink>
       <StyledLink exact activeClassName="active" to="/faq">About</StyledLink>
       <StyledLink exact activeClassName="active" to="/roadmap">Roadmap</StyledLink>
-      {/* <StyledA href="https://medium.com/@yieldwars/welcome-to-yieldwars-%EF%B8%8F-d3e8b388966a">About</StyledA> */}
     </StyledNav >
   )
 }

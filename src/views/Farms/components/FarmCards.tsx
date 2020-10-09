@@ -169,7 +169,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
               to={`/farms/${farm.id}`}
               size='xlg'
             />
-            <Link href={farm.link} target="_blank">
+            <Link href={farm.link} target="_blank" rel="noopener noreferrer"
+            >
               Buy on Balancer
             </Link>
             {/*apr !== 0 && (

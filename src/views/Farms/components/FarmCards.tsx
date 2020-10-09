@@ -7,12 +7,12 @@ import Card from '../../../components/Card'
 import CardContent from '../../../components/CardContent'
 import CardIcon from '../../../components/CardIcon'
 import Loader from '../../../components/Loader'
-
 import useFarms from '../../../hooks/useFarms'
-
 import { Farm } from '../../../contexts/Farms'
+import { useWallet } from 'use-wallet'
 
-//import { getAPR, getPoolEndTime } from '../../../yamUtils'
+import farmIcon from "../../../assets/img/farm-icon.png";
+import { getAPR, getPoolEndTime } from '../../../yamUtils'
 import useYam from '../../../hooks/useYam'
 
 function isMobile() {
@@ -24,11 +24,29 @@ function isMobile() {
   }
 }
 
-
 const FarmCards: React.FC = () => {
   let [farms] = useFarms()
 
-  let rows = farms.reduce<Farm[][]>((farmRows, farm) => {
+
+  console.log("igotdafarmz", farms);
+
+  const old_farms = farms.filter(farm => farm.season === 1);
+  const current_farms = farms.filter(item => item.season === 2);
+
+  console.log("1: ", old_farms);
+  console.log("2: ", current_farms);
+
+
+  let old_rows = old_farms.reduce<Farm[][]>((farmRows, farm) => {
+    const newFarmRows = [...farmRows]
+    if (newFarmRows[newFarmRows.length - 1].length === 3) {
+      newFarmRows.push([farm])
+    } else {
+      newFarmRows[newFarmRows.length - 1].push(farm)
+    }
+    return newFarmRows
+  }, [[]]);
+  let current_rows = current_farms.reduce<Farm[][]>((farmRows, farm) => {
     const newFarmRows = [...farmRows]
     if (newFarmRows[newFarmRows.length - 1].length === 3) {
       newFarmRows.push([farm])
@@ -38,41 +56,43 @@ const FarmCards: React.FC = () => {
     return newFarmRows
   }, [[]]);
 
-  if (isMobile()) {
-    return (
-      <MobileStyledCards>
-        {!!farms.length && farms.map((farm, i) => (
+  return (
+    <FarmCardsContainer>
+      <CardIcon><FarmIcon src={farmIcon}></FarmIcon></CardIcon>
+      <LargeText>New Season 2 Farms</LargeText>
+      <DisclaimerLink href="https://medium.com/@yieldwars/yieldwars-season-2-farms-are-upon-us-heres-how-to-participate-bal-pool-tutorial-included-78a30028f61">
+        Learn how to setup Balancer Pools
+      </DisclaimerLink>
+      <StyledCards>
+        {!!current_rows[0].length && current_rows.map((farmRow, i) => (
           <StyledRow key={i}>
-            <React.Fragment>
-              <FarmCard farm={farm} i={i} />
-            </React.Fragment>
+            {farmRow.map((farm, j) => (
+              <React.Fragment key={j}>
+                <FarmCard farm={farm} i={i + j} />
+              </React.Fragment>
+            ))}
           </StyledRow>
         ))}
-      </MobileStyledCards>
-    )
-  }
-
-  return (
-    <StyledCards>
-      {!!rows[0].length && rows.map((farmRow, i) => (
-        <StyledRow key={i}>
-          {farmRow.map((farm, j) => (
-            <React.Fragment key={j}>
-              <FarmCard farm={farm} i={i + j} />
-            </React.Fragment>
-          ))}
-        </StyledRow>
-      ))}
-    </StyledCards>
+      </StyledCards>
+      <LargeText>Season 1 Farms (CLOSED)</LargeText>
+      <Disclaimer>
+        The pools below in pool 1 are CLOSED. Do not stake in them, you
+        will not earn any yield.
+              </Disclaimer>
+      <StyledCards>
+        {!!old_rows[0].length && old_rows.map((farmRow, i) => (
+          <StyledRow key={i}>
+            {farmRow.map((farm, j) => (
+              <React.Fragment key={j}>
+                <FarmCard farm={farm} i={i + j} />
+              </React.Fragment>
+            ))}
+          </StyledRow>
+        ))}
+      </StyledCards>
+    </FarmCardsContainer>
   )
 }
-
-/* : (
-          <StyledLoadingWrapper>
-            <Loader text="Loading farms" />
-          </StyledLoadingWrapper>
-        )
-*/
 
 interface FarmCardProps {
   farm: Farm,
@@ -83,8 +103,9 @@ const WARNING_TIMESTAMP = 1598000400000
 const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   // const [startTime, setStartTime] = useState(0)
   // const [endTime, setEndTime] = useState(0)
-  //const [apr, setAPR] = useState(0)
+  const [apr, setAPR] = useState(0)
   const yam = useYam()
+  const { account, connect } = useWallet()
 
   // const getStartTime = useCallback(async () => {
   //   const startTime = await getPoolStartTime(farm.contract)
@@ -118,7 +139,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   // const poolActive = ((startTime * 1000)) - Date.now() <= 0
   // console.log(farm);
 
-  /*const aprVal = useCallback(async () => {
+  const aprVal = useCallback(async () => {
     const apr = farm.id !== `CHADS` && farm.id !== `UNIPOOL` && farm.id !== `BATTLEPOOL` ? await getAPR(farm, yam) : 0;
     setAPR(apr)
   }, [farm, setAPR])
@@ -127,44 +148,83 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
     if (farm.contract && !apr && yam) {
       aprVal()
     }
-  }, [farm, yam])*/
+  }, [farm, yam, account])
 
-  // console.log(farm);
-  
+
   if (farm.id === `UNIPOOL` || farm.id === `BATTLEPOOL` || farm.id === `YAM` || farm.id === `MEME` || farm.id === `PICKLE`) {
     return null;
   }
 
-  return (
-    <StyledCardWrapper>
-      {(farm.id === 'mbBASED' || farm.id === 'FARM') && <RainbowShadow />}
-      <Card>
-        <CardContent>
-          <StyledContent>
-            <CardIcon>{farm.icon}</CardIcon>
-            <StyledTitle>{farm.name}</StyledTitle>
-            <DepositEarn>
-              <span>Deposit {farm.id}</span>
-              <span>Earn WAR</span>
-            </DepositEarn>
-            <Button
-              disabled={false}
-              text={`Select`}
-              to={`/farms/${farm.id}`}
-              size='xlg'
-            />
-            {/*apr !== 0 && (
-            <StyledDetails>
-              <StyledDetail>APR</StyledDetail>
-              <StyledDetail>{apr ? `${apr.toFixed(2)}%*` : 'Coming soon'}</StyledDetail>
-            </StyledDetails>
-            )*/}
-          </StyledContent>
-        </CardContent>
-      </Card>
-    </StyledCardWrapper>
+  let content = (
+    <Card>
+      <CardContent>
+        <StyledContent>
+          <CardIcon>{farm.icon}</CardIcon>
+          <StyledTitle>{farm.name}</StyledTitle>
+          <DepositEarn>
+            Deposit {farm.id}-WAR BPT
+        {/* <span>Deposit {farm.id}</span>
+        <span>Earn WAR</span> */}
+          </DepositEarn>
+          <Button
+            disabled={false}
+            text={`Select`}
+            to={`/farms/${farm.id}`}
+            size='xlg'
+          />
+          {farm.season === 2 ? (
+            <StyledDetail>APR: {" "}{apr ? `${apr.toFixed(2)}%*` : 'Coming soon'}</StyledDetail>
+          ) :
+            <SmallSpace />
+          }
+
+          {farm.season === 2 && farm.link && <Link href={farm.link} target="_blank" rel="noopener noreferrer">
+            Get BPT on Balancer
+          </Link>}
+
+
+        </StyledContent>
+      </CardContent>
+    </Card>
   )
+  console.log(`link`, farm);
+  if (farm.season === 2) {
+    return (
+      <S2CardWrapper>
+        {/* {(farm.id === 'mbBASED' || farm.id === 'FARM') && <RainbowShadow />} */}
+        {content}
+      </S2CardWrapper>
+    )
+  }
+  else {
+    return (
+      <S1CardWrapper>
+        {/* {(farm.id === 'mbBASED' || farm.id === 'FARM') && <RainbowShadow />} */}
+        {content}
+      </S1CardWrapper>
+    )
+  }
 }
+
+const Link = styled.a`
+font-family: Alegreya;
+  font-size: 18px;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+`;
+
+const FarmIcon = styled.img`
+width: 100%;
+height: 100%;`
+
+const SmallSpace = styled.div`
+  height: 60px;
+`;
+
+const FarmCardsContainer = styled.div``;
 
 const RainbowShadow = styled.div`
 background: linear-gradient(
@@ -192,69 +252,104 @@ bottom: -2px;
 left: -2px;
 z-index: 0;
 `
+const StyledDetail = styled.div`
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0095f0;
+`
+
+
+const LargeText = styled.div`
+  font-family: Alegreya;
+  font-size: 30px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+`;
+
+const Disclaimer = styled.div`
+  margin: 30px;
+  color: white;
+  font-family: Alegreya;
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.4;
+  color: #ffffff;
+`;
+
+const DisclaimerLink = styled.a`
+  margin: 30px;
+  color: white;
+  font-family: Alegreya;
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.4;
+  color: #ffffff;
+`;
 
 const DepositEarn = styled.div`
 display: flex;
 flex-direction: column;
-margin-top: 8px;
-margin-bottom: 24px;
+margin-top: 24px;
+margin-bottom: 28px;
 font-size: 18px;
 line-height: 1.3;
 `
 
-const StyledCardAccent = styled.div`
-  background: linear-gradient(
-    45deg,
-    rgba(255, 0, 0, 1) 0%,
-    rgba(255, 154, 0, 1) 10%,
-    rgba(208, 222, 33, 1) 20%,
-    rgba(79, 220, 74, 1) 30%,
-    rgba(63, 218, 216, 1) 40%,
-    rgba(47, 201, 226, 1) 50%,
-    rgba(28, 127, 238, 1) 60%,
-    rgba(95, 21, 242, 1) 70%,
-    rgba(186, 12, 248, 1) 80%,
-    rgba(251, 7, 217, 1) 90%,
-    rgba(255, 0, 0, 1) 100%
-  );
-  border-radius: 12px;
-  filter: blur(4px);
-  position: absolute;
-  top: -2px; right: -2px; bottom: -2px; left: -2px;
-  z-index: 1000000;
-`
-
-const StyledCards = styled.div`
-margin-top: 3vh;
+const StyledCards = !isMobile() ? styled.div`
+margin: 40px auto 80px auto;
   width: 1100px;
-`
-
-const MobileStyledCards = styled.div`
-margin-top: 3vh;
+` : styled.div`
+margin: 40px auto 80px auto;
   width: 100%;
 `
 
-const StyledLoadingWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  flex: 1;
-  justify-content: center;
-`
-
-const StyledRow = styled.div`
+const StyledRow = !isMobile() ? styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   margin-bottom: ${props => props.theme.spacing[4]}px;
+` : styled.div`
+flex-direction: column;
+width: 100%;
+align-items: center;
 `
 
-const StyledCardWrapper = styled.div`
+const S1CardWrapper = !isMobile() ? styled.div`
 position: relative;
   display: flex;
   width: 275px;
-  height: 350px;
-
+  height: 300px;
+` : styled.div`
+position: relative;
+  display: flex;
+  width: 275px;
+  height: 370px;
+  margin: 0 auto 20px auto;
 `
+
+const S2CardWrapper = !isMobile() ? styled.div`
+position: relative;
+  display: flex;
+  width: 275px;
+  height: 370px;
+` : styled.div`
+position: relative;
+  display: flex;
+  width: 275px;
+  height: 370px;
+  margin: 0 auto 20px auto;
+`
+
 
 const StyledTitle = styled.h4`
 font-family: Alegreya;
@@ -285,47 +380,6 @@ letter-spacing: normal;
 text-align: center;
 color: #ffffff;
   padding: 0;
-`
-
-const StyledDenominator = styled.div`
-  text-align: center;
-  margin-left: 8px;
-  font-size: 18px;
-  color: ${props => props.theme.color.grey[600]};
-`
-
-const StyledSpacer = styled.div`
-  height: ${props => props.theme.spacing[4]}px;
-  width: ${props => props.theme.spacing[4]}px;
-`
-
-const StyledDetails = styled.div`
-display: flex;
--webkit-box-pack: justify;
-justify-content: space-between;
-box-sizing: border-box;
-border-radius: 8px;
-background: rgb(20,91,170);
-color: rgb(170, 149, 132);
-width: 100%;
-margin-top: 12px;
-line-height: 32px;
-font-size: 13px;
-border: 1px solid rgb(230, 220, 213);
-text-align: center;
-padding: 0px 12px;
-`
-
-const StyledDetail = styled.div`
-font-family: Alegreya;
-line-height: 32px;
-font-size: 18px;
-font-weight: normal;
-font-stretch: normal;
-font-style: normal;
-letter-spacing: normal;
-color: #ffffff;
-}
 `
 
 export default FarmCards

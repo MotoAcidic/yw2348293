@@ -29,6 +29,26 @@ export let addressMap;
 if (chainId === 1) {
   addressMap = {
 
+    //s2
+    send_pool: "0x2e548308807788818993DBD8EEC17e3E046aEEb5",
+    hate_pool: "0xea4da74c141e2EFa0F11e73A79eD598c51231045",
+    stbu_pool: "0xd85AE51083FdE86F26F1085aDb7637aaf854D187",
+    yfl_pool: "0x73D50999B3003465fD4015C42017CC0eBAd47858",
+    rope_pool: "0xF1c6d781b347343Fdb8c2CcF3a41D300b593b509",
+    z_pool: "0xdFf7dB9a74c72a7bC03EFa840a1476cFC84da1A4",
+    cream_pool: "0x7caAd803f4590d74b55f346911aBf9F54f64fa16",
+    value_pool: "0xFA7a321202e996E63E1D3D812B8bF8AFc1b2999c",
+
+    send: "0x58e808e472e5113860339bcd2b5266a47c04305f",
+    hate: "0x650c9f5b5fc57a106722be806c180e433b2f4424",
+    stbu: "0x212DD60D4Bf0DA8372fe8116474602d429E5735F",
+    yfl: "0x97f50f649db045b76edebe7a947d101d9b1c5129",
+    rope: "0xa5af158d9449da9ba12fd7a6cb6eba5e15ac1ab1",
+    z: "0xb1b8c56f3bb4915b2c976a457504b80895953faf",
+    cream: "0x2617eb71ae6932009ec915bf032ddc66d55755fc",
+    value: "0xb88a923ed3d46747085ce2684ed7108352eba886",
+
+    //s1
     link_pool: "0x693c8D8256018ffCbd3A768bf6ef6Efc7B7B7eab",
     snx_pool: "0x17a4cBb7114b5AB0b874a3946bCA335c24a16C69",
     yfi_pool: "0xD52beE6663669d8B89B68080c786FBfe0c43CFBa",
@@ -83,7 +103,7 @@ if (chainId === 1) {
     farm_pool: "0xcce4158494ae8296e3936823058b17e03eeba6c3",
     wnxm_pool: "0xcce4158494ae8296e3936823058b17e03eeba6c3",
     mbbased_pool: "0xcce4158494ae8296e3936823058b17e03eeba6c3",
-    unipool: "0xcce4158494ae8296e3936823058b17e03eeba6c3",
+    unipool_pool: "0xcce4158494ae8296e3936823058b17e03eeba6c3",
     battlepool_pool: "0xcce4158494ae8296e3936823058b17e03eeba6c3",
 
     link: "0x2e475b3a66fb9bfd0087321aa3217562f4150a98",

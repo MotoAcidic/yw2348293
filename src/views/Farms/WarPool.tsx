@@ -1,48 +1,25 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react'
-import {
-	Route,
-	Switch,
-	useRouteMatch,
-} from 'react-router-dom'
 import { useWallet } from 'use-wallet'
 import styled from 'styled-components'
 import { provider } from 'web3-core'
-
-import Logo from '../../assets/img/logo.png'
-
 import Button from '../../components/Button'
-import Page from '../../components/Page'
-import PageHeader from '../../components/PageHeader'
-import useModal from '../../hooks/useModal'
-import { getStats } from './utils'
 import useYam from '../../hooks/useYam'
-import { OverviewData } from './types'
 import useEarnings from '../../hooks/useEarnings'
 import useReward from '../../hooks/useReward'
-import { Contract } from 'web3-eth-contract'
-
-
-import Icon from '../../assets/img/icon.png'
 import TallSky from '../../assets/img/tallsky.png'
 import Sky from '../../assets/img/skybig.png'
 import StakeModal from './StakeModal'
 import UnstakeModal from './UnstakeModal'
-
-
-import FarmCards from './components/FarmCards'
-import CountDown from './components/CountDown'
-import { Account } from '../../yam/lib/accounts'
 import useFarm from '../../hooks/useFarm'
-import useRedeem from '../../hooks/useRedeem'
 import { getContract } from '../../utils/erc20'
 import { getDisplayBalance } from '../../utils/formatBalance'
 import useAllowance from '../../hooks/useAllowance'
+import useModal from '../../hooks/useModal'
 import useApprove from '../../hooks/useApprove'
 import useStake from '../../hooks/useStake'
 import useStakedBalance from '../../hooks/useStakedBalance'
 import useTokenBalance from '../../hooks/useTokenBalance'
 import useUnstake from '../../hooks/useUnstake'
-import useFarms from '../../hooks/useFarms'
 import { getWarAPR, getPoolEndTime } from '../../yamUtils'
 
 function isMobile() {
@@ -345,7 +322,7 @@ display: flex;
 flex-direction: column;
 justify-content: space-evenly;
 text-align: left;
-padding: 10% 10% 0% 10%;
+padding: 50px 10% 0% 10%;
 font-family: SFMono;
   font-size: 18px;
   font-weight: 600;
@@ -375,14 +352,20 @@ margin-top: 1%;
   background-color: #97d5ff;
 `
 
-const InfoContainer = styled.div`
+const InfoContainer = !isMobile() ? styled.div`
 width: 1000px;
   height: 375px;
   border-radius: 8px;
   border: solid 4px #97d5ff;
+	background-color: #003677;
+	margin: 80px auto 80px auto;
+`: styled.div`
+width: 300px;
+  height: 450px;
+  border-radius: 8px;
+  border: solid 4px #97d5ff;
   background-color: #003677;
-  margin-top: 6vh;
-  margin-bottom: 6vh;
+	margin: 60px auto 60px auto;
 `
 
 const MobileInfoContainer = styled.div`
@@ -391,8 +374,7 @@ width: 300px;
   border-radius: 8px;
   border: solid 4px #97d5ff;
   background-color: #003677;
-  margin-top: 6vh;
-  margin-bottom: 6vh;
+	margin: 60px auto 60px auto;
 `
 
 const CountDownText = styled.div`

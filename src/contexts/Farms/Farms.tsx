@@ -39,8 +39,113 @@ const Farms: React.FC = ({ children }) => {
       tokens = await getPoolTokenContracts(yam);
     }
 
+    const balancerURL = "https://pools.balancer.exchange/#/pool/";
 
     let farmsArr = [
+      {
+        contract: pools ? pools["send_pool"] : undefined,
+        name: "SEND Senders",
+        depositToken: "SEND-WAR BPT",
+        depositTokenAddress: tokens ? tokens["send_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "✉️",
+        id: "SEND",
+        sort: 9,
+        season: 2,
+        link: tokens ? balancerURL.concat(tokens["send_token"].options.address,"/") : undefined
+      },
+      {
+        contract: pools ? pools["hate_pool"] : undefined,
+        name: "HATE Drapes",
+        depositToken: "HATE-WAR BPT",
+        depositTokenAddress: tokens ? tokens["hate_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "🟪",
+        id: "HATE",
+        sort: 9,
+        season: 2,
+        link: tokens ? balancerURL.concat(tokens["hate_token"].options.address,"/") : undefined
+      },
+      {
+        contract: pools ? pools["stbu_pool"] : undefined,
+        name: "STBU Robots",
+        depositToken: "STBU-WAR BPT",
+        depositTokenAddress: tokens ? tokens["stbu_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "🤖",
+        id: "STBU",
+        sort: 9,
+        season: 2,
+        link: tokens ? balancerURL.concat(tokens["stbu_token"].options.address,"/") : undefined
+      },
+      {
+        contract: pools ? pools["yfl_pool"] : undefined,
+        name: "YFL Mariners",
+        depositToken: "YFL-WAR BPT",
+        depositTokenAddress: tokens ? tokens["yfl_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "⚓",
+        id: "YFL",
+        sort: 9,
+        season: 2,
+        link: tokens ? balancerURL.concat(tokens["yfl_token"].options.address,"/") : undefined
+      },
+      {
+        contract: pools ? pools["rope_pool"] : undefined,
+        name: "ROPE Rats",
+        depositToken: "ROPE-WAR BPT",
+        depositTokenAddress: tokens ? tokens["rope_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "🐀",
+        id: "ROPE",
+        sort: 9,
+        season: 2,
+        link: tokens ? balancerURL.concat(tokens["rope_token"].options.address,"/") : undefined
+      },
+      {
+        contract: pools ? pools["z_pool"] : undefined,
+        name: "Z Yachts",
+        depositToken: "Z-WAR BPT",
+        depositTokenAddress: tokens ? tokens["z_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "⛵",
+        id: "Z",
+        sort: 9,
+        season: 2,
+        link: tokens ? balancerURL.concat(tokens["z_token"].options.address,"/") : undefined
+      },
+      {
+        contract: pools ? pools["cream_pool"] : undefined,
+        name: "CREAM Pies",
+        depositToken: "CREAM-WAR BPT",
+        depositTokenAddress: tokens ? tokens["cream_token"].options.address : undefined,
+        earnToken: 'CREAM',
+        earnTokenAddress: yamAddress,
+        icon: "🥧",
+        id: "CREAM",
+        sort: 9,
+        season: 2,
+        link: tokens ? balancerURL.concat(tokens["cream_token"].options.address,"/") : undefined
+      },
+      {
+        contract: pools ? pools["value_pool"] : undefined,
+        name: "VALUE Goats",
+        depositToken: "VALUE-WAR BPT",
+        depositTokenAddress: tokens ? tokens["value_token"].options.address : undefined,
+        earnToken: 'WAR',
+        earnTokenAddress: yamAddress,
+        icon: "🐐",
+        id: "VALUE",
+        sort: 9,
+        season: 2,
+        link: tokens ? balancerURL.concat(tokens["value_token"].options.address,"/") : undefined
+      },
       {
         contract: pools ? pools["mbbased_pool"] : undefined,
         name: "mbBASED Ghouls",
@@ -50,7 +155,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "💀",
         id: "mbBASED",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
       {
         contract: pools ? pools["farm_pool"] : undefined,
@@ -61,7 +168,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🚜",
         id: "FARM",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
       {
         contract: pools ? pools["link_pool"] : undefined,
@@ -72,7 +181,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🛥️",
         id: "LINK",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
       {
         contract: pools ? pools["snx_pool"] : undefined,
@@ -83,7 +194,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🛡️",
         id: "SNX",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
       {
         contract: pools ? pools["yfi_pool"] : undefined,
@@ -94,7 +207,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "👧",
         id: "YFI",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
       {
         contract: pools ? pools["comp_pool"] : undefined,
@@ -105,7 +220,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "👑",
         id: "COMP",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
       {
         contract: pools ? pools["bzrx_pool"] : undefined,
@@ -116,7 +233,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🪓",
         id: "BZRX",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
       {
         contract: pools ? pools["uni_pool"] : undefined,
@@ -127,7 +246,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🦄",
         id: "UNI",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
       {
         contract: pools ? pools["lend_pool"] : undefined,
@@ -138,7 +259,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🏹",
         id: "AAVE",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
       {
         contract: pools ? pools["wnxm_pool"] : undefined,
@@ -149,7 +272,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "👾", // BASED Ghouls 💀
         id: "WNXM",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
       {
         contract: pools ? pools["mkr_pool"] : undefined,
@@ -160,7 +285,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "👷",
         id: "MKR",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
       {
         contract: pools ? pools["srm_pool"] : undefined,
@@ -171,7 +298,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🧙‍♂️",
         id: "SRM",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
       {
         contract: pools ? pools["chads_pool"] : undefined,
@@ -182,7 +311,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🦍",
         id: "CHADS",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
       {
         contract: undefined,
@@ -193,7 +324,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🥒",
         id: "PICKLE",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
       {
         contract: undefined,
@@ -204,7 +337,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🍍",
         id: "MEME",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
       {
         contract: undefined,
@@ -215,9 +350,10 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "🍠",
         id: "YAM",
-        sort: 9
+        sort: 9,
+        season: 1,
+        link: ""
       },
-
       {
         contract: pools ? pools["unipool_pool"] : undefined,
         name: "",
@@ -227,9 +363,10 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "",
         id: "UNIPOOL",
-        sort: 9
+        sort: 9,
+        season: null,
+        link: ""
       },
-
       {
         contract: pools ? pools["battlepool_pool"] : undefined,
         name: "",
@@ -239,7 +376,9 @@ const Farms: React.FC = ({ children }) => {
         earnTokenAddress: yamAddress,
         icon: "",
         id: "BATTLEPOOL",
-        sort: 9
+        sort: 9,
+        season: null,
+        link: ""
       },
     ]
 

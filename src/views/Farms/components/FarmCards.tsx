@@ -169,16 +169,20 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
               to={`/farms/${farm.id}`}
               size='xlg'
             />
+            <SmallSpace />
+            {farm.season === 2 ? (
+              <StyledDetail>APR: coming soon
+                {/* <StyledDetail>{apr ? `${apr.toFixed(2)}%*` : 'Coming soon'}</StyledDetail> */}
+              </StyledDetail>
+
+            ) :
+              <Space />}
+            <SmallSpace />
+
             <Link href={farm.link} target="_blank" rel="noopener noreferrer"
             >
-              Buy on Balancer
+              Supply on Balancer
             </Link>
-            {/*apr !== 0 && (
-            <StyledDetails>
-              <StyledDetail>APR</StyledDetail>
-              <StyledDetail>{apr ? `${apr.toFixed(2)}%*` : 'Coming soon'}</StyledDetail>
-            </StyledDetails>
-            )*/}
           </StyledContent>
         </CardContent>
       </Card>
@@ -189,18 +193,19 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
 const Link = styled.a`
 font-family: Alegreya;
   font-size: 18px;
-  margin-top: 20px;
   font-stretch: normal;
   font-style: normal;
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
-  text-decoration: none;
 `;
 
 
 const Space = styled.div`
   height: 40px;
+`;
+const SmallSpace = styled.div`
+  height: 10px;
 `;
 
 const FarmCardsContainer = styled.div``;
@@ -231,6 +236,14 @@ bottom: -2px;
 left: -2px;
 z-index: 0;
 `
+const StyledDetail = styled.div`
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0095f0;
+`
+
 
 const LargeText = styled.div`
   font-family: Alegreya;
@@ -285,7 +298,7 @@ const StyledCardWrapper = styled.div`
 position: relative;
   display: flex;
   width: 275px;
-  height: 350px;
+  height: 370px;
 
 `
 

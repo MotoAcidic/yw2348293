@@ -114,21 +114,21 @@ const Farms: React.FC = () => {
                   TVL: $
                   {tvl && !tvl.totalValue.eq(0)
                     ? Number(tvl.totalValue.toFixed(2)).toLocaleString(
-                        undefined,
-                        {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2
-                        }
-                      )
+                      undefined,
+                      {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                      }
+                    )
                     : "-"}
                 </DisplayItem>
                 <DisplayItem>
                   $War Price: $
                   {currentPrice
                     ? Number(currentPrice).toLocaleString(undefined, {
-                        minimumFractionDigits: 4,
-                        maximumFractionDigits: 4
-                      })
+                      minimumFractionDigits: 4,
+                      maximumFractionDigits: 4
+                    })
                     : "-"}
                 </DisplayItem>
                 <DisplayItem>Supply: 2,800,000</DisplayItem>
@@ -152,8 +152,8 @@ const Farms: React.FC = () => {
                   {isMobile() ? (
                     <MobileCountDown launchDate={launch} />
                   ) : (
-                    <CountDown launchDate={launch} />
-                  )}
+                      <CountDown launchDate={launch} />
+                    )}
                 </div>
               )}
               <WarPool />

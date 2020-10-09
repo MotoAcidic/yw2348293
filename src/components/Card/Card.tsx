@@ -15,10 +15,13 @@ const StyledCard = styled.div`
   height: 100%;
   overflow: hidden;
   z-index: 0;
-  border: 1px solid rgb(226, 214, 207);
   border-radius: 12px;
-  box-shadow: rgb(247, 244, 242) 1px 1px 0px inset;
+  border: solid 2px #0095f0;
     background-color: #003677;
 `
+
+// white border >>
+// border: 1px solid rgb(226, 214, 207);
+// box-shadow: rgb(247, 244, 242) 1px 1px 0px inset;
 
 export default Card

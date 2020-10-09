@@ -21,7 +21,6 @@ import { useWallet } from 'use-wallet'
 import Landscape from '../../assets/img/landscapebig.png'
 import Sky from '../../assets/img/skybig.png'
 import TallSky from '../../assets/img/tallsky.png'
-import FightInstructions from '../../assets/img/flightinstructions.png'
 import DailyQuestion from "./DailyQuestion.jsx";
 
 import useFarms from '../../hooks/useFarms'
@@ -195,7 +194,6 @@ const Versus = ({ battles, question }) => {
 	return (
 		<>
 			{battles &&
-				<VSContentContainer>
 					<VersusItem>
 						<VersusCard>
 							<StyledContent>
@@ -229,7 +227,6 @@ const Versus = ({ battles, question }) => {
 							</StyledContent>
 						</VersusCard>
 					</VersusItem>
-				</VSContentContainer>
 			}
 
 			{question &&
@@ -237,68 +234,32 @@ const Versus = ({ battles, question }) => {
 			}
 
 			{account && <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button>}
-			<Title style={{ marginTop: '6vh' }}>How the battles work </Title>
-			<StyledContainer>
-				<StyledCardContent>
-					<img src={FightInstructions} width="100%" />
-				</StyledCardContent>
-			</StyledContainer>
 		</>
 	)
 }
 
-const Title = styled.div`
-font-family: Alegreya;
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-  margin-top: 1%;
-`
+const ButtonContainer = styled.div``
 
-const StyledCardContent = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-evenly;
-
-`
-
-const StyledContainer = styled.div`
-  box-sizing: border-box;
-  margin: 0 auto;
-  margin-top: 3vh;
-	max-width: 730px;
-	margin-bottom: 60px;
-  width: 100%;
-`
-
-const ButtonContainer = styled.div`
-
-`
-const VSContentContainer = !isMobile() ? styled.div`
-margin: 40px 0 40px 0;
+const VersusItem = !isMobile() ?  styled.div`
 width: 540px;
 display: flex;
-flex-direction: column;
-justify-content: space-evenly;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+font-size: 30px;
+margin: 20px auto 40px auto;
 font-family: Alegreya;
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
 ` : styled.div`
 margin: 40px 0 40px 0;
-width: 100%;
+width: 90vw;
 display: flex;
 flex-direction: column;
-justify-content: space-evenly;
 font-family: Alegreya;
   font-size: 25px;
   font-weight: bold;
@@ -342,15 +303,6 @@ height: 247px;
 border-radius: 8px;
 border: solid 2px #0095f0;
 background-color: #003677;
-`
-
-const VersusItem = styled.div`
-width: 100%;
-display: flex;
-flex-direction: row;
-justify-content: space-evenly;
-align-items: center;
-font-size: 30px;
 `
 
 export default Versus

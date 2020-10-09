@@ -244,14 +244,14 @@ display: flex;
 flex-direction: row;
 justify-content: space-evenly;
 width: 1100px;
-margin-top: 3vh;
+margin-bottom: 80px;
 ` : styled.div`
 display: flex;
 flex-direction: row;
 flex-wrap: wrap;
 justify-content: space-evenly;
 width: 80vw;
-margin-top: 3vh;
+margin-bottom: 70px;
 `;
 
 const Container = !isMobile() ? styled.div`

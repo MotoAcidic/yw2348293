@@ -165,10 +165,9 @@ padding: 30px;
   border-radius: 8px;
   border: solid 2px #0095f0;
 	background-color: #003677;
-	margin-bottom: 20px;
-	margin-top: 40px;
+	margin-bottom: 80px;
 ` : styled.div`
-width: 80vw;
+width: calc(90vw - 60px);
 display: flex;
 flex-direction: column;
 justify-content: space-between;
@@ -176,7 +175,7 @@ padding: 30px;
   border-radius: 8px;
   border: solid 2px #0095f0;
 	background-color: #003677;
-	margin-bottom: 20px;
+	margin-bottom: 80px;
 `
 
 

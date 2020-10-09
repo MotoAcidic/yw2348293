@@ -183,7 +183,7 @@ const StyledA = !isMobile() ? styled.a`
   background-image: url(${Uniswap});
   background-size: cover;
   background-position: center;
-  height: 50px;
+  height: 40px;
   justify-content: center;
   outline: none;
   padding-left: 10px;
@@ -211,7 +211,7 @@ box-shadow: rgb(0, 34, 79) 6px 6px 12px, rgb(0, 54, 119) -12px -12px 24px -2px;
 background-image: url(${Uniswap});
 background-size: cover;
 background-position: center;
-min-height: 50px;
+height: 40px;
 justify-content: center;
 outline: none;
 padding-left: 10px;

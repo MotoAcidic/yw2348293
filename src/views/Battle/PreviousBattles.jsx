@@ -116,6 +116,7 @@ const Versus = ({ history }) => {
 		return (
 			<VSContentContainer>
 				<div>Oct {item[0].day - 1}</div>
+				{item.length === 1 && <Space />}
 				<VersusItem>
 					<VersusCard>
 						<StyledContent>
@@ -141,6 +142,7 @@ const Versus = ({ history }) => {
 						</StyledContent>
 					</VersusCard>
 				</VersusItem>
+				{item.length === 1 && <Space />}
 				{item.length === 2 && (
 					<>
 						<Divider />
@@ -197,6 +199,7 @@ const Versus = ({ history }) => {
 		return (
 			<VSContentContainer>
 				{item[0].day - 1 ? <div>Oct {item[0].day - 1}</div> : <div>Sept 30th</div>}
+				{item.length === 1 && <Space />}
 				<VersusItem>
 					<VersusCard>
 						<StyledContent>
@@ -222,6 +225,7 @@ const Versus = ({ history }) => {
 						</StyledContent>
 					</VersusCard>
 				</VersusItem>
+				{item.length === 1 && <Space />}
 				{item.length === 2 && (
 					<>
 						<Divider />
@@ -257,7 +261,7 @@ const Versus = ({ history }) => {
 	})
 
 	return (
-		<Container>
+		<>
 			<SeasonContainer>
 				{currSeasonHistory}
 			</SeasonContainer>
@@ -265,35 +269,22 @@ const Versus = ({ history }) => {
 			<SeasonContainer>
 				{prevSeasonHistory}
 			</SeasonContainer>
-		</Container>
+		</>
 	)
 }
+
+const Space = styled.div`height: 61px;`
 
 const SeasonContainer = !isMobile() ? styled.div`
 display: flex;
 flex-wrap: wrap;
 justify-content: space-around;
 width: 1200px;
-margin-top: 3vh;
 ` : styled.div`
 display: flex;
 flex-wrap: wrap;
 justify-content: space-around;
 width: 90vw;
-margin-top: 3vh;
-`
-
-const Container = !isMobile() ? styled.div`
-display: flex;
-flex-direction: column;
-width: 1200px;
-margin-top: 3vh;
-` : styled.div`
-display: flex;
-flex-wrap: wrap;
-justify-content: space-around;
-width: 90vw;
-margin-top: 3vh;
 `
 
 const Percent = styled.div`
@@ -354,8 +345,9 @@ font-family: Alegreya;
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
-  margin-top: 1%;
-`
+  max-width: 80vw;
+  margin: 20px auto 20px auto;
+`;
 
 const StyledCardContent = styled.div`
   display: flex;

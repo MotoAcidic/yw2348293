@@ -6,6 +6,7 @@ import Button from "../../components/Button";
 import Card from "../../components/Card";
 import CardContent from "../../components/CardContent";
 import CardIcon from "../../components/CardIcon";
+import Uniswap from "../../assets/img/uniswap@2x.png";
 import Page from "../../components/Page";
 import sushi from "../../assets/img/sushi.png";
 import yamimg from "../../assets/img/yam.png";
@@ -28,6 +29,7 @@ import VersusCard from "./VersusCard.jsx";
 import SingleVersusCard from "./SingleVersusCard.jsx";
 import BattleHistory from './PreviousBattles'
 import Schedule from './Schedule'
+import FightInstructions from '../../assets/img/flightinstructions.png'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -174,18 +176,27 @@ const Battle: React.FC = () => {
               </DisplayItem>
               <DisplayItem>Supply: 2,800,000</DisplayItem>
             </TopDisplayContainer>
+            <StyledA
+              href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
+              target="_blank"
+            />
             <Title>Step 1: Stake $WAR to enter the battle</Title>
             <Pool3 />
             {battles.length > 0 &&
-              <Title style={{ marginTop: '4vh' }}>Step 2: Vote for the armies you will fight for</Title>
+              <Title>Step 2: Vote for the armies you will fight for</Title>
             }
             {battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
+            {/* in case no battle, but still question */}
             {(battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
-            <Title style={{ marginTop: '5vh' }}>Leaderboard</Title>
-            {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}
+            <Title>How the battles work </Title>
+            <StyledCardContent>
+              <img src={FightInstructions} alt="instructions" width="100%" />
+            </StyledCardContent>
+            <Title>Leaderboard</Title>
+            <LeaderBoard>{leaderboardContent}</LeaderBoard>
             <Title>Schedule</Title>
             <Schedule schedule={schedule} />
-            <Title style={{ marginTop: '5vh' }}>Previous Battles</Title>
+            <Title>Previous Battles</Title>
             <BattleHistory history={previousBattles} />
           </Page>
         </ContentContainer>
@@ -194,6 +205,74 @@ const Battle: React.FC = () => {
   );
 };
 
+const StyledCardContent = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-evenly;
+  max-width: 730px;
+  width: 100%;
+	margin: 0 auto 80px auto;
+
+`
+
+const StyledA = !isMobile() ? styled.a`
+  align-items: center;
+  border: 0;
+  border-radius: 18px;
+  cursor: pointer;
+  display: flex;
+  font-size: 16px;
+  border-radius: 8px;
+  box-shadow: rgb(0, 34, 79) 6px 6px 12px, rgb(0, 54, 119) -12px -12px 24px -2px;
+  background-image: url(${Uniswap});
+  background-size: cover;
+  background-position: center;
+  height: 40px;
+  justify-content: center;
+  outline: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  opacity: 1;
+  width: 180px;
+  font-family: Alegreya;
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: white;
+  margin-bottom: 40px;
+` : styled.a`
+align-items: center;
+border: 0;
+border-radius: 18px;
+cursor: pointer;
+display: flex;
+font-size: 16px;
+border-radius: 8px;
+box-shadow: rgb(0, 34, 79) 6px 6px 12px, rgb(0, 54, 119) -12px -12px 24px -2px;
+background-image: url(${Uniswap});
+background-size: cover;
+background-position: center;
+height: 40px;
+justify-content: center;
+outline: none;
+padding-left: 10px;
+padding-right: 10px;
+opacity: 1;
+width: 180px;
+font-family: Alegreya;
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: white;
+margin-bottom: 30px;
+`
 
 const StyledCardIcon = styled.div`
   background-color: #002450;
@@ -250,22 +329,19 @@ const LeaderBoardItem = !isMobile()
       margin-bottom: 20px;
     `;
 
-const LeaderBoard = styled.div`
-  margin-top: 3vh;
+const LeaderBoard = !isMobile() ? styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   width: 70%;
-  height: 25vh;
-`;
-
-const MobileLeaderBoard = styled.div`
-  margin-top: 3vh;
-  display: flex;
-  width: 90vw;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  margin-bottom: 80px;
+` : styled.div`
+display: flex;
+width: 90vw;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-evenly;
+margin-bottom: 70px;
 `;
 
 const StyledVotes = styled.h4`
@@ -340,6 +416,7 @@ font-family: Alegreya;
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
+  margin-bottom: 20px;
 `;
 
 const TopDisplayContainer = !isMobile()

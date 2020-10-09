@@ -367,8 +367,8 @@ width: 300px;
   border-radius: 8px;
   border: solid 4px #97d5ff;
   background-color: #003677;
-  margin-top: 6vh;
-  margin-bottom: 6vh;
+	margin: 60px auto 60px auto;
+
 `
 
 const CountDownText = styled.div`

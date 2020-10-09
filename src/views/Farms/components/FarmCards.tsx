@@ -7,11 +7,10 @@ import Card from '../../../components/Card'
 import CardContent from '../../../components/CardContent'
 import CardIcon from '../../../components/CardIcon'
 import Loader from '../../../components/Loader'
-
 import useFarms from '../../../hooks/useFarms'
-
 import { Farm } from '../../../contexts/Farms'
 
+import farmIcon from "../../../assets/img/farm-icon.png";
 //import { getAPR, getPoolEndTime } from '../../../yamUtils'
 import useYam from '../../../hooks/useYam'
 
@@ -58,6 +57,7 @@ const FarmCards: React.FC = () => {
 
   return (
     <FarmCardsContainer>
+      <CardIcon><FarmIcon src={farmIcon}></FarmIcon></CardIcon>
       <LargeText>New Season 2 Farms</LargeText>
       <StyledCards>
         {!!current_rows[0].length && current_rows.map((farmRow, i) => (
@@ -70,7 +70,6 @@ const FarmCards: React.FC = () => {
           </StyledRow>
         ))}
       </StyledCards>
-      <Space />
       <LargeText>Season 1 Farms</LargeText>
       <Disclaimer>
         The pools below in pool 1 are CLOSED. Do not stake in them, you
@@ -181,7 +180,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
 
             <Link href={farm.link} target="_blank" rel="noopener noreferrer"
             >
-              Supply on Balancer
+              Get BPT on Balancer
             </Link>
           </StyledContent>
         </CardContent>
@@ -200,6 +199,9 @@ font-family: Alegreya;
   color: #ffffff;
 `;
 
+const FarmIcon = styled.img`
+width: 100%;
+height: 100%;`
 
 const Space = styled.div`
   height: 40px;
@@ -278,10 +280,10 @@ line-height: 1.3;
 `
 
 const StyledCards = !isMobile() ? styled.div`
-margin-top: 3vh;
+margin: 40px auto 80px auto;
   width: 1100px;
 ` : styled.div`
-margin-top: 3vh;
+margin: 40px auto 80px auto;
   width: 100%;
 `
 

@@ -22,6 +22,7 @@ import StakeModal from "./StakeModal";
 import UnstakeModal from "./UnstakeModal";
 import WarPool from "./WarPool";
 
+
 import FarmCards from "./components/FarmCards";
 import CountDown from "./components/CountDown";
 import MobileCountDown from "./components/MobileCountdown";
@@ -256,7 +257,7 @@ const TopDisplayContainer = !isMobile()
       flex-direction: row;
       align-content: center;
       justify-content: space-evenly;
-      margin-top: 16px auto 80px auto;
+      margin: 60px auto 40px auto;
       display: flex;
       flex-wrap: wrap;
     `;

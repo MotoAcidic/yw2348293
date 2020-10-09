@@ -71,7 +71,7 @@ const FarmCards: React.FC = () => {
           </StyledRow>
         ))}
       </StyledCards>
-      <LargeText>Season 1 Farms</LargeText>
+      <LargeText>Season 1 Farms (CLOSED)</LargeText>
       <Disclaimer>
         The pools below in pool 1 are CLOSED. Do not stake in them, you
         will not earn any yield.
@@ -151,43 +151,56 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   if (farm.id === `UNIPOOL` || farm.id === `BATTLEPOOL` || farm.id === `YAM` || farm.id === `MEME` || farm.id === `PICKLE`) {
     return null;
   }
-  console.log(`link`,farm);
-  return (
-    <StyledCardWrapper>
-      {(farm.id === 'mbBASED' || farm.id === 'FARM') && <RainbowShadow />}
-      <Card>
-        <CardContent>
-          <StyledContent>
-            <CardIcon>{farm.icon}</CardIcon>
-            <StyledTitle>{farm.name}</StyledTitle>
-            <DepositEarn>
-              Deposit {farm.id}-WAR BPT
-              {/* <span>Deposit {farm.id}</span>
-              <span>Earn WAR</span> */}
-            </DepositEarn>
-            <Button
-              disabled={false}
-              text={`Select`}
-              to={`/farms/${farm.id}`}
-              size='xlg'
-            />
-            {farm.season === 2 ? (
-                <StyledDetail>APR: {" "}{apr ? `${apr.toFixed(2)}%*` : 'Coming soon'}</StyledDetail>
-            ) :
-              <SmallSpace />
-            }
 
-            {farm.season === 2 && farm.link && <Link href={farm.link} target="_blank" rel="noopener noreferrer"
-            >
-              Get BPT on Balancer
-            </Link>}
-            
-            
-          </StyledContent>
-        </CardContent>
-      </Card>
-    </StyledCardWrapper>
+  let content = (
+    <Card>
+      <CardContent>
+        <StyledContent>
+          <CardIcon>{farm.icon}</CardIcon>
+          <StyledTitle>{farm.name}</StyledTitle>
+          <DepositEarn>
+            Deposit {farm.id}-WAR BPT
+        {/* <span>Deposit {farm.id}</span>
+        <span>Earn WAR</span> */}
+          </DepositEarn>
+          <Button
+            disabled={false}
+            text={`Select`}
+            to={`/farms/${farm.id}`}
+            size='xlg'
+          />
+          {farm.season === 2 ? (
+            <StyledDetail>APR: {" "}{apr ? `${apr.toFixed(2)}%*` : 'Coming soon'}</StyledDetail>
+          ) :
+            <SmallSpace />
+          }
+
+          {farm.season === 2 && farm.link && <Link href={farm.link} target="_blank" rel="noopener noreferrer">
+            Get BPT on Balancer
+          </Link>}
+
+
+        </StyledContent>
+      </CardContent>
+    </Card>
   )
+  console.log(`link`, farm);
+  if (farm.season === 2) {
+    return (
+      <S2CardWrapper>
+        {/* {(farm.id === 'mbBASED' || farm.id === 'FARM') && <RainbowShadow />} */}
+        {content}
+      </S2CardWrapper>
+    )
+  }
+  else {
+    return (
+      <S1CardWrapper>
+        {/* {(farm.id === 'mbBASED' || farm.id === 'FARM') && <RainbowShadow />} */}
+        {content}
+      </S1CardWrapper>
+    )
+  }
 }
 
 const Link = styled.a`
@@ -296,7 +309,20 @@ width: 100%;
 align-items: center;
 `
 
-const StyledCardWrapper = !isMobile() ? styled.div`
+const S1CardWrapper = !isMobile() ? styled.div`
+position: relative;
+  display: flex;
+  width: 275px;
+  height: 300px;
+` : styled.div`
+position: relative;
+  display: flex;
+  width: 275px;
+  height: 370px;
+  margin: 0 auto 20px auto;
+`
+
+const S2CardWrapper = !isMobile() ? styled.div`
 position: relative;
   display: flex;
   width: 275px;

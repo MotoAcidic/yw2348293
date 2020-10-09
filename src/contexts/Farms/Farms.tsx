@@ -109,7 +109,7 @@ const Farms: React.FC = ({ children }) => {
       },
       {
         contract: pools ? pools["z_pool"] : undefined,
-        name: "Z Yaughts",
+        name: "Z Yachts",
         depositToken: "Z-WAR BPT",
         depositTokenAddress: tokens ? tokens["z_token"].options.address : undefined,
         earnToken: 'WAR',

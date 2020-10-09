@@ -65,6 +65,9 @@ const Versus = ({ history }) => {
 	formattedHistory.reverse()
 	formattedHistory = formattedHistory.map(item => {
 		let pool1, pool2, pool3, pool4, winner1, winner2
+		if (item.length === 0) {
+			return null
+		}
 		if (item.length === 2) {
 			pool1 = farms.find(farm => farm.id === item[0].pool1.name)
 			pool2 = farms.find(farm => farm.id === item[0].pool2.name)

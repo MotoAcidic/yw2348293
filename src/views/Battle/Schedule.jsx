@@ -56,7 +56,7 @@ const Versus = ({ schedule }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	if (!schedule || !schedule.length) {
-		return <StyledTitle style={{marginTop: '3vh'}}>Check Back Later</StyledTitle>
+		return <StyledTitle style={{ marginTop: '3vh' }}>Check Back Later</StyledTitle>
 	}
 	let offset = schedule[0].day
 	for (let i = 0; i < schedule.length; i++) {
@@ -71,11 +71,21 @@ const Versus = ({ schedule }) => {
 	console.log(formattedSchedule);
 
 	formattedSchedule = formattedSchedule.map(item => {
-		let pool1 = farms.find(farm => farm.id === item[0].pool1.name)
-		let pool2 = farms.find(farm => farm.id === item[0].pool2.name)
-		let pool3 = farms.find(farm => farm.id === item[1].pool1.name)
-		let pool4 = farms.find(farm => farm.id === item[1].pool2.name)
-		if (!pool1 || !pool2 || !pool3 || !pool4) {
+		let pool1, pool2, pool3, pool4
+		if (item.length === 0) {
+			return null
+		}
+		if (item.length === 1) {
+			pool1 = farms.find(farm => farm.id === item[0].pool1.name)
+			pool2 = farms.find(farm => farm.id === item[0].pool2.name)
+		}
+		if (item.length === 2) {
+			pool1 = farms.find(farm => farm.id === item[0].pool1.name)
+			pool2 = farms.find(farm => farm.id === item[0].pool2.name)
+			pool3 = farms.find(farm => farm.id === item[1].pool1.name)
+			pool4 = farms.find(farm => farm.id === item[1].pool2.name)
+		}
+		if (!pool1 || !pool2) {
 			return null
 		}
 
@@ -98,22 +108,26 @@ const Versus = ({ schedule }) => {
 							</StyledContent>
 						</VersusCard>
 					</VersusItem>
-					<Divider />
-					<VersusItem>
-						<VersusCard>
-							<StyledContent>
-								<StyledCardIcon>{pool3.icon}</StyledCardIcon>
-								<StyledTitle>{pool3.name}</StyledTitle>
-							</StyledContent>
-						</VersusCard>
+					{item.length === 2 && (
+						<>
+							<Divider />
+							<VersusItem>
+								<VersusCard>
+									<StyledContent>
+										<StyledCardIcon>{pool3.icon}</StyledCardIcon>
+										<StyledTitle>{pool3.name}</StyledTitle>
+									</StyledContent>
+								</VersusCard>
                     VS
 					<VersusCard>
-							<StyledContent>
-								<StyledCardIcon>{pool4.icon}</StyledCardIcon>
-								<StyledTitle>{pool4.name}</StyledTitle>
-							</StyledContent>
-						</VersusCard>
-					</VersusItem>
+									<StyledContent>
+										<StyledCardIcon>{pool4.icon}</StyledCardIcon>
+										<StyledTitle>{pool4.name}</StyledTitle>
+									</StyledContent>
+								</VersusCard>
+							</VersusItem>
+						</>
+					)}
 				</Container>
 			</VSContentContainer>
 		)

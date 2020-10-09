@@ -17,7 +17,7 @@ import Icon from "../../assets/img/icon.png";
 import Landscape from "../../assets/img/landscapebig.png";
 import TallSky from "../../assets/img/tallsky.png";
 import Sky from "../../assets/img/skybig.png";
-import Uniswap from "../../assets/img/uniswap.png";
+import Uniswap from "../../assets/img/uniswap@2x.png";
 import StakeModal from "./StakeModal";
 import UnstakeModal from "./UnstakeModal";
 import WarPool from "./WarPool";
@@ -114,21 +114,21 @@ const Farms: React.FC = () => {
                   TVL: $
                   {tvl && !tvl.totalValue.eq(0)
                     ? Number(tvl.totalValue.toFixed(2)).toLocaleString(
-                        undefined,
-                        {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2
-                        }
-                      )
+                      undefined,
+                      {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                      }
+                    )
                     : "-"}
                 </DisplayItem>
                 <DisplayItem>
                   $War Price: $
                   {currentPrice
                     ? Number(currentPrice).toLocaleString(undefined, {
-                        minimumFractionDigits: 4,
-                        maximumFractionDigits: 4
-                      })
+                      minimumFractionDigits: 4,
+                      maximumFractionDigits: 4
+                    })
                     : "-"}
                 </DisplayItem>
                 <DisplayItem>Supply: 2,800,000</DisplayItem>
@@ -152,16 +152,11 @@ const Farms: React.FC = () => {
                   {isMobile() ? (
                     <MobileCountDown launchDate={launch} />
                   ) : (
-                    <CountDown launchDate={launch} />
-                  )}
+                      <CountDown launchDate={launch} />
+                    )}
                 </div>
               )}
               <WarPool />
-              <Disclaimer>
-                The pools below in pool 1 are CLOSED. Do not stake in them, you
-                will not earn any yield. New pools will open up on Oct 9th for
-                Season 2.
-              </Disclaimer>
               <FarmCards />
               {/*<SectionDivider />
               <CountDownText>The War Begins:</CountDownText>
@@ -186,6 +181,7 @@ const StyledA = !isMobile() ? styled.a`
   box-shadow: rgb(0, 34, 79) 6px 6px 12px, rgb(0, 54, 119) -12px -12px 24px -2px;
   background-image: url(${Uniswap});
   background-size: cover;
+  background-position: center;
   height: 50px;
   justify-content: center;
   outline: none;
@@ -213,6 +209,7 @@ border-radius: 8px;
 box-shadow: rgb(0, 34, 79) 6px 6px 12px, rgb(0, 54, 119) -12px -12px 24px -2px;
 background-image: url(${Uniswap});
 background-size: cover;
+background-position: center;
 min-height: 50px;
 justify-content: center;
 outline: none;
@@ -250,7 +247,7 @@ const TopDisplayContainer = !isMobile()
       flex-direction: row;
       align-content: center;
       justify-content: space-evenly;
-      margin-top: 30px;
+      margin: 16px auto 80px auto;
     `
   : styled.div`
       width: 40vw;
@@ -259,7 +256,7 @@ const TopDisplayContainer = !isMobile()
       flex-direction: row;
       align-content: center;
       justify-content: space-evenly;
-      margin-top: 30px;
+      margin-top: 16px auto 80px auto;
       display: flex;
       flex-wrap: wrap;
     `;
@@ -290,43 +287,6 @@ const DisplayItem = !isMobile()
       color: #ffffff;
     `;
 
-const BottomButtonContainer = styled.div`
-  width: 84%;
-  margin-left: 8%;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  justify-content: space-evenly;
-`;
-
-const ShadedLine = styled.div`
-  margin-left: 20px;
-  color: #97d5ff;
-`;
-
-const Line = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const InfoLines = styled.div`
-  width: 100%;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  text-align: left;
-  margin: 3%;
-  font-family: SFMono;
-  font-size: 40px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: 1px;
-  color: #ffffff;
-`;
-
 const Title = styled.div`
   font-family: Alegreya;
   font-size: 25px;
@@ -339,42 +299,6 @@ const Title = styled.div`
   margin-top: 1%;
 `;
 
-const InfoDivider = styled.div`
-  margin-top: 1%;
-  width: 100%;
-  height: 5px;
-  background-color: #97d5ff;
-`;
-
-const InfoContainer = styled.div`
-  width: 1000px;
-  height: 375px;
-  border-radius: 8px;
-  border: solid 4px #97d5ff;
-  background-color: #003677;
-  margin-top: 6vh;
-  margin-bottom: 6vh;
-`;
-
-const CountDownText = styled.div`
-  margin-top: 6vh;
-  font-family: Alegreya;
-  font-size: 30px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-`;
-
-const SectionDivider = styled.div`
-  width: 1100px;
-  height: 2px;
-  background-color: #00a1ff;
-  margin-top: 6vh;
-`;
-
 const LargeText = styled.div`
   font-family: Alegreya;
   font-size: 30px;
@@ -384,6 +308,7 @@ const LargeText = styled.div`
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
+  margin-bottom: 20px;
 `;
 
 const SmallText = styled.div`
@@ -399,13 +324,10 @@ const SmallText = styled.div`
 
 const TextContainer = styled.div`
   width: 80vw;
-  height: 20vh;
   display: flex;
   flex-direction: column;
   align-content: center;
   align-items: center;
-  justify-content: space-evenly;
-  margin-top: 3vh;
 `;
 
 const CardContainer = styled.div`
@@ -427,7 +349,7 @@ const AuthContainer = styled.div`
 
 const TallStyledSky = styled.div`
   width: 100%;
-  height: 305vh;
+  height: 450vh;
   background-image: url(${TallSky});
   background-size: 100% 100%;
   background-repeat: repeat-x;
@@ -451,7 +373,7 @@ const StyledLandscape = styled.div`
 
 const MobileTallStyledSky = styled.div`
   width: 100%;
-  height: 900vh;
+  height: 1500vh;
   background-image: url(${TallSky});
   background-size: 100% 100%;
   background-repeat: repeat-x;

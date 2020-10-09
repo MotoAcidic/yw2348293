@@ -26,13 +26,6 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const { color, spacing } = useContext(ThemeContext)
 
-  let buttonColor = 'white'
-
-
-  if (disabled) {
-    buttonColor = 'grey'
-  }
-
   let boxShadow: string
   let buttonSize: number
   let buttonHeight: number
@@ -59,8 +52,8 @@ const Button: React.FC<ButtonProps> = ({
       boxShadow = `6px 6px 12px ${color.grey[300]},
           -12px -12px 24px ${color.grey[100]}ff;`
       buttonPadding = 10
-      buttonSize = 250
-      buttonHeight = 56
+      buttonSize = 220
+      buttonHeight = 40
       fontSize = 16
       break
     case 'md':
@@ -86,7 +79,6 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <StyledButton
       boxShadow={boxShadow}
-      color={buttonColor}
       disabled={disabled}
       fontSize={fontSize}
       onClick={onClick}
@@ -102,7 +94,6 @@ const Button: React.FC<ButtonProps> = ({
 
 interface StyledButtonProps {
   boxShadow: string,
-  color: string,
   disabled?: boolean,
   fontSize: number,
   padding: number,
@@ -112,9 +103,11 @@ interface StyledButtonProps {
 
 const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
-  border: 0;
+  border: solid 2px #0095f0;
+  background-color: #003983;
   border-radius: 18px;
   cursor: pointer;
+  opacity: ${props => !props.disabled ? .8 : .4};
   display: flex;
   font-size: ${props => props.fontSize}px;
   border-radius: 8px;
@@ -126,7 +119,6 @@ const StyledButton = styled.button<StyledButtonProps>`
   padding-left: ${props => props.padding}px;
   padding-right: ${props => props.padding}px;
   pointer-events: ${props => !props.disabled ? undefined : 'none'};
-  opacity: .8;
   width: ${props => props.size}px;
   font-family: Alegreya;
   font-size: 20px;
@@ -135,7 +127,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   font-style: normal;
   line-height: 1;
   letter-spacing: normal;
-  color: ${props => props.color};
+  color: ${props => !props.disabled ? "white" : "#cccccc"};
   &:hover {
     opacity: 1;
   }

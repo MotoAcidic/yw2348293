@@ -177,6 +177,8 @@ const About: React.FC = () => {
                   className="medium-link"
                   style={{ color: "white" }}
                   href="https://medium.com/@yieldwars/war-liquidity-has-been-unleashed-prepare-for-battle-yieldwars-battle-directions-inside-e0db48b58306"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Liquidity Pool Rewards Unleashed
                 </a>
@@ -186,7 +188,8 @@ const About: React.FC = () => {
                 <a
                   className="medium-link"
                   style={{ color: "white" }}
-                  href="https://medium.com/@yieldwars/yieldwars-day-1-recap-and-future-plans-aa88082379b8"
+                  href="https://medium.com/@yieldwars/yieldwars-day-1-recap-and-future-plans-aa88082379b8"                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Day 1 Recap
                 </a>
@@ -197,6 +200,8 @@ const About: React.FC = () => {
                   className="medium-link"
                   style={{ color: "white" }}
                   href="https://medium.com/@yieldwars/welcome-to-yieldwars-%EF%B8%8F-d3e8b388966a"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Welcome to YieldWars
                 </a>
@@ -207,6 +212,8 @@ const About: React.FC = () => {
                   className="medium-link"
                   style={{ color: "white" }}
                   href="https://medium.com/@yieldwars/an-open-letter-to-every-humble-farmer-9cfd97b4dfe9"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   An Open Letter to Every Humble 👨🏻‍🌾
                 </a>

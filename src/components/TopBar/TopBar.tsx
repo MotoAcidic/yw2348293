@@ -7,6 +7,7 @@ import Logo from '../Logo'
 import AccountButton from './components/AccountButton'
 import Nav from './components/Nav'
 import TxButton from './components/TxButton'
+import { NavLink } from 'react-router-dom'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -23,9 +24,9 @@ const TopBar: React.FC = () => {
       {isMobile() ? (
         <Container size="lg">
           <StyledTopBarInner>
-            <div style={{ flex: 1 }}>
+            <NavLink to="/" style={{ flex: 1, textDecoration: "none" }}>
               <Logo />
-            </div>
+            </NavLink>
             <div style={{
               flex: 1,
               display: 'flex',
@@ -39,9 +40,9 @@ const TopBar: React.FC = () => {
       ) : (
           <Container size="lg">
             <StyledTopBarInner>
-              <div style={{ flex: 1 }}>
+              <NavLink to="/" style={{ flex: 1, textDecoration: "none" }}>
                 <Logo />
-              </div>
+              </NavLink>
               <Nav />
               <div style={{
                 flex: 1,

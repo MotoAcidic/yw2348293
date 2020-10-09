@@ -49,6 +49,15 @@ export class Contracts {
     this.cream_token = new this.web3.eth.Contract(ERC20Json.abi);
     this.value_token = new this.web3.eth.Contract(ERC20Json.abi);
 
+    this.send_pool = new this.web3.eth.Contract(WARPoolJson.abi);
+    this.hate_pool = new this.web3.eth.Contract(WARPoolJson.abi);
+    this.stbu_pool = new this.web3.eth.Contract(WARPoolJson.abi);
+    this.yfl_pool = new this.web3.eth.Contract(WARPoolJson.abi);
+    this.rope_pool = new this.web3.eth.Contract(WARPoolJson.abi);
+    this.z_pool = new this.web3.eth.Contract(WARPoolJson.abi);
+    this.cream_pool = new this.web3.eth.Contract(WARPoolJson.abi);
+    this.value_pool = new this.web3.eth.Contract(WARPoolJson.abi);
+
     //s1
     this.link_token = new this.web3.eth.Contract(ERC20Json.abi);
     this.snx_token = new this.web3.eth.Contract(ERC20Json.abi);

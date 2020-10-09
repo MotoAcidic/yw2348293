@@ -151,7 +151,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   if (farm.id === `UNIPOOL` || farm.id === `BATTLEPOOL` || farm.id === `YAM` || farm.id === `MEME` || farm.id === `PICKLE`) {
     return null;
   }
-
+  console.log(`link`,farm);
   return (
     <StyledCardWrapper>
       {(farm.id === 'mbBASED' || farm.id === 'FARM') && <RainbowShadow />}
@@ -177,11 +177,12 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
               <SmallSpace />
             }
 
-
-            <Link href={farm.link} target="_blank" rel="noopener noreferrer"
+            {farm.season === 2 && farm.link && <Link href={farm.link} target="_blank" rel="noopener noreferrer"
             >
               Get BPT on Balancer
-            </Link>
+            </Link>}
+            
+            
           </StyledContent>
         </CardContent>
       </Card>

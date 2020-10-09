@@ -176,9 +176,11 @@ const Battle: React.FC = () => {
             </TopDisplayContainer>
             <Title>Step 1: Stake $WAR to enter the battle</Title>
             <Pool3 />
-            <Title style={{ marginTop: '4vh' }}>Step 2: Vote for the armies you will fight for</Title>
-            {battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion}/>}
-            {(battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion}/>}
+            {battles.length > 0 &&
+              <Title style={{ marginTop: '4vh' }}>Step 2: Vote for the armies you will fight for</Title>
+            }
+            {battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
+            {(battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
             <Title style={{ marginTop: '5vh' }}>Leaderboard</Title>
             {isMobile() ? <MobileLeaderBoard>{leaderboardContent}</MobileLeaderBoard> : <LeaderBoard>{leaderboardContent}</LeaderBoard>}
             <Title>Schedule</Title>
@@ -192,18 +194,6 @@ const Battle: React.FC = () => {
   );
 };
 
-const CountdownText = styled.div`
-  width: 595px;
-  height: 30px;
-  font-family: Alegreya;
-  font-size: 30px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-`;
 
 const StyledCardIcon = styled.div`
   background-color: #002450;
@@ -216,41 +206,6 @@ const StyledCardIcon = styled.div`
   justify-content: center;
   box-shadow: rgb(226, 214, 207) 4px 4px 8px inset,
     rgb(247, 244, 242) -6px -6px 12px inset;
-`;
-
-const ScheduleVSCard = styled.div`
-  width: 175px;
-  height: 157px;
-  border-radius: 8px;
-  border: solid 2px #0095f0;
-  background-color: #003677;
-`;
-
-const Versus = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-`;
-
-const VerticalDivider = styled.div`
-  width: 1px;
-  height: 40vh;
-  opacity: 0.5;
-  background-color: #ffffff;
-`;
-
-const ScheduleItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  font-family: Alegreya;
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
 `;
 
 
@@ -349,53 +304,6 @@ const StyledContent = styled.div`
   height: 100%;
 `;
 
-const StyledDetails = styled.div`
-  text-align: center;
-`;
-
-const StyledDetail = styled.div`
-  font-family: Alegreya;
-  font-size: 20px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-`;
-
-const Divider = styled.div`
-  width: 780px;
-  height: 2px;
-  opacity: 0.5;
-  background-color: #ffffff;
-`;
-
-const VersusItem = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  font-size: 30px;
-`;
-
-const VersusContainer = styled.div`
-  width: 60%;
-  height: 75vh;
-  font-family: Alegreya;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-`;
-
 const DisplayItem = !isMobile()
   ? styled.div`
       color: white;
@@ -422,43 +330,6 @@ const DisplayItem = !isMobile()
       color: #ffffff;
     `;
 
-const BottomButtonContainer = styled.div`
-  width: 84%;
-  margin-left: 8%;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  justify-content: space-evenly;
-`;
-
-const ShadedLine = styled.div`
-  margin-left: 20px;
-  color: #97d5ff;
-`;
-
-const Line = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const InfoLines = styled.div`
-  width: 100%;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  text-align: left;
-  margin: 3%;
-  font-family: SFMono;
-  font-size: 40px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: 1px;
-  color: #ffffff;
-`;
-
 const Title = styled.div`
   font-family: Alegreya;
   font-size: 25px;
@@ -472,74 +343,6 @@ const Title = styled.div`
   max-width: 80vw;
 `;
 
-const InfoDivider = styled.div`
-  margin-top: 1%;
-  width: 100%;
-  height: 5px;
-  background-color: #97d5ff;
-`;
-
-const InfoContainer = styled.div`
-  width: 1000px;
-  height: 375px;
-  border-radius: 8px;
-  border: solid 4px #97d5ff;
-  background-color: #003677;
-  margin-top: 6vh;
-  margin-bottom: 6vh;
-`;
-
-const CountDownText = styled.div`
-  margin-top: 6vh;
-  font-family: Alegreya;
-  font-size: 30px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-`;
-
-const SectionDivider = styled.div`
-  width: 1100px;
-  height: 2px;
-  background-color: #00a1ff;
-  margin-top: 6vh;
-`;
-
-const LargeText = styled.div`
-  font-family: Alegreya;
-  font-size: 30px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-`;
-
-const SmallText = styled.div`
-  font-family: Alegreya;
-  font-size: 20px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-`;
-
-const TextContainer = styled.div`
-  width: 60%;
-  height: 20vh;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-  justify-content: space-evenly;
-  margin-top: 3vh;
-`;
 
 const TopDisplayContainer = !isMobile()
   ? styled.div`

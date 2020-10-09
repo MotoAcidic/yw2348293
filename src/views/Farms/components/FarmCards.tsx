@@ -9,9 +9,10 @@ import CardIcon from '../../../components/CardIcon'
 import Loader from '../../../components/Loader'
 import useFarms from '../../../hooks/useFarms'
 import { Farm } from '../../../contexts/Farms'
+import { useWallet } from 'use-wallet'
 
 import farmIcon from "../../../assets/img/farm-icon.png";
-//import { getAPR, getPoolEndTime } from '../../../yamUtils'
+import { getAPR, getPoolEndTime } from '../../../yamUtils'
 import useYam from '../../../hooks/useYam'
 
 function isMobile() {
@@ -99,8 +100,9 @@ const WARNING_TIMESTAMP = 1598000400000
 const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   // const [startTime, setStartTime] = useState(0)
   // const [endTime, setEndTime] = useState(0)
-  //const [apr, setAPR] = useState(0)
+  const [apr, setAPR] = useState(0)
   const yam = useYam()
+  const { account, connect } = useWallet()
 
   // const getStartTime = useCallback(async () => {
   //   const startTime = await getPoolStartTime(farm.contract)
@@ -134,7 +136,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   // const poolActive = ((startTime * 1000)) - Date.now() <= 0
   // console.log(farm);
 
-  /*const aprVal = useCallback(async () => {
+  const aprVal = useCallback(async () => {
     const apr = farm.id !== `CHADS` && farm.id !== `UNIPOOL` && farm.id !== `BATTLEPOOL` ? await getAPR(farm, yam) : 0;
     setAPR(apr)
   }, [farm, setAPR])
@@ -143,7 +145,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
     if (farm.contract && !apr && yam) {
       aprVal()
     }
-  }, [farm, yam])*/
+  }, [farm, yam, account])
 
 
   if (farm.id === `UNIPOOL` || farm.id === `BATTLEPOOL` || farm.id === `YAM` || farm.id === `MEME` || farm.id === `PICKLE`) {
@@ -159,8 +161,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
             <CardIcon>{farm.icon}</CardIcon>
             <StyledTitle>{farm.name}</StyledTitle>
             <DepositEarn>
-              <span>Deposit {farm.id}</span>
-              <span>Earn WAR</span>
+              Deposit {farm.id}-WAR BPT
+              {/* <span>Deposit {farm.id}</span>
+              <span>Earn WAR</span> */}
             </DepositEarn>
             <Button
               disabled={false}
@@ -168,15 +171,12 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
               to={`/farms/${farm.id}`}
               size='xlg'
             />
-            <SmallSpace />
             {farm.season === 2 ? (
-              <StyledDetail>APR: coming soon
-                {/* <StyledDetail>{apr ? `${apr.toFixed(2)}%*` : 'Coming soon'}</StyledDetail> */}
-              </StyledDetail>
-
+                <StyledDetail>APR: {" "}{apr ? `${apr.toFixed(2)}%*` : 'Coming soon'}</StyledDetail>
             ) :
-              <Space />}
-            <SmallSpace />
+              <SmallSpace />
+            }
+
 
             <Link href={farm.link} target="_blank" rel="noopener noreferrer"
             >
@@ -203,11 +203,8 @@ const FarmIcon = styled.img`
 width: 100%;
 height: 100%;`
 
-const Space = styled.div`
-  height: 40px;
-`;
 const SmallSpace = styled.div`
-  height: 10px;
+  height: 60px;
 `;
 
 const FarmCardsContainer = styled.div``;
@@ -239,7 +236,7 @@ left: -2px;
 z-index: 0;
 `
 const StyledDetail = styled.div`
-  height: 40px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -273,8 +270,8 @@ const Disclaimer = styled.div`
 const DepositEarn = styled.div`
 display: flex;
 flex-direction: column;
-margin-top: 8px;
-margin-bottom: 24px;
+margin-top: 24px;
+margin-bottom: 28px;
 font-size: 18px;
 line-height: 1.3;
 `
@@ -310,6 +307,7 @@ position: relative;
   height: 370px;
   margin: 0 auto 20px auto;
 `
+
 
 const StyledTitle = styled.h4`
 font-family: Alegreya;

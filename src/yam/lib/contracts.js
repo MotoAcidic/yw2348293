@@ -36,11 +36,20 @@ export class Contracts {
     this.uni_router = new this.web3.eth.Contract(UNIRouterJson);
     this.uni_fact = new this.web3.eth.Contract(UNIFactJson);
     this.UNIAmpl = new this.web3.eth.Contract(ERC20Json.abi);
-
     this.war = new this.web3.eth.Contract(ERC20Json.abi);
-
     this.pricing = new this.web3.eth.Contract(PricingJson.abi);
 
+    //s2
+    this.send_token = new this.web3.eth.Contract(ERC20Json.abi);
+    this.hate_token = new this.web3.eth.Contract(ERC20Json.abi);
+    this.stbu_token = new this.web3.eth.Contract(ERC20Json.abi);
+    this.yfl_token = new this.web3.eth.Contract(ERC20Json.abi);
+    this.rope_token = new this.web3.eth.Contract(ERC20Json.abi);
+    this.z_token = new this.web3.eth.Contract(ERC20Json.abi);
+    this.cream_token = new this.web3.eth.Contract(ERC20Json.abi);
+    this.value_token = new this.web3.eth.Contract(ERC20Json.abi);
+
+    //s1
     this.link_token = new this.web3.eth.Contract(ERC20Json.abi);
     this.snx_token = new this.web3.eth.Contract(ERC20Json.abi);
     this.yfi_token = new this.web3.eth.Contract(ERC20Json.abi);
@@ -56,7 +65,6 @@ export class Contracts {
     this.mbbased_token = new this.web3.eth.Contract(ERC20Json.abi);
     this.unipool_token = new this.web3.eth.Contract(ERC20Json.abi);
     this.battlepool_token = new this.web3.eth.Contract(ERC20Json.abi);
-
 
     this.link_pool = new this.web3.eth.Contract(WARPoolJson.abi);
     this.snx_pool = new this.web3.eth.Contract(WARPoolJson.abi);
@@ -90,6 +98,16 @@ export class Contracts {
     this.pricing.setProvider(provider);
     const contracts = [
       { contract: this.war, json: WARJson },
+      //s2
+      { contract: this.send_pool, json: WARPoolJson },
+      { contract: this.hate_pool, json: WARPoolJson },
+      { contract: this.stbu_pool, json: WARPoolJson },
+      { contract: this.yfl_pool, json: WARPoolJson },
+      { contract: this.rope_pool, json: WARPoolJson },
+      { contract: this.z_pool, json: WARPoolJson },
+      { contract: this.cream_pool, json: WARPoolJson },
+      { contract: this.value_pool, json: WARPoolJson },
+      //s1
       { contract: this.link_pool, json: WARPoolJson },
       { contract: this.snx_pool, json: WARPoolJson },
       { contract: this.yfi_pool, json: WARPoolJson },
@@ -108,13 +126,33 @@ export class Contracts {
     ]
 
     contracts.forEach(contract => this.setContractProvider(
-        contract.contract,
-        contract.json,
-        provider,
-        networkId,
-      ),
+      contract.contract,
+      contract.json,
+      provider,
+      networkId,
+    ),
     );
 
+    //s2
+    this.send_pool.options.address = addressMap["send_pool"];
+    this.hate_pool.options.address = addressMap["hate_pool"];
+    this.stbu_pool.options.address = addressMap["stbu_pool"];
+    this.yfl_pool.options.address = addressMap["yfl_pool"];
+    this.rope_pool.options.address = addressMap["rope_pool"];
+    this.z_pool.options.address = addressMap["z_pool"];
+    this.cream_pool.options.address = addressMap["cream_pool"];
+    this.value_pool.options.address = addressMap["value_pool"];
+
+    this.send_token.options.address = addressMap["send"];
+    this.hate_token.options.address = addressMap["hate"];
+    this.stbu_token.options.address = addressMap["stbu"];
+    this.yfl_token.options.address = addressMap["yfl"];
+    this.rope_token.options.address = addressMap["rope"];
+    this.z_token.options.address = addressMap["z"];
+    this.cream_token.options.address = addressMap["cream"];
+    this.value_token.options.address = addressMap["value"];
+
+    //s1
     this.link_pool.options.address = addressMap["link_pool"];
     this.snx_pool.options.address = addressMap["snx_pool"];
     this.yfi_pool.options.address = addressMap["yfi_pool"];
@@ -154,27 +192,49 @@ export class Contracts {
     this.pricing.options.address = addressMap["Pricing"];
 
     this.pools = [
-      {"tokenAddr": this.link_token.options.address, "poolAddr": this.link_pool.options.address},
-      {"tokenAddr": this.snx_token.options.address, "poolAddr": this.snx_pool.options.address},
-      {"tokenAddr": this.yfi_token.options.address, "poolAddr": this.yfi_pool.options.address},
-      {"tokenAddr": this.comp_token.options.address, "poolAddr": this.comp_pool.options.address},
-      {"tokenAddr": this.chads_token.options.address, "poolAddr": this.chads_pool.options.address},
-      {"tokenAddr": this.bzrx_token.options.address, "poolAddr": this.bzrx_pool.options.address},
-      {"tokenAddr": this.uni_token.options.address, "poolAddr": this.uni_pool.options.address},
-      {"tokenAddr": this.lend_token.options.address, "poolAddr": this.lend_pool.options.address},
-      {"tokenAddr": this.wnxm_token.options.address, "poolAddr": this.wnxm_pool.options.address},
-      {"tokenAddr": this.mkr_token.options.address, "poolAddr": this.mkr_pool.options.address},
-      {"tokenAddr": this.srm_token.options.address, "poolAddr": this.srm_pool.options.address},
-      {"tokenAddr": this.farm_token.options.address, "poolAddr": this.farm_pool.options.address},
-      {"tokenAddr": this.mbbased_token.options.address, "poolAddr": this.mbbased_pool.options.address},
-      {"tokenAddr": this.unipool_token.options.address, "poolAddr": this.unipool_pool.options.address},
-      {"tokenAddr": this.battlepool_token.options.address, "poolAddr": this.battlepool_pool.options.address},
+      //s2
+      { "tokenAddr": this.send_token.options.address, "poolAddr": this.send_pool.options.address },
+      { "tokenAddr": this.hate_token.options.address, "poolAddr": this.hate_pool.options.address },
+      { "tokenAddr": this.stbu_token.options.address, "poolAddr": this.stbu_pool.options.address },
+      { "tokenAddr": this.yfl_token.options.address, "poolAddr": this.yfl_pool.options.address },
+      { "tokenAddr": this.rope_token.options.address, "poolAddr": this.rope_pool.options.address },
+      { "tokenAddr": this.z_token.options.address, "poolAddr": this.z_pool.options.address },
+      { "tokenAddr": this.cream_token.options.address, "poolAddr": this.cream_pool.options.address },
+      { "tokenAddr": this.value_token.options.address, "poolAddr": this.value_pool.options.address },
+
+      //s1
+      { "tokenAddr": this.link_token.options.address, "poolAddr": this.link_pool.options.address },
+      { "tokenAddr": this.snx_token.options.address, "poolAddr": this.snx_pool.options.address },
+      { "tokenAddr": this.yfi_token.options.address, "poolAddr": this.yfi_pool.options.address },
+      { "tokenAddr": this.comp_token.options.address, "poolAddr": this.comp_pool.options.address },
+      { "tokenAddr": this.chads_token.options.address, "poolAddr": this.chads_pool.options.address },
+      { "tokenAddr": this.bzrx_token.options.address, "poolAddr": this.bzrx_pool.options.address },
+      { "tokenAddr": this.uni_token.options.address, "poolAddr": this.uni_pool.options.address },
+      { "tokenAddr": this.lend_token.options.address, "poolAddr": this.lend_pool.options.address },
+      { "tokenAddr": this.wnxm_token.options.address, "poolAddr": this.wnxm_pool.options.address },
+      { "tokenAddr": this.mkr_token.options.address, "poolAddr": this.mkr_pool.options.address },
+      { "tokenAddr": this.srm_token.options.address, "poolAddr": this.srm_pool.options.address },
+      { "tokenAddr": this.farm_token.options.address, "poolAddr": this.farm_pool.options.address },
+      { "tokenAddr": this.mbbased_token.options.address, "poolAddr": this.mbbased_pool.options.address },
+      { "tokenAddr": this.unipool_token.options.address, "poolAddr": this.unipool_pool.options.address },
+      { "tokenAddr": this.battlepool_token.options.address, "poolAddr": this.battlepool_pool.options.address },
     ]
   }
 
   setDefaultAccount(
     account
   ) {
+    //s2
+    this.send_token.options.from = account;
+    this.hate_token.options.from = account;
+    this.stbu_token.options.from = account;
+    this.yfl_token.options.from = account;
+    this.rope_token.options.from = account;
+    this.z_token.options.from = account;
+    this.cream_token.options.from = account;
+    this.value_token.options.from = account;
+
+    //s1
     this.link_token.options.from = account;
     this.snx_token.options.from = account;
     this.yfi_token.options.from = account;
@@ -268,7 +328,7 @@ export class Contracts {
             if (hashOutcome === OUTCOMES.INITIAL) {
               hashOutcome = OUTCOMES.REJECTED;
               reject(error);
-              const anyPromi = promi ;
+              const anyPromi = promi;
               anyPromi.off();
             }
           });
@@ -278,7 +338,7 @@ export class Contracts {
               hashOutcome = OUTCOMES.RESOLVED;
               resolve(txHash);
               if (t !== Types.ConfirmationType.Both) {
-                const anyPromi = promi ;
+                const anyPromi = promi;
                 anyPromi.off();
               }
             }
@@ -297,7 +357,7 @@ export class Contracts {
             ) {
               confirmationOutcome = OUTCOMES.REJECTED;
               reject(error);
-              const anyPromi = promi ;
+              const anyPromi = promi;
               anyPromi.off();
             }
           });
@@ -309,7 +369,7 @@ export class Contracts {
                 if (confirmationOutcome === OUTCOMES.INITIAL) {
                   confirmationOutcome = OUTCOMES.RESOLVED;
                   resolve(receipt);
-                  const anyPromi = promi ;
+                  const anyPromi = promi;
                   anyPromi.off();
                 }
               }
@@ -318,7 +378,7 @@ export class Contracts {
             promi.on('receipt', (receipt) => {
               confirmationOutcome = OUTCOMES.RESOLVED;
               resolve(receipt);
-              const anyPromi = promi ;
+              const anyPromi = promi;
               anyPromi.off();
             });
           }
@@ -329,7 +389,7 @@ export class Contracts {
     if (t === Types.ConfirmationType.Hash) {
       const transactionHash = await hashPromise;
       if (this.notifier) {
-          this.notifier.hash(transactionHash)
+        this.notifier.hash(transactionHash)
       }
       return { transactionHash };
     }
@@ -340,7 +400,7 @@ export class Contracts {
 
     const transactionHash = await hashPromise;
     if (this.notifier) {
-        this.notifier.hash(transactionHash)
+      this.notifier.hash(transactionHash)
     }
     return {
       transactionHash,
@@ -367,7 +427,7 @@ export class Contracts {
     contractJson,
     provider,
     networkId,
-  ){
+  ) {
     contract.setProvider(provider);
     try {
       contract.options.address = contractJson.networks[networkId]

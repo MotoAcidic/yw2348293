@@ -209,7 +209,7 @@ border-radius: 8px;
 box-shadow: rgb(0, 34, 79) 6px 6px 12px, rgb(0, 54, 119) -12px -12px 24px -2px;
 background-image: url(${Uniswap});
 background-size: cover;
-background-position: cover;
+background-position: center;
 min-height: 50px;
 justify-content: center;
 outline: none;
@@ -424,7 +424,7 @@ const AuthContainer = styled.div`
 
 const TallStyledSky = styled.div`
   width: 100%;
-  height: 305vh;
+  height: 450vh;
   background-image: url(${TallSky});
   background-size: 100% 100%;
   background-repeat: repeat-x;
@@ -448,7 +448,7 @@ const StyledLandscape = styled.div`
 
 const MobileTallStyledSky = styled.div`
   width: 100%;
-  height: 900vh;
+  height: 1500vh;
   background-image: url(${TallSky});
   background-size: 100% 100%;
   background-repeat: repeat-x;

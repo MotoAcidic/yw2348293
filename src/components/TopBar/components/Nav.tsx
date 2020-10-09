@@ -2,6 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
+function isMobile() {
+	if (window.innerWidth < window.innerHeight) {
+		return true
+	}
+	else {
+		return false
+	}
+}
+
 const Nav: React.FC = () => {
   return (
     <StyledNav>
@@ -14,9 +23,15 @@ const Nav: React.FC = () => {
   )
 }
 
-const StyledNav = styled.nav`
+const StyledNav = !isMobile() ? styled.nav`
   align-items: center;
   display: flex;
+` : styled.nav`
+width: 100vw;
+left: 0;
+position: absolute;
+display: flex;
+justify-content: space-around;
 `
 
 const StyledA = styled.a`
@@ -40,7 +55,7 @@ opacity: 0.7;
   }
 `
 
-const StyledLink = styled(NavLink)`
+const StyledLink = !isMobile() ? styled(NavLink)`
 font-family: Alegreya;
 font-size: 20px;
 font-weight: bold;
@@ -59,7 +74,24 @@ opacity: 0.7;
   &.active {
     opacity: 1;
   }
-`
+` :styled(NavLink)`
+font-family: Alegreya;
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+opacity: 0.7;
+  text-decoration: none;
+  &:hover {
+    opacity: .9;
+  }
+  &.active {
+    opacity: 1;
+  }
+` 
 const StyledLink2 = styled.a`
   color: ${props => props.theme.color.grey[400]};
   padding-left: ${props => props.theme.spacing[3]}px;

@@ -292,14 +292,21 @@ const StyledRow = !isMobile() ? styled.div`
   margin-bottom: ${props => props.theme.spacing[4]}px;
 ` : styled.div`
 flex-direction: column;
+width: 100%;
+align-items: center;
 `
 
-const StyledCardWrapper = styled.div`
+const StyledCardWrapper = !isMobile() ? styled.div`
 position: relative;
   display: flex;
   width: 275px;
   height: 370px;
-
+` : styled.div`
+position: relative;
+  display: flex;
+  width: 275px;
+  height: 370px;
+  margin: 0 auto 20px auto;
 `
 
 const StyledTitle = styled.h4`

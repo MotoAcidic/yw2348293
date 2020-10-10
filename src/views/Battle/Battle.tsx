@@ -157,16 +157,8 @@ const Battle: React.FC = () => {
         </BackgroundSection>
         <ContentContainer>
           <Page>
-            <TopDisplayContainer>
-              {/*<DisplayItem>
-                TVL: $
-                {tvl && !tvl.totalValue.eq(0)
-                  ? Number(tvl.totalValue.toFixed(2)).toLocaleString(
-                    undefined,
-                    { minimumFractionDigits: 2, maximumFractionDigits: 2 }
-                  )
-                  : "-"}
-              </DisplayItem>*/}
+            {/* <TopDisplayContainer>
+
               <DisplayItem>
                 $War Price: $
                 {currentPrice
@@ -177,7 +169,7 @@ const Battle: React.FC = () => {
                   : "-"}
               </DisplayItem>
               <DisplayItem>Supply: 2,800,000</DisplayItem>
-            </TopDisplayContainer>
+            </TopDisplayContainer> */}
             <Video controls poster={AnimeThumbnail}>
               <source src={AnimeVideo} type="video/mp4" />
             </Video>
@@ -211,11 +203,11 @@ const Battle: React.FC = () => {
 };
 
 const Video = !isMobile() ? styled.video`
-margin: 0 auto 80px auto;
+margin: 20px auto 80px auto;
 width: 780px;
 height: auto;
 ` : styled.video`
-margin: 0 auto 80px auto;
+margin: 10px auto 80px auto;
 width: 90vw;
 height: auto;
 `

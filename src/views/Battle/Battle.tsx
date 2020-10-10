@@ -17,8 +17,8 @@ import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 
 import Pool3 from "./Pool3";
-import anime_video from "../../assets/video/yw_anime.mp4";
-import anime_thumbnail from "../../assets/video/yw_anime_thumbnail.png";
+import AnimeVideo from "../../assets/video/yw_anime.mp4";
+import AnimeThumbnail from "../../assets/video/yw_anime_thumbnail.png";
 import Landscape from "../../assets/img/landscapebig.png";
 import Sky from "../../assets/img/skybig.png";
 import TallSky from "../../assets/img/tallsky.png";
@@ -178,9 +178,9 @@ const Battle: React.FC = () => {
               </DisplayItem>
               <DisplayItem>Supply: 2,800,000</DisplayItem>
             </TopDisplayContainer>
-            {/* <Video>
-              <source src={anime_video} type="video/mp4"/>
-            </Video> */}
+            <Video controls poster={AnimeThumbnail}>
+              <source src={AnimeVideo} type="video/mp4" />
+            </Video>
             <StyledA
               href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
               target="_blank"
@@ -210,10 +210,14 @@ const Battle: React.FC = () => {
   );
 };
 
-const Video = styled.video`
+const Video = !isMobile() ? styled.video`
 margin: 0 auto 80px auto;
-width: 500px;
-height: 250px;
+width: 550px;
+height: auto;
+` : styled.video`
+margin: 0 auto 80px auto;
+width: 90vw;
+height: auto;
 `
 
 const StyledCardContent = styled.div`

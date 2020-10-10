@@ -212,7 +212,7 @@ const Battle: React.FC = () => {
 
 const Video = !isMobile() ? styled.video`
 margin: 0 auto 80px auto;
-width: 550px;
+width: 780px;
 height: auto;
 ` : styled.video`
 margin: 0 auto 80px auto;

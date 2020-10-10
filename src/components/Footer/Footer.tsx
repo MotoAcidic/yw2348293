@@ -22,12 +22,14 @@ const Footer: React.FC = () => (
 )
 
 const StyledFooter = styled.footer`
+margin-top: 60px;
   align-items: center;
   display: flex;
   justify-content: center;
 `
 const StyledFooterInner = styled.div`
   align-items: center;
+  margin-top: 40px;
   display: flex;
   justify-content: center;
   height: ${props => props.theme.topBarSize}px;

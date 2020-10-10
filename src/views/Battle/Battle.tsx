@@ -207,7 +207,7 @@ margin: 20px auto 80px auto;
 width: 780px;
 height: auto;
 ` : styled.video`
-margin: 10px auto 80px auto;
+margin: 80px auto 80px auto;
 width: 90vw;
 height: auto;
 `

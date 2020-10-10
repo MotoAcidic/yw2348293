@@ -170,7 +170,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
             size='xlg'
           />
           {farm.season === 2 ? (
-            <StyledDetail>APR: {" "}{apr ? `${apr.toFixed(2)}%*` : 'Coming soon'}</StyledDetail>
+            <StyledDetail>Emitted WAR/day: 3500</StyledDetail>
           ) :
             <SmallSpace />
           }

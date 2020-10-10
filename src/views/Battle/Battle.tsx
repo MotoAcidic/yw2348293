@@ -203,11 +203,11 @@ const Battle: React.FC = () => {
 };
 
 const Video = !isMobile() ? styled.video`
-margin: 20px auto 80px auto;
+margin: 0 auto 40px auto;
 width: 400px;
 height: auto;
 ` : styled.video`
-margin: 80px auto 80px auto;
+margin: 40px auto 40px auto;
 width: 90vw;
 height: auto;
 `

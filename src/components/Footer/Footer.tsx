@@ -22,7 +22,6 @@ const Footer: React.FC = () => (
 )
 
 const StyledFooter = styled.footer`
-margin-top: 60px;
   align-items: center;
   display: flex;
   justify-content: center;

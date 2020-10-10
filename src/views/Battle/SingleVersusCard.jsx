@@ -194,59 +194,72 @@ const Versus = ({ battles, question }) => {
 	return (
 		<>
 			{battles &&
-					<VersusItem>
-						<VersusCard>
-							<StyledContent>
-								<CardIcon>{battle.farm1.icon}</CardIcon>
-								<StyledTitle>{battle.farm1.name}</StyledTitle>
-								{checked == 1 ? (
+				<VersusItem>
+					<VersusCard>
+						<StyledContent>
+							<CardIcon>{battle.farm1.icon}</CardIcon>
+							<StyledTitle>{battle.farm1.name}</StyledTitle>
+							{checked == 1 ? (
+								<ButtonContainer onClick={() => pick(1)}>
+									<img src={checkedIcon} width="40%" />
+								</ButtonContainer>
+							) : (
 									<ButtonContainer onClick={() => pick(1)}>
-										<img src={checkedIcon} width="40%" />
+										<img src={uncheckedIcon} width="40%" />
 									</ButtonContainer>
-								) : (
-										<ButtonContainer onClick={() => pick(1)}>
-											<img src={uncheckedIcon} width="40%" />
-										</ButtonContainer>
-									)}
-							</StyledContent>
-						</VersusCard>
+								)}
+						</StyledContent>
+					</VersusCard>
                     VS
 					<VersusCard>
-							<StyledContent>
-								<CardIcon>{battle.farm2.icon}</CardIcon>
-								<StyledTitle>{battle.farm2.name}</StyledTitle>
-								{checked == 2 ? (
+						<StyledContent>
+							<CardIcon>{battle.farm2.icon}</CardIcon>
+							<StyledTitle>{battle.farm2.name}</StyledTitle>
+							{checked == 2 ? (
+								<ButtonContainer onClick={() => pick(2)}>
+									<img src={checkedIcon} width="40%" />
+								</ButtonContainer>
+							) : (
 									<ButtonContainer onClick={() => pick(2)}>
-										<img src={checkedIcon} width="40%" />
+										<img src={uncheckedIcon} width="40%" />
 									</ButtonContainer>
-								) : (
-										<ButtonContainer onClick={() => pick(2)}>
-											<img src={uncheckedIcon} width="40%" />
-										</ButtonContainer>
-									)}
-							</StyledContent>
-						</VersusCard>
-					</VersusItem>
+								)}
+						</StyledContent>
+					</VersusCard>
+				</VersusItem>
 			}
 
 			{question &&
 				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} />
 			}
 
-{account ? <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button> :
-			<Button size="lg" disabled={true}>Connect Wallet</Button>
+			{account ? <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button> :
+				<RecDesc>
+					connect your wallet to participate
+				</RecDesc>
 			}
 			<Space />
 		</>
 	)
 }
 
+const RecDesc = styled.div`
+font-family: Alegreya;
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+	color: #ffffff;
+`;
+
 const Space = styled.div`
 height: 80px;`
 
 const ButtonContainer = styled.div``
 
-const VersusItem = !isMobile() ?  styled.div`
+const VersusItem = !isMobile() ? styled.div`
 width: 540px;
 display: flex;
 flex-direction: row;

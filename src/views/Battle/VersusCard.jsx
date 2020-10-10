@@ -278,12 +278,26 @@ const Versus = ({ battles, question }) => {
 				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} voted={voted} />
 			}
 			{account ? <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button> :
-			<Button size="lg" disabled={true}>Connect Wallet</Button>
+						<RecDesc>
+							connect your wallet to participate
+					</RecDesc>
 			}
 			<Space />
 		</>
 	)
 }
+
+const RecDesc = styled.div`
+font-family: Alegreya;
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+	color: #ffffff;
+`;
+
 const VS = styled.div`
 width: 10%;
 `

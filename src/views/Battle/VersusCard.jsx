@@ -277,8 +277,9 @@ const Versus = ({ battles, question }) => {
 			{question &&
 				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} voted={voted} />
 			}
-			{account && <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button>}
-			{account && <Space />}
+			{account ? <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button> :
+			<Button size="lg" disabled={true}>Connect Wallet</Button>
+			}
 			<Space />
 		</>
 	)
@@ -288,7 +289,7 @@ width: 10%;
 `
 
 const Space = styled.div`
-height: 40px;`
+height: 80px;`
 
 const ButtonContainer = styled.div`
 

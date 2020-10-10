@@ -56,7 +56,7 @@ const Versus = ({ schedule }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	if (!schedule || !schedule.length) {
-		return <StyledTitle style={{ marginTop: '3vh' }}>Check Back Later</StyledTitle>
+		return <Title>Check Back Later</Title>
 	}
 	let offset = schedule[0].day
 	for (let i = 0; i < schedule.length; i++) {
@@ -236,6 +236,21 @@ const StyledContent = styled.div`
 const StyledTitle = styled.div`
 width: 50%;
 margin: 0;
+font-family: Alegreya;
+font-size: 16px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+color: #ffffff;
+  padding: 0;
+`
+
+const Title = styled.div`
+width: 50%;
+margin: 0 auto 80px auto;
 font-family: Alegreya;
 font-size: 16px;
 font-weight: bold;

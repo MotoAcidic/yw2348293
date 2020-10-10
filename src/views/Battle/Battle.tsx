@@ -173,10 +173,10 @@ const Battle: React.FC = () => {
             <Video controls poster={AnimeThumbnail}>
               <source src={AnimeVideo} type="video/mp4" />
             </Video>
-            <StyledA
+            {/* <StyledA
               href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
               target="_blank"
-            />
+            /> */}
             <Title>Step 1: Stake $WAR to enter the battle</Title>
             <Pool3 />
             {battles.length > 0 &&
@@ -204,7 +204,7 @@ const Battle: React.FC = () => {
 
 const Video = !isMobile() ? styled.video`
 margin: 20px auto 80px auto;
-width: 500px;
+width: 400px;
 height: auto;
 ` : styled.video`
 margin: 80px auto 80px auto;

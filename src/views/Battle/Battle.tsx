@@ -17,6 +17,8 @@ import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 
 import Pool3 from "./Pool3";
+import anime_video from "../../assets/video/yw_anime.mp4";
+import anime_thumbnail from "../../assets/video/yw_anime_thumbnail.png";
 import Landscape from "../../assets/img/landscapebig.png";
 import Sky from "../../assets/img/skybig.png";
 import TallSky from "../../assets/img/tallsky.png";
@@ -176,6 +178,9 @@ const Battle: React.FC = () => {
               </DisplayItem>
               <DisplayItem>Supply: 2,800,000</DisplayItem>
             </TopDisplayContainer>
+            {/* <Video>
+              <source src={anime_video} type="video/mp4"/>
+            </Video> */}
             <StyledA
               href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
               target="_blank"
@@ -204,6 +209,12 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const Video = styled.video`
+margin: 0 auto 80px auto;
+width: 500px;
+height: 250px;
+`
 
 const StyledCardContent = styled.div`
   display: flex;
@@ -271,7 +282,7 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: white;
-margin-bottom: 30px;
+margin-bottom: 40px;
 `
 
 const StyledCardIcon = styled.div`
@@ -440,34 +451,18 @@ const TopDisplayContainer = !isMobile()
       flex-wrap: wrap;
     `;
 
-const CardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-`;
-
-const AuthContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  height: 35vh;
-  justify-content: space-around;
-`;
 
 const StyledSky = !isMobile()
   ? styled.div`
       width: 100%;
-      height: 420vh;
+      height: 5800px;
       background-image: url(${TallSky});
       background-size: 100% 100%;
       background-repeat: repeat-x;
     `
   : styled.div`
       width: 100%;
-      height: 900vh;
+      height: 1600vh;
       background-image: url(${TallSky});
       background-size: 100% 100%;
       background-repeat: repeat-x;
@@ -475,7 +470,7 @@ const StyledSky = !isMobile()
 
 const StyledLandscape = styled.div`
   width: 100%;
-  height: 45vh;
+  height: 500px;
   background-image: url(${Landscape});
   background-size: cover;
   transform: translateY(-1px);

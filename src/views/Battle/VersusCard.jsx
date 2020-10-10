@@ -218,7 +218,10 @@ const Versus = ({ battles, question }) => {
 								)}
 						</StyledContent>
 					</VersusCard>
-                    VS
+					<VS>
+						VS
+										</VS>
+
 					<VersusCard>
 						<StyledContent>
 							<CardIcon>{battle1.farm2.icon}</CardIcon>
@@ -251,7 +254,9 @@ const Versus = ({ battles, question }) => {
 								)}
 						</StyledContent>
 					</VersusCard>
-                    VS
+					<VS>
+						VS
+										</VS>
 					<VersusCard>
 						<StyledContent>
 							<CardIcon>{battle2.farm2.icon}</CardIcon>
@@ -273,72 +278,22 @@ const Versus = ({ battles, question }) => {
 				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} voted={voted} />
 			}
 			{account && <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button>}
-			<Title style={{ marginTop: '6vh' }}>How the battles work </Title>
-			<StyledContainer>
-				<StyledCardContent>
-					<img src={FightInstructions} width="100%" />
-				</StyledCardContent>
-			</StyledContainer>
+			{account && <Space />}
+			<Space />
 		</>
 	)
 }
-
-const Title = styled.div`
-font-family: Alegreya;
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-  margin-top: 1%;
+const VS = styled.div`
+width: 10%;
 `
 
-const StyledCardContent = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-evenly;
-
-`
-
-const StyledContainer = styled.div`
-  box-sizing: border-box;
-  margin: 0 auto;
-  margin-top: 3vh;
-  max-width: 730px;
-  width: 100%;
-`
-
-const StyledCard = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 0;
-  border-radius: 8px;
-    background-color: #003677;
-`
-
-const StyledText = styled.p`
-font-family: Alegreya;
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: #ffffff;
-`
+const Space = styled.div`
+height: 40px;`
 
 const ButtonContainer = styled.div`
 
 `
 const VSContentContainer = !isMobile() ? styled.div`
-margin-top: 1vh;
 width: 540px;
 height: 600px;
 display: flex;
@@ -353,12 +308,10 @@ font-family: Alegreya;
   letter-spacing: normal;
   color: #ffffff;
 ` : styled.div`
-margin-top: 1vh;
-width: 100%;
-height: 600px;
+width: 90vw;
 display: flex;
 flex-direction: column;
-justify-content: space-evenly;
+justify-content: space-between;
 font-family: Alegreya;
   font-size: 25px;
   font-weight: bold;
@@ -438,9 +391,10 @@ font-size: 30px;
 width: 100%;
 display: flex;
 flex-direction: row;
-justify-content: space-evenly;
+justify-content: space-between;
 align-items: center;
 font-size: 30px;
+margin-bottom: 20px;
 `
 
 export default Versus

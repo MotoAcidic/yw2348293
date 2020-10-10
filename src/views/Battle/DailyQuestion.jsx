@@ -165,7 +165,7 @@ padding: 30px;
   border-radius: 8px;
   border: solid 2px #0095f0;
 	background-color: #003677;
-	margin-bottom: 80px;
+	margin-bottom: 40px;
 ` : styled.div`
 width: calc(90vw - 60px);
 display: flex;
@@ -175,7 +175,7 @@ padding: 30px;
   border-radius: 8px;
   border: solid 2px #0095f0;
 	background-color: #003677;
-	margin-bottom: 80px;
+	margin-bottom: 40px;
 `
 
 

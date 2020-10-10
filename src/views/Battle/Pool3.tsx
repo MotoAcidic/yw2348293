@@ -421,18 +421,16 @@ width: 1000px;
   border-radius: 8px;
   border: solid 4px #97d5ff;
   background-color: #003677;
-  margin-top: 3vh;
-  margin-bottom: 3vh;
+  margin-bottom: 80px;
 `
 
 const MobileInfoContainer = styled.div`
-width: 300px;
+width: 90vw;
   height: 450px;
   border-radius: 8px;
   border: solid 4px #97d5ff;
   background-color: #003677;
-  margin-top: 6vh;
-  margin-bottom: 6vh;
+  margin-bottom: 70px;
 `
 
 const CountDownText = styled.div`

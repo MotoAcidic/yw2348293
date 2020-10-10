@@ -16,6 +16,7 @@ import { OverviewData } from "./types";
 import Icon from "../../assets/img/icon.png";
 import Landscape from "../../assets/img/landscapebig.png";
 import TallSky from "../../assets/img/tallsky.png";
+import SmollSky from "../../assets/img/bg3.svg";
 import Sky from "../../assets/img/skybig.png";
 import Uniswap from "../../assets/img/uniswap@2x.png";
 import StakeModal from "./StakeModal";
@@ -183,7 +184,7 @@ const StyledA = !isMobile() ? styled.a`
   background-image: url(${Uniswap});
   background-size: cover;
   background-position: center;
-  height: 50px;
+  height: 40px;
   justify-content: center;
   outline: none;
   padding-left: 10px;
@@ -211,7 +212,7 @@ box-shadow: rgb(0, 34, 79) 6px 6px 12px, rgb(0, 54, 119) -12px -12px 24px -2px;
 background-image: url(${Uniswap});
 background-size: cover;
 background-position: center;
-min-height: 50px;
+height: 40px;
 justify-content: center;
 outline: none;
 padding-left: 10px;
@@ -330,7 +331,7 @@ const CardContainer = styled.div`
 
 const TallStyledSky = styled.div`
   width: 100%;
-  height: 450vh;
+  height: 500vh;
   background-image: url(${TallSky});
   background-size: 100% 100%;
   background-repeat: repeat-x;

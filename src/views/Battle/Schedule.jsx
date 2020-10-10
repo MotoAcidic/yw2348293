@@ -56,7 +56,7 @@ const Versus = ({ schedule }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	if (!schedule || !schedule.length) {
-		return <StyledTitle style={{ marginTop: '3vh' }}>Check Back Later</StyledTitle>
+		return <Title>Check Back Later</Title>
 	}
 	let offset = schedule[0].day
 	for (let i = 0; i < schedule.length; i++) {
@@ -119,7 +119,7 @@ const Versus = ({ schedule }) => {
 									</StyledContent>
 								</VersusCard>
                     VS
-					<VersusCard>
+								<VersusCard>
 									<StyledContent>
 										<StyledCardIcon>{pool4.icon}</StyledCardIcon>
 										<StyledTitle>{pool4.name}</StyledTitle>
@@ -137,18 +137,6 @@ const Versus = ({ schedule }) => {
 		<ScheduleContainer>{formattedSchedule}</ScheduleContainer>
 	)
 }
-
-const Percent = styled.div`
-width: 20%;
-font-family: Alegreya;
-  font-size: 16px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-`
 
 const Divider = !isMobile() ? styled.div`` : styled.div`
 margin: 20px 0 20px 10%;
@@ -172,86 +160,20 @@ box-shadow: rgb(226, 214, 207) 4px 4px 8px inset, rgb(247, 244, 242) -6px -6px 1
 margin: 2px;
 `
 
-const WinningCardIcon = styled.div`
-background-color: #002450;
-font-size: 36px;
-height: 62px;
-width: 62px;
-border-radius: 40px;
-align-items: center;
-display: flex;
-justify-content: center;
-box-shadow: rgb(226, 214, 207) 4px 4px 8px inset, rgb(247, 244, 242) -6px -6px 12px inset;
-border: solid 2px #ffd500;
-
-margin: 2px;
-`
-
-const Title = styled.div`
-font-family: Alegreya;
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-  margin-top: 1%;
-`
-
-const StyledCardContent = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-evenly;
-
-`
-
-const StyledContainer = styled.div`
-  box-sizing: border-box;
-  margin: 0 auto;
-  margin-top: 3vh;
-  max-width: 730px;
-  height: 570px;
-  width: 100%;
-`
-
-const StyledCard = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 0;
-  border-radius: 8px;
-    background-color: #003677;
-`
-
-const StyledText = styled.p`
-font-family: Alegreya;
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: #ffffff;
-`
-
 const ScheduleContainer = !isMobile() ? styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
+flex-wrap: wrap;
 width: 1100px;
-margin-top: 3vh;
+margin-bottom: 60px;
 ` : styled.div`
 display: flex;
 flex-direction: row;
 flex-wrap: wrap;
 justify-content: space-evenly;
 width: 80vw;
-margin-top: 3vh;
+margin-bottom: 50px;
 `;
 
 const Container = !isMobile() ? styled.div`
@@ -281,7 +203,8 @@ font-family: Alegreya;
   font-style: normal;
   line-height: 1;
   letter-spacing: normal;
-  color: #ffffff;
+	color: #ffffff;
+	margin-bottom: 20px;
 ` : styled.div`
 width: 100%;
   border-radius: 8px;
@@ -310,24 +233,24 @@ const StyledContent = styled.div`
   height: 100%;
 `
 
-const StyledDetails = styled.div`
-  text-align: center;
-`
-
-const StyledDetail = styled.div`
+const StyledTitle = styled.div`
+width: 50%;
+margin: 0;
 font-family: Alegreya;
-font-size: 20px;
-font-weight: normal;
+font-size: 16px;
+font-weight: bold;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
+text-align: center;
 color: #ffffff;
+  padding: 0;
 `
 
-const StyledTitle = styled.div`
+const Title = styled.div`
 width: 50%;
-margin: 0;
+margin: 0 auto 80px auto;
 font-family: Alegreya;
 font-size: 16px;
 font-weight: bold;

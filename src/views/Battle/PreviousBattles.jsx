@@ -262,10 +262,15 @@ const Versus = ({ history }) => {
 
 	return (
 		<>
+			{currSeasonHistory &&
+				<Title>Season 2</Title>
+			}
 			<SeasonContainer>
 				{currSeasonHistory}
 			</SeasonContainer>
-			<Title>Season 1</Title>
+			{prevSeasonHistory &&
+				<Title>Season 1</Title>
+			}
 			<SeasonContainer>
 				{prevSeasonHistory}
 			</SeasonContainer>

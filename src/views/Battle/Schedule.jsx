@@ -243,6 +243,7 @@ const ScheduleContainer = !isMobile() ? styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
+flex-wrap: wrap;
 width: 1100px;
 margin-top: 3vh;
 ` : styled.div`

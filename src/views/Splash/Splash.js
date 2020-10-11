@@ -3,7 +3,7 @@ import moment from 'moment'
 import styled from 'styled-components'
 import Sky from '../../assets/img/skybig.png'
 import Landscape from '../../assets/img/landscapebig.png'
-import Logo from '../../assets/img/logo@2x.png'
+import Logo from '../../assets/img/logo.png'
 
 class Splash extends React.Component {
 	constructor(props) {
@@ -86,7 +86,7 @@ const TimerText = styled.div`
 text-align: center;
 width: 100%;
 margin-top: 1vh;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 20px;
   font-weight: normal;
   font-stretch: normal;
@@ -100,7 +100,7 @@ const Label = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 20px;
   font-weight: normal;
   font-stretch: normal;
@@ -114,7 +114,7 @@ const Countdown = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 80px;
   font-weight: bold;
   font-stretch: normal;
@@ -143,7 +143,7 @@ margin-top: 8vh;
 
 const Text = styled.div`
 margin-top: 3vh;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
@@ -155,7 +155,7 @@ font-family: Alegreya;
 
 const Title = styled.div`
 margin-top: 8vh;
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 50px;
 font-weight: bold;
 font-stretch: normal;
@@ -168,7 +168,7 @@ color: #ffffff;
 const StyledLink = styled.a`
   padding-left: ${props => props.theme.spacing[3]}px;
   padding-right: ${props => props.theme.spacing[3]}px;
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
   font-stretch: normal;

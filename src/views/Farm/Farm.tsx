@@ -6,19 +6,18 @@ import { useWallet } from 'use-wallet'
 import { provider } from 'web3-core'
 
 import Page from '../../components/Page'
-
-import Button from '../../components/Button'
 import PageHeader from '../../components/PageHeader'
 import Spacer from '../../components/Spacer'
+import Harvest from './components/Harvest'
+import Stake from './components/Stake'
+import Sky from '../../assets/img/skybig.png'
+import Landscape from '../../assets/img/landscapebig.png'
+import Background from '../../assets/img/bg3.svg'
 
 import useFarm from '../../hooks/useFarm'
 import useRedeem from '../../hooks/useRedeem'
 import { getContract } from '../../utils/erc20'
 
-import Harvest from './components/Harvest'
-import Stake from './components/Stake'
-import Sky from '../../assets/img/skybig.png'
-import Landscape from '../../assets/img/landscapebig.png'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -98,10 +97,7 @@ const Farm: React.FC = () => {
 
   return (
     <StyledCanvas>
-      <BackgroundSection>
-        {isMobile() ? <MobileStyledSky /> : <StyledSky />}
-        {isMobile() ? <MobileStyledLandscape /> : <StyledLandscape />}
-      </BackgroundSection>
+      <BackgroundSection />
       <ContentContainer>
         <Page>
           <PageHeader
@@ -159,24 +155,6 @@ background-color: #003677;
 margin-bottom: 50px;
 `;
 
-const MobileStyledCardWrapper = styled.div`
-  display: flex;
-  width: 80vw;
-  height: 350px;
-  border-radius: 8px;
-  border: solid 2px #0095f0;
-  background-color: #003677;
-`
-
-const StyledLink = styled.a`
-  color: ${props => props.theme.color.grey[400]};
-  padding-left: ${props => props.theme.spacing[3]}px;
-  padding-right: ${props => props.theme.spacing[3]}px;
-  text-decoration: none;
-  &:hover {
-    color: ${props => props.theme.color.grey[500]};
-  }
-`
 const StyledCanvas = styled.div`
   position: absolute;
   width: 100%;
@@ -184,44 +162,14 @@ const StyledCanvas = styled.div`
   background-color: #154f9b;
 `
 
-const StyledSky = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 60%;
-  background-image: url(${Sky});
-  background-size: 100% 100%;
-  background-repeat: repeat-x;
-`
-
-const MobileStyledSky = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 150vh;
-  background-image: url(${Sky});
-  background-size: 100% 100%;
-  background-repeat: repeat-x;
-`
-
-const StyledLandscape = styled.div`
-position: absolute;
-  width: 100%;
-  height: 45%;
-  top: 55vh;
-  background-image: url(${Landscape});
-  background-size: cover;
-`
-
-const MobileStyledLandscape = styled.div`
-position: absolute;
-  width: 100%;
-  height: 45%;
-  top: 150vh;
-  background-image: url(${Landscape});
-  background-size: cover;
-`
-
 const BackgroundSection = styled.div`
-
+background-image: url(${Background});
+position: fixed;
+width: 100vw;
+height: 100vh;
+top: 0;
+background-repeat: no-repeat;
+background-size: cover;
 `
 
 const ContentContainer = styled.div`

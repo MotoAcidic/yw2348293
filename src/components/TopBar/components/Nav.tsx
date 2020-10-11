@@ -3,12 +3,12 @@ import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
 function isMobile() {
-	if (window.innerWidth < window.innerHeight) {
-		return true
-	}
-	else {
-		return false
-	}
+  if (window.innerWidth < window.innerHeight) {
+    return true
+  }
+  else {
+    return false
+  }
 }
 
 const Nav: React.FC = () => {
@@ -17,7 +17,7 @@ const Nav: React.FC = () => {
       <StyledLink exact activeClassName="active" to="/">Farm</StyledLink>
       {/* <StyledLink exact activeClassName="active" to="/earn">Earn</StyledLink> */}
       <StyledLink exact activeClassName="active" to="/battle">Battle</StyledLink>
-      <StyledLink exact activeClassName="active" to="/faq">About</StyledLink>
+      <StyledLink exact activeClassName="active" to="/faq">FAQ</StyledLink>
       <StyledLink exact activeClassName="active" to="/roadmap">Roadmap</StyledLink>
     </StyledNav >
   )
@@ -35,41 +35,45 @@ justify-content: space-around;
 `
 
 const StyledLink = !isMobile() ? styled(NavLink)`
-font-family: Alegreya;
-font-size: 20px;
+font-family: "Gilroy";
+font-size: 18px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-color: #ffffff;
-opacity: 0.7;
+color: #ffb700;
+opacity: 0.8;
   padding-left: ${props => props.theme.spacing[3]}px;
   padding-right: ${props => props.theme.spacing[3]}px;
   text-decoration: none;
   &:hover {
-    opacity: .9;
+    opacity: 1;
   }
   &.active {
     opacity: 1;
+    text-decoration: underline;
+    color: white;
   }
-` :styled(NavLink)`
-font-family: Alegreya;
-font-size: 20px;
+` : styled(NavLink)`
+font-family: "Gilroy";
+font-size: 18px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-color: #ffffff;
-opacity: 0.7;
+color: #ffb700;
+opacity: 0.8;
   text-decoration: none;
   &:hover {
-    opacity: .9;
+    opacity: 1;
   }
   &.active {
     opacity: 1;
+    text-decoration: underline;
+    color: white;
   }
-` 
+`
 
 export default Nav

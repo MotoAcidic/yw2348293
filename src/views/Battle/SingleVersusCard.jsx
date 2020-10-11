@@ -244,7 +244,7 @@ const Versus = ({ battles, question }) => {
 }
 
 const RecDesc = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 20px;
   font-weight: bold;
   font-stretch: normal;
@@ -267,7 +267,7 @@ justify-content: space-between;
 align-items: center;
 font-size: 30px;
 margin: 20px auto 40px auto;
-font-family: Alegreya;
+font-family: "Gilroy";
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
@@ -279,7 +279,7 @@ margin: 40px 0 40px 0;
 width: 90vw;
 display: flex;
 flex-direction: column;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;
   font-stretch: normal;
@@ -299,7 +299,7 @@ const StyledContent = styled.div`
 
 const StyledTitle = styled.h4`
 margin: 0;
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 25px;
 font-weight: bold;
 font-stretch: normal;

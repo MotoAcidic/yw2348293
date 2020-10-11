@@ -288,7 +288,7 @@ const Versus = ({ battles, question }) => {
 }
 
 const RecDesc = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 20px;
   font-weight: bold;
   font-stretch: normal;
@@ -314,7 +314,7 @@ height: 600px;
 display: flex;
 flex-direction: column;
 justify-content: space-evenly;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;
   font-stretch: normal;
@@ -327,7 +327,7 @@ width: 90vw;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;
   font-stretch: normal;
@@ -350,7 +350,7 @@ const StyledDetails = styled.div`
 `
 
 const StyledDetail = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 20px;
 font-weight: normal;
 font-stretch: normal;
@@ -362,7 +362,7 @@ color: #ffffff;
 
 const StyledTitle = styled.h4`
 margin: 0;
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 25px;
 font-weight: bold;
 font-stretch: normal;

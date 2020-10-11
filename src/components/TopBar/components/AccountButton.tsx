@@ -48,28 +48,21 @@ width: 8px;
   `
 
 const StyledAccountInfo = styled.div`
-font-family: Alegreya;
-  font-size: 20px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: white;
+
   display: flex;
   flex-direction: row;
   align-items: center;
 `
 
 const StyledA = styled.a`
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 20px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-color: #ffffff;
+color: #ffb700;
 opacity: 0.7;
   text-decoration: none;
   &:hover {

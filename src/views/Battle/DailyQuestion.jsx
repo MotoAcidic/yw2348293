@@ -103,7 +103,7 @@ const Question = ({ question, setResponse, voted }) => {
 }
 
 const RecDesc = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 20px;
   font-weight: bold;
   font-stretch: normal;
@@ -114,7 +114,7 @@ font-family: Alegreya;
 `;
 
 const RecTitle = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
 margin: 20px 0 20px 0;
   font-size: 25px;
   font-weight: bold;
@@ -144,7 +144,7 @@ const StyledContent = styled.div`
 
 const StyledTitle = styled.h4`
 margin: 0;
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 25px;
 font-weight: bold;
 font-stretch: normal;

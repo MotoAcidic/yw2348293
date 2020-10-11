@@ -110,7 +110,7 @@ font-family: SFMono;
 `
 
 const Title = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;
   font-stretch: normal;
@@ -140,7 +140,7 @@ width: 1000px;
 
 const CountDownText = styled.div`
 margin-top: 6vh;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
@@ -158,7 +158,7 @@ const SectionDivider = styled.div`
 `
 
 const LargeText = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
@@ -169,7 +169,7 @@ font-family: Alegreya;
 `
 
 const SmallText = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 20px;
   font-weight: bold;
   font-stretch: normal;

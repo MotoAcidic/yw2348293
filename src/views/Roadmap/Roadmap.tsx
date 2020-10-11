@@ -1,20 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import BigNumber from "bignumber.js";
-import Card from "../../components/Card";
-import CardContent from "../../components/CardContent";
-import CardIcon from "../../components/CardIcon";
-import Container from "../../components/Container";
 import Page from "../../components/Page";
-import PageHeader from "../../components/PageHeader";
-import Landscape from "../../assets/img/landscapebig.png";
-import Sky from "../../assets/img/skybig.png";
-import TallSky from "../../assets/img/tallsky.png";
 import useFarms from "../../hooks/useFarms";
 import useYam from "../../hooks/useYam";
 import { useWallet } from "use-wallet";
 import { getTotalValue } from "../../yamUtils";
 import { getStats } from "./utils";
+import Background from '../../assets/img/bg3.svg'
 import milestone_s1_1 from "../../assets/img/milestones/milestone-s1-1.svg";
 import milestone_s1_2 from "../../assets/img/milestones/milestone-s1-2.svg";
 import milestone_s1_3 from "../../assets/img/milestones/milestone-s1-3.svg";
@@ -100,10 +93,7 @@ const Roadmap: React.FC = () => {
 
   return (
     <StyledCanvas>
-      <BackgroundSection>
-        <StyledSky />
-        <StyledLandscape />
-      </BackgroundSection>
+      <BackgroundSection/>
       <ContentContainer>
         <Page>
           <TopDisplayContainer>
@@ -270,7 +260,7 @@ const Roadmap: React.FC = () => {
 const MilestoneRow = styled.div`display: flex; align-items: center; margin-bottom: 20px;`
 
 const MilestoneText = styled.div`margin-left: 30px;
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 18px;
 font-weight: bold;
 font-stretch: normal;
@@ -298,7 +288,7 @@ const TextSection = !isMobile()
     `;
 
 const LinkSection = styled.div`
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 18px;
   margin-bottom: 10px;
   font-weight: bold;
@@ -325,7 +315,7 @@ const MediumSection = !isMobile()
     `;
 
 const RecDesc = styled.div`
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 18px;
   font-weight: normal;
   font-stretch: normal;
@@ -339,7 +329,7 @@ const RecDesc = styled.div`
 
 const RecTitle = styled.div`
   margin-left: 62px;
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 20px;
   font-weight: bold;
   font-stretch: normal;
@@ -370,7 +360,7 @@ const Rectangle = !isMobile()
 const DisplayItem = !isMobile()
   ? styled.div`
       color: white;
-      font-family: Alegreya;
+      font-family: "Gilroy";
       font-size: 18px;
       font-weight: bold;
       font-stretch: normal;
@@ -383,7 +373,7 @@ const DisplayItem = !isMobile()
       width: 100%;
       margin-bottom: 10px;
       color: white;
-      font-family: Alegreya;
+      font-family: "Gilroy";
       font-size: 18px;
       font-weight: bold;
       font-stretch: normal;
@@ -414,34 +404,15 @@ const DisplayItem = !isMobile()
         flex-wrap: wrap;
       `;
 
-
-const StyledSky = !isMobile() ? styled.div`
-  width: 100%;
-  height: 200vh;
-  background-image: url(${TallSky});
-  background-size: 100% 100%;
-  background-repeat: repeat-x;
-` : styled.div`
-width: 100%;
-height: 320vh;
-background-image: url(${TallSky});
-background-size: 100% 100%;
-background-repeat: repeat-x;`
-
-const StyledLandscape = styled.div`
-  width: 100%;
-  height: 45vh;
-  background-image: url(${Landscape});
-  background-size: cover;
-  transform: translateY(-1px);
-`;
-
-const BackgroundSection = styled.div`
-  position: absolute;
-  width: 100%;
-  background-color: #154f9b;
-`;
-
+      const BackgroundSection = styled.div`
+      background-image: url(${Background});
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      background-repeat: no-repeat;
+      background-size: cover;
+      `
 const StyledCanvas = styled.div`
   position: absolute;
   width: 100%;
@@ -453,19 +424,9 @@ const ContentContainer = styled.div`
   text-align: left;
 `;
 
-const StyledText = styled.p`
-  font-family: Alegreya;
-  font-size: 20px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-`;
 
 const Title = styled.div`
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 24px;
   font-weight: bold;
   font-stretch: normal;

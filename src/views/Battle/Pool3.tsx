@@ -313,7 +313,7 @@ text-align: center;
 padding: 0px 12px;`
 
 const StyledDetail = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
 line-height: 32px;
 font-size: 18px;
 font-weight: normal;
@@ -331,7 +331,7 @@ flex-direction: column;
 
 const DisplayItem = styled.div`
 color: white;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 18px;
   font-weight: bold;
   font-stretch: normal;
@@ -397,7 +397,7 @@ font-family: SFMono;
 `
 
 const Title = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;
   font-stretch: normal;
@@ -421,8 +421,8 @@ width: 1000px;
   border-radius: 8px;
   border: solid 4px #97d5ff;
   background-color: #003677;
-  margin-bottom: 80px;
-`
+	margin: 20px 0 80px 0;
+	`
 
 const MobileInfoContainer = styled.div`
 width: 90vw;
@@ -435,7 +435,7 @@ width: 90vw;
 
 const CountDownText = styled.div`
 margin-top: 6vh;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
@@ -453,7 +453,7 @@ const SectionDivider = styled.div`
 `
 
 const LargeText = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
@@ -464,7 +464,7 @@ font-family: Alegreya;
 `
 
 const SmallText = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 20px;
   font-weight: bold;
   font-stretch: normal;

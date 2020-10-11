@@ -10,7 +10,7 @@ const Label: React.FC<LabelProps> = ({ text }) => (
 )
 
 const StyledLabel = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 18px;
 font-weight: bold;
 font-stretch: normal;

@@ -16,8 +16,8 @@ const StyledCard = styled.div`
   overflow: hidden;
   z-index: 0;
   border-radius: 12px;
-  border: solid 2px #0095f0;
-    background-color: #003677;
+  border: solid 2px rgba(255, 183, 0, 0.3);
+  background-color: rgba(256,256,256,0.08);
 `
 
 // white border >>

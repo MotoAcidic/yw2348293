@@ -196,7 +196,7 @@ width: 499px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;
   font-stretch: normal;
@@ -213,7 +213,7 @@ width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;
   font-stretch: normal;
@@ -236,7 +236,7 @@ const StyledContent = styled.div`
 const StyledTitle = styled.div`
 width: 50%;
 margin: 0;
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 16px;
 font-weight: bold;
 font-stretch: normal;
@@ -251,7 +251,7 @@ color: #ffffff;
 const Title = styled.div`
 width: 50%;
 margin: 0 auto 80px auto;
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 16px;
 font-weight: bold;
 font-stretch: normal;

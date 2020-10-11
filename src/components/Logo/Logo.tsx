@@ -6,7 +6,7 @@ import logo from '../../assets/img/logo.png'
 const Logo: React.FC = () => {
   return (
     <StyledLogo>
-      <img src={logo} height="32" style={{ marginTop: -4 }} />
+      <img src={logo} height="40px"/>
       <StyledText>YieldWars</StyledText>
     </StyledLogo>
   )
@@ -18,7 +18,7 @@ const StyledLogo = styled.div`
 `
 
 const StyledText = styled.span`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 20px;
   font-weight: bold;
   font-stretch: normal;
@@ -26,7 +26,7 @@ font-family: Alegreya;
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
-  margin-left: ${props => props.theme.spacing[2]}px;
+  margin-left: ${props => props.theme.spacing[2] * 1.5}px;
 `
 
 export default Logo

@@ -295,7 +295,7 @@ width: 90vw;
 
 const Percent = styled.div`
 width: 20%;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 16px;
   font-weight: normal;
   font-stretch: normal;
@@ -343,7 +343,7 @@ margin: 2px;
 `
 
 const Title = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
@@ -385,7 +385,7 @@ const StyledCard = styled.div`
 `
 
 const StyledText = styled.p`
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 20px;
 font-weight: bold;
 font-stretch: normal;
@@ -406,7 +406,7 @@ width: 332px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;
   font-stretch: normal;
@@ -430,7 +430,7 @@ const StyledDetails = styled.div`
 `
 
 const StyledDetail = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 20px;
 font-weight: normal;
 font-stretch: normal;
@@ -443,7 +443,7 @@ color: #ffffff;
 const StyledTitle = styled.h4`
 width: 50%;
 margin: 0;
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 16px;
 font-weight: bold;
 font-stretch: normal;

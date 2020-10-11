@@ -2,22 +2,13 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { useWallet } from "use-wallet";
 import styled from "styled-components";
-
-import Logo from "../../assets/img/logo.png";
-
-import Button from "../../components/Button";
 import Page from "../../components/Page";
-import PageHeader from "../../components/PageHeader";
 import useModal from "../../hooks/useModal";
 import { getStats } from "./utils";
 import useYam from "../../hooks/useYam";
 import { OverviewData } from "./types";
 
-import Icon from "../../assets/img/icon.png";
-import Landscape from "../../assets/img/landscapebig.png";
-import TallSky from "../../assets/img/tallsky.png";
-import SmollSky from "../../assets/img/bg3.svg";
-import Sky from "../../assets/img/skybig.png";
+import Background from '../../assets/img/bg3.svg'
 import Uniswap from "../../assets/img/uniswap@2x.png";
 import StakeModal from "./StakeModal";
 import UnstakeModal from "./UnstakeModal";
@@ -104,10 +95,7 @@ const Farms: React.FC = () => {
   return (
     <Switch>
       <StyledCanvas>
-        <BackgroundSection>
-          {isMobile() ? <MobileTallStyledSky /> : <TallStyledSky />}
-          <StyledLandscape />
-        </BackgroundSection>
+        <BackgroundSection/>
         <ContentContainer>
           <Page>
             <CardContainer>
@@ -134,22 +122,22 @@ const Farms: React.FC = () => {
                     : "-"}
                 </DisplayItem>
                 <DisplayItem>Supply: 2,800,000</DisplayItem>
+                <StyledA
+                  href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
+                  target="_blank"
+                />
               </TopDisplayContainer>
               {/*<HelloBar>YieldWars Battle page will launch at 5pm PT today!!
               Official statement on our telegram here: <a style={{color: 'white'}} href="https://t.me/YieldWarsOfficial/4548">https://t.me/YieldWarsOfficial/4548</a>
               </HelloBar>*/}
               <TextContainer>
-                <StyledA
-                  href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
-                  target="_blank"
-                />
                 <LargeText>Select a farm</LargeText>
                 <SmallText>
                   Earn WAR tokens by Farming the fields of Byzantium
                 </SmallText>
               </TextContainer>
-              {diffTime > 0 && (
-                <div style={{ marginBottom: "5vh", marginTop: "5vh" }}>
+              {/* {diffTime > 0 && (
+                <div>
                   <Title>Pool 2 Begins:</Title>
                   {isMobile() ? (
                     <MobileCountDown launchDate={launch} />
@@ -157,7 +145,7 @@ const Farms: React.FC = () => {
                       <CountDown launchDate={launch} />
                     )}
                 </div>
-              )}
+              )} */}
               <WarPool />
               <FarmCards />
               {/*<SectionDivider />
@@ -172,62 +160,18 @@ const Farms: React.FC = () => {
   );
 };
 
-const StyledA = !isMobile() ? styled.a`
-  align-items: center;
-  border: 0;
-  border-radius: 18px;
+const StyledA = styled.a`
   cursor: pointer;
   display: flex;
-  font-size: 16px;
-  border-radius: 8px;
-  box-shadow: rgb(0, 34, 79) 6px 6px 12px, rgb(0, 54, 119) -12px -12px 24px -2px;
   background-image: url(${Uniswap});
   background-size: cover;
   background-position: center;
-  height: 40px;
-  justify-content: center;
-  outline: none;
-  padding-left: 10px;
-  padding-right: 10px;
-  opacity: 1;
-  width: 180px;
-  font-family: Alegreya;
-  font-size: 20px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: white;
-  margin-bottom: 20px;
-` : styled.a`
-align-items: center;
-border: 0;
-border-radius: 18px;
-cursor: pointer;
-display: flex;
-font-size: 16px;
-border-radius: 8px;
-box-shadow: rgb(0, 34, 79) 6px 6px 12px, rgb(0, 54, 119) -12px -12px 24px -2px;
-background-image: url(${Uniswap});
-background-size: cover;
-background-position: center;
-height: 40px;
-justify-content: center;
-outline: none;
-padding-left: 10px;
-padding-right: 10px;
-opacity: 1;
-width: 180px;
-font-family: Alegreya;
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: white;
-margin-bottom: 20px;
+  height: 30px;
+  opacity: 0.9;
+  width: 137px;
+  &:hover {
+    opacity: 1;
+  }
 `
 
 const TopDisplayContainer = !isMobile()
@@ -235,7 +179,7 @@ const TopDisplayContainer = !isMobile()
       width: 40vw;
       display: flex;
       flex-direction: row;
-      align-content: center;
+      align-items: center;
       justify-content: space-evenly;
       margin: 16px auto 80px auto;
     `
@@ -244,7 +188,7 @@ const TopDisplayContainer = !isMobile()
       display: flex;
       flex-wrap: wrap;
       flex-direction: row;
-      align-content: center;
+      align-items: center;
       justify-content: space-evenly;
       margin: 60px auto 40px auto;
       display: flex;
@@ -254,7 +198,7 @@ const TopDisplayContainer = !isMobile()
 const DisplayItem = !isMobile()
   ? styled.div`
       color: white;
-      font-family: Alegreya;
+      font-family: "Gilroy";
       font-size: 18px;
       font-weight: bold;
       font-stretch: normal;
@@ -262,35 +206,26 @@ const DisplayItem = !isMobile()
       line-height: 1;
       letter-spacing: normal;
       color: #ffffff;
+      opacity: 0.9;
     `
   : styled.div`
       width: 100%;
       margin-bottom: 10px;
       color: white;
-      font-family: Alegreya;
+      font-family: "Gilroy";
       font-size: 18px;
       font-weight: bold;
       font-stretch: normal;
       font-style: normal;
       line-height: 1;
       letter-spacing: normal;
+      opacity: 0.9;
       color: #ffffff;
     `;
 
-const Title = styled.div`
-  font-family: Alegreya;
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-  margin-top: 1%;
-`;
 
 const LargeText = styled.div`
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
@@ -302,7 +237,7 @@ const LargeText = styled.div`
 `;
 
 const SmallText = styled.div`
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 20px;
   font-weight: bold;
   font-stretch: normal;
@@ -329,35 +264,15 @@ const CardContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-const TallStyledSky = styled.div`
-  width: 100%;
-  height: 500vh;
-  background-image: url(${TallSky});
-  background-size: 100% 100%;
-  background-repeat: repeat-x;
-`;
-
-const StyledLandscape = styled.div`
-  width: 100%;
-  height: 45vh;
-  background-image: url(${Landscape});
-  background-size: cover;
-  transform: translateY(-1px);
-`;
-
-const MobileTallStyledSky = styled.div`
-  width: 100%;
-  height: 1500vh;
-  background-image: url(${TallSky});
-  background-size: 100% 100%;
-  background-repeat: repeat-x;
-`;
-
 const BackgroundSection = styled.div`
-  position: absolute;
-  width: 100%;
-  background-color: #154f9b;
-`;
+background-image: url(${Background});
+position: fixed;
+width: 100vw;
+height: 100vh;
+top: 0;
+background-repeat: no-repeat;
+background-size: cover;
+`
 
 const StyledCanvas = styled.div`
   position: absolute;

@@ -103,24 +103,22 @@ interface StyledButtonProps {
 
 const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
-  border: solid 2px #0095f0;
-  background-color: #003983;
-  border-radius: 18px;
+  border: ${props => !props.disabled ? "solid 2px #ffb700" : "solid 2px #838383"};
+  border-radius: 8px;
   cursor: pointer;
   opacity: ${props => !props.disabled ? .8 : .4};
   display: flex;
   font-size: ${props => props.fontSize}px;
   border-radius: 8px;
-  box-shadow: rgb(0,34,79) 6px 6px 12px, rgb(0,54,119) -12px -12px 24px -2px;
-  background-color: #003983;
-  height: ${props => props.height}px;
+  background-color: rgba(256, 256, 256, 0.05);
+  height: ${props => props.height ? props.height : 38}px;
   justify-content: center;
   outline: none;
   padding-left: ${props => props.padding}px;
   padding-right: ${props => props.padding}px;
   pointer-events: ${props => !props.disabled ? undefined : 'none'};
   width: ${props => props.size}px;
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 20px;
   font-weight: bold;
   font-stretch: normal;

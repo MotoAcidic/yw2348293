@@ -51,7 +51,7 @@ margin-bottom: 30px;
 `;
 
 const StyledTitle = styled.h1`
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 30px;
 font-weight: bold;
 font-stretch: normal;
@@ -66,7 +66,7 @@ color: #ffffff;
 const StyledSubtitle = styled.h3`
   color: ${props => props.theme.color.grey[400]};
   font-size: 18px;
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;

@@ -28,7 +28,7 @@ const StyledFooter = styled.footer`
 `
 const StyledFooterInner = styled.div`
   align-items: center;
-  margin-top: 40px;
+  margin: 40px 0 40px 0;
   display: flex;
   justify-content: center;
   height: ${props => props.theme.topBarSize}px;

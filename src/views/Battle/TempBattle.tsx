@@ -210,7 +210,7 @@ const ScheduleItem = styled.div`
 display: flex;
 flex-direction: column;
 justify-content: space-evenly;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;
   font-stretch: normal;
@@ -235,7 +235,7 @@ width: 175px;
   border-radius: 8px;
   border: solid 2px #0095f0;
   background-color: #003677;
-  font-family: Alegreya;
+  font-family: "Gilroy";
 font-size: 20px;
 font-weight: normal;
 font-stretch: normal;
@@ -266,7 +266,7 @@ justify-content: space-evenly;
 
 const StyledTitle = styled.h4`
 margin: 0;
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 25px;
 font-weight: bold;
 font-stretch: normal;
@@ -291,7 +291,7 @@ const StyledDetails = styled.div`
 `
 
 const StyledDetail = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 20px;
 font-weight: normal;
 font-stretch: normal;
@@ -328,7 +328,7 @@ font-size: 30px;
 const VersusContainer = styled.div`
   width: 60%;
   height: 75vh;
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -343,7 +343,7 @@ align-items: center;
 
 const DisplayItem = styled.div`
 color: white;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 18px;
   font-weight: bold;
   font-stretch: normal;
@@ -391,7 +391,7 @@ font-family: SFMono;
 `
 
 const Title = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;
   font-stretch: normal;
@@ -421,7 +421,7 @@ width: 1000px;
 
 const CountDownText = styled.div`
 margin-top: 6vh;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
@@ -439,7 +439,7 @@ const SectionDivider = styled.div`
 `
 
 const LargeText = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
@@ -450,7 +450,7 @@ font-family: Alegreya;
 `
 
 const SmallText = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 20px;
   font-weight: bold;
   font-stretch: normal;

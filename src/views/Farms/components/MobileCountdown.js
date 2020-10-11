@@ -66,7 +66,7 @@ const TimerText = styled.div`
 text-align: center;
 width: 100%;
 margin-top: 1vh;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 15px;
   font-weight: normal;
   font-stretch: normal;
@@ -80,7 +80,7 @@ const Countdown = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 40px;
   font-weight: bold;
   font-stretch: normal;

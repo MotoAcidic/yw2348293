@@ -19,7 +19,7 @@ const StyledNav = styled.nav`
 `
 
 const StyledLink = styled.a`
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 15px;
 font-weight: bold;
 font-stretch: normal;

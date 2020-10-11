@@ -1,5 +1,5 @@
 .title-class {
-	font-family: Alegreya;
+	font-family: "Gilroy";
 	font-size: 23px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -11,7 +11,7 @@
 }
 
 .text-class {
-	font-family: Alegreya;
+	font-family: "Gilroy";
 	font-size: 18px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -32,7 +32,7 @@
 	height: 40px;
 	border-radius: 8px;
 	border: solid 2px #0095f0;
-	font-family: Alegreya;
+	font-family: "Gilroy";
 	font-size: 20px;
 	font-weight: bold;
 	font-stretch: normal;

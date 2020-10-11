@@ -71,6 +71,8 @@ const FarmCards: React.FC = () => {
           </StyledRow>
         ))}
       </StyledCards>
+      <SmallSpace />
+
       <LargeText>Season 1 Farms (CLOSED)</LargeText>
       <Disclaimer>
         The pools below in pool 1 are CLOSED. Do not stake in them, you
@@ -188,7 +190,6 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   if (farm.season === 2) {
     return (
       <S2CardWrapper>
-        {/* {(farm.id === 'mbBASED' || farm.id === 'FARM') && <RainbowShadow />} */}
         {content}
       </S2CardWrapper>
     )
@@ -204,7 +205,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
 }
 
 const Link = styled.a`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 18px;
   font-stretch: normal;
   font-style: normal;
@@ -215,7 +216,9 @@ font-family: Alegreya;
 
 const FarmIcon = styled.img`
 width: 80px;
-height: 80px;`
+height: 80px;
+border: solid 2px rgba(255, 183, 0, 0.3);
+border-radius: 50%;`
 
 const SmallSpace = styled.div`
   height: 60px;
@@ -254,12 +257,12 @@ const StyledDetail = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0095f0;
+  color: rgba(255, 183, 0, 0.7);
 `
 
 
 const LargeText = styled.div`
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
@@ -267,12 +270,13 @@ const LargeText = styled.div`
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
+  margin-bottom: 20px;
 `;
 
 const Disclaimer = styled.div`
-  margin: 30px;
+  margin-bottom: 20px;
   color: white;
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 18px;
   font-weight: bold;
   font-stretch: normal;
@@ -284,7 +288,7 @@ const Disclaimer = styled.div`
 const DisclaimerLink = styled.a`
   margin: 30px;
   color: white;
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 18px;
   font-weight: bold;
   font-stretch: normal;
@@ -303,10 +307,11 @@ line-height: 1.3;
 `
 
 const StyledCards = !isMobile() ? styled.div`
-margin: 40px auto 80px auto;
-  width: 1100px;
+margin-top: 40px;
+ 
+width: 1100px;
 ` : styled.div`
-margin: 40px auto 80px auto;
+margin-top: 40px;
   width: 100%;
 `
 
@@ -349,7 +354,7 @@ position: relative;
 
 
 const StyledTitle = styled.h4`
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 28px;
 font-weight: 700;
 font-stretch: normal;
@@ -367,7 +372,7 @@ const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  font-family: Alegreya;
+  font-family: "Gilroy";
 font-size: 15px;
 font-weight: bold;
 font-stretch: normal;

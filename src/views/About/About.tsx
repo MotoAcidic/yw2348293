@@ -1,19 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import BigNumber from "bignumber.js";
-import Card from "../../components/Card";
-import CardContent from "../../components/CardContent";
-import CardIcon from "../../components/CardIcon";
-import Container from "../../components/Container";
 import Page from "../../components/Page";
-import PageHeader from "../../components/PageHeader";
 import Landscape from "../../assets/img/landscapebig.png";
-import Sky from "../../assets/img/skybig.png";
+import Background from '../../assets/img/bg3.svg'
 import TallSky from "../../assets/img/tallsky.png";
-import FAQInfo from "../../assets/img/FAQInfo.png";
-import FAQ1 from "../../assets/img/FAQ1.png";
-import FAQ2 from "../../assets/img/FAQ2.png";
-import FAQ3 from "../../assets/img/FAQ3.png";
 import useFarms from "../../hooks/useFarms";
 import useYam from "../../hooks/useYam";
 import { useWallet } from "use-wallet";
@@ -87,10 +78,7 @@ const About: React.FC = () => {
 
   return (
     <StyledCanvas>
-      <BackgroundSection>
-        <StyledSky />
-        <StyledLandscape />
-      </BackgroundSection>
+      <BackgroundSection />
       <ContentContainer>
         <Page>
           <TopDisplayContainer>
@@ -247,7 +235,7 @@ const LinkSection = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 20px;
   font-weight: bold;
   font-stretch: normal;
@@ -292,7 +280,7 @@ const FAQSection = !isMobile()
     `;
 
 const RecDesc = styled.div`
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 18px;
   font-weight: normal;
   font-stretch: normal;
@@ -305,7 +293,7 @@ const RecDesc = styled.div`
 `;
 
 const RecTitle = styled.div`
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 20px;
   font-weight: bold;
   font-stretch: normal;
@@ -336,7 +324,7 @@ const Rectangle = !isMobile()
 const DisplayItem = !isMobile()
   ? styled.div`
       color: white;
-      font-family: Alegreya;
+      font-family: "Gilroy";
       font-size: 18px;
       font-weight: bold;
       font-stretch: normal;
@@ -349,7 +337,7 @@ const DisplayItem = !isMobile()
       width: 100%;
       margin-bottom: 10px;
       color: white;
-      font-family: Alegreya;
+      font-family: "Gilroy";
       font-size: 18px;
       font-weight: bold;
       font-stretch: normal;
@@ -381,32 +369,15 @@ const TopDisplayContainer = !isMobile()
       `;
 
 
-const StyledSky = !isMobile() ? styled.div`
-  width: 100%;
-  height: 270vh;
-  background-image: url(${TallSky});
-  background-size: 100% 100%;
-  background-repeat: repeat-x;
-` : styled.div`
-width: 100%;
-height: 420vh;
-background-image: url(${TallSky});
-background-size: 100% 100%;
-background-repeat: repeat-x;`
-
-const StyledLandscape = styled.div`
-  width: 100%;
-  height: 45vh;
-  background-image: url(${Landscape});
-  background-size: cover;
-  transform: translateY(-1px);
-`;
-
 const BackgroundSection = styled.div`
-  position: absolute;
-  width: 100%;
-  background-color: #154f9b;
-`;
+      background-image: url(${Background});
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      background-repeat: no-repeat;
+      background-size: cover;
+      `
 
 const StyledCanvas = styled.div`
   position: absolute;
@@ -420,7 +391,7 @@ const ContentContainer = styled.div`
 `;
 
 const Title = styled.div`
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 24px;
   font-weight: bold;
   font-stretch: normal;

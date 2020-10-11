@@ -7,27 +7,30 @@ import {
 import { ThemeProvider } from 'styled-components'
 import { UseWalletProvider } from 'use-wallet'
 import styled from 'styled-components'
-import Sky from './assets/img/skybig.png'
-import Landscape from './assets/img/landscapebig.png'
-import Logo from './assets/img/logo@2x.png'
 import DisclaimerModal from './components/DisclaimerModal'
-
 import FarmsProvider from './contexts/Farms'
 import ModalsProvider from './contexts/Modals'
 import YamProvider from './contexts/YamProvider'
 import TransactionProvider from './contexts/Transactions'
-
 import useModal from './hooks/useModal'
-
 import Farms from './views/Farms'
 import Farm from './views/Farm'
 import Splash from './views/Splash/Splash'
 import Battle from './views/Battle/Battle'
 import About from './views/About/About'
 import Roadmap from './views/Roadmap/Roadmap'
-
-
 import theme from './theme'
+import { createGlobalStyle } from 'styled-components';
+import Gilroy from "./assets/fonts/Gilroy-Bold.otf";
+
+const GlobalStyle = createGlobalStyle`
+@font-face {
+  font-family: "Gilroy";
+  src: local(Gilroy-Bold), url(${Gilroy}) format("opentype");
+  font-weight: bold;
+  font-style: normal;
+}
+`;
 
 const App: React.FC = () => {
   return (
@@ -63,7 +66,6 @@ const App: React.FC = () => {
           </Switch>
         </Router>
       </StyledCanvas>
-      {/* <Disclaimer /> */}
     </Providers>
   )
 }
@@ -77,6 +79,8 @@ const Providers: React.FC = ({ children }) => {
           <TransactionProvider>
             <ModalsProvider>
               <FarmsProvider>
+      <GlobalStyle />
+
                 {children}
               </FarmsProvider>
             </ModalsProvider>
@@ -107,36 +111,10 @@ const Disclaimer: React.FC = () => {
   )
 }
 
-const ContentContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-`
-
 const StyledCanvas = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
   background-color: #154f9b;
 `
-
-const StyledSky = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 60%;
-  background-image: url(${Sky});
-  background-size: 100% 100%;
-  background-repeat: repeat-x;
-`
-
-const StyledLandscape = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 45%;
-  top: 55vh;
-  background-image: url(${Landscape});
-  background-size: cover;
-`
-
 export default App

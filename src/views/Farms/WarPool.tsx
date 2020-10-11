@@ -119,13 +119,12 @@ const WarPool: React.FC = () => {
 		return (
 			<MobileInfoContainer>
 				<WarTopContainer>
-					<Title>Uniswap WAR/ETH</Title>
+					<Title>War Pool</Title>
 					<StyledDetails>
 						<StyledDetail>APR</StyledDetail>
 						<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
 					</StyledDetails>
 				</WarTopContainer>
-				<InfoDivider />
 				<MobileInfoLines>
 					<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} ETH-WAR-UNI-V2</ShadedLine></Line>
 					<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
@@ -167,13 +166,12 @@ const WarPool: React.FC = () => {
 	return (
 		<InfoContainer>
 			<WarTopContainer>
-				<Title>Uniswap WAR/ETH</Title>
+				<Title>War Pool</Title>
 				<StyledDetails>
 					<StyledDetail>APR</StyledDetail>
 					<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
 				</StyledDetails>
 			</WarTopContainer>
-			<InfoDivider />
 			<InfoLines>
 				<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} ETH-WAR-UNI-V2</ShadedLine></Line>
 				<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
@@ -212,6 +210,8 @@ const WarPool: React.FC = () => {
 
 const WarTopContainer = styled.div`
 display: flex;
+height: 50px;
+align-items: center;
 flex-direction: row;
 justify-content: center;
 `
@@ -223,14 +223,14 @@ display: flex;
 justify-content: space-between;
 box-sizing: border-box;
 border-radius: 8px;
-background: rgb(20,91,170);
+background-color: rgba(256, 256, 256, 0.05);
 color: rgb(170, 149, 132);
 width: 200px;
 margin-top: 6px;
 margin-left: 780px;
 line-height: 32px;
 font-size: 13px;
-border: 1px solid rgb(230, 220, 213);
+border: solid 2px #ffb700;
 text-align: center;
 padding: 0px 12px;
 ` : styled.div`
@@ -240,17 +240,17 @@ display: flex;
 justify-content: space-between;
 box-sizing: border-box;
 border-radius: 8px;
-background: rgb(20,91,170);
+background-color: rgba(256, 256, 256, 0.05);
 color: rgb(170, 149, 132);
 width: 200px;
-margin-top: 50px;
+margin-top: 100px;
 font-size: 13px;
-border: 1px solid rgb(230, 220, 213);
+border: solid 2px #ffb700;
 text-align: center;
 padding: 0px 12px;`
 
 const StyledDetail = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
 line-height: 32px;
 font-size: 18px;
 font-weight: normal;
@@ -268,7 +268,7 @@ flex-direction: column;
 
 const DisplayItem = styled.div`
 color: white;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 18px;
   font-weight: bold;
   font-stretch: normal;
@@ -289,16 +289,18 @@ margin-left: 8%;
 
 const ShadedLine = styled.div`
 margin-left: 20px;
-color: #97d5ff;
+color: #ffb700;
+text-align: right;
 `
 
 const Line = styled.div`
 display: flex;
 flex-direction: row;
+justify-content: space-between;
 `
 
 const InfoLines = styled.div`
-width: 100%;
+width: 94%;
 height: 50%;
 display: flex;
 flex-direction: column;
@@ -334,7 +336,7 @@ font-family: SFMono;
 `
 
 const Title = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;
   font-stretch: normal;
@@ -342,29 +344,21 @@ font-family: Alegreya;
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
-  margin-top: 1%;
 `
-
-const InfoDivider = styled.div`
-margin-top: 1%;
-  width: 100%;
-  height: 5px;
-  background-color: #97d5ff;
-`
-
 const InfoContainer = !isMobile() ? styled.div`
 width: 1000px;
   height: 375px;
   border-radius: 8px;
-  border: solid 4px #97d5ff;
-	background-color: #003677;
+  border: solid 2px rgba(255, 183, 0, 0.3);
+  background-color: rgba(256,256,256,0.08);
+
 	margin: 80px auto 80px auto;
 `: styled.div`
 width: 300px;
   height: 450px;
   border-radius: 8px;
-  border: solid 4px #97d5ff;
-  background-color: #003677;
+  border: solid 2px rgba(255, 183, 0, 0.3);
+  background-color: rgba(256,256,256,0.08);
 	margin: 60px auto 60px auto;
 `
 
@@ -372,14 +366,14 @@ const MobileInfoContainer = styled.div`
 width: 300px;
   height: 450px;
   border-radius: 8px;
-  border: solid 4px #97d5ff;
-  background-color: #003677;
+  border: solid 2px rgba(255, 183, 0, 0.3);
+  background-color: rgba(256,256,256,0.08);
 	margin: 60px auto 60px auto;
 `
 
 const CountDownText = styled.div`
 margin-top: 6vh;
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
@@ -397,7 +391,7 @@ const SectionDivider = styled.div`
 `
 
 const LargeText = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
@@ -408,7 +402,7 @@ font-family: Alegreya;
 `
 
 const SmallText = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 20px;
   font-weight: bold;
   font-stretch: normal;

@@ -2,20 +2,15 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import Button from "../../components/Button";
-import Card from "../../components/Card";
-import CardContent from "../../components/CardContent";
-import CardIcon from "../../components/CardIcon";
 import Uniswap from "../../assets/img/uniswap@2x.png";
 import Page from "../../components/Page";
-import sushi from "../../assets/img/sushi.png";
-import yamimg from "../../assets/img/yam.png";
 
 import { getAPR, getPoolEndTime } from "../../yamUtils";
 import useYam from "../../hooks/useYam";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 
+import Background from '../../assets/img/bg3.svg'
 import Pool3 from "./Pool3";
 import AnimeVideo from "../../assets/video/yw_anime.mp4";
 import AnimeThumbnail from "../../assets/video/yw_anime_thumbnail.png";
@@ -151,10 +146,7 @@ const Battle: React.FC = () => {
   return (
     <Switch>
       <StyledCanvas>
-        <BackgroundSection>
-          <StyledSky />
-          <StyledLandscape />
-        </BackgroundSection>
+        <BackgroundSection/>
         <ContentContainer>
           <Page>
             {/* <TopDisplayContainer>
@@ -242,7 +234,7 @@ const StyledA = !isMobile() ? styled.a`
   padding-right: 10px;
   opacity: 1;
   width: 180px;
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 20px;
   font-weight: bold;
   font-stretch: normal;
@@ -270,7 +262,7 @@ padding-left: 10px;
 padding-right: 10px;
 opacity: 1;
 width: 180px;
-font-family: Alegreya;
+font-family: "Gilroy";
 font-size: 20px;
 font-weight: bold;
 font-stretch: normal;
@@ -303,7 +295,7 @@ const LeaderBoardItem = !isMobile()
       border-radius: 8px;
       border: solid 2px #0095f0;
       background-color: #003677;
-      font-family: Alegreya;
+      font-family: "Gilroy";
       font-size: 20px;
       font-weight: normal;
       font-stretch: normal;
@@ -322,7 +314,7 @@ const LeaderBoardItem = !isMobile()
       border-radius: 8px;
       border: solid 2px #0095f0;
       background-color: #003677;
-      font-family: Alegreya;
+      font-family: "Gilroy";
       font-size: 20px;
       font-weight: normal;
       font-stretch: normal;
@@ -353,7 +345,7 @@ margin-bottom: 70px;
 
 const StyledVotes = styled.h4`
   margin: 0;
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 16px;
   font-weight: bold;
   font-stretch: normal;
@@ -367,7 +359,7 @@ const StyledVotes = styled.h4`
 
 const StyledTitle = styled.h4`
   margin: 0;
-  font-family: Alegreya;
+  font-family: "Gilroy";
   font-size: 20px;
   font-weight: bold;
   font-stretch: normal;
@@ -390,7 +382,7 @@ const StyledContent = styled.div`
 const DisplayItem = !isMobile()
   ? styled.div`
       color: white;
-      font-family: Alegreya;
+      font-family: "Gilroy";
       font-size: 18px;
       font-weight: bold;
       font-stretch: normal;
@@ -403,7 +395,7 @@ const DisplayItem = !isMobile()
       width: 100%;
       margin-bottom: 10px;
       color: white;
-      font-family: Alegreya;
+      font-family: "Gilroy";
       font-size: 18px;
       font-weight: bold;
       font-stretch: normal;
@@ -414,7 +406,7 @@ const DisplayItem = !isMobile()
     `;
 
 const Title = styled.div`
-font-family: Alegreya;
+font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
   font-stretch: normal;
@@ -448,35 +440,15 @@ const TopDisplayContainer = !isMobile()
     `;
 
 
-const StyledSky = !isMobile()
-  ? styled.div`
-      width: 100%;
-      height: 5800px;
-      background-image: url(${TallSky});
-      background-size: 100% 100%;
-      background-repeat: repeat-x;
+    const BackgroundSection = styled.div`
+    background-image: url(${Background});
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
     `
-  : styled.div`
-      width: 100%;
-      height: 1600vh;
-      background-image: url(${TallSky});
-      background-size: 100% 100%;
-      background-repeat: repeat-x;
-    `;
-
-const StyledLandscape = styled.div`
-  width: 100%;
-  height: 500px;
-  background-image: url(${Landscape});
-  background-size: cover;
-  transform: translateY(-1px);
-`;
-
-const BackgroundSection = styled.div`
-  position: absolute;
-  width: 100%;
-  background-color: #154f9b;
-`;
 
 const StyledCanvas = styled.div`
   position: absolute;

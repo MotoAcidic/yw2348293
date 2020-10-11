@@ -62,6 +62,9 @@ const Battle: React.FC = () => {
   let [schedule, setSchedule] = useState([])
   let [dailyQuestion, setDailyQuestion] = useState();
 
+  let [oldLeaderboard, setOldLeaderboard] = useState([]);
+  let [oldPreviousBattles, setOldPreviousBattles] = useState([]);
+
   const [
     {
       circSupply,
@@ -108,7 +111,6 @@ const Battle: React.FC = () => {
         setDailyQuestion(res.data.dailyQuestion);
       }).catch(err => {
         console.log(err);
-
       })
     }
   }, [yam, account, farms, farms[0]]);

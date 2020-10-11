@@ -91,7 +91,7 @@ const Versus = ({ schedule }) => {
 
 		return (
 			<VSContentContainer>
-				<div>Oct {item[0].day - 1}</div>
+				<div>Oct {item[0].day - 2}</div>
 				<Container>
 					<VersusItem>
 						<VersusCard>

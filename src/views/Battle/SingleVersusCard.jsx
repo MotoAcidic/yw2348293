@@ -21,7 +21,6 @@ import { useWallet } from 'use-wallet'
 import Landscape from '../../assets/img/landscapebig.png'
 import Sky from '../../assets/img/skybig.png'
 import TallSky from '../../assets/img/tallsky.png'
-import FightInstructions from '../../assets/img/flightinstructions.png'
 import DailyQuestion from "./DailyQuestion.jsx";
 
 import useFarms from '../../hooks/useFarms'
@@ -49,7 +48,6 @@ function getServerURI() {
 }
 
 let cookie = new Cookie()
-
 
 const Versus = ({ battles, question }) => {
 	battles = battles[0]
@@ -169,9 +167,11 @@ const Versus = ({ battles, question }) => {
 	}
 
 	useEffect(() => {
-		const questionVoted = cookie.get(question._id + "1");
-		if (questionVoted) {
-			setVoted(true);
+		if (question) {
+			const questionVoted = cookie.get(question._id + "1");
+			if (questionVoted) {
+				setVoted(true);
+			}
 		}
 		if (account) {
 			axios.post(`${getServerURI()}/api/status`, {
@@ -194,110 +194,91 @@ const Versus = ({ battles, question }) => {
 	return (
 		<>
 			{battles &&
-				<VSContentContainer>
-					<VersusItem>
-						<VersusCard>
-							<StyledContent>
-								<CardIcon>{battle.farm1.icon}</CardIcon>
-								<StyledTitle>{battle.farm1.name}</StyledTitle>
-								{checked == 1 ? (
+				<VersusItem>
+					<VersusCard>
+						<StyledContent>
+							<CardIcon>{battle.farm1.icon}</CardIcon>
+							<StyledTitle>{battle.farm1.name}</StyledTitle>
+							{checked == 1 ? (
+								<ButtonContainer onClick={() => pick(1)}>
+									<img src={checkedIcon} width="40%" />
+								</ButtonContainer>
+							) : (
 									<ButtonContainer onClick={() => pick(1)}>
-										<img src={checkedIcon} width="40%" />
+										<img src={uncheckedIcon} width="40%" />
 									</ButtonContainer>
-								) : (
-										<ButtonContainer onClick={() => pick(1)}>
-											<img src={uncheckedIcon} width="40%" />
-										</ButtonContainer>
-									)}
-							</StyledContent>
-						</VersusCard>
+								)}
+						</StyledContent>
+					</VersusCard>
                     VS
 					<VersusCard>
-							<StyledContent>
-								<CardIcon>{battle.farm2.icon}</CardIcon>
-								<StyledTitle>{battle.farm2.name}</StyledTitle>
-								{checked == 2 ? (
+						<StyledContent>
+							<CardIcon>{battle.farm2.icon}</CardIcon>
+							<StyledTitle>{battle.farm2.name}</StyledTitle>
+							{checked == 2 ? (
+								<ButtonContainer onClick={() => pick(2)}>
+									<img src={checkedIcon} width="40%" />
+								</ButtonContainer>
+							) : (
 									<ButtonContainer onClick={() => pick(2)}>
-										<img src={checkedIcon} width="40%" />
+										<img src={uncheckedIcon} width="40%" />
 									</ButtonContainer>
-								) : (
-										<ButtonContainer onClick={() => pick(2)}>
-											<img src={uncheckedIcon} width="40%" />
-										</ButtonContainer>
-									)}
-							</StyledContent>
-						</VersusCard>
-					</VersusItem>
-				</VSContentContainer>
+								)}
+						</StyledContent>
+					</VersusCard>
+				</VersusItem>
 			}
 
 			{question &&
 				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} />
 			}
 
-			{account && <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button>}
-			<Title style={{ marginTop: '6vh' }}>How the battles work </Title>
-			<StyledContainer>
-				<StyledCardContent>
-					<img src={FightInstructions} width="100%" />
-				</StyledCardContent>
-			</StyledContainer>
+			{account ? <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button> :
+				<RecDesc>
+					connect your wallet to participate
+				</RecDesc>
+			}
+			<Space />
 		</>
 	)
 }
 
-const Title = styled.div`
+const RecDesc = styled.div`
 font-family: Alegreya;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 1;
   letter-spacing: normal;
-  color: #ffffff;
-  margin-top: 1%;
-`
+	color: #ffffff;
+`;
 
-const StyledCardContent = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-evenly;
+const Space = styled.div`
+height: 80px;`
 
-`
+const ButtonContainer = styled.div``
 
-const StyledContainer = styled.div`
-  box-sizing: border-box;
-  margin: 0 auto;
-  margin-top: 3vh;
-	max-width: 730px;
-	margin-bottom: 60px;
-  width: 100%;
-`
-
-const ButtonContainer = styled.div`
-
-`
-const VSContentContainer = !isMobile() ? styled.div`
-margin: 40px 0 40px 0;
+const VersusItem = !isMobile() ? styled.div`
 width: 540px;
 display: flex;
-flex-direction: column;
-justify-content: space-evenly;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+font-size: 30px;
+margin: 20px auto 40px auto;
 font-family: Alegreya;
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
 ` : styled.div`
 margin: 40px 0 40px 0;
-width: 100%;
+width: 90vw;
 display: flex;
 flex-direction: column;
-justify-content: space-evenly;
 font-family: Alegreya;
   font-size: 25px;
   font-weight: bold;
@@ -341,15 +322,6 @@ height: 247px;
 border-radius: 8px;
 border: solid 2px #0095f0;
 background-color: #003677;
-`
-
-const VersusItem = styled.div`
-width: 100%;
-display: flex;
-flex-direction: row;
-justify-content: space-evenly;
-align-items: center;
-font-size: 30px;
 `
 
 export default Versus

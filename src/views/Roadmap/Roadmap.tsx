@@ -127,7 +127,7 @@ const Roadmap: React.FC = () => {
             </DisplayItem>
             <DisplayItem>Supply: 2,800,000</DisplayItem>
           </TopDisplayContainer>
-          <Title style={{ margin: "20px 0 20px 0" }}>
+          <Title >
             YieldWars Roadmap
           </Title>
           <Rectangle>
@@ -312,38 +312,16 @@ const LinkSection = styled.div`
 
 const MediumSection = !isMobile()
   ? styled.div`
-      margin-top: 3vh;
       width: 780px;
-      height: 220px;
       border-radius: 8px;
       border: solid 2px #0095f0;
       background-color: #003677;
     `
   : styled.div`
-      margin-top: 3vh;
       width: 80vw;
-      height: 220px;
       border-radius: 8px;
       border: solid 2px #0095f0;
       background-color: #003677;
-    `;
-
-const FAQSection = !isMobile()
-  ? styled.div`
-      display: flex;
-      flex-direction: column;
-      align-content: center;
-      justify-content: space-evenly;
-      height: 1100px;
-      margin-bottom: 6vh;
-    `
-  : styled.div`
-      display: flex;
-      flex-direction: column;
-      align-content: center;
-      justify-content: space-evenly;
-      margin-bottom: 6vh;
-      width: 80vw;
     `;
 
 const RecDesc = styled.div`
@@ -375,17 +353,18 @@ const RecTitle = styled.div`
 
 const Rectangle = !isMobile()
   ? styled.div`
-      width: 780px;
       border-radius: 8px;
       border: solid 2px #0095f0;
       background-color: #003677;
+      margin-bottom: 40px;
+      width: 780px;
     `
   : styled.div`
       width: 90vw;
       border-radius: 8px;
       border: solid 2px #0095f0;
       background-color: #003677;
-      margin-bottom: 20px;
+      margin-bottom: 40px;
     `;
 
 const DisplayItem = !isMobile()
@@ -414,60 +393,27 @@ const DisplayItem = !isMobile()
       color: #ffffff;
     `;
 
-const TopDisplayContainer = !isMobile()
-  ? styled.div`
-      width: 40%;
-      display: flex;
-      flex-direction: row;
-      align-content: center;
-      justify-content: space-evenly;
-      margin-top: 4vh;
-      margin-bottom: 6vh;
-    `
-  : styled.div`
-      width: 40vw;
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: row;
-      align-content: center;
-      justify-content: space-evenly;
-      margin-top: 4vh;
-      display: flex;
-      flex-wrap: wrap;
-    `;
+    const TopDisplayContainer = !isMobile()
+    ? styled.div`
+        width: 40vw;
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        justify-content: space-evenly;
+        margin: 16px auto 80px auto;
+      `
+    : styled.div`
+        width: 40vw;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-content: center;
+        justify-content: space-evenly;
+        margin: 60px auto 40px auto;
+        display: flex;
+        flex-wrap: wrap;
+      `;
 
-const StyledCardContent = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-evenly;
-  padding: 30px;
-  margin-left: 20px;
-  margin-right: 20px;
-`;
-
-const StyledContainer = styled.div`
-  box-sizing: border-box;
-  margin: 0 auto;
-  margin-top: 3vh;
-  max-width: 1000px;
-  height: 1500px;
-  width: 100%;
-`;
-
-const StyledCard = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 0;
-  border: 1px solid rgb(226, 214, 207);
-  border-radius: 12px;
-  box-shadow: rgb(247, 244, 242) 1px 1px 0px inset;
-  background-color: #003677;
-`;
 
 const StyledSky = !isMobile() ? styled.div`
   width: 100%;
@@ -520,14 +466,15 @@ const StyledText = styled.p`
 
 const Title = styled.div`
   font-family: Alegreya;
-  font-size: 25px;
+  font-size: 24px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
-  margin-top: 1%;
+  margin-bottom: 20px;
 `;
+
 
 export default Roadmap;

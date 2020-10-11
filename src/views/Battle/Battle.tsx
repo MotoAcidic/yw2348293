@@ -24,7 +24,7 @@ import Sky from "../../assets/img/skybig.png";
 import TallSky from "../../assets/img/tallsky.png";
 import useFarms from "../../hooks/useFarms";
 import useFarm from "../../hooks/useFarm";
-import { getTotalValue } from "../../yamUtils";
+import { getWarStaked } from "../../yamUtils";
 import { getStats } from "./utils";
 import Cookie from "universal-cookie";
 import VersusCard from "./VersusCard.jsx";
@@ -59,7 +59,9 @@ export interface OverviewData {
 const Battle: React.FC = () => {
   let [farms] = useFarms()
   const yam = useYam()
-  //let [tvl, setTVL] = useState({ totalValue: new BigNumber(0), poolValues: {} })
+  let [warStaked, setWarStaked] = useState({
+    warStaked: new BigNumber(0)
+  });
   const { account, connect } = useWallet()
   let [battles, setBattles] = useState([])
   let [leaderboard, setLeaderboard] = useState([])
@@ -83,22 +85,22 @@ const Battle: React.FC = () => {
     setStats(statsData);
   }, [yam, setStats]);
 
-  /*const fetchTotalValue = useCallback(
+  const fetchWarStaked = useCallback(
     async pools => {
-      const tv = await getTotalValue(pools, yam);
-      setTVL(tv);
+      const st = await getWarStaked(pools, yam);
+      setWarStaked(st);
     },
-    [yam, setTVL, setTVL]
-  );*/
+    [yam, setWarStaked]
+  );
 
   useEffect(() => {
     if (yam && account && farms && farms[0]) {
       fetchStats();
     }
-    /*if (yam && farms) {
+    if (yam && farms) {
       console.log(farms);
-      fetchTotalValue(farms);
-    }*/
+      fetchWarStaked(farms);
+    }
     if (battles.length === 0) {
       axios.get(`${getServerURI()}/api/battles`).then(res => {
         let lb = res.data.leaderboard.leaderboard.sort((a, b) => {

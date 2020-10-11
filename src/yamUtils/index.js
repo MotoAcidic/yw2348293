@@ -523,6 +523,11 @@ export const getTotalValue = async (pools, yam) => {
   }
 }
 
+export const getWarStaked = async (pools, yam) => {
+  let warStaked = new BigNumber(await yam.contracts.battlepool_pool.methods.totalSupply().call()).dividedBy(10**18);
+  return { warStaked };
+}
+
 let assetPrices = null
 
 export const getAssetPrices = async (yam) => {

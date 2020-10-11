@@ -380,7 +380,7 @@ flex-direction: column;
 justify-content: space-evenly;
 text-align: left;
 margin: 3%;
-font-family: SFMono;
+font-family: "SF Mono Semibold";
   font-size: 40px;
   font-weight: 600;
   font-stretch: normal;

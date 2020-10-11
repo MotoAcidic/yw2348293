@@ -25,6 +25,7 @@ import Cookie from "universal-cookie";
 import VersusCard from "./VersusCard.jsx";
 import SingleVersusCard from "./SingleVersusCard.jsx";
 import BattleHistory from './PreviousBattles'
+import OldBattleHistory from './OldPreviousBattles'
 import Schedule from './Schedule'
 import FightInstructions from '../../assets/img/flightinstructions.png'
 
@@ -98,6 +99,18 @@ const Battle: React.FC = () => {
       fetchTotalValue(farms);
     }*/
     if (battles.length === 0) {
+      axios.post(`${getServerURI()}/api/season-info`, ({ season: 1 })).then(res => {
+        console.log("s1battlews");
+        let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
+          return b.votes - a.votes;
+        });
+        console.log("s1battles", res.data);
+        console.log(lb);
+        setOldLeaderboard(lb);
+        setOldPreviousBattles(res.data.history);
+      }).catch(err => {
+        console.log(err);
+      })
       axios.get(`${getServerURI()}/api/battles`).then(res => {
         let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
           return b.votes - a.votes;
@@ -116,10 +129,29 @@ const Battle: React.FC = () => {
   }, [yam, account, farms, farms[0]]);
 
   let leaderboardContent;
+  let oldLeaderboardContent;
 
   if (farms[0]) {
     leaderboard = leaderboard.slice(0, 5);
     leaderboardContent = leaderboard.map((item, index) => {
+      let pool = farms.find(farm => farm.id === item.pool);
+      let rank = "th";
+      if (index === 0) rank = "st";
+      if (index === 1) rank = "nd";
+      return (
+        <LeaderBoardItem key={index}>
+          <StyledContent>
+            {index + 1}
+            {rank}
+            <StyledCardIcon>{pool.icon}</StyledCardIcon>
+            <StyledTitle>{pool.name}</StyledTitle>
+            <StyledVotes>{item.votes.toFixed(2)} votes</StyledVotes>
+          </StyledContent>
+        </LeaderBoardItem>
+      )
+    })
+    oldLeaderboard = oldLeaderboard.slice(0, 5);
+    oldLeaderboardContent = oldLeaderboard.map((item, index) => {
       let pool = farms.find(farm => farm.id === item.pool);
       let rank = "th";
       if (index === 0) rank = "st";
@@ -147,7 +179,7 @@ const Battle: React.FC = () => {
   return (
     <Switch>
       <StyledCanvas>
-        <BackgroundSection/>
+        <BackgroundSection />
         <ContentContainer>
           <Page>
             {/* <TopDisplayContainer>
@@ -186,8 +218,11 @@ const Battle: React.FC = () => {
             <LeaderBoard>{leaderboardContent}</LeaderBoard>
             <Title>Schedule</Title>
             <Schedule schedule={schedule} />
-            <Title>Previous Battles</Title>
+            {previousBattles.length && <Title>Previous Battles</Title>}
             <BattleHistory history={previousBattles} />
+            <Title>Season 1 Results</Title>
+            <OldLeaderBoard>{oldLeaderboardContent}</OldLeaderBoard>
+            <OldBattleHistory history={oldPreviousBattles} />
           </Page>
         </ContentContainer>
       </StyledCanvas>
@@ -344,6 +379,21 @@ justify-content: space-evenly;
 margin-bottom: 70px;
 `;
 
+const OldLeaderBoard = !isMobile() ? styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 70%;
+  margin-bottom: 60px;
+` : styled.div`
+display: flex;
+width: 90vw;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-evenly;
+margin-bottom: 60px;
+`;
+
 const StyledVotes = styled.h4`
   margin: 0;
   font-family: "Gilroy";
@@ -441,7 +491,7 @@ const TopDisplayContainer = !isMobile()
     `;
 
 
-    const BackgroundSection = styled.div`
+const BackgroundSection = styled.div`
     background-image: url(${Background});
     position: fixed;
     width: 100vw;

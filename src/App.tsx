@@ -22,14 +22,24 @@ import Roadmap from './views/Roadmap/Roadmap'
 import theme from './theme'
 import { createGlobalStyle } from 'styled-components';
 import Gilroy from "./assets/fonts/Gilroy-Bold.otf";
+import SFMono from "./assets/fonts/SFMonoSemibold.woff";
 
 const GlobalStyle = createGlobalStyle`
+
+@font-face {
+  font-family: 'SF Mono Semibold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF Mono Semibold'), url(${SFMono}) format('woff');
+  }
+
 @font-face {
   font-family: "Gilroy";
   src: local(Gilroy-Bold), url(${Gilroy}) format("opentype");
   font-weight: bold;
   font-style: normal;
 }
+
 `;
 
 const App: React.FC = () => {

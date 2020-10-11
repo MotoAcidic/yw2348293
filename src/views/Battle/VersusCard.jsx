@@ -52,11 +52,11 @@ let cookie = new Cookie()
 
 
 const Versus = ({ battles, question }) => {
-	console.log(question);
+	// console.log(question);
 	let [farms] = useFarms()
 	const yam = useYam()
 	const { account, connect } = useWallet()
-	console.log(battles);
+	// console.log(battles);
 	const [voted, setVoted] = useState(false)
 	const [checked1, setChecked1] = useState(cookie.get(battles[0]._id))
 	const [checked2, setChecked2] = useState(cookie.get(battles[1]._id))

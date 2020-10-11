@@ -68,7 +68,7 @@ const Versus = ({ schedule }) => {
 	for (let i = 0; i < schedule.length / 2; i++) {
 		formattedSchedule.push(schedule.filter(item => item.day === i + offset))
 	}
-	console.log(formattedSchedule);
+	// console.log(formattedSchedule);
 
 	formattedSchedule = formattedSchedule.map(item => {
 		let pool1, pool2, pool3, pool4

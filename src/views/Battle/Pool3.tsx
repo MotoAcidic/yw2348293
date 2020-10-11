@@ -251,7 +251,7 @@ const WarPool: React.FC = () => {
 }
 
 const Disclaimer = styled.div`
-font-family: SFMono;
+font-family: "SF Mono Semibold";
   font-size: 16px;
   font-weight: 600;
   font-stretch: normal;
@@ -262,7 +262,7 @@ font-family: SFMono;
   transform: translateY(16px);
 `
 const MobileDisclaimer = styled.div`
-font-family: SFMono;
+font-family: "SF Mono Semibold";
   font-size: 12px;
   font-weight: 600;
   font-stretch: normal;
@@ -352,7 +352,8 @@ margin-left: 8%;
 
 const ShadedLine = styled.div`
 margin-left: 20px;
-color: #97d5ff;
+color: #ffb700;
+text-align: right;
 `
 
 const Line = styled.div`
@@ -368,7 +369,7 @@ flex-direction: column;
 justify-content: space-evenly;
 text-align: left;
 margin: 3%;
-font-family: SFMono;
+font-family: "SF Mono Semibold";
   font-size: 40px;
   font-weight: 600;
   font-stretch: normal;
@@ -386,7 +387,7 @@ flex-direction: column;
 justify-content: space-evenly;
 text-align: left;
 padding: 10% 10% 0% 10%;
-font-family: SFMono;
+font-family: "SF Mono Semibold";
   font-size: 18px;
   font-weight: 600;
   font-stretch: normal;
@@ -415,22 +416,30 @@ margin-top: 1%;
   background-color: #97d5ff;
 `
 
-const InfoContainer = styled.div`
+const InfoContainer = !isMobile() ? styled.div`
 width: 1000px;
   height: 375px;
   border-radius: 8px;
-  border: solid 4px #97d5ff;
-  background-color: #003677;
-	margin: 20px 0 80px 0;
-	`
+  border: solid 2px rgba(255, 183, 0, 0.3);
+  background-color: rgba(256,256,256,0.08);
 
-const MobileInfoContainer = styled.div`
-width: 90vw;
+	margin: 80px auto 80px auto;
+`: styled.div`
+width: 300px;
   height: 450px;
   border-radius: 8px;
-  border: solid 4px #97d5ff;
-  background-color: #003677;
-  margin-bottom: 70px;
+  border: solid 2px rgba(255, 183, 0, 0.3);
+  background-color: rgba(256,256,256,0.08);
+	margin: 60px auto 60px auto;
+`
+
+const MobileInfoContainer = styled.div`
+width: 300px;
+  height: 450px;
+  border-radius: 8px;
+  border: solid 2px rgba(255, 183, 0, 0.3);
+  background-color: rgba(256,256,256,0.08);
+	margin: 60px auto 60px auto;
 `
 
 const CountDownText = styled.div`

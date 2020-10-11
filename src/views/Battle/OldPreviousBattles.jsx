@@ -6,15 +6,6 @@ import {
 } from 'react-router-dom'
 import styled from 'styled-components'
 
-import Button from '../../components/Button'
-import Card from '../../components/Card'
-import CardContent from '../../components/CardContent'
-import CardIcon from '../../components/CardIcon'
-import Page from '../../components/Page'
-import checkedIcon from '../../assets/img/checked.png'
-import uncheckedIcon from '../../assets/img/unchecked.png'
-
-import { getAPR, getPoolEndTime } from '../../yamUtils'
 import useYam from '../../hooks/useYam'
 import { useWallet } from 'use-wallet'
 
@@ -58,20 +49,20 @@ const Versus = ({ history }) => {
 	if (!history.length) {
 		return null
 	}
-	console.log("dis history", history);
 
-	let currSeasonHistory = []
+	let prevSeasonHistory = []
 
 	const sortedHistory = history.sort((a, b) => {
 		return a.day - b.day
 	})
 	for (let i = 0; i < sortedHistory.length; i++) {
-
+			// checks if another battle exists in array, then adds as group
+			// if it was on the same day
 			if (i + 1 < sortedHistory.length && sortedHistory[i].day === sortedHistory[i + 1].day) {
-				currSeasonHistory.push([sortedHistory[i], sortedHistory[i + 1]]);
+				prevSeasonHistory.push([sortedHistory[i], sortedHistory[i + 1]]);
 				i++;
 			} else {
-				currSeasonHistory.push([sortedHistory[i]]);
+				prevSeasonHistory.push([sortedHistory[i]]);
 			}
 	}
 
@@ -79,11 +70,11 @@ const Versus = ({ history }) => {
 	// 	prevSeasonHistory.push(history.filter(item => item.day - 1 === i))
 	// }
 
-	currSeasonHistory.reverse()
+	prevSeasonHistory.reverse()
 
-	// console.log("prev: ", prevSeasonHistory, "\ncurr: ", currSeasonHistory);
 
-	currSeasonHistory = currSeasonHistory.map(item => {
+	
+	prevSeasonHistory = prevSeasonHistory.map(item => {
 		let pool1, pool2, pool3, pool4, winner1, winner2
 		if (item.length === 0) {
 			return null
@@ -100,11 +91,19 @@ const Versus = ({ history }) => {
 			pool2 = farms.find(farm => farm.id === item[0].pool2.name)
 			winner1 = item[0].pool1.totalVotes - item[0].pool2.totalVotes > 0 ? 1 : 2
 		}
+		let day = "";
+		if (item[0].day - 2 < 0) {
+			day = "Sept 29th";
+		} else if (item[0].day === 0) {
+			day = "Sept 30th";
+		} else {
+			day = "Oct " + (item[0].day - 2);
+		}
 
-		// console.log(item[0].pool1.totalVotes);
+		console.log(item[0].pool1.totalVotes);
 		return (
 			<VSContentContainer>
-				<div>Oct {item[0].day - 2}</div>
+				{item[0].day - 2 ? <div>{day}</div> : <div>Sept 30th</div>}
 				{item.length === 1 && <Space />}
 				<VersusItem>
 					<VersusCard>
@@ -166,15 +165,15 @@ const Versus = ({ history }) => {
 		)
 	})
 
+
 	return (
 		<>
-			{currSeasonHistory.length > 0 &&
-				<Title>Season 2</Title>
+			{prevSeasonHistory.length > 0 &&
+				<Title>Season 1 Battle History</Title>
 			}
 			<SeasonContainer>
-				{currSeasonHistory}
+				{prevSeasonHistory}
 			</SeasonContainer>
-
 		</>
 	)
 }
@@ -186,13 +185,13 @@ display: flex;
 flex-wrap: wrap;
 justify-content: space-around;
 width: 1200px;
-margin-bottom: 60px;
+margin-bottom: 20px;
 ` : styled.div`
 display: flex;
 flex-wrap: wrap;
 justify-content: space-around;
+margin-bottom: 20px;
 width: 90vw;
-margin-bottom: 60px;
 `
 
 const Percent = styled.div`

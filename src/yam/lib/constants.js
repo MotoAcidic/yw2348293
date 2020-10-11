@@ -41,7 +41,7 @@ if (chainId === 1) {
 
     send: "0x58e808e472e5113860339bcd2b5266a47c04305f",
     hate: "0x650c9f5b5fc57a106722be806c180e433b2f4424",
-    stbu: "0x212DD60D4Bf0DA8372fe8116474602d429E5735F",
+    stbu: "0x452aadf9d02cfe3a22e0ba1faa991673e8fdb39c",
     yfl: "0x97f50f649db045b76edebe7a947d101d9b1c5129",
     rope: "0xa5af158d9449da9ba12fd7a6cb6eba5e15ac1ab1",
     z: "0xb1b8c56f3bb4915b2c976a457504b80895953faf",

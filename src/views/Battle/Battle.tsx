@@ -54,7 +54,7 @@ export interface OverviewData {
 const Battle: React.FC = () => {
   let [farms] = useFarms()
   const yam = useYam()
-  let [tvl, setTVL] = useState({ totalValue: new BigNumber(0), poolValues: {} })
+  //let [tvl, setTVL] = useState({ totalValue: new BigNumber(0), poolValues: {} })
   const { account, connect } = useWallet()
   let [battles, setBattles] = useState([])
   let [leaderboard, setLeaderboard] = useState([])
@@ -78,23 +78,22 @@ const Battle: React.FC = () => {
     setStats(statsData);
   }, [yam, setStats]);
 
-  const fetchTotalValue = useCallback(
+  /*const fetchTotalValue = useCallback(
     async pools => {
       const tv = await getTotalValue(pools, yam);
       setTVL(tv);
     },
     [yam, setTVL, setTVL]
-  );
+  );*/
 
   useEffect(() => {
     if (yam && account && farms && farms[0]) {
       fetchStats();
     }
-    if (yam && farms) {
+    /*if (yam && farms) {
       console.log(farms);
-
       fetchTotalValue(farms);
-    }
+    }*/
     if (battles.length === 0) {
       axios.get(`${getServerURI()}/api/battles`).then(res => {
         let lb = res.data.leaderboard.leaderboard.sort((a, b) => {

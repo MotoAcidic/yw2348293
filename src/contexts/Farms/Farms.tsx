@@ -147,6 +147,19 @@ const Farms: React.FC = ({ children }) => {
         link: undefined
       },
       {
+        contract: undefined,
+        name: "CORE Heat",
+        depositToken: "",
+        depositTokenAddress:  undefined,
+        earnToken: '',
+        earnTokenAddress: yamAddress,
+        icon: "🔥",
+        id: "CORE",
+        sort: 9,
+        season: 2,
+        link: undefined
+      },
+      {
         contract: pools ? pools["value_pool"] : undefined,
         name: "VALUE Goats",
         depositToken: "VALUE-WAR BPT",

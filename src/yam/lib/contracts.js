@@ -71,7 +71,7 @@ export class Contracts {
     this.mkr_token = new this.web3.eth.Contract(ERC20Json.abi);
     this.srm_token = new this.web3.eth.Contract(ERC20Json.abi);
     this.farm_token = new this.web3.eth.Contract(ERC20Json.abi);
-    this.mbbased_token = new this.web3.eth.Contract(ERC20Json.abi);
+    this.based_token = new this.web3.eth.Contract(ERC20Json.abi);
     this.unipool_token = new this.web3.eth.Contract(ERC20Json.abi);
     this.battlepool_token = new this.web3.eth.Contract(ERC20Json.abi);
 
@@ -87,7 +87,7 @@ export class Contracts {
     this.mkr_pool = new this.web3.eth.Contract(WARPoolJson.abi);
     this.srm_pool = new this.web3.eth.Contract(WARPoolJson.abi);
     this.farm_pool = new this.web3.eth.Contract(WARPoolJson.abi);
-    this.mbbased_pool = new this.web3.eth.Contract(WARPoolJson.abi);
+    this.based_pool = new this.web3.eth.Contract(WARPoolJson.abi);
     this.unipool_pool = new this.web3.eth.Contract(WARPoolJson.abi);
     this.battlepool_pool = new this.web3.eth.Contract(WARPoolJson.abi);
 
@@ -129,7 +129,7 @@ export class Contracts {
       { contract: this.mkr_pool, json: WARPoolJson },
       { contract: this.srm_pool, json: WARPoolJson },
       { contract: this.farm_pool, json: WARPoolJson },
-      { contract: this.mbbased_pool, json: WARPoolJson },
+      { contract: this.based_pool, json: WARPoolJson },
       { contract: this.unipool_pool, json: WARPoolJson },
       { contract: this.battlepool_pool, json: WARPoolJson },
     ]
@@ -174,7 +174,7 @@ export class Contracts {
     this.mkr_pool.options.address = addressMap["mkr_pool"];
     this.srm_pool.options.address = addressMap["srm_pool"];
     this.farm_pool.options.address = addressMap["farm_pool"];
-    this.mbbased_pool.options.address = addressMap["mbbased_pool"];
+    this.based_pool.options.address = addressMap["based_pool"];
     this.unipool_pool.options.address = addressMap["unipool_pool"];
     this.battlepool_pool.options.address = addressMap["battlepool_pool"];
 
@@ -190,7 +190,7 @@ export class Contracts {
     this.mkr_token.options.address = addressMap["mkr"];
     this.srm_token.options.address = addressMap["srm"];
     this.farm_token.options.address = addressMap["farm"];
-    this.mbbased_token.options.address = addressMap["mbbased"];
+    this.based_token.options.address = addressMap["based"];
     this.unipool_token.options.address = addressMap["unipool"];
     this.battlepool_token.options.address = addressMap["war"];
 
@@ -224,7 +224,7 @@ export class Contracts {
       { "tokenAddr": this.mkr_token.options.address, "poolAddr": this.mkr_pool.options.address },
       { "tokenAddr": this.srm_token.options.address, "poolAddr": this.srm_pool.options.address },
       { "tokenAddr": this.farm_token.options.address, "poolAddr": this.farm_pool.options.address },
-      { "tokenAddr": this.mbbased_token.options.address, "poolAddr": this.mbbased_pool.options.address },
+      { "tokenAddr": this.based_token.options.address, "poolAddr": this.based_pool.options.address },
       { "tokenAddr": this.unipool_token.options.address, "poolAddr": this.unipool_pool.options.address },
       { "tokenAddr": this.battlepool_token.options.address, "poolAddr": this.battlepool_pool.options.address },
     ]
@@ -256,7 +256,7 @@ export class Contracts {
     this.mkr_token.options.from = account;
     this.srm_token.options.from = account;
     this.farm_token.options.from = account;
-    this.mbbased_token.options.from = account;
+    this.based_token.options.from = account;
     this.unipool_token.options.from = account;
     this.battlepool_token.options.from = account;
     this.uni_router.options.from = account;

@@ -193,7 +193,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   else {
     return (
       <S1CardWrapper>
-        {/* {(farm.id === 'mbBASED' || farm.id === 'FARM') && <RainbowShadow />} */}
+        {/* {(farm.id === 'BASED' || farm.id === 'FARM') && <RainbowShadow />} */}
         {content}
       </S1CardWrapper>
     )

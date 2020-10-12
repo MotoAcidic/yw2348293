@@ -28,7 +28,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
   border: 0;
   border-radius: 28px;
-  border: solid 2px #0095f0;
+    border: solid 2px rgba(255, 183, 0, 0.3);
   background-color: #003983;
   cursor: pointer;
   display: flex;

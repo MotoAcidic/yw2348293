@@ -209,11 +209,11 @@ const Versus = ({ battles, question }) => {
 							<StyledTitle>{battle1.farm1.name}</StyledTitle>
 							{checked1 == 1 ? (
 								<ButtonContainer onClick={() => pick1(1)}>
-									<img src={checkedIcon} width="40%" />
+									<img src={checkedIcon} width="30px" />
 								</ButtonContainer>
 							) : (
 									<ButtonContainer onClick={() => pick1(1)}>
-										<img src={uncheckedIcon} width="40%" />
+										<img src={uncheckedIcon} width="30px" />
 									</ButtonContainer>
 								)}
 						</StyledContent>
@@ -228,11 +228,11 @@ const Versus = ({ battles, question }) => {
 							<StyledTitle>{battle1.farm2.name}</StyledTitle>
 							{checked1 == 2 ? (
 								<ButtonContainer onClick={() => pick1(2)}>
-									<img src={checkedIcon} width="40%" />
+									<img src={checkedIcon} width="30px" />
 								</ButtonContainer>
 							) : (
 									<ButtonContainer onClick={() => pick1(2)}>
-										<img src={uncheckedIcon} width="40%" />
+										<img src={uncheckedIcon} width="30px" />
 									</ButtonContainer>
 								)}
 						</StyledContent>
@@ -245,11 +245,11 @@ const Versus = ({ battles, question }) => {
 							<StyledTitle>{battle2.farm1.name}</StyledTitle>
 							{checked2 == 1 ? (
 								<ButtonContainer onClick={() => pick2(1)}>
-									<img src={checkedIcon} width="40%" />
+									<img src={checkedIcon} width="30px" />
 								</ButtonContainer>
 							) : (
 									<ButtonContainer onClick={() => pick2(1)}>
-										<img src={uncheckedIcon} width="40%" />
+										<img src={uncheckedIcon} width="30px" />
 									</ButtonContainer>
 								)}
 						</StyledContent>
@@ -263,11 +263,11 @@ const Versus = ({ battles, question }) => {
 							<StyledTitle>{battle2.farm2.name}</StyledTitle>
 							{checked2 == 2 ? (
 								<ButtonContainer onClick={() => pick2(2)}>
-									<img src={checkedIcon} width="40%" />
+									<img src={checkedIcon} width="30px" />
 								</ButtonContainer>
 							) : (
 									<ButtonContainer onClick={() => pick2(2)}>
-										<img src={uncheckedIcon} width="40%" />
+										<img src={uncheckedIcon} width="30px" />
 									</ButtonContainer>
 								)}
 						</StyledContent>
@@ -378,7 +378,7 @@ color: #ffffff;
 // width: 220px;
 //   height: 247px;
 //   border-radius: 8px;
-//   border: solid 2px #0095f0;
+//     border: solid 2px rgba(255, 183, 0, 0.3);
 //   background-color: #003677
 // `
 
@@ -386,13 +386,13 @@ const VersusCard = !isMobile() ? styled.div`
 width: 220px;
   height: 247px;
   border-radius: 8px;
-  border: solid 2px #0095f0;
-  background-color: #003677;
+  border: solid 2px rgba(255, 183, 0, 0.3);
+  background-color: rgba(256,256,256,0.08);
 ` : styled.div`width: 40%;
 height: 247px;
 border-radius: 8px;
-border: solid 2px #0095f0;
-background-color: #003677;
+border: solid 2px rgba(255, 183, 0, 0.3);
+background-color: rgba(256,256,256,0.08);
 `
 
 const VersusItem = !isMobile() ? styled.div`

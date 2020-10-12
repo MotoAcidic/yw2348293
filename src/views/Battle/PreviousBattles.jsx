@@ -183,16 +183,18 @@ const Space = styled.div`height: 61px;`
 
 const SeasonContainer = !isMobile() ? styled.div`
 display: flex;
+flex-direction: row;
 flex-wrap: wrap;
-justify-content: space-around;
-width: 1200px;
-margin-bottom: 60px;
+justify-content: space-between;
+width: 80%;
+max-width: 1200px;
+margin-bottom: 40px;
 ` : styled.div`
 display: flex;
 flex-wrap: wrap;
 justify-content: space-around;
 width: 90vw;
-margin-bottom: 60px;
+margin-bottom: 40px;
 `
 
 const Percent = styled.div`
@@ -217,7 +219,7 @@ width: 80%;
 
 
 const StyledCardIcon = styled.div`
-background-color: #002450;
+
 font-size: 36px;
 height: 62px;
 width: 62px;
@@ -228,9 +230,8 @@ justify-content: center;
 box-shadow: rgb(226, 214, 207) 4px 4px 8px inset, rgb(247, 244, 242) -6px -6px 12px inset;
 margin: 2px;
 `
-
 const WinningCardIcon = styled.div`
-background-color: #002450;
+
 font-size: 36px;
 height: 62px;
 width: 62px;
@@ -243,7 +244,6 @@ border: solid 2px #ffd500;
 
 margin: 2px;
 `
-
 const Title = styled.div`
 font-family: "Gilroy";
   font-size: 30px;
@@ -257,54 +257,14 @@ font-family: "Gilroy";
   margin: 20px auto 20px auto;
 `;
 
-const StyledCardContent = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-evenly;
-
-`
-
-const StyledContainer = styled.div`
-  box-sizing: border-box;
-  margin: 0 auto;
-  margin-top: 3vh;
-  max-width: 730px;
-  height: 570px;
-  width: 100%;
-`
-
-const StyledCard = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 0;
-  border-radius: 8px;
-    background-color: #003677;
-`
-
-const StyledText = styled.p`
-font-family: "Gilroy";
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: #ffffff;
-`
-
-const ButtonContainer = styled.div`
-`
 const VSContentContainer = styled.div`
-width: 332px;
+width: 30%;
+
+min-width: 300px;
   height: 398px;
   border-radius: 8px;
-  border: solid 2px #0095f0;
-  background-color: #003677;
+    border: solid 2px rgba(255, 183, 0, 0.3);
+  background-color: rgba(256,256,256,0.08);
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -316,15 +276,16 @@ font-family: "Gilroy";
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 `
 
 const StyledContent = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  height: 100%;
+width: 100px;
+height: 140px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-around;
 `
 
 const StyledDetails = styled.div`
@@ -341,9 +302,8 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 `
-
 const StyledTitle = styled.h4`
-width: 50%;
+width: 80%;
 margin: 0;
 font-family: "Gilroy";
 font-size: 16px;
@@ -356,6 +316,7 @@ text-align: center;
 color: #ffffff;
   padding: 0;
 `
+
 
 const VersusCard = styled.div`
 width: 100px;

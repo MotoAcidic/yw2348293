@@ -201,11 +201,11 @@ const Versus = ({ battles, question }) => {
 							<StyledTitle>{battle.farm1.name}</StyledTitle>
 							{checked == 1 ? (
 								<ButtonContainer onClick={() => pick(1)}>
-									<img src={checkedIcon} width="40%" />
+									<img src={checkedIcon} width="30px" />
 								</ButtonContainer>
 							) : (
 									<ButtonContainer onClick={() => pick(1)}>
-										<img src={uncheckedIcon} width="40%" />
+										<img src={uncheckedIcon} width="30px" />
 									</ButtonContainer>
 								)}
 						</StyledContent>
@@ -217,11 +217,11 @@ const Versus = ({ battles, question }) => {
 							<StyledTitle>{battle.farm2.name}</StyledTitle>
 							{checked == 2 ? (
 								<ButtonContainer onClick={() => pick(2)}>
-									<img src={checkedIcon} width="40%" />
+									<img src={checkedIcon} width="30px" />
 								</ButtonContainer>
 							) : (
 									<ButtonContainer onClick={() => pick(2)}>
-										<img src={uncheckedIcon} width="40%" />
+										<img src={uncheckedIcon} width="30px" />
 									</ButtonContainer>
 								)}
 						</StyledContent>
@@ -315,13 +315,13 @@ const VersusCard = !isMobile() ? styled.div`
 width: 220px;
   height: 247px;
   border-radius: 8px;
-  border: solid 2px #0095f0;
-  background-color: #003677;
+  border: solid 2px rgba(255, 183, 0, 0.3);
+  background-color: rgba(256,256,256,0.08);
 ` : styled.div`width: 40%;
 height: 247px;
 border-radius: 8px;
-border: solid 2px #0095f0;
-background-color: #003677;
+border: solid 2px rgba(255, 183, 0, 0.3);
+background-color: rgba(256,256,256,0.08);
 `
 
 export default Versus

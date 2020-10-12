@@ -157,10 +157,9 @@ const WarPool: React.FC = () => {
 						<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
 					</StyledDetails>
 				</WarTopContainer>
-				<InfoDivider />
 				<MobileInfoLines>
 					<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
-					<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
+					<Line><>Currently Staked: </><ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
 					<Line>Battle Rewards: <ShadedLine>{getDisplayBalance(earnings)}</ShadedLine> </Line>
 					<MobileDisclaimer>(Updated @ 16:00 UTC Each Day)</MobileDisclaimer>
 					<Line>Daily Rewards Available: <ShadedLine>21000 WAR</ShadedLine></Line>
@@ -205,17 +204,17 @@ const WarPool: React.FC = () => {
 	return (
 		<InfoContainer>
 			<WarTopContainer>
-				<Title>WARchest</Title>
+				<Title>$WARchest</Title>
 				<StyledDetails>
 					<StyledDetail>APR</StyledDetail>
 					<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
 				</StyledDetails>
 			</WarTopContainer>
-			<InfoDivider />
 			<InfoLines>
 				<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
 				<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
-				<Line>Battle Rewards: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine><Disclaimer>(Updated @ 16:00 UTC Each Day)</Disclaimer></Line>
+				<Line>Battle Rewards: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></Line>
+				<Disclaimer>(Updated @ 16:00 UTC Each Day)</Disclaimer>
 				<Line>Daily Rewards Available: <ShadedLine>21000 WAR</ShadedLine></Line>
 			</InfoLines>
 			<BottomButtonContainer>
@@ -257,9 +256,9 @@ font-family: "SF Mono Semibold";
   font-stretch: normal;
   font-style: normal;
   line-height: 1;
-  letter-spacing: 1px;
+	letter-spacing: 1px;
+	margin: -5px 0 10px 0;
   color: #ffffff;
-  transform: translateY(16px);
 `
 const MobileDisclaimer = styled.div`
 font-family: "SF Mono Semibold";
@@ -270,15 +269,17 @@ font-family: "SF Mono Semibold";
   letter-spacing: 1px;
   color: #ffffff;
   transform: translateY(16px);
-  margin-top: -50px;
+	margin-top: -40px;
+	margin-bottom: 20px;
 `
 
 const WarTopContainer = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: center;
+height: 60px;
+align-items: center;
 `
-
 const StyledDetails = !isMobile() ? styled.div`
 position: absolute;
 display: flex;
@@ -286,14 +287,14 @@ display: flex;
 justify-content: space-between;
 box-sizing: border-box;
 border-radius: 8px;
-background: rgb(20,91,170);
+background-color: rgba(256, 256, 256, 0.05);
 color: rgb(170, 149, 132);
 width: 200px;
 margin-top: 6px;
 margin-left: 780px;
 line-height: 32px;
 font-size: 13px;
-border: 1px solid rgb(230, 220, 213);
+border: solid 2px #ffb700;
 text-align: center;
 padding: 0px 12px;
 ` : styled.div`
@@ -303,12 +304,12 @@ display: flex;
 justify-content: space-between;
 box-sizing: border-box;
 border-radius: 8px;
-background: rgb(20,91,170);
+background-color: rgba(256, 256, 256, 0.05);
 color: rgb(170, 149, 132);
 width: 200px;
-margin-top: 50px;
+margin-top: 100px;
 font-size: 13px;
-border: 1px solid rgb(230, 220, 213);
+border: solid 2px #ffb700;
 text-align: center;
 padding: 0px 12px;`
 
@@ -347,7 +348,8 @@ margin-left: 8%;
   display: flex;
   flex-direction: row;
   align-content: center;
-  justify-content: space-evenly;
+	justify-content: space-evenly;
+	margin-bottom: 30px;
 `
 
 const ShadedLine = styled.div`
@@ -359,10 +361,12 @@ text-align: right;
 const Line = styled.div`
 display: flex;
 flex-direction: row;
+justify-content: space-between;
+margin-bottom: 10px;
 `
 
 const InfoLines = styled.div`
-width: 100%;
+width: 94%;
 height: 50%;
 display: flex;
 flex-direction: column;
@@ -386,7 +390,7 @@ display: flex;
 flex-direction: column;
 justify-content: space-evenly;
 text-align: left;
-padding: 10% 10% 0% 10%;
+padding: 50px 10% 0% 10%;
 font-family: "SF Mono Semibold";
   font-size: 18px;
   font-weight: 600;
@@ -418,12 +422,11 @@ margin-top: 1%;
 
 const InfoContainer = !isMobile() ? styled.div`
 width: 1000px;
-  height: 375px;
   border-radius: 8px;
   border: solid 2px rgba(255, 183, 0, 0.3);
   background-color: rgba(256,256,256,0.08);
 
-	margin: 80px auto 80px auto;
+	margin: 20px auto 80px auto;
 `: styled.div`
 width: 300px;
   height: 450px;
@@ -434,12 +437,12 @@ width: 300px;
 `
 
 const MobileInfoContainer = styled.div`
-width: 300px;
+width: 80vw;
   height: 450px;
   border-radius: 8px;
   border: solid 2px rgba(255, 183, 0, 0.3);
   background-color: rgba(256,256,256,0.08);
-	margin: 60px auto 60px auto;
+	margin: 20px auto 60px auto;
 `
 
 const CountDownText = styled.div`

@@ -12,15 +12,13 @@ const CardIcon: React.FC<CardIconProps> = ({ children }) => (
 )
 
 const StyledCardIcon = styled.div`
-  background-color: #002450;
-  font-size: 36px;
+  font-size: 60px;
   height: 80px;
   width: 80px;
   border-radius: 40px;
   align-items: center;
   display: flex;
   justify-content: center;
-  box-shadow: rgb(226, 214, 207) 4px 4px 8px inset, rgb(247, 244, 242) -6px -6px 12px inset;
   margin: 0px auto 16px;
 `
 

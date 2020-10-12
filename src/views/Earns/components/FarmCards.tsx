@@ -185,8 +185,8 @@ const StyledCardWrapper = styled.div`
   width: 250px;
   height: 290px;
   border-radius: 8px;
-  border: solid 2px #0095f0;
-  background-color: #003677;
+    border: solid 2px rgba(255, 183, 0, 0.3);
+  background-color: rgba(256,256,256,0.08);
 `
 
 const StyledTitle = styled.h4`

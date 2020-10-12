@@ -6,30 +6,10 @@ import {
 } from 'react-router-dom'
 import styled from 'styled-components'
 
-import Button from '../../components/Button'
-import Card from '../../components/Card'
-import CardContent from '../../components/CardContent'
-import CardIcon from '../../components/CardIcon'
-import Page from '../../components/Page'
-import checkedIcon from '../../assets/img/checked.png'
-import uncheckedIcon from '../../assets/img/unchecked.png'
-
-import { getAPR, getPoolEndTime } from '../../yamUtils'
 import useYam from '../../hooks/useYam'
 import { useWallet } from 'use-wallet'
-
-import Landscape from '../../assets/img/landscapebig.png'
-import Sky from '../../assets/img/skybig.png'
-import TallSky from '../../assets/img/tallsky.png'
-import FightInstructions from '../../assets/img/flightinstructions.png'
-
 import useFarms from '../../hooks/useFarms'
-import useFarm from '../../hooks/useFarm'
-import { Farm } from '../../contexts/Farms'
 import Cookie from 'universal-cookie'
-import axios from 'axios'
-import Swal from 'sweetalert2'
-import Win from '../../assets/img/win.png'
 import './swal.css'
 
 function isMobile() {
@@ -138,34 +118,38 @@ const Versus = ({ schedule }) => {
 	)
 }
 
-const Divider = !isMobile() ? styled.div`` : styled.div`
+const Divider = !isMobile() ? styled.div`
+width: 3px;
+  height: 80%;
+  background-color: rgba(255, 256, 256, 0.5);
+` : styled.div`
 margin: 20px 0 20px 10%;
 width: 80%;
   height: 2px;
-  opacity: 0.5;
-  background-color: #ffffff;
+  background-color: rgba(255, 256, 256, 0.5);
+
 `
 
 
 const StyledCardIcon = styled.div`
-background-color: #002450;
-font-size: 36px;
+
+font-size: 50px;
 height: 62px;
 width: 62px;
 border-radius: 40px;
 align-items: center;
 display: flex;
 justify-content: center;
-box-shadow: rgb(226, 214, 207) 4px 4px 8px inset, rgb(247, 244, 242) -6px -6px 12px inset;
 margin: 2px;
 `
 
 const ScheduleContainer = !isMobile() ? styled.div`
 display: flex;
 flex-direction: row;
-justify-content: space-evenly;
 flex-wrap: wrap;
-width: 1100px;
+justify-content: space-between;
+width: 80%;
+max-width: 1200px;
 margin-bottom: 60px;
 ` : styled.div`
 display: flex;
@@ -173,7 +157,7 @@ flex-direction: row;
 flex-wrap: wrap;
 justify-content: space-evenly;
 width: 80vw;
-margin-bottom: 50px;
+margin-bottom: 30px;
 `;
 
 const Container = !isMobile() ? styled.div`
@@ -188,11 +172,13 @@ flex-direction: row;
 
 
 const VSContentContainer = !isMobile() ? styled.div`
-width: 499px;
-  height: 189px;
+	height: 189px;
+	max-width: 48%;
+	min-width: 420px;
+	flex: 1 1 300px;
   border-radius: 8px;
-  border: solid 2px #0095f0;
-  background-color: #003677;
+    border: solid 2px rgba(255, 183, 0, 0.3);
+  background-color: rgba(256,256,256,0.08);
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -204,12 +190,12 @@ font-family: "Gilroy";
   line-height: 1;
   letter-spacing: normal;
 	color: #ffffff;
-	margin-bottom: 20px;
-` : styled.div`
-width: 100%;
+	margin-bottom: 40px;
+	` : styled.div`
+width: 97%;
   border-radius: 8px;
-  border: solid 2px #0095f0;
-  background-color: #003677;
+    border: solid 2px rgba(255, 183, 0, 0.3);
+  background-color: rgba(256,256,256,0.08);
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -221,7 +207,7 @@ font-family: "Gilroy";
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   padding: 20px 0 20px 0;
 `;
 
@@ -234,7 +220,7 @@ const StyledContent = styled.div`
 `
 
 const StyledTitle = styled.div`
-width: 50%;
+width: 80%;
 margin: 0;
 font-family: "Gilroy";
 font-size: 16px;
@@ -249,7 +235,7 @@ color: #ffffff;
 `
 
 const Title = styled.div`
-width: 50%;
+width: 80%;
 margin: 0 auto 80px auto;
 font-family: "Gilroy";
 font-size: 16px;

@@ -135,7 +135,7 @@ const TimerContainer = styled.div`
 width: 700px;
 height: 250px;
 border: solid 4px #97d5ff;
-background-color: #003677;
+background-color: rgba(256,256,256,0.08);
 margin: auto;
 margin-top: 8vh;
 

@@ -304,14 +304,14 @@ const MediumSection = !isMobile()
   ? styled.div`
       width: 780px;
       border-radius: 8px;
-      border: solid 2px #0095f0;
-      background-color: #003677;
+        border: solid 2px rgba(255, 183, 0, 0.3);
+      background-color: rgba(256,256,256,0.08);
     `
   : styled.div`
       width: 80vw;
       border-radius: 8px;
-      border: solid 2px #0095f0;
-      background-color: #003677;
+        border: solid 2px rgba(255, 183, 0, 0.3);
+      background-color: rgba(256,256,256,0.08);
     `;
 
 const RecDesc = styled.div`
@@ -344,16 +344,16 @@ const RecTitle = styled.div`
 const Rectangle = !isMobile()
   ? styled.div`
       border-radius: 8px;
-      border: solid 2px #0095f0;
-      background-color: #003677;
+        border: solid 2px rgba(255, 183, 0, 0.3);
+      background-color: rgba(256,256,256,0.08);
       margin-bottom: 40px;
       width: 780px;
     `
   : styled.div`
       width: 90vw;
       border-radius: 8px;
-      border: solid 2px #0095f0;
-      background-color: #003677;
+        border: solid 2px rgba(255, 183, 0, 0.3);
+      background-color: rgba(256,256,256,0.08);
       margin-bottom: 40px;
     `;
 

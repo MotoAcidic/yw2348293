@@ -27,6 +27,7 @@ import SingleVersusCard from "./SingleVersusCard.jsx";
 import BattleHistory from './PreviousBattles'
 import OldBattleHistory from './OldPreviousBattles'
 import Schedule from './Schedule'
+import Instructions from "./Instructions";
 import FightInstructions from '../../assets/img/flightinstructions.png'
 
 function isMobile() {
@@ -134,6 +135,8 @@ const Battle: React.FC = () => {
   if (farms[0]) {
     leaderboard = leaderboard.slice(0, 5);
     leaderboardContent = leaderboard.map((item, index) => {
+      const votes = Number(item.votes.toFixed(0));
+
       let pool = farms.find(farm => farm.id === item.pool);
       let rank = "th";
       if (index === 0) rank = "st";
@@ -145,13 +148,14 @@ const Battle: React.FC = () => {
             {rank}
             <StyledCardIcon>{pool.icon}</StyledCardIcon>
             <StyledTitle>{pool.name}</StyledTitle>
-            <StyledVotes>{item.votes.toFixed(2)} votes</StyledVotes>
+            <StyledVotes>{votes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} votes</StyledVotes>
           </StyledContent>
         </LeaderBoardItem>
       )
     })
     oldLeaderboard = oldLeaderboard.slice(0, 5);
     oldLeaderboardContent = oldLeaderboard.map((item, index) => {
+      const votes = Number(item.votes.toFixed(0));
       let pool = farms.find(farm => farm.id === item.pool);
       let rank = "th";
       if (index === 0) rank = "st";
@@ -163,7 +167,7 @@ const Battle: React.FC = () => {
             {rank}
             <StyledCardIcon>{pool.icon}</StyledCardIcon>
             <StyledTitle>{pool.name}</StyledTitle>
-            <StyledVotes>{item.votes.toFixed(2)} votes</StyledVotes>
+            <StyledVotes>{votes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} votes</StyledVotes>
           </StyledContent>
         </LeaderBoardItem>
       )
@@ -202,7 +206,7 @@ const Battle: React.FC = () => {
               href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
               target="_blank"
             /> */}
-            <Title>Step 1: Stake $WAR to enter the battle</Title>
+            <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
             {battles.length > 0 &&
               <Title>Step 2: Vote for the armies you will fight for</Title>
@@ -211,9 +215,10 @@ const Battle: React.FC = () => {
             {/* in case no battle, but still question */}
             {(battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
             <Title>How the battles work </Title>
-            <StyledCardContent>
+            {/* <StyledCardContent>
               <img src={FightInstructions} alt="instructions" width="100%" />
-            </StyledCardContent>
+            </StyledCardContent> */}
+            <Instructions/>
             <Title>Leaderboard</Title>
             <LeaderBoard>{leaderboardContent}</LeaderBoard>
             <Title>Schedule</Title>
@@ -310,27 +315,26 @@ margin-bottom: 40px;
 `
 
 const StyledCardIcon = styled.div`
-  background-color: #002450;
-  font-size: 36px;
+  
+  font-size: 60px;
   height: 80px;
   width: 80px;
   border-radius: 40px;
   align-items: center;
   display: flex;
   justify-content: center;
-  box-shadow: rgb(226, 214, 207) 4px 4px 8px inset,
-    rgb(247, 244, 242) -6px -6px 12px inset;
 `;
 
 
 const LeaderBoardItem = !isMobile()
   ? styled.div`
       text-align: center;
-      width: 175px;
+      min-width: 120px;
+      width: 17%;
       height: 200px;
       border-radius: 8px;
-      border: solid 2px #0095f0;
-      background-color: #003677;
+        border: solid 2px rgba(255, 183, 0, 0.3);
+      background-color: rgba(256,256,256,0.08);
       font-family: "Gilroy";
       font-size: 20px;
       font-weight: normal;
@@ -342,14 +346,16 @@ const LeaderBoardItem = !isMobile()
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
+      margin-bottom: 20px;
     `
   : styled.div`
       text-align: center;
       width: 40%;
+      min-width: 200px;
       height: 200px;
       border-radius: 8px;
-      border: solid 2px #0095f0;
-      background-color: #003677;
+        border: solid 2px rgba(255, 183, 0, 0.3);
+      background-color: rgba(256,256,256,0.08);
       font-family: "Gilroy";
       font-size: 20px;
       font-weight: normal;
@@ -357,6 +363,7 @@ const LeaderBoardItem = !isMobile()
       font-style: normal;
       line-height: 1;
       letter-spacing: normal;
+      padding: 20px 0 20px 0;
       color: #ffffff;
       display: flex;
       flex-direction: column;
@@ -367,24 +374,28 @@ const LeaderBoardItem = !isMobile()
 const LeaderBoard = !isMobile() ? styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
-  width: 70%;
-  margin-bottom: 80px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 80%;
+  max-width: 1200px;
+  margin-bottom: 60px;
 ` : styled.div`
 display: flex;
 width: 90vw;
 flex-direction: row;
 flex-wrap: wrap;
 justify-content: space-evenly;
-margin-bottom: 70px;
+margin-bottom: 60px;
 `;
 
 const OldLeaderBoard = !isMobile() ? styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  width: 70%;
-  margin-bottom: 60px;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-between;
+width: 80%;
+max-width: 1200px;
+margin-bottom: 60px;
 ` : styled.div`
 display: flex;
 width: 90vw;

@@ -70,11 +70,11 @@ const Question = ({ question, setResponse, voted }) => {
 				<StyledTitle>{option.name}</StyledTitle>
 				{checked == option.name ? (
 					<ButtonContainer onClick={() => pick(option.name)}>
-						<img src={checkedIcon} width="40%" />
+						<img src={checkedIcon} width="30px" />
 					</ButtonContainer>
 				) : (
 						<ButtonContainer onClick={() => pick(option.name)}>
-							<img src={uncheckedIcon} width="40%" />
+							<img src={uncheckedIcon} width="30px" />
 						</ButtonContainer>
 					)}
 			</StyledContent>
@@ -163,8 +163,8 @@ flex-direction: column;
 justify-content: space-between;
 padding: 30px;
   border-radius: 8px;
-  border: solid 2px #0095f0;
-	background-color: #003677;
+  border: solid 2px rgba(255, 183, 0, 0.3);
+  background-color: rgba(256,256,256,0.08);
 	margin-bottom: 40px;
 ` : styled.div`
 width: calc(90vw - 60px);
@@ -173,8 +173,8 @@ flex-direction: column;
 justify-content: space-between;
 padding: 30px;
   border-radius: 8px;
-  border: solid 2px #0095f0;
-	background-color: #003677;
+    border: solid 2px rgba(255, 183, 0, 0.3);
+	background-color: rgba(256,256,256,0.08);
 	margin-bottom: 40px;
 `
 

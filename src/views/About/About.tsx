@@ -92,7 +92,7 @@ const About: React.FC = () => {
                 : "-"}
             </DisplayItem>
             <DisplayItem>
-              Supply Staked:
+              Supply Staked:&nbsp;
               {warStaked && !warStaked.warStaked.eq(0)
                 ? `${Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
                   minimumFractionDigits: 2,

@@ -143,8 +143,9 @@ const MobileStyledCardsWrapper = styled.div`
 
 const StyledCardWrapper = !isMobile() ? styled.div`
   display: flex;
-  width: 300px;
+  width: 280px;
   height: 350px;
+  padding: 30px;
 ` : styled.div`
 display: flex;
 width: 80vw;

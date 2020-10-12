@@ -35,10 +35,10 @@ const Button: React.FC<ButtonProps> = ({
     case 'sm':
       boxShadow = `4px 4px 8px ${color.grey[300]},
         -8px -8px 16px ${color.grey[100]}FF;`
-      buttonPadding = 5
-      buttonSize = 100
-      buttonHeight = 40
-      fontSize = 14
+        buttonPadding = 10
+        buttonSize = 170
+        buttonHeight = 60
+        fontSize = 16
       break
     case 'lg':
       boxShadow = `6px 6px 12px ${color.grey[300]},

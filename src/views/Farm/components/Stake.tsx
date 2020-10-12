@@ -91,7 +91,7 @@ const Stake: React.FC<StakeProps> = ({
           <StyledCardActions>
             {!allowance.toNumber() ? (
               <Button
-                size="lg"
+                size="sm"
                 disabled={account ? false: true}
                 onClick={handleApprove}
                 text={`Approve ${tokenName}`}

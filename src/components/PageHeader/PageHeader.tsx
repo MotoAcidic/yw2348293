@@ -40,14 +40,22 @@ const StyledIcon = !isMobile() ? styled.div`
   height: 96px;
   line-height: 96px;
   text-align: center;
-  width: 96px;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0 40px 0;
 ` : styled.div`
 font-size: 96px;
 height: 96px;
 line-height: 96px;
 text-align: center;
-width: 96px;
-margin-bottom: 30px;
+width: 150px;
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 20px 0 40px 0;
+
 `;
 
 const StyledTitle = styled.h1`

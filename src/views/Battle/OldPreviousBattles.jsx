@@ -1,26 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import {
-	Route,
-	Switch,
-	useRouteMatch,
-} from 'react-router-dom'
-import styled from 'styled-components'
 
+import styled from 'styled-components'
 import useYam from '../../hooks/useYam'
 import { useWallet } from 'use-wallet'
-
-import Landscape from '../../assets/img/landscapebig.png'
-import Sky from '../../assets/img/skybig.png'
-import TallSky from '../../assets/img/tallsky.png'
-import FightInstructions from '../../assets/img/flightinstructions.png'
-
 import useFarms from '../../hooks/useFarms'
-import useFarm from '../../hooks/useFarm'
-import { Farm } from '../../contexts/Farms'
 import Cookie from 'universal-cookie'
-import axios from 'axios'
-import Swal from 'sweetalert2'
-import Win from '../../assets/img/win.png'
+import WinnerChalice from "../../assets/img/win@2x.png";
 import './swal.css'
 
 function isMobile() {
@@ -109,6 +94,8 @@ const Versus = ({ history }) => {
 					<VersusCard>
 						<StyledContent>
 							{winner1 === 1 ? <WinningCardIcon>{pool1.icon}</WinningCardIcon> : <StyledCardIcon>{pool1.icon}</StyledCardIcon>}
+							{winner1 === 1 && <Chalice />}
+
 							<StyledTitle>{pool1.name}</StyledTitle>
 							<Percent>{
 								((parseInt(item[0].pool1.totalVotes, 10) /
@@ -121,6 +108,8 @@ const Versus = ({ history }) => {
 					<VersusCard>
 						<StyledContent>
 							{winner1 === 2 ? <WinningCardIcon>{pool2.icon}</WinningCardIcon> : <StyledCardIcon>{pool2.icon}</StyledCardIcon>}
+							{winner1 === 2 && <Chalice />}
+
 							<StyledTitle>{pool2.name}</StyledTitle>
 							<Percent>{
 								((parseInt(item[0].pool2.totalVotes, 10) /
@@ -138,6 +127,8 @@ const Versus = ({ history }) => {
 							<VersusCard>
 								<StyledContent>
 									{winner2 === 1 ? <WinningCardIcon>{pool3.icon}</WinningCardIcon> : <StyledCardIcon>{pool3.icon}</StyledCardIcon>}
+									{winner2 === 1 && <Chalice />}
+
 									<StyledTitle>{pool3.name}</StyledTitle>
 									<Percent>{
 										((parseInt(item[1].pool1.totalVotes, 10) /
@@ -150,6 +141,8 @@ const Versus = ({ history }) => {
 							<VersusCard>
 								<StyledContent>
 									{winner2 === 2 ? <WinningCardIcon>{pool4.icon}</WinningCardIcon> : <StyledCardIcon>{pool4.icon}</StyledCardIcon>}
+									{winner2 === 2 && <Chalice />}
+
 									<StyledTitle>{pool4.name}</StyledTitle>
 									<Percent>{
 										((parseInt(item[1].pool2.totalVotes, 10) /
@@ -177,6 +170,17 @@ const Versus = ({ history }) => {
 		</>
 	)
 }
+const Chalice = styled.div`
+position: absolute;
+margin-left: 95px;
+margin-top: -55px;
+background-repeat: no-repeat;
+background-size: cover;
+height: 30px;
+width: 22px;
+background-image: url(${WinnerChalice});
+`
+
 
 const Space = styled.div`height: 61px;`
 
@@ -231,17 +235,15 @@ margin: 2px;
 `
 
 const WinningCardIcon = styled.div`
-
-font-size: 36px;
+font-size: 40px;
 height: 62px;
 width: 62px;
 border-radius: 40px;
 align-items: center;
 display: flex;
 justify-content: center;
-box-shadow: rgb(226, 214, 207) 4px 4px 8px inset, rgb(247, 244, 242) -6px -6px 12px inset;
-border: solid 2px #ffd500;
-
+box-shadow: rgba(226, 214, 207, 0.3) 4px 4px 8px inset, rgba(247, 244, 242, 0.3) -6px -6px 12px inset;
+border: solid 2px rgba(255, 213, 0, 0.7);
 margin: 2px;
 `
 

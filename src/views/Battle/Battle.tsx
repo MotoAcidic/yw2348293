@@ -214,7 +214,7 @@ const Battle: React.FC = () => {
             {battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
             {/* in case no battle, but still question */}
             {(battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
-            <Title>How the battles work </Title>
+            <Title>How battles work </Title>
             {/* <StyledCardContent>
               <img src={FightInstructions} alt="instructions" width="100%" />
             </StyledCardContent> */}

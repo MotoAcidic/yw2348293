@@ -43,7 +43,7 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffb700;
-opacity: 0.8;
+opacity: 0.92;
   padding-left: ${props => props.theme.spacing[3]}px;
   padding-right: ${props => props.theme.spacing[3]}px;
   text-decoration: none;
@@ -64,7 +64,7 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffb700;
-opacity: 0.8;
+opacity: 0.92;
   text-decoration: none;
   &:hover {
     opacity: 1;

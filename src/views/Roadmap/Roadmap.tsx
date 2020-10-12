@@ -99,21 +99,21 @@ const Roadmap: React.FC = () => {
         <Page>
           <TopDisplayContainer>
             <DisplayItem>
-              $War Price: $
-                  {currentPrice
-                ? Number(currentPrice).toLocaleString(undefined, {
+              $War Price:&nbsp;
+              {currentPrice
+                ? `$${Number(currentPrice).toLocaleString(undefined, {
                   minimumFractionDigits: 4,
                   maximumFractionDigits: 4
-                })
+                })}`
                 : "-"}
             </DisplayItem>
             <DisplayItem>
-              $War Staked:&nbsp;
+              Supply Staked:&nbsp;
               {warStaked && !warStaked.warStaked.eq(0)
-                ? Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
+                ? `${Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
-                })
+                })}%`
                 : "-"}
             </DisplayItem>
             <DisplayItem>Supply: 2,800,000</DisplayItem>

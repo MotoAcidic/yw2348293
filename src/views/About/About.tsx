@@ -10,6 +10,7 @@ import useYam from "../../hooks/useYam";
 import { useWallet } from "use-wallet";
 import { getTotalValue } from "../../yamUtils";
 import { getStats } from "./utils";
+import Uniswap from "../../assets/img/uniswap@2x.png";
 
 export interface OverviewData {
   circSupply?: string;
@@ -81,27 +82,35 @@ const About: React.FC = () => {
       <BackgroundSection />
       <ContentContainer>
         <Page>
-          <TopDisplayContainer>
-            {/*<DisplayItem>
-              TVL: $
-              {tvl && !tvl.totalValue.eq(0)
-                ? Number(tvl.totalValue.toFixed(2)).toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  })
-                : "-"}
-            </DisplayItem>*/}
-            <DisplayItem>
-              $War Price: $
-              {currentPrice
-                ? Number(currentPrice).toLocaleString(undefined, {
-                  minimumFractionDigits: 4,
-                  maximumFractionDigits: 4
-                })
-                : "-"}
-            </DisplayItem>
-            <DisplayItem>Supply: 2,800,000</DisplayItem>
-          </TopDisplayContainer>
+        <TopDisplayContainer>
+                {/*<DisplayItem>
+                  TVL: $
+                  {tvl && !tvl.totalValue.eq(0)
+                    ? Number(tvl.totalValue.toFixed(2)).toLocaleString(
+                      undefined,
+                      {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                      }
+                    )
+                    : "-"}
+                </DisplayItem>*/}
+                <DisplayItem>
+                  $War Price: $
+                  {currentPrice
+                    ? Number(currentPrice).toLocaleString(undefined, {
+                      minimumFractionDigits: 4,
+                      maximumFractionDigits: 4
+                    })
+                    : "-"}
+                </DisplayItem>
+                <DisplayItem>Supply: 2,800,000</DisplayItem>
+                <StyledA
+                  style={{marginTop: "-5px"}}
+                  href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
+                  target="_blank"
+                />
+              </TopDisplayContainer>
           <Title>
             Frequently Asked Questions
           </Title>
@@ -214,6 +223,21 @@ const About: React.FC = () => {
     </StyledCanvas>
   );
 };
+
+
+const StyledA = styled.a`
+  cursor: pointer;
+  display: flex;
+  background-image: url(${Uniswap});
+  background-size: cover;
+  background-position: center;
+  height: 30px;
+  opacity: 0.9;
+  width: 137px;
+  &:hover {
+    opacity: 1;
+  }
+`
 
 const TextSection = !isMobile()
   ? styled.div`
@@ -347,28 +371,28 @@ const DisplayItem = !isMobile()
       color: #ffffff;
     `;
 
-const TopDisplayContainer = !isMobile()
-  ? styled.div`
+
+    const TopDisplayContainer = !isMobile()
+    ? styled.div`
         width: 40vw;
         display: flex;
         flex-direction: row;
-        align-content: center;
+        align-items: center;
         justify-content: space-evenly;
         margin: 16px auto 80px auto;
       `
-  : styled.div`
+    : styled.div`
         width: 40vw;
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
-        align-content: center;
+        align-items: center;
         justify-content: space-evenly;
         margin: 60px auto 40px auto;
         display: flex;
         flex-wrap: wrap;
       `;
-
-
+  
 const BackgroundSection = styled.div`
       background-image: url(${Background});
       position: fixed;

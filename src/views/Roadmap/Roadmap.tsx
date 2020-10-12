@@ -25,6 +25,8 @@ import milestone_s4_1 from "../../assets/img/milestones/milestone-s4-1.svg";
 import milestone_s4_2 from "../../assets/img/milestones/milestone-s4-2.svg";
 import milestone_s4_3 from "../../assets/img/milestones/milestone-s4-3.svg";
 import milestone_s4_4 from "../../assets/img/milestones/milestone-s4-4.svg";
+import Uniswap from "../../assets/img/uniswap@2x.png";
+
 
 export interface OverviewData {
   circSupply?: string;
@@ -93,22 +95,25 @@ const Roadmap: React.FC = () => {
 
   return (
     <StyledCanvas>
-      <BackgroundSection/>
+      <BackgroundSection />
       <ContentContainer>
         <Page>
           <TopDisplayContainer>
             {/*<DisplayItem>
-              TVL: $
-              {tvl && !tvl.totalValue.eq(0)
-                ? Number(tvl.totalValue.toFixed(2)).toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                })
-                : "-"}
-            </DisplayItem>*/}
+                  TVL: $
+                  {tvl && !tvl.totalValue.eq(0)
+                    ? Number(tvl.totalValue.toFixed(2)).toLocaleString(
+                      undefined,
+                      {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                      }
+                    )
+                    : "-"}
+                </DisplayItem>*/}
             <DisplayItem>
               $War Price: $
-              {currentPrice
+                  {currentPrice
                 ? Number(currentPrice).toLocaleString(undefined, {
                   minimumFractionDigits: 4,
                   maximumFractionDigits: 4
@@ -116,6 +121,11 @@ const Roadmap: React.FC = () => {
                 : "-"}
             </DisplayItem>
             <DisplayItem>Supply: 2,800,000</DisplayItem>
+            <StyledA
+              style={{ marginTop: "-5px" }}
+              href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
+              target="_blank"
+            />
           </TopDisplayContainer>
           <Title >
             YieldWars Roadmap
@@ -153,7 +163,7 @@ const Roadmap: React.FC = () => {
                   Completed Security Review on Battles
               </MilestoneText>
               </MilestoneRow>
-              <Space/>
+              <Space />
               <MilestoneRow>
                 <img className="milestone-image" src={milestone_s2_1} />
                 <MilestoneText>
@@ -178,7 +188,7 @@ const Roadmap: React.FC = () => {
                   Experiment with different ways to choose winners, i.e. Token price changes
               </MilestoneText>
               </MilestoneRow>
-              <Space/>
+              <Space />
               <MilestoneRow>
                 <img className="milestone-image" src={milestone_s3_1} />
                 <MilestoneText>
@@ -203,7 +213,7 @@ const Roadmap: React.FC = () => {
                   Security Review on all Betting Features
               </MilestoneText>
               </MilestoneRow>
-              <Space/>
+              <Space />
               <MilestoneRow>
                 <img className="milestone-image" src={milestone_s4_1} />
                 <MilestoneText>
@@ -256,6 +266,21 @@ const Roadmap: React.FC = () => {
     </StyledCanvas>
   );
 };
+
+
+const StyledA = styled.a`
+  cursor: pointer;
+  display: flex;
+  background-image: url(${Uniswap});
+  background-size: cover;
+  background-position: center;
+  height: 30px;
+  opacity: 0.9;
+  width: 137px;
+  &:hover {
+    opacity: 1;
+  }
+`
 
 const MilestoneRow = styled.div`display: flex; align-items: center; margin-bottom: 20px;`
 
@@ -383,28 +408,29 @@ const DisplayItem = !isMobile()
       color: #ffffff;
     `;
 
-    const TopDisplayContainer = !isMobile()
-    ? styled.div`
+const TopDisplayContainer = !isMobile()
+  ? styled.div`
         width: 40vw;
         display: flex;
         flex-direction: row;
-        align-content: center;
+        align-items: center;
         justify-content: space-evenly;
         margin: 16px auto 80px auto;
       `
-    : styled.div`
+  : styled.div`
         width: 40vw;
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
-        align-content: center;
+        align-items: center;
         justify-content: space-evenly;
         margin: 60px auto 40px auto;
         display: flex;
         flex-wrap: wrap;
       `;
 
-      const BackgroundSection = styled.div`
+
+const BackgroundSection = styled.div`
       background-image: url(${Background});
       position: fixed;
       width: 100vw;

@@ -37,7 +37,7 @@ const Button: React.FC<ButtonProps> = ({
         -8px -8px 16px ${color.grey[100]}FF;`
         buttonPadding = 10
         buttonSize = 170
-        buttonHeight = 60
+        buttonHeight = 80
         fontSize = 16
       break
     case 'lg':

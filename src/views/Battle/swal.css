@@ -29,9 +29,8 @@
 
 .confirm-button-class {
 	width: 135px;
-	height: 40px;
-	border-radius: 8px;
-	  border: solid 2px rgba(255, 183, 0, 0.3);
+  border-radius: 8px;
+  border: solid 2px #ffb700;
 	font-family: "Gilroy";
 	font-size: 20px;
 	font-weight: bold;

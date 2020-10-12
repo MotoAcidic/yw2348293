@@ -1,37 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import {
-	Route,
-	Switch,
-	useRouteMatch,
-} from 'react-router-dom'
-import styled from 'styled-components'
 
-import Button from '../../components/Button'
-import Card from '../../components/Card'
-import CardContent from '../../components/CardContent'
-import CardIcon from '../../components/CardIcon'
-import Page from '../../components/Page'
+import styled from 'styled-components'
 import checkedIcon from '../../assets/img/checked.png'
 import uncheckedIcon from '../../assets/img/unchecked.png'
 
-import { getAPR, getPoolEndTime } from '../../yamUtils'
-import useYam from '../../hooks/useYam'
-import { useWallet } from 'use-wallet'
-
-import Landscape from '../../assets/img/landscapebig.png'
-import Sky from '../../assets/img/skybig.png'
-import TallSky from '../../assets/img/tallsky.png'
-import FightInstructions from '../../assets/img/flightinstructions.png'
-
-import useFarms from '../../hooks/useFarms'
-import useFarm from '../../hooks/useFarm'
-import { Farm } from '../../contexts/Farms'
 import Cookie from 'universal-cookie'
-import axios from 'axios'
-import Swal from 'sweetalert2'
 import './swal.css'
-import { forEachChild } from 'typescript'
-import { options } from 'numeral'
+
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {

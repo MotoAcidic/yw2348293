@@ -1,14 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import {
-	Route,
-	Switch,
-	useRouteMatch,
-} from 'react-router-dom'
 import styled from 'styled-components'
 
 import Button from '../../components/Button'
-import Card from '../../components/Card'
-import CardContent from '../../components/CardContent'
 import CardIcon from '../../components/CardIcon'
 import Page from '../../components/Page'
 import checkedIcon from '../../assets/img/checked.png'
@@ -18,15 +11,11 @@ import { getAPR, getPoolEndTime } from '../../yamUtils'
 import useYam from '../../hooks/useYam'
 import { useWallet } from 'use-wallet'
 
-import Landscape from '../../assets/img/landscapebig.png'
-import Sky from '../../assets/img/skybig.png'
-import TallSky from '../../assets/img/tallsky.png'
-import FightInstructions from '../../assets/img/flightinstructions.png'
 import DailyQuestion from "./DailyQuestion.jsx";
+import Warning from "../../assets/img/warning@2x.png";
 
 import useFarms from '../../hooks/useFarms'
-import useFarm from '../../hooks/useFarm'
-import { Farm } from '../../contexts/Farms'
+
 import Cookie from 'universal-cookie'
 import axios from 'axios'
 import Swal from 'sweetalert2'
@@ -344,22 +333,6 @@ const StyledContent = styled.div`
   justify-content: space-evenly;
   height: 100%;
 `
-
-const StyledDetails = styled.div`
-  text-align: center;
-`
-
-const StyledDetail = styled.div`
-font-family: "Gilroy";
-font-size: 20px;
-font-weight: normal;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: #ffffff;
-`
-
 const StyledTitle = styled.h4`
 margin: 0;
 font-family: "Gilroy";

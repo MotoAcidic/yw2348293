@@ -13,11 +13,9 @@ const Modal: React.FC = ({ children }) => {
   return (
     <Container size="sm">
       <StyledModal>
-          <Card>
             <CardContent>
               {children}
             </CardContent>
-          </Card>
       </StyledModal>
     </Container>
   )
@@ -26,8 +24,9 @@ const Modal: React.FC = ({ children }) => {
 const StyledModal = styled.div`
 border-radius: 8px;
   position: relative;
-    border: solid 2px rgba(255, 183, 0, 0.3);
-  background-color: rgba(256,256,256,0.08);
+  width: 100%;
+  height: 100%;
+  background-color: rgb(28, 30, 31);
   z-index: 100000;
 `
 

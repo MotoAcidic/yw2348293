@@ -12,6 +12,7 @@ const StyledCardContent = styled.div`
   flex: 1;
   flex-direction: column;
   padding: 16px;
+  height: 100%;
 `
 
 export default CardContent

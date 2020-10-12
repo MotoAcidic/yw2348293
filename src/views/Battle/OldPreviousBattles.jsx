@@ -260,48 +260,6 @@ font-family: "Gilroy";
   margin: 20px auto 20px auto;
 `;
 
-const StyledCardContent = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-evenly;
-
-`
-
-const StyledContainer = styled.div`
-  box-sizing: border-box;
-  margin: 0 auto;
-  margin-top: 3vh;
-  max-width: 730px;
-  height: 570px;
-  width: 100%;
-`
-
-const StyledCard = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 0;
-  border-radius: 8px;
-    background-color: rgba(256,256,256,0.08);
-`
-
-const StyledText = styled.p`
-font-family: "Gilroy";
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: #ffffff;
-`
-
-const ButtonContainer = styled.div`
-`
 const VSContentContainer = styled.div`
 width: 30%;
 min-width: 300px;
@@ -330,21 +288,6 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: space-around;
-`
-
-const StyledDetails = styled.div`
-  text-align: center;
-`
-
-const StyledDetail = styled.div`
-font-family: "Gilroy";
-font-size: 20px;
-font-weight: normal;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: #ffffff;
 `
 
 const StyledTitle = styled.h4`

@@ -29,6 +29,7 @@ import { Farm } from '../../contexts/Farms'
 import Cookie from 'universal-cookie'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import Warning from "../../assets/img/warning@2x.png";
 import './swal.css'
 
 function isMobile() {
@@ -141,6 +142,7 @@ const Versus = ({ battles, question }) => {
 		}).catch(err => {
 			Swal.fire({
 				title: `Error submitting your votes: ${err.response.status}`,
+				icon: { Warning },
 				text: `Response: ${err.response.data}\n Please let us know and we'll take care of it.`,
 				width: '600',
 				height: '465',

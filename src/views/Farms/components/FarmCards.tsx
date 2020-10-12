@@ -62,13 +62,11 @@ const FarmCards: React.FC = () => {
       </DisclaimerLink>
       <StyledCards>
         {!!current_rows[0].length && current_rows.map((farmRow, i) => (
-          <StyledRow key={i}>
-            {farmRow.map((farm, j) => (
-              <React.Fragment key={j}>
-                <FarmCard farm={farm} i={i + j} />
-              </React.Fragment>
-            ))}
-          </StyledRow>
+          farmRow.map((farm, j) => (
+            <React.Fragment key={j}>
+              <FarmCard farm={farm} i={i + j} />
+            </React.Fragment>
+          ))
         ))}
       </StyledCards>
       <SmallSpace />
@@ -80,13 +78,11 @@ const FarmCards: React.FC = () => {
               </Disclaimer>
       <StyledCards>
         {!!old_rows[0].length && old_rows.map((farmRow, i) => (
-          <StyledRow key={i}>
-            {farmRow.map((farm, j) => (
-              <React.Fragment key={j}>
-                <FarmCard farm={farm} i={i + j} />
-              </React.Fragment>
-            ))}
-          </StyledRow>
+          farmRow.map((farm, j) => (
+            <React.Fragment key={j}>
+              <FarmCard farm={farm} i={i + j} />
+            </React.Fragment>
+          ))
         ))}
       </StyledCards>
     </FarmCardsContainer>
@@ -212,6 +208,7 @@ font-family: "Gilroy";
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
+  margin-bottom: 10px;
 `;
 
 const FarmIcon = styled.img`
@@ -307,9 +304,13 @@ line-height: 1.3;
 `
 
 const StyledCards = !isMobile() ? styled.div`
-margin-top: 40px;
- 
-width: 1100px;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-between;
+width: 80%;
+max-width: 1200px;
+margin: 20px auto 20px auto;
 ` : styled.div`
 margin-top: 40px;
   width: 100%;
@@ -329,8 +330,6 @@ align-items: center;
 const S1CardWrapper = !isMobile() ? styled.div`
 position: relative;
   display: flex;
-  width: 275px;
-  height: 300px;
 ` : styled.div`
 position: relative;
   display: flex;
@@ -342,8 +341,6 @@ position: relative;
 const S2CardWrapper = !isMobile() ? styled.div`
 position: relative;
   display: flex;
-  width: 275px;
-  height: 370px;
 ` : styled.div`
 position: relative;
   display: flex;

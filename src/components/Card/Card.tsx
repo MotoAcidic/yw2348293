@@ -8,16 +8,24 @@ const Card: React.FC = ({ children }) => (
 )
 
 const StyledCard = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 0;
-  border-radius: 12px;
-  border: solid 2px rgba(255, 183, 0, 0.3);
+width: 30%;
+margin: auto;
+min-width: 300px;
+  border-radius: 8px;
+    border: solid 2px rgba(255, 183, 0, 0.3);
   background-color: rgba(256,256,256,0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+font-family: "Gilroy";
+  font-size: 25px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  margin-bottom: 40px;
 `
 
 // white border >>

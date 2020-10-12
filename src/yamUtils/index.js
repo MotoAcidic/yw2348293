@@ -531,7 +531,7 @@ export const getWarStaked = async (pools, yam) => {
   const warStaked = warLocked.dividedBy(circSupply).multipliedBy(100);
   //console.log(deployer.toString(), team.toString(), circSupply.toString(), warLocked.toString(), warStaked.toString());
   //let warStaked = new BigNumber(await yam.contracts.war.methods.balanceOf(yam.contracts.battlepool_pool.options.address).call()).dividedBy(10**18);
-  return { warStaked };
+  return { warStaked, circSupply };
 }
 
 let assetPrices = null

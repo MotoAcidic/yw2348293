@@ -176,7 +176,7 @@ const StyledA = styled.a`
 
 const TopDisplayContainer = !isMobile()
   ? styled.div`
-      width: 40vw;
+      width:80vw;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -184,7 +184,7 @@ const TopDisplayContainer = !isMobile()
       margin: 16px auto 80px auto;
     `
   : styled.div`
-      width: 40vw;
+      width: 60vw;
       display: flex;
       flex-wrap: wrap;
       flex-direction: row;
@@ -218,6 +218,7 @@ const DisplayItem = !isMobile()
       font-stretch: normal;
       font-style: normal;
       line-height: 1;
+      text-align: center;
       letter-spacing: normal;
       opacity: 0.9;
       color: #ffffff;

@@ -378,43 +378,17 @@ const Rectangle = !isMobile()
       margin-bottom: 40px;
     `;
 
-const DisplayItem = !isMobile()
-  ? styled.div`
-      color: white;
-      font-family: "Gilroy";
-      font-size: 18px;
-      font-weight: bold;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1;
-      letter-spacing: normal;
-      color: #ffffff;
-    `
-  : styled.div`
-      width: 100%;
-      margin-bottom: 10px;
-      color: white;
-      font-family: "Gilroy";
-      font-size: 18px;
-      font-weight: bold;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1;
-      letter-spacing: normal;
-      color: #ffffff;
-    `;
-
-const TopDisplayContainer = !isMobile()
-  ? styled.div`
-        width: 40vw;
+    const TopDisplayContainer = !isMobile()
+    ? styled.div`
+        width:80vw;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-evenly;
         margin: 16px auto 80px auto;
       `
-  : styled.div`
-        width: 40vw;
+    : styled.div`
+        width: 60vw;
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
@@ -424,7 +398,35 @@ const TopDisplayContainer = !isMobile()
         display: flex;
         flex-wrap: wrap;
       `;
-
+  
+  const DisplayItem = !isMobile()
+    ? styled.div`
+        color: white;
+        font-family: "Gilroy";
+        font-size: 18px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        color: #ffffff;
+        opacity: 0.9;
+      `
+    : styled.div`
+        width: 100%;
+        margin-bottom: 10px;
+        color: white;
+        font-family: "Gilroy";
+        font-size: 18px;
+        font-weight: bold;
+        font-stretch: normal;
+        text-align: center;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        opacity: 0.9;
+        color: #ffffff;
+      `;
 
 const BackgroundSection = styled.div`
       background-image: url(${Background});

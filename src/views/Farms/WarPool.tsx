@@ -126,14 +126,14 @@ const WarPool: React.FC = () => {
 					</StyledDetails>
 				</WarTopContainer>
 				<MobileInfoLines>
-					<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} ETH-WAR-UNI-V2</ShadedLine></Line>
-					<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
-					<Line>Rewards Available: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></Line>
+					<MobileLine>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} ETH-WAR-UNI-V2</ShadedLine></MobileLine>
+					<MobileLine>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></MobileLine>
+					<MobileLine>Rewards Available: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></MobileLine>
 				</MobileInfoLines>
 				<BottomButtonContainer>
 					{!allowance.toNumber() ? (
 						<Button
-							size="lg"
+							size="xlg"
 							disabled={account ? false : true}
 							onClick={handleApprove}
 							text={`Approve WAR`}
@@ -146,9 +146,13 @@ const WarPool: React.FC = () => {
 						// />
 					) : (
 							<MobileButtons>
-								<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
-								<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
-								<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
+								<Button size='xlg' onClick={onPresentStake}>Stake Tokens</Button>
+							<Space/>
+								
+								<Button size='xlg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
+							<Space/>
+								
+								<Button size='xlg' onClick={onPresentUnstake}>Unstake Tokens</Button>
 								{/*<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>*/}
 								{/* <Button size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</Button>
 								<Button size='lg' onClick={onReward} disabled={true}>Claim Rewards</Button>
@@ -208,6 +212,10 @@ const WarPool: React.FC = () => {
 	)
 }
 
+const Space = styled.div`
+height: 10px;
+`
+
 const WarTopContainer = styled.div`
 display: flex;
 height: 50px;
@@ -264,18 +272,7 @@ color: #ffffff;
 const MobileButtons = styled.div`
 display: flex;
 flex-direction: column;
-`
-
-const DisplayItem = styled.div`
-color: white;
-font-family: "Gilroy";
-  font-size: 18px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
+margin-bottom: 20px;
 `
 
 const BottomButtonContainer = styled.div`
@@ -299,6 +296,14 @@ flex-direction: row;
 justify-content: space-between;
 `
 
+const MobileLine = styled.div`
+display: flex;
+flex-direction: row;
+margin-bottom: 20px;
+justify-content: space-between;
+`
+
+
 const InfoLines = styled.div`
 width: 94%;
 height: 50%;
@@ -318,13 +323,14 @@ font-family: "SF Mono Semibold";
 `
 
 const MobileInfoLines = styled.div`
-width: 80%;
+width: 90%;
 height: 60%;
 display: flex;
 flex-direction: column;
 justify-content: space-evenly;
 text-align: left;
-padding: 50px 10% 0% 10%;
+padding: 75px 5% 0% 5%;
+margin-bottom: 20px;
 font-family: "SF Mono Semibold";
   font-size: 18px;
   font-weight: 600;
@@ -355,130 +361,20 @@ width: 1000px;
 	margin: 80px auto 80px auto;
 `: styled.div`
 width: 300px;
-  height: 450px;
   border-radius: 8px;
   border: solid 2px rgba(255, 183, 0, 0.3);
   background-color: rgba(256,256,256,0.08);
 	margin: 60px auto 60px auto;
 `
 
-const MobileInfoContainer = styled.div`
+const MobileInfoContainer =  styled.div`
 width: 300px;
-  height: 450px;
   border-radius: 8px;
   border: solid 2px rgba(255, 183, 0, 0.3);
   background-color: rgba(256,256,256,0.08);
 	margin: 60px auto 60px auto;
-`
+	padding: 20px;
 
-const CountDownText = styled.div`
-margin-top: 6vh;
-font-family: "Gilroy";
-  font-size: 30px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-`
-
-const SectionDivider = styled.div`
-  width: 1100px;
-  height: 2px;
-  background-color: #00a1ff;
-  margin-top: 6vh;
-`
-
-const LargeText = styled.div`
-font-family: "Gilroy";
-  font-size: 30px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-`
-
-const SmallText = styled.div`
-font-family: "Gilroy";
-  font-size: 20px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-`
-
-const TextContainer = styled.div`
-width: 60%;
-height: 20vh;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-  justify-content: space-evenly;
-  margin-top: 3vh;
-`
-
-const TopDisplayContainer = styled.div`
-width: 40%;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  justify-content: space-evenly;
-`
-
-const CardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-`
-
-const AuthContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  height: 35vh;
-  justify-content: space-around
-`
-
-const TallStyledSky = styled.div`
-  width: 100%;
-  height: 270vh;
-  background-image: url(${TallSky});
-  background-size: 100% 100%;
-  background-repeat: repeat-x;
-`
-
-const StyledSky = styled.div`
-  width: 100%;
-  height: 60vh;
-  background-image: url(${Sky});
-  background-size: 100% 100%;
-  background-repeat: repeat-x;
-`
-
-const BackgroundSection = styled.div`
-  position: absolute;
-  width: 100%;
-  background-color: #154f9b;
-`
-
-const StyledCanvas = styled.div`
-  position: absolute;
-  width: 100%;
-  background-color: #154f9b;
-`
-const ContentContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  text-align: center;
 `
 
 export default WarPool

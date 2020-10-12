@@ -87,38 +87,38 @@ const Instructions: React.FC = () => {
         <MilestoneRow>
           <img className="milestone-image" src={img_1} />
           <MilestoneText>
-            Your Staked WAR is never at risk, but your Yields are fought over in battle!
+          Your staked WAR is never at risk, but your daily rewards are fought over in battle!
+
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>
           <img className="milestone-image" src={img_2} />
           <MilestoneText>
-            Fight with the winning army and plunder 50% of the losers yield!
+          Fight with the winning army and win 50% of the losers rewards!
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>
           <img className="milestone-image" src={img_3} />
           <MilestoneText>
-            Run away before the battle is over (15:00 UTC) and  lose all your yield for the amount you pulled out.
+          Leave a battle before it ends (15:00 UTC) and your votes/rewards for that day will not be counted!
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>
           <img className="milestone-image" src={img_4} />
           <MilestoneText>
-            You can only vote once per day, and the earlier you vote, the more yield you earn! Anything staked after your vote won’t be counted in that day’s battle
+          You can only vote once per day. Votes and Rewards are tallied by how much you have staked in battle when voting ends (15:00 UTC). Early and late voters earn the same.
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>
           <img className="milestone-image" src={img_5} />
           <MilestoneText>
-            Battles end at 15:00 UTC and new battles begin at 16:00 UTC daily
-            Vote Daily to earn yield, staking alone will not earn Battle Rewards
+          Battles end at 15:00 UTC daily and start again at 16:00 UTC.
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>
           <img className="milestone-image" src={img_6} />
           <MilestoneText>
-            WAR Rewards will show in your account once Battles end
+          $WAR Rewards will only show in your account after battles end and votes are tallied. 
               </MilestoneText>
         </MilestoneRow>
       </RecDesc>

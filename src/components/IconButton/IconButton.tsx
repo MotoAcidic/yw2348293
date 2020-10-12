@@ -29,7 +29,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   border: 0;
   border-radius: 28px;
     border: solid 2px rgba(255, 183, 0, 0.3);
-  background-color: #003983;
+  background-color: rgba(0,0,0,0);
   cursor: pointer;
   display: flex;
   font-weight: 700;

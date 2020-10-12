@@ -30,8 +30,8 @@ const FarmCards: React.FC = () => {
   const old_farms = farms.filter(farm => farm.season === 1);
   const current_farms = farms.filter(item => item.season === 2);
 
-  console.log("1: ", old_farms);
-  console.log("2: ", current_farms);
+  //console.log("1: ", old_farms);
+  //console.log("2: ", current_farms);
 
 
   let old_rows = old_farms.reduce<Farm[][]>((farmRows, farm) => {
@@ -182,7 +182,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
       </CardContent>
     </Card>
   )
-  console.log(`link`, farm);
+
   if (farm.season === 2) {
     return (
       <S2CardWrapper>

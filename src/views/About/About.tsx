@@ -8,7 +8,7 @@ import TallSky from "../../assets/img/tallsky.png";
 import useFarms from "../../hooks/useFarms";
 import useYam from "../../hooks/useYam";
 import { useWallet } from "use-wallet";
-import { getTotalValue } from "../../yamUtils";
+import { getWarStaked } from "../../yamUtils";
 import { getStats } from "./utils";
 import Uniswap from "../../assets/img/uniswap@2x.png";
 
@@ -32,9 +32,8 @@ const About: React.FC = () => {
   let [farms] = useFarms();
   const yam = useYam();
   const { account, connect } = useWallet();
-  let [tvl, setTVL] = useState({
-    totalValue: new BigNumber(0),
-    poolValues: {}
+  let [warStaked, setWarStaked] = useState({
+    warStaked: new BigNumber(0)
   });
   const [
     {
@@ -52,12 +51,12 @@ const About: React.FC = () => {
     setStats(statsData);
   }, [yam, setStats]);
 
-  const fetchTotalValue = useCallback(
+  const fetchWarStaked = useCallback(
     async pools => {
-      const tv = await getTotalValue(pools, yam);
-      setTVL(tv);
+      const st = await getWarStaked(pools, yam);
+      setWarStaked(st);
     },
-    [yam, setTVL, setTVL]
+    [yam, setWarStaked]
   );
 
   useEffect(() => {
@@ -67,7 +66,7 @@ const About: React.FC = () => {
     if (yam && farms) {
       console.log(farms);
 
-      fetchTotalValue(farms);
+      fetchWarStaked(farms);
     }
   }, [yam, account, farms, farms[0]]);
 

@@ -20,7 +20,7 @@ import CountDown from "./components/CountDown";
 import MobileCountDown from "./components/MobileCountdown";
 
 import { Account } from "../../yam/lib/accounts";
-import { getStartTime, getTotalValue } from "../../yamUtils";
+import { getStartTime, getWarStaked } from "../../yamUtils";
 import useFarms from "../../hooks/useFarms";
 import BigNumber from "bignumber.js";
 
@@ -37,9 +37,8 @@ const Farms: React.FC = () => {
   const { account, connect } = useWallet();
   const yam = useYam();
   let [farms] = useFarms();
-  let [tvl, setTVL] = useState({
-    totalValue: new BigNumber(0),
-    poolValues: {}
+  let [warStaked, setWarStaked] = useState({
+    warStaked: new BigNumber(0)
   });
   let launch = 1601308800000;
 
@@ -59,12 +58,12 @@ const Farms: React.FC = () => {
     setStats(statsData);
   }, [yam, setStats]);
 
-  const fetchTotalValue = useCallback(
+  const fetchWarStaked = useCallback(
     async pools => {
-      const tv = await getTotalValue(pools, yam);
-      setTVL(tv);
+      const st = await getWarStaked(pools, yam);
+      setWarStaked(st);
     },
-    [yam, setTVL, setTVL]
+    [yam, setWarStaked]
   );
 
   useEffect(() => {
@@ -72,7 +71,7 @@ const Farms: React.FC = () => {
       fetchStats();
     }
     if (yam && farms) {
-      fetchTotalValue(farms);
+      fetchWarStaked(farms);
     }
   }, [yam, account, farms, farms[0]]);
 
@@ -100,18 +99,6 @@ const Farms: React.FC = () => {
           <Page>
             <CardContainer>
               <TopDisplayContainer>
-                {/*<DisplayItem>
-                  TVL: $
-                  {tvl && !tvl.totalValue.eq(0)
-                    ? Number(tvl.totalValue.toFixed(2)).toLocaleString(
-                      undefined,
-                      {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                      }
-                    )
-                    : "-"}
-                </DisplayItem>*/}
                 <DisplayItem>
                   $War Price: $
                   {currentPrice
@@ -119,6 +106,18 @@ const Farms: React.FC = () => {
                       minimumFractionDigits: 4,
                       maximumFractionDigits: 4
                     })
+                    : "-"}
+                </DisplayItem>
+                <DisplayItem>
+                  $War Staked:&nbsp;
+                  {warStaked && !warStaked.warStaked.eq(0)
+                    ? Number(warStaked.warStaked.toFixed(2)).toLocaleString(
+                      undefined,
+                      {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                      }
+                    )
                     : "-"}
                 </DisplayItem>
                 <DisplayItem>Supply: 2,800,000</DisplayItem>

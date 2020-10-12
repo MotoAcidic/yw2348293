@@ -49,7 +49,8 @@ const Roadmap: React.FC = () => {
   const yam = useYam();
   const { account, connect } = useWallet();
   let [warStaked, setWarStaked] = useState({
-    warStaked: new BigNumber(0)
+    warStaked: new BigNumber(0),
+    circSupply: new BigNumber(0)
   });
   const [
     {
@@ -116,7 +117,15 @@ const Roadmap: React.FC = () => {
                 })}%`
                 : "-"}
             </DisplayItem>
-            <DisplayItem>Supply: 2,800,000</DisplayItem>
+            <DisplayItem>
+              Marketcap:&nbsp;
+              {currentPrice && warStaked && !warStaked.circSupply.eq(0)
+                ? `$${Number(warStaked.circSupply.multipliedBy(currentPrice).dividedBy(10**18).toFixed(2)).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })}`
+                : "-"}
+            </DisplayItem>
             <StyledA
               style={{ marginTop: "-5px" }}
               href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"

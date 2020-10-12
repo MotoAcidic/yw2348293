@@ -165,6 +165,18 @@ const About: React.FC = () => {
           <Title>Official Medium Posts</Title>
           <MediumSection>
             <TextSection>
+            <LinkSection>
+                <a
+                  className="medium-link"
+                  style={{ color: "white" }}
+                  href="https://medium.com/@yieldwars/everything-you-need-to-know-about-yieldwars-bc89adf129f8"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Everything you Need to Know About YieldWars
+                </a>
+                Oct 11
+              </LinkSection>
               <LinkSection>
                 <a
                   className="medium-link"
@@ -264,6 +276,7 @@ const LinkSection = styled.div`
   letter-spacing: normal;
   color: #ffffff;
   class: about-link;
+  margin-bottom: 8px;
 `;
 
 const MediumSection = !isMobile()

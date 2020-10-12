@@ -158,6 +158,9 @@ const Versus = ({ history }) => {
 		)
 	})
 
+	if (prevSeasonHistory.length % 3 == 2) {
+		prevSeasonHistory.push(<FillCard/>)
+	}
 
 	return (
 		<>
@@ -170,6 +173,12 @@ const Versus = ({ history }) => {
 		</>
 	)
 }
+
+const FillCard = styled.div`
+width: 30%;
+min-width: 300px;
+`
+
 const Chalice = styled.div`
 position: absolute;
 margin-left: 95px;
@@ -230,7 +239,7 @@ border-radius: 40px;
 align-items: center;
 display: flex;
 justify-content: center;
-box-shadow: rgb(226, 214, 207) 4px 4px 8px inset, rgb(247, 244, 242) -6px -6px 12px inset;
+box-shadow: rgba(226, 214, 207, 0.3) 4px 4px 8px inset, rgba(247, 244, 242, 0.3) -6px -6px 12px inset;
 margin: 2px;
 `
 

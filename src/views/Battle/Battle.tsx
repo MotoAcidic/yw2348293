@@ -201,13 +201,14 @@ const Battle: React.FC = () => {
               </DisplayItem>
               <DisplayItem>Supply: 2,800,000</DisplayItem>
             </TopDisplayContainer> */}
-            <Video controls poster={AnimeThumbnail}>
-              <source src={AnimeVideo} type="video/mp4" />
-            </Video>
-            {/* <StyledA
-              href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
-              target="_blank"
-            /> */}
+            {/* <Video controls poster={AnimeThumbnail}>
+              <source src="{AnimeVideo}" type="video/mp4" />
+            </Video> */}
+            {!isMobile() ?
+          <iframe style={{width: "400px", height: "225px", margin: "10px auto 40px auto"}} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
+          :
+<iframe style={{width: "90vw", height: "50.6vw", margin: "40px auto 40px auto"}} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
+          }
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
             {battles.length > 0 &&
@@ -225,9 +226,10 @@ const Battle: React.FC = () => {
             <LeaderBoard>{leaderboardContent}</LeaderBoard>
             <Title>Schedule</Title>
             <Schedule schedule={schedule} />
-            {previousBattles.length && <Title>Previous Battles</Title>}
+            {previousBattles.length && <Title>Results</Title>}
             <BattleHistory history={previousBattles} />
-            <Title>Season 1 Results</Title>
+            <Title>Season 1</Title>
+            <S1Seperator/>
             <OldLeaderBoard>{oldLeaderboardContent}</OldLeaderBoard>
             <OldBattleHistory history={oldPreviousBattles} />
           </Page>
@@ -237,83 +239,16 @@ const Battle: React.FC = () => {
   );
 };
 
-const Video = !isMobile() ? styled.video`
-margin: 0 auto 40px auto;
+const S1Seperator = !isMobile() ? styled.div`
 width: 400px;
-height: auto;
-` : styled.video`
-margin: 40px auto 40px auto;
+    height: 1px;
+    margin-bottom: 40px;
+    background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
+` : styled.div`
 width: 90vw;
-height: auto;
-`
-
-const StyledCardContent = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-evenly;
-  max-width: 730px;
-  width: 100%;
-	margin: 0 auto 80px auto;
-
-`
-
-const StyledA = !isMobile() ? styled.a`
-  align-items: center;
-  border: 0;
-  border-radius: 18px;
-  cursor: pointer;
-  display: flex;
-  font-size: 16px;
-  border-radius: 8px;
-  box-shadow: rgb(0, 34, 79) 6px 6px 12px, rgb(0, 54, 119) -12px -12px 24px -2px;
-  background-image: url(${Uniswap});
-  background-size: cover;
-  background-position: center;
-  height: 40px;
-  justify-content: center;
-  outline: none;
-  padding-left: 10px;
-  padding-right: 10px;
-  opacity: 1;
-  width: 180px;
-  font-family: "Gilroy";
-  font-size: 20px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: white;
-  margin-bottom: 40px;
-` : styled.a`
-align-items: center;
-border: 0;
-border-radius: 18px;
-cursor: pointer;
-display: flex;
-font-size: 16px;
-border-radius: 8px;
-box-shadow: rgb(0, 34, 79) 6px 6px 12px, rgb(0, 54, 119) -12px -12px 24px -2px;
-background-image: url(${Uniswap});
-background-size: cover;
-background-position: center;
-height: 40px;
-justify-content: center;
-outline: none;
-padding-left: 10px;
-padding-right: 10px;
-opacity: 1;
-width: 180px;
-font-family: "Gilroy";
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: white;
-margin-bottom: 40px;
+    height: 1px;
+    background-color: rgba(256,256,256,0.5);
+    margin-bottom: 40px;
 `
 
 const StyledCardIcon = styled.div`

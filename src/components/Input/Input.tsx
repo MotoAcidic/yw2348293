@@ -27,9 +27,9 @@ const Input: React.FC<InputProps> = ({
 
 const StyledInputWrapper = styled.div`
   align-items: center;
-  background-color: rgb(46, 29, 34);
+  background-color: #eee;
   border-radius: ${props => props.theme.borderRadius}px;
-  box-shadow: rgb(61, 37, 44) 4px 4px 8px inset, rgb(39, 24, 30) -6px -6px 12px inset;
+  box-shadow: rgba(61, 37, 44, 0.3) 2px 2px 4px inset, rgba(39, 24, 30, 0.3) -3px -3px 6px inset;
   display: flex;
   height: 72px;
   padding: 0 ${props => props.theme.spacing[3]}px;
@@ -38,7 +38,7 @@ const StyledInputWrapper = styled.div`
 const StyledInput = styled.input`
   background: none;
   border: 0;
-  color: #ccc;
+  color: black;
   font-size: 18px;
   flex: 1;
   height: 56px;

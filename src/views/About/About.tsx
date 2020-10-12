@@ -94,21 +94,21 @@ const About: React.FC = () => {
         <Page>
           <TopDisplayContainer>
             <DisplayItem>
-              $War Price: $
+              $War Price:&nbsp;
               {currentPrice
-                ? Number(currentPrice).toLocaleString(undefined, {
+                ? `$${Number(currentPrice).toLocaleString(undefined, {
                   minimumFractionDigits: 4,
                   maximumFractionDigits: 4
-                })
+                })}`
                 : "-"}
             </DisplayItem>
             <DisplayItem>
-              $War Staked:&nbsp;
+              Supply Staked:
               {warStaked && !warStaked.warStaked.eq(0)
-                ? Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  })
+                ? `${Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })}%`
                 : "-"}
             </DisplayItem>
             <DisplayItem>Supply: 2,800,000</DisplayItem>

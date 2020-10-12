@@ -112,26 +112,23 @@ const Farms: React.FC = () => {
             <CardContainer>
               <TopDisplayContainer>
                 <DisplayItem>
-                  $War Price: $
+                  $War Price:&nbsp;
                   {currentPrice
-                    ? Number(currentPrice).toLocaleString(undefined, {
+                    ? `$${Number(currentPrice).toLocaleString(undefined, {
                       minimumFractionDigits: 4,
                       maximumFractionDigits: 4
-                    })
+                    })}`
                     : "-"}
                 </DisplayItem>
                 <DisplayItem>
-                  $War Staked:&nbsp;
-                  {warStaked && !warStaked.warStaked.eq(0)
-                    ? Number(warStaked.warStaked.toFixed(2)).toLocaleString(
-                      undefined,
-                      {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                      }
-                    )
-                    : "-"}
-                </DisplayItem>
+                Supply Staked:&nbsp;
+                {warStaked && !warStaked.warStaked.eq(0)
+                  ? `${Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}%`
+                  : "-"}
+              </DisplayItem>
                 <DisplayItem>Supply: 2,800,000</DisplayItem>
               </TopDisplayContainer>
               {/*<HelloBar>YieldWars Battle page will launch at 5pm PT today!!

@@ -524,7 +524,13 @@ export const getTotalValue = async (pools, yam) => {
 }
 
 export const getWarStaked = async (pools, yam) => {
-  let warStaked = new BigNumber(await yam.contracts.battlepool_pool.methods.totalSupply().call()).dividedBy(10**18);
+  const deployer = new BigNumber(await yam.contracts.war.methods.balanceOf("0x8b6e2e23FCfaCCFd34eb8E8AC027FAA189DA36Ff").call());
+  const team = new BigNumber(await yam.contracts.war.methods.balanceOf("0x5b45DBaF51f5Fe31edAFCab674306607554acA82").call());
+  const circSupply = new BigNumber(2800000e18).minus(deployer).minus(team);
+  const warLocked = new BigNumber(await yam.contracts.war.methods.balanceOf(yam.contracts.battlepool_pool.options.address).call());
+  const warStaked = warLocked.dividedBy(circSupply).multipliedBy(100);
+  //console.log(deployer.toString(), team.toString(), circSupply.toString(), warLocked.toString(), warStaked.toString());
+  //let warStaked = new BigNumber(await yam.contracts.war.methods.balanceOf(yam.contracts.battlepool_pool.options.address).call()).dividedBy(10**18);
   return { warStaked };
 }
 

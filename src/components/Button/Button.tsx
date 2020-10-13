@@ -138,8 +138,7 @@ const StyledLink = styled(Link)`
   height: 56px;
   justify-content: center;
   text-align: center;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-top: 2px;
   width: 100%;
   margin: 0 ${props => -props.theme.spacing[4]}px;
   text-decoration: none;

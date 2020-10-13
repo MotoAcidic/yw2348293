@@ -10,6 +10,14 @@ import Button from '../../Button'
 
 import AccountModal from './AccountModal'
 
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 interface AccountButtonProps { }
 
 const AccountButton: React.FC<AccountButtonProps> = (props) => {
@@ -20,12 +28,19 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
   return (
     <StyledAccountButton>
       {!account ? (
+        !isMobile() ? (
         <Button
           onClick={() => connect('injected')}
           size="lg"
           text="Unlock Wallet"
           disabled={false}
-        />
+        />) :(
+          <Button
+            onClick={() => connect('walletconnect')}
+            size="lg"
+            text="Unlock Wallet"
+            disabled={false}
+          />)
       ) : (
           <StyledAccountInfo>
             <Oval /><StyledA href={`https://etherscan.io/address/${account}`} target={`_blank`}>{account.substring(0, 6) + '...' + account.substring(account.length - 4)}</StyledA>

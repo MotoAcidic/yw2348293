@@ -78,7 +78,7 @@ const WarPool: React.FC = () => {
 		return getContract(ethereum as provider, depositTokenAddress)
 	}, [ethereum, depositTokenAddress])
 
-	
+
 	const { onReward } = useReward(contract)
 	const earnings = useEarnings(contract)
 	const tokenBalance = useTokenBalance(depositTokenAddress)
@@ -109,7 +109,7 @@ const WarPool: React.FC = () => {
 	}*/
 
 	const onClaimRestake = async () => {
-		onStake(earnings.dividedBy(10**18).toString());
+		onStake(earnings.dividedBy(10 ** 18).toString());
 		harvest(contract, account);
 	}
 
@@ -172,23 +172,12 @@ const WarPool: React.FC = () => {
 							onClick={handleApprove}
 							text={`Approve WAR`}
 						/>
-						// <Button
-						// 	size="lg"
-						// 	disabled={true}
-						// 	onClick={handleApprove}
-						// 	text={`Approve WAR`}
-						// />
 					) : (
 							<MobileButtons>
 								<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
 								<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
 								<Button size='lg' onClick={onClaimRestake} disabled={!earnings.toNumber()}>Claim & Restake</Button>
 								<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
-								{/*<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>*/}
-								{/* <Button size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</Button>
-								<Button size='lg' onClick={onReward} disabled={true}>Claim Rewards</Button>
-								<Button size='lg' onClick={onPresentUnstake} disabled={true}>Unstake Tokens</Button>
-								<Button size='lg' onClick={onClaimUnstake} disabled={true}>Claim & Unstake</Button> */}
 							</MobileButtons>
 						)}
 				</BottomButtonContainer>
@@ -198,7 +187,7 @@ const WarPool: React.FC = () => {
 
 	const now = new Date().getTime() / 1000;
 
-		const earningsBalance = getDisplayBalance(earnings);
+	const earningsBalance = getDisplayBalance(earnings);
 
 
 	return (

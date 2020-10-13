@@ -20,11 +20,19 @@ const AdvertisementFormButton: React.FC<AccountButtonProps> = (props) => {
   return (
     <StyledAccountButton>
       {!account ? (
-        <Button
-          onClick={() => connect('injected')}
-          size="md"
-          text="Unlock Wallet"
-        />
+ !isMobile() ? (
+  <Button
+    onClick={() => connect('injected')}
+    size="lg"
+    text="Unlock Wallet"
+    disabled={false}
+  />) : (
+    <Button
+      onClick={() => connect('walletconnect')}
+      size="lg"
+      text="Unlock Wallet"
+      disabled={false}
+    />)
       ) : (
         <Button
           onClick={onPresentAccountModal}

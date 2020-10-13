@@ -34,7 +34,7 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
           size="lg"
           text="Unlock Wallet"
           disabled={false}
-        />) :(
+        />) : (
           <Button
             onClick={() => connect('walletconnect')}
             size="lg"

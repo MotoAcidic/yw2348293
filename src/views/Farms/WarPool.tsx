@@ -138,26 +138,13 @@ const WarPool: React.FC = () => {
 							onClick={handleApprove}
 							text={`Approve WAR`}
 						/>
-						// <Button
-						// 	size="lg"
-						// 	disabled={true}
-						// 	onClick={handleApprove}
-						// 	text={`Approve WAR`}
-						// />
 					) : (
 							<MobileButtons>
 								<Button size='xlg' onClick={onPresentStake}>Stake Tokens</Button>
-							<Space/>
-								
+								<Space />
 								<Button size='xlg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
-							<Space/>
-								
+								<Space />
 								<Button size='xlg' onClick={onPresentUnstake}>Unstake Tokens</Button>
-								{/*<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>*/}
-								{/* <Button size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</Button>
-								<Button size='lg' onClick={onReward} disabled={true}>Claim Rewards</Button>
-								<Button size='lg' onClick={onPresentUnstake} disabled={true}>Unstake Tokens</Button>
-								<Button size='lg' onClick={onClaimUnstake} disabled={true}>Claim & Unstake</Button> */}
 							</MobileButtons>
 						)}
 				</BottomButtonContainer>
@@ -189,22 +176,11 @@ const WarPool: React.FC = () => {
 						onClick={handleApprove}
 						text={`Approve WAR`}
 					/>
-					// <Button
-					// 	size="lg"
-					// 	disabled={true}
-					// 	onClick={handleApprove}
-					// 	text={`Approve WAR`}
-					// />
 				) : (
 						<>
 							<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
 							<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
 							<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
-							{/*<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>*/}
-							{/* <Button size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</Button>
-							<Button size='lg' onClick={onReward} disabled={true}>Claim Rewards</Button>
-							<Button size='lg' onClick={onPresentUnstake} disabled={true}>Unstake Tokens</Button>
-							<Button size='lg' onClick={onClaimUnstake} disabled={true}>Claim & Unstake</Button> */}
 						</>
 					)}
 			</BottomButtonContainer>
@@ -367,7 +343,7 @@ width: 300px;
 	margin: 60px auto 60px auto;
 `
 
-const MobileInfoContainer =  styled.div`
+const MobileInfoContainer = styled.div`
 width: 300px;
   border-radius: 8px;
   border: solid 2px rgba(255, 183, 0, 0.3);

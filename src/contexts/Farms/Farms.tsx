@@ -173,14 +173,14 @@ const Farms: React.FC = ({ children }) => {
         link: tokens ? balancerURL.concat(tokens["value_token"].options.address,"/") : undefined
       },
       {
-        contract: pools ? pools["mbbased_pool"] : undefined,
-        name: "mbBASED Ghouls",
-        depositToken: "mbBASED",
-        depositTokenAddress: tokens ? tokens["mbbased_token"].options.address : undefined,
+        contract: pools ? pools["based_pool"] : undefined,
+        name: "BASED Ghouls",
+        depositToken: "BASED",
+        depositTokenAddress: tokens ? tokens["based_token"].options.address : undefined,
         earnToken: 'WAR',
         earnTokenAddress: yamAddress,
         icon: "💀",
-        id: "mbBASED",
+        id: "BASED",
         sort: 9,
         season: 1,
         link: ""

@@ -28,6 +28,8 @@ const StyledModalActions = styled.div`
 
 const StyledModalAction = styled.div`
   flex: 1;
+  display: flex;
+  justify-content: center;
 `
 
 const StyledSpacer = styled.div`

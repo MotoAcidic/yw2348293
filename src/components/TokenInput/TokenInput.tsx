@@ -26,7 +26,9 @@ const TokenInput: React.FC<TokenInputProps> = ({
             <StyledTokenSymbol>{symbol}</StyledTokenSymbol>
             <StyledSpacer />
             <div>
-              <Button size="md" text="Max" onClick={onSelectMax} />
+              <ModalButton onClick={onSelectMax} >
+                Max
+                </ModalButton>
             </div>
           </StyledTokenAdornmentWrapper>
         )}
@@ -38,15 +40,34 @@ const TokenInput: React.FC<TokenInputProps> = ({
   )
 }
 
-/*
-            <div>
-              <Button size="sm" text="Max" />
-            </div>
-*/
+const ModalButton = styled.button`
+  align-items: center;
+  border: solid 2px #ffb700;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0.8;
+  display: flex;
+  font-size:16px;
+  background-color: rgba(256, 256, 256, 0.05);
+  height: 38px;
+  padding: 0 10px 0 10px;
+  justify-content: center;
+  outline: none;
+  font-family: "Gilroy";
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #003677;
+  &:hover {
+    opacity: 1;
+  }
+`
 
 const StyledTokenInput = styled.div`
 font-size: 14px;
-
 `
 
 const StyledSpacer = styled.div`
@@ -56,7 +77,8 @@ const StyledSpacer = styled.div`
 const StyledTokenAdornmentWrapper = styled.div`
   align-items: center;
   display: flex;
-  width: 60%;
+  justify-content: flex-end;
+  width: 50%;
 `
 
 const StyledMaxText = styled.div`
@@ -70,7 +92,7 @@ const StyledMaxText = styled.div`
 `
 
 const StyledTokenSymbol = styled.span`
-color: rgb(213, 155, 176);
+color: #0d87b3;
   font-weight: 700;
 `
 

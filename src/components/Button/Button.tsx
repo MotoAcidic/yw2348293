@@ -109,7 +109,6 @@ const StyledButton = styled.button<StyledButtonProps>`
   opacity: ${props => !props.disabled ? .8 : .4};
   display: flex;
   font-size: ${props => props.fontSize}px;
-  border-radius: 8px;
   background-color: rgba(256, 256, 256, 0.05);
   height: ${props => props.height ? props.height : 38}px;
   justify-content: center;

@@ -175,6 +175,10 @@ const Versus = ({ history }) => {
 		)
 	})
 
+	if (currSeasonHistory.length % 3 == 2) {
+		currSeasonHistory.push(<FillCard/>)
+	}
+
 	return (
 		<>
 			{currSeasonHistory.length > 0 &&
@@ -187,6 +191,11 @@ const Versus = ({ history }) => {
 		</>
 	)
 }
+
+const FillCard = styled.div`
+width: 30%;
+min-width: 300px;
+`
 
 const Chalice = styled.div`
 position: absolute;

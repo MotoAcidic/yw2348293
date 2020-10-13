@@ -56,7 +56,7 @@ const FarmCards: React.FC = () => {
   return (
     <FarmCardsContainer>
       <FarmIcon src={farmIcon}></FarmIcon>
-      <LargeText>New Season 2 Farms</LargeText>
+      <LargeText>New Season 2 Farms (CLOSED)</LargeText>
       <DisclaimerLink href="https://medium.com/@yieldwars/yieldwars-season-2-farms-are-upon-us-heres-how-to-participate-bal-pool-tutorial-included-78a30028f61">
         Learn how to setup Balancer Pools
       </DisclaimerLink>
@@ -193,7 +193,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   else {
     return (
       <S1CardWrapper>
-        {/* {(farm.id === 'mbBASED' || farm.id === 'FARM') && <RainbowShadow />} */}
+        {/* {(farm.id === 'BASED' || farm.id === 'FARM') && <RainbowShadow />} */}
         {content}
       </S1CardWrapper>
     )

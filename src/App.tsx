@@ -125,6 +125,6 @@ const StyledCanvas = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #154f9b;
+  background: #011B3A;
 `
 export default App

@@ -26,7 +26,7 @@ border-radius: 8px;
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: rgb(28, 30, 31);
+  background-color: #fff;
   z-index: 100000;
 `
 

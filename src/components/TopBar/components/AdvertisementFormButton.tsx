@@ -4,11 +4,19 @@ import styled from 'styled-components'
 import { useWallet } from 'use-wallet'
 
 import useModal from '../../../hooks/useModal'
-import { formatAddress } from '../../../utils'
 
 import Button from '../../Button'
 
 import AdvertisementFormModal from './AdvertisementFormModal'
+
+
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 interface AccountButtonProps {}
 

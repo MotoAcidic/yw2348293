@@ -10,9 +10,13 @@ import Button from '../../Button'
 
 import VoteModal from './VoteModal'
 
-import {
-  get_counted_votes
-} from '../../../yamUtils'
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 interface AccountButtonProps { }
 
@@ -20,10 +24,6 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
   const [onPresentAccountModal] = useModal(<VoteModal />)
 
   const { account, connect, ethereum } = useWallet()
-
-  const callConnect = () => {
-    connect('injected')
-  }
 
   return (
     <StyledAccountButton>

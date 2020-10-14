@@ -10,28 +10,30 @@ import Button from '../../Button'
 
 import AdvertisementFormModal from './AdvertisementFormModal'
 
-interface AccountButtonProps {}
+interface AccountButtonProps { }
 
 const AdvertisementFormButton: React.FC<AccountButtonProps> = (props) => {
   const [onPresentAccountModal] = useModal(<AdvertisementFormModal />)
-  
+
   const { account, connect } = useWallet()
 
   return (
     <StyledAccountButton>
       {!account ? (
-        <Button
-          onClick={() => connect('injected')}
-          size="md"
-          text="Unlock Wallet"
-        />
+        (
+          <Button
+            onClick={() => connect('injected')}
+            size="lg"
+            text="Unlock Wallet"
+            disabled={false}
+          />)
       ) : (
-        <Button
-          onClick={onPresentAccountModal}
-          size="md"
-          text="Make A Pool"
-        />
-      )}
+          <Button
+            onClick={onPresentAccountModal}
+            size="md"
+            text="Make A Pool"
+          />
+        )}
     </StyledAccountButton>
   )
 }

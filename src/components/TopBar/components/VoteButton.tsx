@@ -14,11 +14,11 @@ import {
   get_counted_votes
 } from '../../../yamUtils'
 
-interface AccountButtonProps {}
+interface AccountButtonProps { }
 
 const AccountButton: React.FC<AccountButtonProps> = (props) => {
   const [onPresentAccountModal] = useModal(<VoteModal />)
-  
+
   const { account, connect, ethereum } = useWallet()
 
   const callConnect = () => {
@@ -29,17 +29,18 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
     <StyledAccountButton>
       {!account ? (
         <Button
-          onClick={callConnect}
-          size="md"
+          onClick={() => connect('walletconnect')}
+          size="lg"
           text="Unlock Wallet"
-        />
-      ) : (
-        <Button
-          onClick={onPresentAccountModal}
-          size="md"
-          text="Make A Proposal"
-        />
-      )}
+          disabled={false}
+        />)
+        : (
+          <Button
+            onClick={onPresentAccountModal}
+            size="md"
+            text="Make A Proposal"
+          />
+        )}
     </StyledAccountButton>
   )
 }

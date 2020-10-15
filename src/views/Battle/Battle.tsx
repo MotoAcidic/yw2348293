@@ -230,6 +230,7 @@ const NextBattle = styled.div`
   margin-bottom: 80px;
   font-size: 18px;
   font-family: "Gilroy";
+  color: white;
 `
 
 const S1Seperator = !isMobile() ? styled.div`

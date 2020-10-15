@@ -121,26 +121,15 @@ const Versus = ({ battles, question }) => {
 			setVoted(true)
 			Swal.fire({
 				title: 'Your votes have been recorded successfully!',
-				text: 'Check back tomorrow to see the victors and rewards',
+				text: 'Come back tomorrow. All rewards will be distributed tomorrow at 16:00 UTC',
 				width: '600',
 				height: '465',
 				padding: '10',
 				customClass: {
 					container: 'container-class',
-					// popup: 'popup-class',
-					// header: 'header-class',
 					title: 'title-class',
-					// text: 'text-class',
-					// closeButton: 'close-button-class',
-					// icon: 'icon-class',
-					// image: 'image-class',
 					content: 'text-class',
-					// input: 'input-class',
-					// actions: 'actions-class',
 					confirmButton: 'confirm-button-class',
-					// denyButton: 'confirm-button-class',
-					// cancelButton: 'cancel-button-class',
-					// footer: 'footer-class'
 				}
 			})
 		}).catch(err => {
@@ -153,20 +142,9 @@ const Versus = ({ battles, question }) => {
 				padding: '10',
 				customClass: {
 					container: 'container-class',
-					// popup: 'popup-class',
-					// header: 'header-class',
 					title: 'title-class',
-					// text: 'text-class',
-					// closeButton: 'close-button-class',
-					// icon: 'icon-class',
-					// image: 'image-class',
 					content: 'text-class',
-					// input: 'input-class',
-					// actions: 'actions-class',
 					confirmButton: 'confirm-button-class',
-					// denyButton: 'confirm-button-class',
-					// cancelButton: 'cancel-button-class',
-					// footer: 'footer-class'
 				}
 			})
 		})

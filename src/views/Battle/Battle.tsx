@@ -188,27 +188,11 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
-            {/* <TopDisplayContainer>
-
-              <DisplayItem>
-                $War Price: $
-                {currentPrice
-                  ? Number(currentPrice).toLocaleString(undefined, {
-                    minimumFractionDigits: 4,
-                    maximumFractionDigits: 4
-                  })
-                  : "-"}
-              </DisplayItem>
-              <DisplayItem>Supply: 2,800,000</DisplayItem>
-            </TopDisplayContainer> */}
-            {/* <Video controls poster={AnimeThumbnail}>
-              <source src="{AnimeVideo}" type="video/mp4" />
-            </Video> */}
             {!isMobile() ?
-          <iframe style={{width: "400px", height: "225px", margin: "10px auto 40px auto"}} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
-          :
-<iframe style={{width: "90vw", height: "50.6vw", margin: "40px auto 40px auto"}} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
-          }
+              <iframe style={{ width: "400px", height: "225px", margin: "10px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
+              :
+              <iframe style={{ width: "90vw", height: "50.6vw", margin: "40px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
+            }
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
             {battles.length > 0 &&
@@ -217,11 +201,14 @@ const Battle: React.FC = () => {
             {battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
             {/* in case no battle, but still question */}
             {(battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
+            {!battles.length &&
+              <>
+                <Title>Voting is closed. Check back soon to see the winners.</Title>
+                <NextBattle>Next battle begins at 16:00 UTC</NextBattle>
+              </>
+            }
             <Title>How battles work </Title>
-            {/* <StyledCardContent>
-              <img src={FightInstructions} alt="instructions" width="100%" />
-            </StyledCardContent> */}
-            <Instructions/>
+            <Instructions />
             <Title>Leaderboard</Title>
             <LeaderBoard>{leaderboardContent}</LeaderBoard>
             <Title>Schedule</Title>
@@ -229,7 +216,7 @@ const Battle: React.FC = () => {
             {previousBattles.length && <Title>Results</Title>}
             <BattleHistory history={previousBattles} />
             <Title>Season 1</Title>
-            <S1Seperator/>
+            <S1Seperator />
             <OldLeaderBoard>{oldLeaderboardContent}</OldLeaderBoard>
             <OldBattleHistory history={oldPreviousBattles} />
           </Page>
@@ -238,6 +225,12 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const NextBattle = styled.div`
+  margin-bottom: 80px;
+  font-size: 18px;
+  font-family: "Gilroy";
+`
 
 const S1Seperator = !isMobile() ? styled.div`
 width: 400px;

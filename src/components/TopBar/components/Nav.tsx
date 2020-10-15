@@ -43,12 +43,13 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffb700;
-opacity: 0.92;
   padding-left: ${props => props.theme.spacing[3]}px;
   padding-right: ${props => props.theme.spacing[3]}px;
   text-decoration: none;
   &:hover {
     opacity: 1;
+  color: #ffcb46;
+
   }
   &.active {
     opacity: 1;
@@ -64,11 +65,7 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffb700;
-opacity: 0.92;
   text-decoration: none;
-  &:hover {
-    opacity: 1;
-  }
   &.active {
     opacity: 1;
     text-decoration: underline;

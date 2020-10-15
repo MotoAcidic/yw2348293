@@ -71,6 +71,7 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffb700;
+transition: all .1s linear;
 opacity: 0.7;
   text-decoration: none;
   &:hover {

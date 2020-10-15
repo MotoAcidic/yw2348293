@@ -120,7 +120,7 @@ const Roadmap: React.FC = () => {
             <DisplayItem>
               Marketcap:&nbsp;
               {currentPrice && warStaked && !warStaked.circSupply.eq(0)
-                ? `$${Number(warStaked.circSupply.multipliedBy(currentPrice).dividedBy(10**18).toFixed(2)).toLocaleString(undefined, {
+                ? `$${Number(warStaked.circSupply.multipliedBy(currentPrice).dividedBy(10 ** 18).toFixed(2)).toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
                 })}`
@@ -282,6 +282,7 @@ const StyledA = styled.a`
   height: 30px;
   opacity: 0.9;
   width: 137px;
+  transition: all .1s linear;
   &:hover {
     opacity: 1;
   }
@@ -387,8 +388,8 @@ const Rectangle = !isMobile()
       margin-bottom: 40px;
     `;
 
-    const TopDisplayContainer = !isMobile()
-    ? styled.div`
+const TopDisplayContainer = !isMobile()
+  ? styled.div`
         width:80vw;
         display: flex;
         flex-direction: row;
@@ -396,7 +397,7 @@ const Rectangle = !isMobile()
         justify-content: space-evenly;
         margin: 16px auto 80px auto;
       `
-    : styled.div`
+  : styled.div`
         width: 60vw;
         display: flex;
         flex-wrap: wrap;
@@ -407,9 +408,9 @@ const Rectangle = !isMobile()
         display: flex;
         flex-wrap: wrap;
       `;
-  
-  const DisplayItem = !isMobile()
-    ? styled.div`
+
+const DisplayItem = !isMobile()
+  ? styled.div`
         color: white;
         font-family: "Gilroy";
         font-size: 18px;
@@ -421,7 +422,7 @@ const Rectangle = !isMobile()
         color: #ffffff;
         opacity: 0.9;
       `
-    : styled.div`
+  : styled.div`
         width: 100%;
         margin-bottom: 10px;
         color: white;

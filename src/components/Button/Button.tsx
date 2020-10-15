@@ -106,7 +106,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   border: ${props => !props.disabled ? "solid 2px #ffb700" : "solid 2px #838383"};
   border-radius: 8px;
   cursor: pointer;
-  opacity: ${props => !props.disabled ? .8 : .4};
+  opacity: ${props => !props.disabled ? 1 : .4};
   display: flex;
   font-size: ${props => props.fontSize}px;
   background-color: rgba(256, 256, 256, 0.05);
@@ -115,6 +115,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   outline: none;
   padding-left: ${props => props.padding}px;
   padding-right: ${props => props.padding}px;
+  padding-top: 3px;
   pointer-events: ${props => !props.disabled ? undefined : 'none'};
   width: ${props => props.size}px;
   font-family: "Gilroy";
@@ -125,8 +126,10 @@ const StyledButton = styled.button<StyledButtonProps>`
   line-height: 1;
   letter-spacing: normal;
   color: ${props => !props.disabled ? "white" : "#cccccc"};
+  transition: all .1s linear;
   &:hover {
-    opacity: 1;
+  background-color: rgba(256, 256, 256, 0.07);
+  border: solid 2px #ffcb46;
   }
 `
 

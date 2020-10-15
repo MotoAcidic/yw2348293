@@ -92,6 +92,8 @@ const ModalButton = styled.button`
   font-style: normal;
   line-height: 1;
   letter-spacing: normal;
+  transition: all .1s linear;
+
   color: #003677;
   &:hover {
     opacity: 1;

@@ -251,6 +251,7 @@ const StyledA = styled.a`
   height: 30px;
   opacity: 0.9;
   width: 137px;
+  transition: all .1s linear;
   &:hover {
     opacity: 1;
   }

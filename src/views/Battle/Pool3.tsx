@@ -176,7 +176,7 @@ const WarPool: React.FC = () => {
 							<MobileButtons>
 								<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
 								<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
-								<Button size='lg' onClick={onClaimRestake} disabled={!earnings.toNumber()}>Claim & Restake</Button>
+								<Button size='xlg' onClick={onClaimRestake} disabled={!earnings.toNumber()}>Claim & Restake</Button>
 								<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
 							</MobileButtons>
 						)}

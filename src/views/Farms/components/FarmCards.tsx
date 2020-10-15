@@ -173,9 +173,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
             <SmallSpace />
           }
 
-          {farm.season === 2 && farm.link && <Link href={farm.link} target="_blank" rel="noopener noreferrer">
+          {farm.season === 2 && farm.link ? <Link href={farm.link} target="_blank" rel="noopener noreferrer">
             Get BPT on Balancer
-          </Link>}
+          </Link> : <Filler />}
 
 
         </StyledContent>
@@ -199,6 +199,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
     )
   }
 }
+
+const Filler = styled.div`height: 28px;`
 
 const Link = styled.a`
 font-family: "Gilroy";
@@ -254,7 +256,7 @@ const StyledDetail = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 183, 0, 0.7);
+  color: rgb(255, 190, 26);
 `
 
 

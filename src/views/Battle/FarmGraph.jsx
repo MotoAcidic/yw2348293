@@ -70,7 +70,6 @@ function numberWithCommas(x) {
 
 const calcPercentChange = (start, end) => {
 	let final = 0;
-	console.log("startr", start, end)
 	if (start > end) {
 		final = -100 * (start - end) / start;
 	} else if (start < end) {
@@ -88,7 +87,6 @@ const FarmGraph = ({ farm, order }) => {
 	if (!price || !marketCap || !graphData) {
 		axios.get(`https://api.coingecko.com/api/v3/coins/${getGeckoId(farm.id)}/market_chart?vs_currency=usd&days=1`).then(res => {
 			const { market_caps, prices } = res.data;
-			console.log("jfia", market_caps, prices)
 			setMarketCap(numberWithCommas(market_caps[market_caps.length - 1][1].toFixed(0)));
 			setPrice(numberWithCommas(prices[prices.length - 1][1].toFixed(2)));
 			let chartData = [];
@@ -124,8 +122,6 @@ const FarmGraph = ({ farm, order }) => {
 		}),
 		[]
 	);
-
-	console.log("farm", farm)
 
 	return (
 		<StyledContent>

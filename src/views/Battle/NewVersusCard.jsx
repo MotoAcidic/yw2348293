@@ -39,7 +39,6 @@ const Versus = ({ battles, question }) => {
 	let [farms] = useFarms()
 	const yam = useYam()
 	const { account, connect } = useWallet()
-	console.log(battles);
 	const [voted, setVoted] = useState(false)
 	const [checked, setChecked] = useState(false);
 	const [questionResponse, setQuestionResponse] = useState("");

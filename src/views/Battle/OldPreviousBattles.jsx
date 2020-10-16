@@ -85,7 +85,6 @@ const Versus = ({ history }) => {
 			day = "Oct " + (item[0].day - 2);
 		}
 
-		console.log(item[0].pool1.totalVotes);
 		return (
 			<VSContentContainer>
 				{item[0].day - 2 ? <div>{day}</div> : <div>Sept 30th</div>}

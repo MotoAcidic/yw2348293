@@ -60,7 +60,6 @@ const Versus = ({ history }) => {
 	if (!history.length) {
 		return null
 	}
-	console.log("dis history", history);
 
 	let currSeasonHistory = []
 

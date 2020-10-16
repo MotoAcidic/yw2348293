@@ -2,21 +2,16 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import Uniswap from "../../assets/img/uniswap@2x.png";
 import Page from "../../components/Page";
 
 import { getAPR, getPoolEndTime } from "../../yamUtils";
 import useYam from "../../hooks/useYam";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
+import NewVersusCard from "./NewVersusCard";
 
 import Background from '../../assets/img/bg3.svg'
 import Pool3 from "./Pool3";
-import AnimeVideo from "../../assets/video/yw_anime.mp4";
-import AnimeThumbnail from "../../assets/video/yw_anime_thumbnail.png";
-import Landscape from "../../assets/img/landscapebig.png";
-import Sky from "../../assets/img/skybig.png";
-import TallSky from "../../assets/img/tallsky.png";
 import useFarms from "../../hooks/useFarms";
 import useFarm from "../../hooks/useFarm";
 import { getWarStaked } from "../../yamUtils";
@@ -195,6 +190,9 @@ const Battle: React.FC = () => {
             }
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
+
+            <NewVersusCard battles={battles} question={dailyQuestion}/>
+
             {battles.length > 0 &&
               <Title>Step 2: Vote for the armies you will fight for</Title>
             }

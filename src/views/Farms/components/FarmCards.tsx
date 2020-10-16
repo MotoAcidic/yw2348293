@@ -146,7 +146,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, i }) => {
   }, [farm, yam, account])
 
 
-  if (farm.id === `UNIPOOL` || farm.id === `BATTLEPOOL` || farm.id === `YAM` || farm.id === `MEME` || farm.id === `PICKLE` || farm.id === 'WBTC') {
+  if (farm.id === `UNIPOOL` || farm.id === `BATTLEPOOL` || farm.id === `YAM` || farm.id === `MEME` || farm.id === `PICKLE` || farm.id === 'WBTC' || farm.id === 'SNOW') {
     return null;
   }
 

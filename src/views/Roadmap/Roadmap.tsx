@@ -159,7 +159,7 @@ const Roadmap: React.FC = () => {
               <MilestoneRow>
                 <img className="milestone-image" src={milestone_s1_4} />
                 <MilestoneText>
-                  Airdropped NFT's for Season 1+2 participants and Finals Winnders
+                  Airdropped NFT's for Season 1+2 participants and Finals Winners
               </MilestoneText>
               </MilestoneRow>
               <MilestoneRow>

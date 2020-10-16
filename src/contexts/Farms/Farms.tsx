@@ -43,6 +43,19 @@ const Farms: React.FC = ({ children }) => {
 
     let farmsArr = [
       {
+        contract: undefined,
+        name: "SNOW men",
+        depositToken: "",
+        depositTokenAddress:  undefined,
+        earnToken: '',
+        earnTokenAddress: yamAddress,
+        icon: "☃️",
+        id: "SNOW",
+        sort: 9,
+        season: 2,
+        link: undefined
+      },
+      {
         contract: pools ? pools["send_pool"] : undefined,
         name: "SEND Senders",
         depositToken: "SEND-WAR BPT",

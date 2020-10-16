@@ -9,6 +9,8 @@ import ProposalJson from '../yam/clean_build/contracts/Proposal.json';
 import PASTAv1 from '../yam/clean_build/contracts/PASTAv1.json';
 import PASTAv2 from '../yam/clean_build/contracts/PASTAv2.json';
 
+import TokenJson from '../yam/clean_build/contracts/IERC20.json';
+
 import AdvancedJson from '../yam/clean_build/contracts/AdvancedPool.json';
 
 BigNumber.config({
@@ -222,6 +224,29 @@ export const getCurrentPrice = async (yam) => {
     "1000000000000000000",
     [
       "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde",
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+    ]
+  ).call();
+
+  // call for kovan
+  /*let p = await yam.contracts.uni_router.methods.getAmountsOut(
+    new BigNumber(1000000000000000000),
+    [
+      "0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"
+    ]
+  ).call();*/
+
+  p = yam.toBigN(p[p.length - 1]).div(10 ** 6).toFixed(4);
+  //console.log(p);
+  return p;
+}
+
+export const getETHPrice = async (yam) => {
+  //return yam.toBigN(await yam.contracts.rebaser.methods.getCurrentTWAP().call())
+  let p = await yam.contracts.uni_router.methods.getAmountsOut(
+    "1000000000000000000",
+    [
       "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
       "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
     ]
@@ -471,7 +496,7 @@ export const getTotalSupply = async (pool) => {
 }
 
 export const getAPR = async (pool, yam) => {
-  const curPrice = new BigNumber(2.8);//new BigNumber(await getCurrentPrice(yam))
+  const curPrice = new BigNumber(await getCurrentPrice(yam));
   let rewardPerYear = await getRewardPerYear(pool.contract);
   const totalSupply = await getTotalSupply(pool)
   let assetPrice = await getAssetPrices(yam)
@@ -482,15 +507,35 @@ export const getAPR = async (pool, yam) => {
 }
 
 export const getWarAPR = async (contract, yam) => {
-  const curPrice = new BigNumber(2.8);//new BigNumber(await getCurrentPrice(yam))
-  let rewardPerYear = await getRewardPerYear(contract);
-  //console.log(`rewardPerYear`, rewardPerYear.toString())
-  const totalSupply = new BigNumber(await contract.methods.totalSupply().call()).div(10 ** 18);
-  let assetPrice = new BigNumber(35);
-  //console.log(`totalSupply`, totalSupply.toString())
+  if (yam && contract) {
+    const curPrice = new BigNumber(await getCurrentPrice(yam));
+    let rewardPerYear = await getRewardPerYear(contract);
+    const totalSupplyInPool = new BigNumber(await contract.methods.totalSupply().call()).div(10 ** 18);
 
-  let apy = rewardPerYear.multipliedBy(curPrice).dividedBy(totalSupply.multipliedBy(assetPrice)).multipliedBy(100).toNumber()
-  return apy
+    const uni_token = yam.contracts.unipool_token;
+    const balanceOfWAR = new BigNumber(await yam.contracts.war.methods.balanceOf(uni_token.options.address).call());
+    const balanceOfWETH = new BigNumber(await yam.contracts.weth_token.methods.balanceOf(uni_token.options.address).call());
+    const ethPrice = new BigNumber(await getETHPrice(yam));
+    const totalSupply = new BigNumber(await uni_token.methods.totalSupply().call());
+
+    let assetPrice = balanceOfWAR.multipliedBy(curPrice).plus(
+      balanceOfWETH.multipliedBy(ethPrice)
+    ).dividedBy(
+      totalSupply
+    )
+
+    /*console.log(`rewardPerYear`, rewardPerYear.toString())
+    console.log(`totalSupplyInPool`,totalSupplyInPool.toString())
+    console.log(uni_token);
+    console.log(`balanceOfWAR`,balanceOfWAR.toString())
+    console.log(`balanceOfWETH`,balanceOfWETH.toString())
+    console.log(`ethPrice`,ethPrice.toString())
+    console.log(`totalSupply`,totalSupply.toString())
+    console.log(`assetPrice`, assetPrice.toString())*/
+
+    let apy = rewardPerYear.multipliedBy(curPrice).dividedBy(totalSupplyInPool.multipliedBy(assetPrice)).multipliedBy(100).toNumber()
+    return apy
+  }
 }
 
 export const getBattleAPR = async (contract, yam) => {

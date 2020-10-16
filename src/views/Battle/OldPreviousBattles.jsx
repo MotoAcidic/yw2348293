@@ -85,6 +85,7 @@ const Versus = ({ history }) => {
 			day = "Oct " + (item[0].day - 2);
 		}
 
+		console.log(item[0].pool1.totalVotes);
 		return (
 			<VSContentContainer>
 				{item[0].day - 2 ? <div>{day}</div> : <div>Sept 30th</div>}
@@ -224,7 +225,8 @@ const Divider = styled.div`
 margin-left: 10%;
 width: 80%;
   height: 2px;
-  background-color: rgba(256,256,256,0.3);
+  opacity: 0.5;
+  background-color: #ffffff;
 `
 
 

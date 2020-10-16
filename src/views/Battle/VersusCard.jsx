@@ -276,7 +276,7 @@ const ButtonContainer = styled.div`
 
 `
 const VSContentContainer = !isMobile() ? styled.div`
-width: 600px;
+width: 540px;
 height: 600px;
 display: flex;
 flex-direction: column;

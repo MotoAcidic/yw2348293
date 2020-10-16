@@ -21,8 +21,7 @@ import About from './views/About/About'
 import Roadmap from './views/Roadmap/Roadmap'
 import theme from './theme'
 import { createGlobalStyle } from 'styled-components';
-import GilroyBold from "./assets/fonts/Gilroy-Bold.otf";
-import GilroyMed from "./assets/fonts/Gilroy-Medium.otf";
+import Gilroy from "./assets/fonts/Gilroy-Bold.otf";
 import SFMono from "./assets/fonts/SFMonoSemibold.woff";
 
 const GlobalStyle = createGlobalStyle`
@@ -36,14 +35,8 @@ const GlobalStyle = createGlobalStyle`
 
 @font-face {
   font-family: "Gilroy";
-  src: local(Gilroy-Bold), url(${GilroyBold}) format("opentype");
+  src: local(Gilroy-Bold), url(${Gilroy}) format("opentype");
   font-weight: bold;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Gilroy";
-  src: local(Gilroy-Medium), url(${GilroyMed}) format("opentype");
-  font-weight: normal;
   font-style: normal;
 }
 

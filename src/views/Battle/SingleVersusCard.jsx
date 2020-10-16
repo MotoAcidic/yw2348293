@@ -240,7 +240,7 @@ height: 80px;`
 const ButtonContainer = styled.div``
 
 const VersusItem = !isMobile() ? styled.div`
-width: 600px;
+width: 540px;
 display: flex;
 flex-direction: row;
 justify-content: space-between;

@@ -101,7 +101,11 @@ margin: 20px 0 20px 0;
 	color: #ffffff;
 `;
 
-const ButtonContainer = styled.div``
+
+const ButtonContainer = styled.div`
+
+`
+
 
 const StyledContent = styled.div`
   align-items: center;
@@ -128,7 +132,7 @@ color: #ffffff;
 `
 
 const VersusCard = !isMobile() ? styled.div`
-width: 540px;
+width: 480px;
 display: flex;
 flex-direction: column;
 justify-content: space-between;

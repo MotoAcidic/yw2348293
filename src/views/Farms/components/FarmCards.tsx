@@ -251,7 +251,6 @@ bottom: -2px;
 left: -2px;
 z-index: 0;
 `
-
 const StyledDetail = styled.div`
   height: 60px;
   display: flex;
@@ -319,14 +318,25 @@ margin-top: 40px;
   width: 100%;
 `
 
+const StyledRow = !isMobile() ? styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: ${props => props.theme.spacing[4]}px;
+` : styled.div`
+flex-direction: column;
+width: 100%;
+align-items: center;
+`
+
 const S1CardWrapper = !isMobile() ? styled.div`
 position: relative;
   display: flex;
 ` : styled.div`
 position: relative;
   display: flex;
-  width: 90vw;
-  align-items: center;
+  width: 275px;
+  height: 370px;
   margin: 0 auto 20px auto;
 `
 
@@ -336,8 +346,8 @@ position: relative;
 ` : styled.div`
 position: relative;
   display: flex;
-  width: 90vw;
-  align-items: center;
+  width: 275px;
+  height: 370px;
   margin: 0 auto 20px auto;
 `
 

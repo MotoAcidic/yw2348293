@@ -42,8 +42,6 @@ const Versus = ({ battles, question }) => {
 	console.log(battles);
 	const [voted, setVoted] = useState(false)
 	const [checked, setChecked] = useState(false);
-	const [leftData, setLeftData] = useState(null);
-	const [rightData, setRightData] = useState(null);
 	const [questionResponse, setQuestionResponse] = useState("");
 	const farmTemplate = {
 		icon: "🤔",
@@ -134,6 +132,7 @@ const Versus = ({ battles, question }) => {
 
 	useEffect(() => {
 		if (question) {
+			setQuestionResponse(cookie.get(question._id));
 			const questionVoted = cookie.get(question._id + "1");
 			if (questionVoted) {
 				setVoted(true);
@@ -149,18 +148,11 @@ const Versus = ({ battles, question }) => {
 				console.log(err);
 			})
 		}
-		if (question) {
-			setQuestionResponse(cookie.get(question._id));
-		}
 		if (battles) {
 			setChecked(cookie.get(battles._id))
 		}
-		if (!leftData || !rightData) {
-			axios.get(`https://api.coingecko.com/api/v3/coins/yieldwars-com/market_chart?vs_currency=usd&days=2`).then(res => {
-				console.log("geck", res.data);
-			})
-		}
-	}, [account, question, battles, leftData, rightData])
+
+	}, [account, question, battles])
 
 	return (
 		<>
@@ -218,7 +210,7 @@ width: 100%;
 display: flex;
 flex-direction: row;
 justify-content: space-around;
-` : `
+` : styled.div`
 width: 100%;
 display: flex;
 flex-direction: column;
@@ -227,12 +219,11 @@ align-items: center;`
 const Divider = !isMobile() ? styled.div`
 background-color: rgba(256,256,256,0.3);
 width: 2px;
-` : `
+` : styled.div`
 height: 2px;
 width: 80%;
-margin: auto;
-background-color: rgba(256,256,256,0.3);
-`
+margin: 20px auto 30px auto;
+background-color: rgba(256,256,256,0.3);`
 
 const RecDesc = styled.div`
 font-family: "Gilroy";
@@ -283,26 +274,11 @@ font-family: "Gilroy";
   font-style: normal;
   line-height: 1;
   letter-spacing: normal;
-  color: #ffffff;
-	height: 247px;
+	color: #ffffff;
+	padding-top: 20px;
+	padding-bottom: 20px;
 	border-radius: 8px;
 	border: solid 2px rgba(255, 183, 0, 0.3);
 	background-color: rgba(256,256,256,0.08);`
-
-const StyledTitle = styled.h4`
-margin: 0;
-font-family: "Gilroy";
-font-size: 25px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-text-align: center;
-color: #ffffff;
-  padding: 0;
-`
-
-
 
 export default Versus

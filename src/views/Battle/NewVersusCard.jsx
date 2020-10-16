@@ -165,38 +165,34 @@ const Versus = ({ battles, question }) => {
 	return (
 		<>
 			{battles &&
-				<VersusItem>
-					<VersusCard>
-						<StyledContent>
-							<FarmGraph farm={battle.farm2} />
-							{checked == 1 ? (
-								<ButtonContainer onClick={() => pick(1)}>
+				<VersusContainer>
+					<RecDesc>
+						Which coin will change in price by the highest percentage in 24 hours?
+      	</RecDesc>
+					<Options>
+						<VersusItem>
+							<FarmGraph farm={battle.farm1} order={1} />
+							<ButtonContainer onClick={() => pick(1)}>
+								{checked == 1 ? (
 									<img src={checkedIcon} width="30px" />
-								</ButtonContainer>
-							) : (
-									<ButtonContainer onClick={() => pick(1)}>
+								) : (
 										<img src={uncheckedIcon} width="30px" />
-									</ButtonContainer>
-								)}
-						</StyledContent>
-					</VersusCard>
-                    VS
-					<VersusCard>
-						<StyledContent>
-							<CardIcon>{battle.farm2.icon}</CardIcon>
-							<StyledTitle>{battle.farm2.name}</StyledTitle>
-							{checked == 2 ? (
-								<ButtonContainer onClick={() => pick(2)}>
+									)}
+							</ButtonContainer>
+						</VersusItem>
+						<Divider />
+						<VersusItem>
+							<FarmGraph farm={battle.farm2} order={2} />
+							<ButtonContainer onClick={() => pick(2)}>
+								{checked == 2 ? (
 									<img src={checkedIcon} width="30px" />
-								</ButtonContainer>
-							) : (
-									<ButtonContainer onClick={() => pick(2)}>
+								) : (
 										<img src={uncheckedIcon} width="30px" />
-									</ButtonContainer>
-								)}
-						</StyledContent>
-					</VersusCard>
-				</VersusItem>
+									)}
+							</ButtonContainer>
+						</VersusItem>
+					</Options>
+				</VersusContainer>
 			}
 
 			{question &&
@@ -213,15 +209,42 @@ const Versus = ({ battles, question }) => {
 	)
 }
 
+const VersusItem = styled.div`
+display: flex;
+flex-direction: column;`
+
+const Options = !isMobile() ? styled.div`
+width: 100%;
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+` : `
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;`
+
+const Divider = !isMobile() ? styled.div`
+background-color: rgba(256,256,256,0.3);
+width: 2px;
+` : `
+height: 2px;
+width: 80%;
+margin: auto;
+background-color: rgba(256,256,256,0.3);
+`
+
 const RecDesc = styled.div`
 font-family: "Gilroy";
   font-size: 20px;
-  font-weight: bold;
-  font-stretch: normal;
+	font-stretch: normal;
   font-style: normal;
-  line-height: 1;
+  line-height: 1.44;
   letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
 	color: #ffffff;
+	margin: 0 20px 20px 20px;
 `;
 
 const Space = styled.div`
@@ -229,10 +252,10 @@ height: 80px;`
 
 const ButtonContainer = styled.div``
 
-const VersusItem = !isMobile() ? styled.div`
+const VersusContainer = !isMobile() ? styled.div`
 width: 540px;
 display: flex;
-flex-direction: row;
+flex-direction: column;
 justify-content: space-between;
 align-items: center;
 font-size: 30px;
@@ -244,6 +267,10 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
+border-radius: 8px;
+border: solid 2px rgba(255, 183, 0, 0.3);
+background-color: rgba(256,256,256,0.08);
+padding: 30px;
 ` : styled.div`
 margin: 40px 0 40px 0;
 width: 90vw;
@@ -257,15 +284,10 @@ font-family: "Gilroy";
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
-`
-
-const StyledContent = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  height: 100%;
-`
+	height: 247px;
+	border-radius: 8px;
+	border: solid 2px rgba(255, 183, 0, 0.3);
+	background-color: rgba(256,256,256,0.08);`
 
 const StyledTitle = styled.h4`
 margin: 0;
@@ -281,17 +303,6 @@ color: #ffffff;
   padding: 0;
 `
 
-const VersusCard = !isMobile() ? styled.div`
-width: 220px;
-  height: 247px;
-  border-radius: 8px;
-  border: solid 2px rgba(255, 183, 0, 0.3);
-  background-color: rgba(256,256,256,0.08);
-` : styled.div`width: 40%;
-height: 247px;
-border-radius: 8px;
-border: solid 2px rgba(255, 183, 0, 0.3);
-background-color: rgba(256,256,256,0.08);
-`
+
 
 export default Versus

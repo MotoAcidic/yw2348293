@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import CardIcon from '../../components/CardIcon'
 import axios from 'axios'
 import './swal.css'
 import { Chart } from 'react-charts'
@@ -14,30 +13,82 @@ function isMobile() {
 	}
 }
 
+function getGeckoId(coin) {
+	switch (coin.toLowerCase()) {
+		// case "link":
+		// 	return "link";
+		case "snx":
+			return "aave-snx";
+		case "yfi":
+			return "yearn-finance";
+		case "comp":
+			return "compound-coin";
+		case "chads":
+			return "chads-vc";
+		case "lend":
+			return "ethlend";
+		case "uni":
+			return "uniswap";
+		case "wnxm":
+			return "wrapped-nxm";
+		case "mkr":
+			return "maker";
+		case "bzrx":
+			return "bzx-protocol";
+		case "srm":
+			return "serum";
+		case "farm":
+			return "harvest-finance";
+		case "based":
+			return "based-money";
+		case "send":
+			return "social-send";
+		case "hate":
+			return "heavens-gate";
+		case "stbu":
+			return "stobox-token";
+		case "yfl":
+			return "yflink";
+		// case "rope":
+		// 	return "rope";
+		case "z":
+			//cannot find
+			return "";
+		// case "cream":
+		// 	return "";
+		case "value":
+			return "value-liquidity";
+		default:
+			return (coin);
+	}
+}
+
+function numberWithCommas(x) {
+	return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const calcPercentChange = (start, end) => {
 	let final = 0;
 	console.log("startr", start, end)
 	if (start > end) {
-		final = 100 * (start - end) / start;
+		final = -100 * (start - end) / start;
 	} else if (start < end) {
 		final = 100 * (end - start) / start
 	}
-	return final
+	return final.toFixed(1);
 }
 
-const FarmGraph = ({ farm }) => {
+const FarmGraph = ({ farm, order }) => {
 	const [price, setPrice] = useState(null);
 	const [marketCap, setMarketCap] = useState(null);
 	const [graphData, setGraphData] = useState(null);
 	const [recentChange, setRecentChange] = useState(null);
 
-
 	if (!price || !marketCap || !graphData) {
-		axios.get(`https://api.coingecko.com/api/v3/coins/yieldwars-com/market_chart?vs_currency=usd&days=1`).then(res => {
-			console.log("geck", res.data);
+		axios.get(`https://api.coingecko.com/api/v3/coins/${getGeckoId(farm.id)}/market_chart?vs_currency=usd&days=1`).then(res => {
 			const { market_caps, prices } = res.data;
-			setMarketCap(market_caps[market_caps.length - 1][1]);
-			setPrice(prices[prices.length - 1][1]);
+			setMarketCap(numberWithCommas(market_caps[market_caps.length - 1][1].toFixed(0)));
+			setPrice(numberWithCommas(prices[prices.length - 1][1].toFixed(2)));
 			let chartData = [];
 			// For using 2 days (24 data points)
 			// const start = Math.floor(prices.length / 2);
@@ -47,8 +98,6 @@ const FarmGraph = ({ farm }) => {
 			for (let i = 0; i < prices.length; i++) {
 				chartData.push([i, prices[i][1]]);
 			}
-			// 	const percentChange = 100 * (prices[prices.length - 1][1] - prices[0][1]) / prices[0][1];
-			// setRecentChange(percentChange);
 			setRecentChange(calcPercentChange(prices[0][1], prices[prices.length - 1][1]))
 			console.log("mechart", chartData);
 			setGraphData(chartData);
@@ -57,10 +106,10 @@ const FarmGraph = ({ farm }) => {
 
 	const axes = React.useMemo(() => [
 		{
-			primary: true, type: 'time', position: 'bottom', showGrid: false, showTicks: false,
+			primary: true, type: 'time', position: 'bottom', show: false
 		},
 		{
-			type: 'linear', position: 'left', showGrid: false, showTicks: false,
+			type: 'linear', position: 'left', showGrid: false, showTicks: false, show: false,
 		}
 	])
 	const data = React.useMemo(() => [
@@ -75,78 +124,77 @@ const FarmGraph = ({ farm }) => {
 		[]
 	);
 
+	console.log("farm", farm)
 
 	return (
 		<StyledContent>
-			<CardIcon>{farm.icon}</CardIcon>
-			<StyledTitle>{farm.name}</StyledTitle>
-			{graphData &&
-				<ChartContainer>
-					<Chart data={data} axes={axes} series={series} />
-				</ChartContainer>
+			{order === 1 ?
+				<CardIcon1>{farm.icon}</CardIcon1>
+				:
+				<CardIcon2>{farm.icon}</CardIcon2>
+
 			}
+			<CardData>
+				<StyledTitle>{farm.depositToken}</StyledTitle>
+				<Text>${price}</Text>
+				<SubTitle>Market Cap</SubTitle>
+				<Text>${marketCap}</Text>
+				<SubTitle>Recent Change</SubTitle>
+				{recentChange >= 0 ?
+					<GreenText>+{recentChange}%</GreenText>
+					:
+					<RedText>{recentChange}%</RedText>
+				}
+				{graphData &&
+					<ChartContainer>
+						<Chart data={data} axes={axes} series={series} />
+					</ChartContainer>
+				}
+			</CardData>
 		</StyledContent>
 	)
 }
 
-const ChartContainer = styled.div`height: 75px; width: 200px;`
+const CardIcon1 = styled.div`
+	font-size: 35px;
+	height: 50px;
+	width: 50px;
+	background-color: #BAE7E3;
+  border-radius: 50%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 0px auto 16px;
+`
+const CardIcon2 = styled.div`
+	font-size: 35px;
+	height: 50px;
+	width: 50px;
+	background-color: #FFF6F9;
+  border-radius: 50%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 0px auto 16px;
+`
 
-const RecDesc = styled.div`
-font-family: "Gilroy";
-  font-size: 20px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-	color: #ffffff;
-`;
+const ChartContainer = styled.div`
+height: 50px;
+width: 170px;
+margin-bottom: 20px;`
 
-const Space = styled.div`
-height: 80px;`
-
-const ButtonContainer = styled.div``
-
-const VersusItem = !isMobile() ? styled.div`
-width: 540px;
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-align-items: center;
-font-size: 30px;
-margin: 20px auto 40px auto;
-font-family: "Gilroy";
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: #ffffff;
-` : styled.div`
-margin: 40px 0 40px 0;
-width: 90vw;
-display: flex;
-flex-direction: column;
-font-family: "Gilroy";
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
+const CardData = styled.div`
+margin-left: 10px;
 `
 
 const StyledContent = styled.div`
-  align-items: center;
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  height: 100%;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	height: 100%;
 `
 
-const StyledTitle = styled.h4`
-margin: 0;
+const StyledTitle = styled.div`
 font-family: "Gilroy";
 font-size: 25px;
 font-weight: bold;
@@ -156,20 +204,67 @@ line-height: 1;
 letter-spacing: normal;
 text-align: center;
 color: #ffffff;
-  padding: 0;
+	text-align: left;
+margin-bottom: 5px;
 `
 
-const VersusCard = !isMobile() ? styled.div`
-width: 220px;
-  height: 247px;
-  border-radius: 8px;
-  border: solid 2px rgba(255, 183, 0, 0.3);
-  background-color: rgba(256,256,256,0.08);
-` : styled.div`width: 40%;
-height: 247px;
-border-radius: 8px;
-border: solid 2px rgba(255, 183, 0, 0.3);
-background-color: rgba(256,256,256,0.08);
+const SubTitle = styled.div`
+font-family: "Gilroy";
+margin-bottom: 5px;
+font-size: 16px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+color: #ffffff;
+	text-align: left;
+`
+const Text = styled.div`
+font-family: "Gilroy";
+font-size: 16px;
+font-weight: normal;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+color: #ffffff;
+	text-align: left;
+	margin-bottom: 10px;
+	letter-spacing: 1px;
+`
+const GreenText = styled.div`
+font-family: "Gilroy";
+font-size: 16px;
+font-weight: normal;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+color: #ffffff;
+	text-align: left;
+	margin-bottom: 10px;
+	letter-spacing: 1px;
+	color: #38ff00;
+`
+const RedText = styled.div`
+font-family: "Gilroy";
+font-size: 16px;
+font-weight: normal;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+color: #ffffff;
+	text-align: left;
+	margin-bottom: 10px;
+	letter-spacing: 1px;
+	color: #ff4343;
+
 `
 
 export default FarmGraph;

@@ -62,6 +62,7 @@ if (chainId === 1) {
     farm_pool: "0xD74a66c60761231960b9A67daB72871E545C72f5",
     wnxm_pool: "0xCC3A2c4891740e2055f4C6875a28BB9EB32f2e69",
     based_pool: "0x67bA643d6acDB7c12F913f0bbE4632df9889e0E5",
+    
     unipool_pool: "0xA11cB7F893F3939f91d3c6E23025B41877190D6c",
     battlepool_pool: "0xa9CDb5e3C911884Ca6D4b32273c219B536Ee9e6A",
 
@@ -78,13 +79,11 @@ if (chainId === 1) {
     srm: "0x476c5e26a75bd202a9683ffd34359c0cc15be0ff", // 6 decimals
     farm: "0xa0246c9032bc3a600820415ae600c6388619a14d",
     based: "0x26cF82e4aE43D31eA51e72B663d26e26a75AF729",
+
     unipool: "0x24004f6fCE7e3842e5a308eAC032E09f1883CeF8",
     battlepool: "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde",
-
     war: "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde",
-
     UNIRouter: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-
     Pricing: "0xA056b5a1fC97ea86D949cdB67Be4950e29942421",
   }
 } else { // 42 = kovan

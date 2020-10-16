@@ -55,6 +55,8 @@ function getGeckoId(coin) {
 		case "z":
 			//cannot find
 			return "";
+		case "meme":
+			return "degenerator";
 		// case "cream":
 		// 	return "";
 		case "value":

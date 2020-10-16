@@ -14,7 +14,8 @@ function isMobile() {
 }
 
 function getGeckoId(coin) {
-	switch (coin.toLowerCase()) {
+	coin = coin.toLowerCase();
+	switch (coin) {
 		// case "link":
 		// 	return "link";
 		case "snx":
@@ -22,11 +23,11 @@ function getGeckoId(coin) {
 		case "yfi":
 			return "yearn-finance";
 		case "comp":
-			return "compound-coin";
+			return "compound-governance-token";
 		case "chads":
 			return "chads-vc";
-		case "lend":
-			return "ethlend";
+		case "wbtc":
+			return "wrapped-bitcoin";
 		case "uni":
 			return "uniswap";
 		case "wnxm":
@@ -87,6 +88,7 @@ const FarmGraph = ({ farm, order }) => {
 	if (!price || !marketCap || !graphData) {
 		axios.get(`https://api.coingecko.com/api/v3/coins/${getGeckoId(farm.id)}/market_chart?vs_currency=usd&days=1`).then(res => {
 			const { market_caps, prices } = res.data;
+			console.log("jfia", market_caps, prices)
 			setMarketCap(numberWithCommas(market_caps[market_caps.length - 1][1].toFixed(0)));
 			setPrice(numberWithCommas(prices[prices.length - 1][1].toFixed(2)));
 			let chartData = [];
@@ -99,7 +101,6 @@ const FarmGraph = ({ farm, order }) => {
 				chartData.push([i, prices[i][1]]);
 			}
 			setRecentChange(calcPercentChange(prices[0][1], prices[prices.length - 1][1]))
-			console.log("mechart", chartData);
 			setGraphData(chartData);
 		})
 	}
@@ -132,10 +133,9 @@ const FarmGraph = ({ farm, order }) => {
 				<CardIcon1>{farm.icon}</CardIcon1>
 				:
 				<CardIcon2>{farm.icon}</CardIcon2>
-
 			}
 			<CardData>
-				<StyledTitle>{farm.depositToken}</StyledTitle>
+				<StyledTitle>{farm.id}</StyledTitle>
 				<Text>${price}</Text>
 				<SubTitle>Market Cap</SubTitle>
 				<Text>${marketCap}</Text>

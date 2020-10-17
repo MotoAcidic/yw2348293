@@ -42,6 +42,8 @@ function getGeckoId(coin) {
 			return "harvest-finance";
 		case "based":
 			return "based-money";
+			case "yam":
+				return "yam-2";
 		case "send":
 			return "social-send";
 		case "hate":
@@ -50,6 +52,8 @@ function getGeckoId(coin) {
 			return "stobox-token";
 		case "yfl":
 			return "yflink";
+		case "snow":
+			return "snowswap";
 		// case "rope":
 		// 	return "rope";
 		case "z":
@@ -57,8 +61,8 @@ function getGeckoId(coin) {
 			return "";
 		case "meme":
 			return "degenerator";
-		// case "cream":
-		// 	return "";
+		case "cream":
+			return "cream-2";
 		case "value":
 			return "value-liquidity";
 		default:

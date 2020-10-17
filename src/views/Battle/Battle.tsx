@@ -8,7 +8,8 @@ import { getAPR, getPoolEndTime } from "../../yamUtils";
 import useYam from "../../hooks/useYam";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
-import NewVersusCard from "./NewVersusCard";
+import NewVSCardSingle from "./NewVCardSingle";
+import NewVSCard from "./NewVCard";
 
 import Background from '../../assets/img/bg3.svg'
 import Pool3 from "./Pool3";
@@ -191,7 +192,9 @@ const Battle: React.FC = () => {
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
 
-            <NewVersusCard battles={battles} question={dailyQuestion}/>
+            {battles.length === 2 && <NewVSCard battles={battles} question={dailyQuestion} />}
+            {/* in case no battle, but still question */}
+            {(battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <NewVSCardSingle battles={battles} question={dailyQuestion} />}
 
             {battles.length > 0 &&
               <Title>Step 2: Vote for the armies you will fight for</Title>

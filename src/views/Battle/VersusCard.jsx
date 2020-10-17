@@ -3,19 +3,13 @@ import styled from 'styled-components'
 
 import Button from '../../components/Button'
 import CardIcon from '../../components/CardIcon'
-import Page from '../../components/Page'
 import checkedIcon from '../../assets/img/checked.png'
 import uncheckedIcon from '../../assets/img/unchecked.png'
 
-import { getAPR, getPoolEndTime } from '../../yamUtils'
 import useYam from '../../hooks/useYam'
 import { useWallet } from 'use-wallet'
-
 import DailyQuestion from "./DailyQuestion.jsx";
-import Warning from "../../assets/img/warning@2x.png";
-
 import useFarms from '../../hooks/useFarms'
-
 import Cookie from 'universal-cookie'
 import axios from 'axios'
 import Swal from 'sweetalert2'

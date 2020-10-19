@@ -131,7 +131,7 @@ const FarmGraph = ({ farm, order }) => {
 		[]
 	);
 
-	console.log("farm", farm)
+	// console.log("farm", farm)
 
 	return (
 		<StyledContent>

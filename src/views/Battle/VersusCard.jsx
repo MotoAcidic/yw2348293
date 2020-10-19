@@ -13,7 +13,7 @@ import './swal.css'
 import FarmGraph from "./FarmGraph";
 import VotingBalance from "./VotingBalance";
 import DailyQuestion from "./DailyQuestion.jsx";
-
+import CountDown from "./CountDown";
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -170,9 +170,7 @@ const Versus = ({ battles, question }) => {
 					<RecDesc>
 						Which coin will change in price by the highest percentage in 24 hours?
       		</RecDesc>
-					<Desc>
-						Voting ends in 08:53:18
-      		</Desc>
+					<CountDown/>
 					<VersusContainer>
 						<Options>
 							<VersusItem>
@@ -283,18 +281,6 @@ font-family: "Gilroy";
 	color: #ffffff;
 	margin-bottom: 10px;
 	`;
-
-const Desc = styled.div`
-font-family: "Gilroy";
-  font-size: 20px;
-	font-stretch: normal;
-  font-style: normal;
-  letter-spacing: normal;
-  text-align: center;
-  color: #ffffff;
-	color: #ffffff;
-	margin-bottom: 20px;
-`;
 
 const ButtonContainer = styled.div`
 display: flex;

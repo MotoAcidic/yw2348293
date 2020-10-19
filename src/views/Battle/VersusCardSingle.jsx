@@ -6,6 +6,7 @@ import uncheckedIcon from '../../assets/img/unchecked.png'
 import useYam from '../../hooks/useYam'
 import { useWallet } from 'use-wallet'
 import DailyQuestion from "./DailyQuestion.jsx";
+import CountDown from "./CountDown";
 
 import useFarms from '../../hooks/useFarms'
 import Cookie from 'universal-cookie'
@@ -155,6 +156,7 @@ const Versus = ({ battles, question }) => {
 					<RecDesc>
 						Which coin will change in price by the highest percentage in 24 hours?
       	</RecDesc>
+					<CountDown />
 					<Options>
 						<VersusItem>
 							<FarmGraph farm={battle.farm1} order={1} />

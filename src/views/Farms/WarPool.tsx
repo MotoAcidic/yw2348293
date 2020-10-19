@@ -122,7 +122,7 @@ const WarPool: React.FC = () => {
 					<Title>War Pool</Title>
 					<StyledDetails>
 						<StyledDetail>APR</StyledDetail>
-						<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
+						<StyledDetail>{apr.toFixed(3)}%</StyledDetail>
 					</StyledDetails>
 				</WarTopContainer>
 				<MobileInfoLines>
@@ -160,7 +160,7 @@ const WarPool: React.FC = () => {
 				<Title>War Pool</Title>
 				<StyledDetails>
 					<StyledDetail>APR</StyledDetail>
-					<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
+					<StyledDetail>{apr.toFixed(3)}%</StyledDetail>
 				</StyledDetails>
 			</WarTopContainer>
 			<InfoLines>

@@ -288,7 +288,7 @@ align-items: flex-start;
 height: 31px;`
 
 const VersusContainer = !isMobile() ? styled.div`
-width: 520px;
+width: 460px;
 display: flex;
 flex-direction: column;
 align-items: center;

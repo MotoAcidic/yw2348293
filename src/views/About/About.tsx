@@ -2,9 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import BigNumber from "bignumber.js";
 import Page from "../../components/Page";
-import Landscape from "../../assets/img/landscapebig.png";
 import Background from '../../assets/img/bg3.svg'
-import TallSky from "../../assets/img/tallsky.png";
 import useFarms from "../../hooks/useFarms";
 import useYam from "../../hooks/useYam";
 import { useWallet } from "use-wallet";

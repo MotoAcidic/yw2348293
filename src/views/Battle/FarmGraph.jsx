@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 import './swal.css'
 import { Chart } from 'react-charts'
+import Fight from "../../assets/img/fight@2x.png";
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -42,8 +43,8 @@ function getGeckoId(coin) {
 			return "harvest-finance";
 		case "based":
 			return "based-money";
-			case "yam":
-				return "yam-2";
+		case "yam":
+			return "yam-2";
 		case "send":
 			return "social-send";
 		case "hate":
@@ -90,10 +91,10 @@ const FarmGraph = ({ farm, order }) => {
 	const [graphData, setGraphData] = useState(null);
 	const [recentChange, setRecentChange] = useState(null);
 
-	if (!price || !marketCap || !graphData) {
+	if (!price) {
 		axios.get(`https://api.coingecko.com/api/v3/coins/${getGeckoId(farm.id)}/market_chart?vs_currency=usd&days=1`).then(res => {
 			const { market_caps, prices } = res.data;
-			console.log(farm.id, market_caps, prices);
+			// console.log(farm.id, market_caps, prices);
 			setMarketCap(numberWithCommas(market_caps[market_caps.length - 1][1].toFixed(0)));
 			setPrice(numberWithCommas(prices[prices.length - 1][1].toFixed(2)));
 			let chartData = [];
@@ -130,50 +131,62 @@ const FarmGraph = ({ farm, order }) => {
 		[]
 	);
 
+	console.log("farm", farm)
+
 	return (
 		<StyledContent>
-			{order === 1 ?
-				<CardIcon1>{farm.icon}</CardIcon1>
-				:
-				<CardIcon2>{farm.icon}</CardIcon2>
-			}
+			<CardIcon>{farm.icon}</CardIcon>
 			<CardData>
 				<StyledTitle>{farm.id}</StyledTitle>
 				<Text>${price}</Text>
 				<SubTitle>Market Cap</SubTitle>
-				<Text>${marketCap}</Text>
+				<Text>{marketCap !== "0" ? "$" + marketCap : "unknown"}</Text>
+				{graphData &&
+					<ChartContainer>
+						<Chart data={data} axes={axes} series={series} />
+					</ChartContainer>
+				}
 				<SubTitle>Recent Change</SubTitle>
 				{recentChange >= 0 ?
 					<GreenText>+{recentChange}%</GreenText>
 					:
 					<RedText>{recentChange}%</RedText>
 				}
-				{graphData &&
-					<ChartContainer>
-						<Chart data={data} axes={axes} series={series} />
-					</ChartContainer>
-				}
+				{farm.votes && (
+					<VotesContainer>
+						<VotesIcon />
+						<Votes>
+							<SubTitle>Current Votes</SubTitle>
+							<Text>{numberWithCommas(farm.votes)}</Text>
+						</Votes>
+					</VotesContainer>
+				)}
 			</CardData>
 		</StyledContent>
 	)
 }
 
-const CardIcon1 = styled.div`
-	font-size: 35px;
-	height: 50px;
-	width: 50px;
-	background-color: #BAE7E3;
-  border-radius: 50%;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin: 0px auto 16px;
+const VotesContainer = styled.div`
+display: flex;
+flex-direction: row;
+margin: 0 0 10px -40px;
 `
-const CardIcon2 = styled.div`
-	font-size: 35px;
+
+const VotesIcon = styled.div`
+display: flex;
+background-image: url(${Fight});
+background-size: cover;
+background-position: center;
+height: 28px;
+width: 28px;
+margin-right: 12px;`
+
+const Votes = styled.div``
+
+const CardIcon = styled.div`
+	font-size: 40px;
 	height: 50px;
 	width: 50px;
-	background-color: #FFF6F9;
   border-radius: 50%;
   align-items: center;
   display: flex;
@@ -182,8 +195,8 @@ const CardIcon2 = styled.div`
 `
 
 const ChartContainer = styled.div`
-height: 50px;
-width: 170px;
+height: 40px;
+width: 140px;
 margin-bottom: 20px;`
 
 const CardData = styled.div`

@@ -442,7 +442,7 @@ export const getDelegatedBalance = async (yam, account) => {
 
 export const getRewardPerYear = async (pool) => {
   let getRewardPerYear
-  if (pool.options.address.toLowerCase == "0x476c5e26a75bd202a9683ffd34359c0cc15be0ff") { // SRM has 6 decimals
+  if (pool.options.address.toLowerCase === "0x476c5e26a75bd202a9683ffd34359c0cc15be0ff") { // SRM has 6 decimals
     getRewardPerYear = new BigNumber(await pool.methods.rewardRate().call()).div(10 ** 6).multipliedBy(31536000);
   }
   else {
@@ -462,7 +462,7 @@ export const getTotalSupply = async (pool) => {
     return 0
   }
   let totalSupply = new BigNumber(await pool.contract.methods.totalSupply().call());
-  if (pool.id == "SRM") { // SRM has 6 decimals
+  if (pool.id === "SRM") { // SRM has 6 decimals
     totalSupply = totalSupply.div(10 ** 6);
   } else {
     totalSupply = totalSupply.div(10 ** 18);

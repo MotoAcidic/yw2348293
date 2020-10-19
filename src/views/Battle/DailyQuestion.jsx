@@ -43,7 +43,7 @@ const Question = ({ question, setResponse, voted }) => {
 		questionOptions.push(
 			<StyledContent>
 				<StyledTitle>{option.name}</StyledTitle>
-				{checked == option.name ? (
+				{checked === option.name ? (
 					<ButtonContainer onClick={() => pick(option.name)}>
 						<img src={checkedIcon} width="30px" />
 					</ButtonContainer>

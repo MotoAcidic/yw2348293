@@ -4,27 +4,20 @@ import styled from "styled-components";
 import axios from "axios";
 import Page from "../../components/Page";
 
-import { getAPR, getPoolEndTime } from "../../yamUtils";
 import useYam from "../../hooks/useYam";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
-import NewVSCardSingle from "./NewVCardSingle";
-import NewVSCard from "./NewVCard";
-
 import Background from '../../assets/img/bg3.svg'
 import Pool3 from "./Pool3";
 import useFarms from "../../hooks/useFarms";
-import useFarm from "../../hooks/useFarm";
 import { getWarStaked } from "../../yamUtils";
 import { getStats } from "./utils";
-import Cookie from "universal-cookie";
 import VersusCard from "./VersusCard.jsx";
-import SingleVersusCard from "./SingleVersusCard.jsx";
+import SingleVersusCard from "./VersusCardSingle.jsx";
 import BattleHistory from './PreviousBattles'
 import OldBattleHistory from './OldPreviousBattles'
 import Schedule from './Schedule'
 import Instructions from "./Instructions";
-import FightInstructions from '../../assets/img/flightinstructions.png'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -192,16 +185,13 @@ const Battle: React.FC = () => {
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
 
-            {battles.length === 2 && <NewVSCard battles={battles} question={dailyQuestion} />}
-            {/* in case no battle, but still question */}
-            {(battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <NewVSCardSingle battles={battles} question={dailyQuestion} />}
-
             {battles.length > 0 &&
               <Title>Step 2: Vote for the armies you will fight for</Title>
             }
             {battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
             {/* in case no battle, but still question */}
             {(battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
+
             {!battles.length &&
               <>
                 <Title>Voting is closed. Check back soon to see the winners.</Title>

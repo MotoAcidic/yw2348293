@@ -174,7 +174,7 @@ const Versus = ({ history }) => {
 		)
 	})
 
-	if (currSeasonHistory.length % 3 == 2) {
+	if (currSeasonHistory.length % 3 === 2) {
 		currSeasonHistory.push(<FillCard/>)
 	}
 

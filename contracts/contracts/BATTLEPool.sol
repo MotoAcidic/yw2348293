@@ -127,7 +127,7 @@ contract BATTLEPool is LPTokenWrapper, IRewardDistributionRecipient {
     }
 
     function addRewards(address[] calldata accounts, uint256[] calldata amounts) external onlyRewardDistribution returns (uint256 total) {
-        require(accounts.length == amounts.length, "arrays must match");
+        require(accounts.length === amounts.length, "arrays must match");
         for (uint256 i = 0; i < accounts.length; i++) {
             total = total.add(amounts[i]);
             rewards[accounts[i]] = rewards[accounts[i]].add(amounts[i]);
@@ -139,7 +139,7 @@ contract BATTLEPool is LPTokenWrapper, IRewardDistributionRecipient {
     }
 
     function distributePenalties(address[] calldata accounts, uint256[] calldata fractions) external onlyRewardDistribution returns (uint256 total) {
-        require(accounts.length == fractions.length, "arrays must match");
+        require(accounts.length === fractions.length, "arrays must match");
         if (penalties != 0) {
             for (uint256 i = 0; i < accounts.length; i++) {
                 uint256 fraction = penalties.mul(fractions[i]).div(1e20);

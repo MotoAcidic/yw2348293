@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
-
 import Button from '../../components/Button'
 import CardIcon from '../../components/CardIcon'
 import checkedIcon from '../../assets/img/checked.png'
@@ -13,8 +12,9 @@ import useFarms from '../../hooks/useFarms'
 import Cookie from 'universal-cookie'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import BettingCard from "./BettingCard";
-import './swal.css';
+import Warning from "../../assets/img/warning@2x.png";
+import BettingCardSingle from "./BettingCardSingle";
+import './swal.css'
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -34,86 +34,71 @@ function getServerURI() {
 
 let cookie = new Cookie()
 
-
 const Versus = ({ battles, question }) => {
-	// console.log(question);
+	battles = battles[0]
 	let [farms] = useFarms()
 	const yam = useYam()
 	const { account, connect } = useWallet()
-	// console.log(battles);
+	console.log(battles);
 	const [voted, setVoted] = useState(false)
-	const [checked1, setChecked1] = useState(cookie.get(battles[0]._id))
-	const [checked2, setChecked2] = useState(cookie.get(battles[1]._id))
-	const [questionResponse, setQuestionResponse] = useState(null);
+	const [checked, setChecked] = useState(false);
+	const [questionResponse, setQuestionResponse] = useState("");
 	const farmTemplate = {
 		icon: "🤔",
 		name: "THINKING Errors"
 	}
-	const battle1 = {
-		farm1: farms.find(farm => farm.id === battles[0].pool1.name) || farmTemplate,
-		farm2: farms.find(farm => farm.id === battles[0].pool2.name) || farmTemplate
-	}
-	const battle2 = {
-		farm1: farms.find(farm => farm.id === battles[1].pool1.name) || farmTemplate,
-		farm2: farms.find(farm => farm.id === battles[1].pool2.name) || farmTemplate
+
+	let battle;
+	if (battles) {
+
+		battle = {
+			farm1: farms.find(farm => farm.id === battles.pool1.name) || farmTemplate,
+			farm2: farms.find(farm => farm.id === battles.pool2.name) || farmTemplate
+		}
 	}
 
-	const pick1 = (g) => {
-		cookie.set(battles[0]._id, g)
-		setChecked1(g)
-	}
-
-	const pick2 = (g) => {
-		cookie.set(battles[1]._id, g)
-		setChecked2(g)
+	const pick = (g) => {
+		cookie.set(battles._id, g)
+		setChecked(g)
 	}
 
 	const castVote = async () => {
-		let vote1
-		let vote2
-		console.log(checked1, checked2);
-		if (!checked1 || !checked2 || (question && !questionResponse))
+		let vote;
+		if (!checked && !questionResponse)
 			return
-		if (checked1 === 1)
-			vote1 = battle1.farm1.id
-		if (checked1 === 2)
-			vote1 = battle1.farm2.id
-		if (checked2 === 1)
-			vote2 = battle2.farm1.id
-		if (checked2 === 2)
-			vote2 = battle2.farm2.id
-		console.log(vote1, vote2);
+
+		if (!battles) {
+			battles = {
+				_id: null
+			}
+		}
+
+		if (checked === 1)
+			vote = battle.farm1.id
+		if (checked === 2)
+			vote = battle.farm2.id
 		const signature = await yam.web3.eth.personal.sign(JSON.stringify({
 			address: account,
 			vote: [
 				{
-					vote: vote1,
-					_id: battles[0]._id,
-				},
-				{
-					vote: vote2,
-					_id: battles[1]._id,
+					vote: vote,
+					_id: battles._id,
 				}
 			]
 		}), account).catch(err => console.log(err))
-		console.log(signature);
 		axios.post(`${getServerURI()}/api/vote`, {
 			address: account,
 			vote: [
 				{
-					vote: vote1,
-					_id: battles[0]._id,
-				},
-				{
-					vote: vote2,
-					_id: battles[1]._id,
+					vote: vote,
+					_id: battles._id,
 				}
 			],
 			questionResponse,
 			sig: signature
 		}).then(res => {
-			console.log(res);
 			setVoted(true)
+			cookie.set(question._id + "1", true);
 			Swal.fire({
 				title: 'Your votes have been recorded successfully!',
 				text: 'Come back tomorrow. All rewards will be distributed tomorrow at 16:00 UTC',
@@ -128,9 +113,9 @@ const Versus = ({ battles, question }) => {
 				}
 			})
 		}).catch(err => {
-			console.log(err);
 			Swal.fire({
 				title: `Error submitting your votes: ${err.response.status}`,
+				icon: { Warning },
 				text: `Response: ${err.response.data}\n Please let us know and we'll take care of it.`,
 				width: '600',
 				height: '465',
@@ -146,11 +131,17 @@ const Versus = ({ battles, question }) => {
 	}
 
 	useEffect(() => {
+		if (question) {
+			const questionVoted = cookie.get(question._id + "1");
+			if (questionVoted) {
+				setVoted(true);
+			}
+		}
 		if (account) {
 			axios.post(`${getServerURI()}/api/status`, {
 				address: account,
 			}).then(res => {
-				console.log(res.data);
+				console.log("here", res.data);
 				setVoted(res.data)
 			}).catch(err => {
 				console.log(err);
@@ -159,92 +150,59 @@ const Versus = ({ battles, question }) => {
 		if (question) {
 			setQuestionResponse(cookie.get(question._id));
 		}
-	}, [account, question])
+		if (battles) {
+			setChecked(cookie.get(battles._id))
+		}
+	}, [account, question, battles])
 
 	return (
 		<>
-			<VSContentContainer>
+			{battles &&
 				<VersusItem>
 					<VersusCard>
 						<StyledContent>
-							<CardIcon>{battle1.farm1.icon}</CardIcon>
-							<StyledTitle>{battle1.farm1.name}</StyledTitle>
-							{checked1 === 1 ? (
-								<ButtonContainer onClick={() => pick1(1)}>
-									<img src={checkedIcon} width="30px" />
+							<CardIcon>{battle.farm1.icon}</CardIcon>
+							<StyledTitle>{battle.farm1.name}</StyledTitle>
+							{checked === 1 ? (
+								<ButtonContainer onClick={() => pick(1)}>
+									<img alt="check" src={checkedIcon} width="30px" />
 								</ButtonContainer>
 							) : (
-									<ButtonContainer onClick={() => pick1(1)}>
-										<img src={uncheckedIcon} width="30px" />
+									<ButtonContainer onClick={() => pick(1)}>
+										<img alt="check" src={uncheckedIcon} width="30px" />
 									</ButtonContainer>
 								)}
 						</StyledContent>
 					</VersusCard>
-					<VS>
-						VS
-										</VS>
+                    VS
+					<VersusCard>
+						<StyledContent>
+							<CardIcon>{battle.farm2.icon}</CardIcon>
+							<StyledTitle>{battle.farm2.name}</StyledTitle>
+							{checked === 2 ? (
+								<ButtonContainer onClick={() => pick(2)}>
+									<img alt="check" src={checkedIcon} width="30px" />
+								</ButtonContainer>
+							) : (
+									<ButtonContainer onClick={() => pick(2)}>
+										<img alt="check" src={uncheckedIcon} width="30px" />
+									</ButtonContainer>
+								)}
+						</StyledContent>
+					</VersusCard>
+				</VersusItem>
+			}
 
-					<VersusCard>
-						<StyledContent>
-							<CardIcon>{battle1.farm2.icon}</CardIcon>
-							<StyledTitle>{battle1.farm2.name}</StyledTitle>
-							{checked1 === 2 ? (
-								<ButtonContainer onClick={() => pick1(2)}>
-									<img src={checkedIcon} width="30px" />
-								</ButtonContainer>
-							) : (
-									<ButtonContainer onClick={() => pick1(2)}>
-										<img src={uncheckedIcon} width="30px" />
-									</ButtonContainer>
-								)}
-						</StyledContent>
-					</VersusCard>
-				</VersusItem>
-				<VersusItem>
-					<VersusCard>
-						<StyledContent>
-							<CardIcon>{battle2.farm1.icon}</CardIcon>
-							<StyledTitle>{battle2.farm1.name}</StyledTitle>
-							{checked2 === 1 ? (
-								<ButtonContainer onClick={() => pick2(1)}>
-									<img src={checkedIcon} width="30px" />
-								</ButtonContainer>
-							) : (
-									<ButtonContainer onClick={() => pick2(1)}>
-										<img src={uncheckedIcon} width="30px" />
-									</ButtonContainer>
-								)}
-						</StyledContent>
-					</VersusCard>
-					<VS>
-						VS
-										</VS>
-					<VersusCard>
-						<StyledContent>
-							<CardIcon>{battle2.farm2.icon}</CardIcon>
-							<StyledTitle>{battle2.farm2.name}</StyledTitle>
-							{checked2 === 2 ? (
-								<ButtonContainer onClick={() => pick2(2)}>
-									<img src={checkedIcon} width="30px" />
-								</ButtonContainer>
-							) : (
-									<ButtonContainer onClick={() => pick2(2)}>
-										<img src={uncheckedIcon} width="30px" />
-									</ButtonContainer>
-								)}
-						</StyledContent>
-					</VersusCard>
-				</VersusItem>
-			</VSContentContainer>
-			<BettingCard battles={battles}/>
+			<BettingCardSingle battles={battles}/>
 
 			{question &&
-				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} voted={voted} />
+				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} />
 			}
+
 			{account ? <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button> :
-						<RecDesc>
-							connect your wallet to participate
-					</RecDesc>
+				<RecDesc>
+					connect your wallet to participate
+				</RecDesc>
 			}
 			<Space />
 		</>
@@ -262,34 +220,31 @@ font-family: "Gilroy";
 	color: #ffffff;
 `;
 
-const VS = styled.div`
-width: 10%;
-`
-
 const Space = styled.div`
 height: 80px;`
 
-const ButtonContainer = styled.div`
+const ButtonContainer = styled.div``
 
-`
-const VSContentContainer = !isMobile() ? styled.div`
+const VersusItem = !isMobile() ? styled.div`
 width: 600px;
 display: flex;
-flex-direction: column;
-justify-content: space-evenly;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+font-size: 30px;
+margin: 20px auto 40px auto;
 font-family: "Gilroy";
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
 ` : styled.div`
+margin: 40px 0 40px 0;
 width: 90vw;
 display: flex;
 flex-direction: column;
-justify-content: space-between;
 font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;
@@ -307,6 +262,7 @@ const StyledContent = styled.div`
   justify-content: space-evenly;
   height: 100%;
 `
+
 const StyledTitle = styled.h4`
 margin: 0;
 font-family: "Gilroy";
@@ -321,14 +277,6 @@ color: #ffffff;
   padding: 0;
 `
 
-// const VersusCard = styled.div`
-// width: 220px;
-//   height: 247px;
-//   border-radius: 8px;
-//     border: solid 2px rgba(255, 183, 0, 0.3);
-//   background-color: #003677
-// `
-
 const VersusCard = !isMobile() ? styled.div`
 width: 220px;
   height: 247px;
@@ -340,24 +288,6 @@ height: 247px;
 border-radius: 8px;
 border: solid 2px rgba(255, 183, 0, 0.3);
 background-color: rgba(256,256,256,0.08);
-`
-
-const VersusItem = !isMobile() ? styled.div`
-width: 100%;
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-align-items: center;
-font-size: 30px;
-margin-bottom: 20px;
-` : styled.div`
-width: 100%;
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-align-items: center;
-font-size: 30px;
-margin-bottom: 20px;
 `
 
 export default Versus

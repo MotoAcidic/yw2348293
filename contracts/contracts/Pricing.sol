@@ -15,7 +15,7 @@ contract Pricing {
     }
 
     function getAmountsOutMulti(uint[] memory inAmounts, RouteInfo[] memory routeInfos) public view returns (uint[] memory amountsOut) {
-        require(inAmounts.length == routeInfos.length, "wrong size");
+        require(inAmounts.length === routeInfos.length, "wrong size");
         amountsOut = new uint[](inAmounts.length);
         for (uint256 i = 0; i < inAmounts.length; i++) {
             uint[] memory ret = unirouter.getAmountsOut(inAmounts[i], routeInfos[i].routesList);

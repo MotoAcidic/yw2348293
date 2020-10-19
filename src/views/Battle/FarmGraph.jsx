@@ -135,78 +135,35 @@ const FarmGraph = ({ farm, order }) => {
 
 	return (
 		<StyledContent>
-			<CardIcon>{farm.icon}</CardIcon>
-			<CardData>
-				<StyledTitle>{farm.id}</StyledTitle>
-				<Text>${price}</Text>
-				<SubTitle>Market Cap</SubTitle>
-				<Text>{marketCap !== "0" ? "$" + marketCap : "unknown"}</Text>
-				{graphData &&
-					<ChartContainer>
-						<Chart data={data} axes={axes} series={series} />
-					</ChartContainer>
-				}
-				<SubTitle>Recent Change</SubTitle>
-				{recentChange >= 0 ?
-					<GreenText>+{recentChange}%</GreenText>
-					:
-					<RedText>{recentChange}%</RedText>
-				}
-				{farm.votes && (
-					<VotesContainer>
-						<VotesIcon />
-						<Votes>
-							<SubTitle>Current Votes</SubTitle>
-							<Text>{numberWithCommas(farm.votes)}</Text>
-						</Votes>
-					</VotesContainer>
-				)}
-			</CardData>
+			<StyledTitle>{farm.id}</StyledTitle>
+			<Text>${price}</Text>
+			<SubTitle>Market Cap</SubTitle>
+			<Text>{marketCap !== "0" ? "$" + marketCap : "unknown"}</Text>
+			<SubTitle>Recent Change</SubTitle>
+			{recentChange >= 0 ?
+				<GreenText>+{recentChange}%</GreenText>
+				:
+				<RedText>{recentChange}%</RedText>
+			}
+			{graphData &&
+				<ChartContainer>
+					<Chart data={data} axes={axes} series={series} />
+				</ChartContainer>
+			}
 		</StyledContent>
 	)
 }
 
-const VotesContainer = styled.div`
-display: flex;
-flex-direction: row;
-margin: 0 0 10px -40px;
-`
-
-const VotesIcon = styled.div`
-display: flex;
-background-image: url(${Fight});
-background-size: cover;
-background-position: center;
-height: 28px;
-width: 28px;
-margin-right: 12px;`
-
-const Votes = styled.div``
-
-const CardIcon = styled.div`
-	font-size: 40px;
-	height: 50px;
-	width: 50px;
-  border-radius: 50%;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin: 0px auto 16px;
-`
 
 const ChartContainer = styled.div`
 height: 40px;
-width: 140px;
-margin-bottom: 20px;`
-
-const CardData = styled.div`
-margin-left: 10px;
+width: 170px;
+margin-bottom: 10px;
 `
 
 const StyledContent = styled.div`
   display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
+	flex-direction: column;
 	height: 100%;
 `
 

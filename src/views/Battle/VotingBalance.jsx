@@ -35,7 +35,7 @@ const FarmGraph = ({ farm1, farm2 }) => {
 }
 
 const BalanceBar = styled.div`
-width: calc(100% - 100px);
+width: calc(100% - 110px);
 height: 20px;
 background-color: #d20064;
 border-radius: 2px;
@@ -71,7 +71,7 @@ const CardIcon1 = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
-  margin-right: 10px;
+  margin-right: 15px;
 `
 
 const CardIcon2 = styled.div`
@@ -82,7 +82,7 @@ const CardIcon2 = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
-  margin-left: 10px;
+  margin-left: 15px;
 `
 
 const StyledContent = styled.div`

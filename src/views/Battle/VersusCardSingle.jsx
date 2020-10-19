@@ -1,20 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Button from '../../components/Button'
-import CardIcon from '../../components/CardIcon'
 import checkedIcon from '../../assets/img/checked.png'
 import uncheckedIcon from '../../assets/img/unchecked.png'
-
 import useYam from '../../hooks/useYam'
 import { useWallet } from 'use-wallet'
 import DailyQuestion from "./DailyQuestion.jsx";
+
 import useFarms from '../../hooks/useFarms'
 import Cookie from 'universal-cookie'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import Warning from "../../assets/img/warning@2x.png";
-import BettingCardSingle from "./BettingCardSingle";
 import './swal.css'
+import FarmGraph from "./FarmGraph";
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -39,7 +38,6 @@ const Versus = ({ battles, question }) => {
 	let [farms] = useFarms()
 	const yam = useYam()
 	const { account, connect } = useWallet()
-	console.log(battles);
 	const [voted, setVoted] = useState(false)
 	const [checked, setChecked] = useState(false);
 	const [questionResponse, setQuestionResponse] = useState("");
@@ -97,8 +95,7 @@ const Versus = ({ battles, question }) => {
 			questionResponse,
 			sig: signature
 		}).then(res => {
-			setVoted(true)
-			cookie.set(question._id + "1", true);
+			setVoted(true);
 			Swal.fire({
 				title: 'Your votes have been recorded successfully!',
 				text: 'Come back tomorrow. All rewards will be distributed tomorrow at 16:00 UTC',
@@ -131,12 +128,7 @@ const Versus = ({ battles, question }) => {
 	}
 
 	useEffect(() => {
-		if (question) {
-			const questionVoted = cookie.get(question._id + "1");
-			if (questionVoted) {
-				setVoted(true);
-			}
-		}
+
 		if (account) {
 			axios.post(`${getServerURI()}/api/status`, {
 				address: account,
@@ -153,47 +145,41 @@ const Versus = ({ battles, question }) => {
 		if (battles) {
 			setChecked(cookie.get(battles._id))
 		}
+
 	}, [account, question, battles])
 
 	return (
 		<>
 			{battles &&
-				<VersusItem>
-					<VersusCard>
-						<StyledContent>
-							<CardIcon>{battle.farm1.icon}</CardIcon>
-							<StyledTitle>{battle.farm1.name}</StyledTitle>
-							{checked === 1 ? (
-								<ButtonContainer onClick={() => pick(1)}>
-									<img alt="check" src={checkedIcon} width="30px" />
-								</ButtonContainer>
-							) : (
-									<ButtonContainer onClick={() => pick(1)}>
-										<img alt="check" src={uncheckedIcon} width="30px" />
-									</ButtonContainer>
-								)}
-						</StyledContent>
-					</VersusCard>
-                    VS
-					<VersusCard>
-						<StyledContent>
-							<CardIcon>{battle.farm2.icon}</CardIcon>
-							<StyledTitle>{battle.farm2.name}</StyledTitle>
-							{checked === 2 ? (
-								<ButtonContainer onClick={() => pick(2)}>
-									<img alt="check" src={checkedIcon} width="30px" />
-								</ButtonContainer>
-							) : (
-									<ButtonContainer onClick={() => pick(2)}>
-										<img alt="check" src={uncheckedIcon} width="30px" />
-									</ButtonContainer>
-								)}
-						</StyledContent>
-					</VersusCard>
-				</VersusItem>
+				<VersusContainer>
+					<RecDesc>
+						Which coin will change in price by the highest percentage in 24 hours?
+      	</RecDesc>
+					<Options>
+						<VersusItem>
+							<FarmGraph farm={battle.farm1} order={1} />
+							<ButtonContainer onClick={() => pick(1)}>
+								{checked === 1 ? (
+									<img src={checkedIcon} width="30px" />
+								) : (
+										<img src={uncheckedIcon} width="30px" />
+									)}
+							</ButtonContainer>
+						</VersusItem>
+						<Divider />
+						<VersusItem>
+							<FarmGraph farm={battle.farm2} order={2} />
+							<ButtonContainer onClick={() => pick(2)}>
+								{checked === 2 ? (
+									<img src={checkedIcon} width="30px" />
+								) : (
+										<img src={uncheckedIcon} width="30px" />
+									)}
+							</ButtonContainer>
+						</VersusItem>
+					</Options>
+				</VersusContainer>
 			}
-
-			<BettingCardSingle battles={battles}/>
 
 			{question &&
 				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} />
@@ -209,26 +195,55 @@ const Versus = ({ battles, question }) => {
 	)
 }
 
+const VersusItem = styled.div`
+display: flex;
+flex-direction: column;`
+
+const Options = !isMobile() ? styled.div`
+width: 100%;
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+` : styled.div`
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;`
+
+const Divider = !isMobile() ? styled.div`
+background-color: rgba(256,256,256,0.3);
+width: 2px;
+` : styled.div`
+height: 2px;
+width: 80%;
+margin: 20px auto 30px auto;
+background-color: rgba(256,256,256,0.3);`
+
 const RecDesc = styled.div`
 font-family: "Gilroy";
   font-size: 20px;
-  font-weight: bold;
-  font-stretch: normal;
+	font-stretch: normal;
   font-style: normal;
-  line-height: 1;
+  line-height: 1.44;
   letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
 	color: #ffffff;
+	margin: 0 20px 20px 20px;
 `;
 
 const Space = styled.div`
 height: 80px;`
 
-const ButtonContainer = styled.div``
-
-const VersusItem = !isMobile() ? styled.div`
-width: 600px;
+const ButtonContainer = styled.div`
 display: flex;
-flex-direction: row;
+align-items: flex-start;
+height: 31px;`
+
+const VersusContainer = !isMobile() ? styled.div`
+width: 520px;
+display: flex;
+flex-direction: column;
 justify-content: space-between;
 align-items: center;
 font-size: 30px;
@@ -240,6 +255,10 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
+border-radius: 8px;
+border: solid 2px rgba(255, 183, 0, 0.3);
+background-color: rgba(256,256,256,0.08);
+padding: 30px;
 ` : styled.div`
 margin: 40px 0 40px 0;
 width: 90vw;
@@ -252,42 +271,11 @@ font-family: "Gilroy";
   font-style: normal;
   line-height: 1;
   letter-spacing: normal;
-  color: #ffffff;
-`
-
-const StyledContent = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  height: 100%;
-`
-
-const StyledTitle = styled.h4`
-margin: 0;
-font-family: "Gilroy";
-font-size: 25px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-text-align: center;
-color: #ffffff;
-  padding: 0;
-`
-
-const VersusCard = !isMobile() ? styled.div`
-width: 220px;
-  height: 247px;
-  border-radius: 8px;
-  border: solid 2px rgba(255, 183, 0, 0.3);
-  background-color: rgba(256,256,256,0.08);
-` : styled.div`width: 40%;
-height: 247px;
-border-radius: 8px;
-border: solid 2px rgba(255, 183, 0, 0.3);
-background-color: rgba(256,256,256,0.08);
-`
+	color: #ffffff;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-radius: 8px;
+	border: solid 2px rgba(255, 183, 0, 0.3);
+	background-color: rgba(256,256,256,0.08);`
 
 export default Versus

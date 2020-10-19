@@ -169,7 +169,7 @@ const StyledContent = styled.div`
 
 const StyledTitle = styled.div`
 font-family: "Gilroy";
-font-size: 25px;
+font-size: 28px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
@@ -184,7 +184,7 @@ margin-bottom: 5px;
 const SubTitle = styled.div`
 font-family: "Gilroy";
 margin-bottom: 5px;
-font-size: 16px;
+font-size: 20px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;

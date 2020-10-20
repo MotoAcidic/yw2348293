@@ -26,7 +26,7 @@ const FarmGraph = ({ farm1, farm2 }) => {
       <StyledContent>
         <CardIcon1>{farm1.icon}</CardIcon1>
         <BalanceBar>
-          <div style={{ backgroundColor: '#de9cff', height: '100%', borderRadius: "2px 0 0 2px", width: percent1 }} />
+          <div style={{ backgroundColor: '#d270ff', height: '100%', borderRadius: "2px 0 0 2px", width: percent1 }} />
         </BalanceBar>
         <CardIcon2>{farm2.icon}</CardIcon2>
       </StyledContent>
@@ -37,7 +37,7 @@ const FarmGraph = ({ farm1, farm2 }) => {
 const BalanceBar = styled.div`
 width: calc(100% - 110px);
 height: 20px;
-background-color: #9cd7ff;
+background-color: #70bfff;
 border-radius: 2px;
 `
 

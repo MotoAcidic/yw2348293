@@ -55,6 +55,8 @@ function getGeckoId(coin) {
 			return "yflink";
 		case "snow":
 			return "snowswap";
+		case "pickle":
+			return "pickle-finance";
 		// case "rope":
 		// 	return "rope";
 		case "z":

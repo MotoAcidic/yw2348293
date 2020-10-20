@@ -303,7 +303,7 @@ letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
 border: solid 2px rgba(255, 183, 0, 0.3);
-background-color: rgba(256,256,256,0.08);
+background-color: #142C49;
 padding: 60px 40px 60px 40px;
 ` : styled.div`
 margin: 0 0 40px 0;

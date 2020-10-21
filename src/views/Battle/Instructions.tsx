@@ -100,13 +100,13 @@ const Instructions: React.FC = () => {
         <MilestoneRow>
           <img className="milestone-image" src={img_3} />
           <MilestoneText>
-            Leave a battle before it ends (15:00 UTC) and your votes/rewards for that day will not be counted!
+            Leave a battle before it ends (18:00 UTC) and your votes/rewards for that day will not be counted!
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>
           <img className="milestone-image" src={img_4} />
           <MilestoneText>
-            You can only vote once per day. Votes and Rewards are tallied by how much you have staked in battle when voting ends (15:00 UTC). Early and late voters earn the same.
+            You can only vote once per day. Votes and Rewards are tallied by how much you have staked in battle when voting ends (18:00 UTC). Early and late voters earn the same.
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>

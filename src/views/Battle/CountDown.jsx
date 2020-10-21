@@ -19,14 +19,14 @@ class CountDown extends React.Component {
 
 		let endTime;
 		const format = 'hh:mm:ss';
-		if (moment.utc().isBetween(moment.utc('15:00:00', format), moment.utc('16:00:00', format))) {
+		if (moment.utc().isBetween(moment.utc('18:00:00', format), moment.utc('19:00:00', format))) {
 			this.setState({inBetween: true})
-			endTime = moment.utc().startOf('hour').hours(16)
+			endTime = moment.utc().startOf('hour').hours(19)
 		} else {
-			if (moment.utc().isBetween(moment.utc('16:00:00', format), moment.utc('23:59:59', format))) {
-				endTime = moment.utc().add(1, 'days').startOf('hour').hours(15)
+			if (moment.utc().isBetween(moment.utc('19:00:00', format), moment.utc('23:59:59', format))) {
+				endTime = moment.utc().add(1, 'days').startOf('hour').hours(18)
 			} else {
-				endTime = moment.utc().startOf('hour').hours(15)
+				endTime = moment.utc().startOf('hour').hours(18)
 			}
 		}
 

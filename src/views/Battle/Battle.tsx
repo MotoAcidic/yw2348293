@@ -165,8 +165,6 @@ const Battle: React.FC = () => {
     })
   }
 
-  console.log("fuck how many times");
-
   return (
     <Switch>
       <StyledCanvas>

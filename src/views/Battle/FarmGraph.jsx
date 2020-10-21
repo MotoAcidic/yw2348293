@@ -17,8 +17,6 @@ function isMobile() {
 function getGeckoId(coin) {
 	coin = coin.toLowerCase();
 	switch (coin) {
-		// case "link":
-		// 	return "link";
 		case "snx":
 			return "aave-snx";
 		case "yfi":
@@ -57,11 +55,6 @@ function getGeckoId(coin) {
 			return "snowswap";
 		case "pickle":
 			return "pickle-finance";
-		// case "rope":
-		// 	return "rope";
-		case "z":
-			//cannot find
-			return "";
 		case "meme":
 			return "degenerator";
 		case "cream":

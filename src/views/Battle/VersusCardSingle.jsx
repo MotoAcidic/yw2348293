@@ -6,7 +6,6 @@ import uncheckedIcon from '../../assets/img/unchecked.png'
 import useYam from '../../hooks/useYam'
 import { useWallet } from 'use-wallet'
 import DailyQuestion from "./DailyQuestion.jsx";
-import CountDown from "./CountDown";
 
 import useFarms from '../../hooks/useFarms'
 import Cookie from 'universal-cookie'
@@ -15,6 +14,9 @@ import Swal from 'sweetalert2'
 import Warning from "../../assets/img/warning@2x.png";
 import './swal.css'
 import FarmGraph from "./FarmGraph";
+import VotingBalance from "./VotingBalance";
+import CountDown from "./CountDown";
+
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -40,7 +42,7 @@ const Versus = ({ battles, question }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	const [voted, setVoted] = useState(false)
-	const [checked, setChecked] = useState(false);
+	const [checked, setChecked] = useState(parseInt(cookie.get(battles._id)))
 	const [questionResponse, setQuestionResponse] = useState("");
 	const farmTemplate = {
 		icon: "🤔",
@@ -54,6 +56,8 @@ const Versus = ({ battles, question }) => {
 			farm1: farms.find(farm => farm.id === battles.pool1.name) || farmTemplate,
 			farm2: farms.find(farm => farm.id === battles.pool2.name) || farmTemplate
 		}
+		battle.farm1.votes = battles.pool1.totalVotes.toFixed(0);
+		battle.farm2.votes = battles.pool2.totalVotes.toFixed(0);
 	}
 
 	const pick = (g) => {
@@ -149,13 +153,15 @@ const Versus = ({ battles, question }) => {
 
 	}, [account, question, battles])
 
+	console.log("farmzz", battle);
+
 	return (
 		<>
 			{battles &&
 				<VersusContainer>
 					<RecDesc>
-						Which coin will change in price by the highest percentage in 24 hours?
-      	</RecDesc>
+						Which token price will change by a greater % in 24 hours?
+     	 	</RecDesc>
 					<CountDown />
 					<Options>
 						<VersusItem>
@@ -180,6 +186,8 @@ const Versus = ({ battles, question }) => {
 							</ButtonContainer>
 						</VersusItem>
 					</Options>
+					<VotingBalance farm1={battle.farm1} farm2={battle.farm2} />
+
 				</VersusContainer>
 			}
 

@@ -245,7 +245,7 @@ const Roadmap: React.FC = () => {
               </MilestoneRow>
             </RecDesc>
           </Rectangle>
-          <Title>YieldWars Job Board // Bountys</Title>
+          <Title>YieldWars Job Board // Bounties</Title>
           <MediumSection>
             <TextSection>
               <LinkSection>

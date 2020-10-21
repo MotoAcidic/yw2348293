@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import checkedIcon from '../../assets/img/checked.png'
 import uncheckedIcon from '../../assets/img/unchecked.png'
@@ -38,8 +38,8 @@ const Versus = ({ battles, question }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	const [voted, setVoted] = useState(false)
-	const [checked1, setChecked1] = useState(cookie.get(battles[0]._id))
-	const [checked2, setChecked2] = useState(cookie.get(battles[1]._id))
+	const [checked1, setChecked1] = useState(parseInt(cookie.get(battles[0]._id)))
+	const [checked2, setChecked2] = useState(parseInt(cookie.get(battles[1]._id)))
 	const [questionResponse, setQuestionResponse] = useState(null);
 	const farmTemplate = {
 		icon: "🤔",
@@ -61,11 +61,18 @@ const Versus = ({ battles, question }) => {
 	battle2.farm2.votes = battles[1].pool2.totalVotes.toFixed(0);
 
 	const pick1 = (g) => {
+		console.log("battleID", battles[0]._id, g);
+		console.log("cook", cookie.get(battles[0]._id));
+
 		cookie.set(battles[0]._id, g)
+
 		setChecked1(g)
 	}
 
 	const pick2 = (g) => {
+		console.log("battleID", battles[1]._id, g);
+		console.log("cook", cookie.get(battles[1]._id));
+
 		cookie.set(battles[1]._id, g)
 		setChecked2(g)
 	}
@@ -168,9 +175,9 @@ const Versus = ({ battles, question }) => {
 			{battles &&
 				<>
 					<RecDesc>
-						Which coin will change in price by the highest percentage in 24 hours?
+						Which token price will change by a greater % in 24 hours?
       		</RecDesc>
-					<CountDown/>
+					<CountDown />
 					<VersusContainer>
 						<Options>
 							<VersusItem>

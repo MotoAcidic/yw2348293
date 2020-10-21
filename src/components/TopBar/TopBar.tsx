@@ -77,7 +77,7 @@ const Notice = styled.div`
   letter-spacing: normal;
   text-align: center;
   color: white;
-  background-color: #00be8c;
+  background-color: black;
 `
 
 const StyledTopBar = styled.div`

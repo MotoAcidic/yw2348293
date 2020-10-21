@@ -186,8 +186,9 @@ const Battle: React.FC = () => {
 
             {!battles.length &&
               <>
-                <Title>Voting is closed. Check back soon to see the winners.</Title>
-                <NextBattle>Next battle begins at 19:00 UTC</NextBattle>
+              <Title>Loading Battles...</Title>
+                {/* <Title>Voting is closed. Check back soon to see the winners.</Title>
+                <NextBattle>Next battle begins at 19:00 UTC</NextBattle> */}
               </>
             }
             <Title>How battles work </Title>

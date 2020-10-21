@@ -30,7 +30,7 @@ function getServerURI() {
   if (window.location.hostname === "localhost") {
     return "http://localhost:5000";
   }
-  return "https://yieldwars-staging.herokuapp.com";
+  return "https://yieldwars-api.herokuapp.com/";
 }
 
 export interface OverviewData {

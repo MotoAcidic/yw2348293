@@ -108,7 +108,7 @@ font-family: "Gilroy";
   font-stretch: normal;
   font-style: normal;
   letter-spacing: 2px;
-  color: #ffffff;
+  color: #ffb700;
 `
 
 

@@ -21,6 +21,11 @@ function isMobile() {
 const TopBar: React.FC = () => {
   return (
     <StyledTopBar>
+      <Notice>
+        ⚔️ 🚨  WAR is an experiment in DeFi Gambling. DYOR.<a style={{color: 'white', margin: "0 4px 0 4px",}} target="_blank"
+        rel="noopener noreferrer" href="https://medium.com/@yieldwars/announcing-yieldwars-2-0-the-next-evolution-of-the-defi-battle-royale-6b1f15755209">Learn More.</a>  🚨⚔️
+      </Notice>
+
       {isMobile() ? (
         <Container size="lg">
           <StyledTopBarInner>
@@ -32,7 +37,6 @@ const TopBar: React.FC = () => {
               display: 'flex',
               justifyContent: 'flex-end'
             }}>
-              <AccountButton />
             </div>
           </StyledTopBarInner >
           <Nav />
@@ -57,6 +61,24 @@ const TopBar: React.FC = () => {
     </StyledTopBar >
   )
 }
+
+const Notice = styled.div`
+  width: 100vw;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Gilroy";
+  font-size: 14px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-align: center;
+  color: white;
+  background-color: black;
+`
 
 const StyledTopBar = styled.div`
 `

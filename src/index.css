@@ -25,6 +25,9 @@ code {
     background-position: 0% 50%;
   }
 }
+.Series  > g > path {
+  stroke: white !important;
+}
 
 .medium-link {
   max-width: 60%;

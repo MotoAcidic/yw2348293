@@ -1,10 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react'
-
+import React from 'react'
 import styled from 'styled-components'
-import useYam from '../../hooks/useYam'
-import { useWallet } from 'use-wallet'
 import useFarms from '../../hooks/useFarms'
-import Cookie from 'universal-cookie'
 import WinnerChalice from "../../assets/img/win@2x.png";
 import './swal.css'
 
@@ -17,20 +13,9 @@ function isMobile() {
 	}
 }
 
-function getServerURI() {
-	if (window.location.hostname === 'localhost') {
-		return 'http://localhost:5000'
-	}
-	return 'https://yieldwars-api.herokuapp.com'
-}
-
-let cookie = new Cookie()
-
 
 const Versus = ({ history }) => {
 	let [farms] = useFarms()
-	const yam = useYam()
-	const { account, connect } = useWallet()
 	if (!history.length) {
 		return null
 	}
@@ -56,8 +41,6 @@ const Versus = ({ history }) => {
 	// }
 
 	prevSeasonHistory.reverse()
-
-
 	
 	prevSeasonHistory = prevSeasonHistory.map(item => {
 		let pool1, pool2, pool3, pool4, winner1, winner2
@@ -85,7 +68,7 @@ const Versus = ({ history }) => {
 			day = "Oct " + (item[0].day - 2);
 		}
 
-		console.log(item[0].pool1.totalVotes);
+		// console.log(item[0].pool1.totalVotes);
 		return (
 			<VSContentContainer>
 				{item[0].day - 2 ? <div>{day}</div> : <div>Sept 30th</div>}
@@ -158,7 +141,7 @@ const Versus = ({ history }) => {
 		)
 	})
 
-	if (prevSeasonHistory.length % 3 == 2) {
+	if (prevSeasonHistory.length % 3 === 2) {
 		prevSeasonHistory.push(<FillCard/>)
 	}
 

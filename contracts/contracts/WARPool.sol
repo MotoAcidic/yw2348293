@@ -91,7 +91,7 @@ contract WARPool is LPTokenWrapper, IRewardDistributionRecipient {
     }
 
     function rewardPerToken() public view returns (uint256) {
-        if (totalSupply() == 0) {
+        if (totalSupply() === 0) {
             return rewardPerTokenStored;
         }
         return

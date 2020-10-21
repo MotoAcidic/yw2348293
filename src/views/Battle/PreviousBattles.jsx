@@ -47,7 +47,7 @@ function getServerURI() {
 	if (window.location.hostname === 'localhost') {
 		return 'http://localhost:5000'
 	}
-	return 'https://yieldwars-api.herokuapp.com'
+	return 'https://yieldwars-staging.herokuapp.com'
 }
 
 let cookie = new Cookie()
@@ -175,7 +175,7 @@ const Versus = ({ history }) => {
 		)
 	})
 
-	if (currSeasonHistory.length % 3 == 2) {
+	if (currSeasonHistory.length % 3 === 2) {
 		currSeasonHistory.push(<FillCard/>)
 	}
 

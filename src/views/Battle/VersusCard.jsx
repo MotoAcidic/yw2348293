@@ -121,7 +121,7 @@ const Versus = ({ battles, question }) => {
 			setVoted(true)
 			Swal.fire({
 				title: 'Your votes have been recorded successfully!',
-				text: 'Come back tomorrow. All rewards will be distributed tomorrow at 16:00 UTC',
+				text: 'Come back tomorrow. All rewards will be distributed tomorrow at 19:00 UTC',
 				width: '600',
 				height: '465',
 				padding: '10',

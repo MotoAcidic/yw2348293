@@ -112,7 +112,7 @@ const Instructions: React.FC = () => {
         <MilestoneRow>
           <img className="milestone-image" src={img_5} />
           <MilestoneText>
-            Battles end at 15:00 UTC daily and start again at 16:00 UTC.
+            Battles end at 18:00 UTC daily and start again at 19:00 UTC.
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>

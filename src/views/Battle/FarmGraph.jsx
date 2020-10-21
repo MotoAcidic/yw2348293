@@ -61,6 +61,8 @@ function getGeckoId(coin) {
 			return "cream-2";
 		case "value":
 			return "value-liquidity";
+		case "link":
+			return "chainlink";
 		default:
 			return (coin);
 	}

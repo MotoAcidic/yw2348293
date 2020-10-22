@@ -17,6 +17,7 @@ import BattleHistory from './PreviousBattles'
 import OldBattleHistory from './OldPreviousBattles'
 import Schedule from './Schedule'
 import Instructions from "./Instructions";
+import InbetweenCard from "./InbetweenCard";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -48,12 +49,12 @@ const Battle: React.FC = () => {
     warStaked: new BigNumber(0)
   });
   const { account, connect } = useWallet()
+  let [inbetween, setInbetween] = useState(false);
   let [battles, setBattles] = useState([])
   let [leaderboard, setLeaderboard] = useState([])
   let [previousBattles, setPreviousBattles] = useState([])
   let [schedule, setSchedule] = useState([])
   let [dailyQuestion, setDailyQuestion] = useState();
-
   let [oldLeaderboard, setOldLeaderboard] = useState([]);
   let [oldPreviousBattles, setOldPreviousBattles] = useState([]);
 
@@ -107,8 +108,8 @@ const Battle: React.FC = () => {
         let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
           return b.votes - a.votes;
         });
+        if (res.data.inbetween) setInbetween(true);
         console.log("battles", res.data);
-        console.log(lb);
         setLeaderboard(lb);
         setPreviousBattles(res.data.history)
         setBattles(res.data.battles)
@@ -165,6 +166,33 @@ const Battle: React.FC = () => {
     })
   }
 
+  const battleFields = () => {
+    if (!battles.length) {
+      return (<>
+        <Title>Loading Battles...</Title>
+        <NextBattle />
+        {/* <Title>Voting is closed. Check back soon to see the winners.</Title>
+        <NextBattle>Next battle begins at 19:00 UTC</NextBattle> */}
+      </>)
+    } else if (!inbetween) {
+      console.log('take1')
+      return (<>
+        {
+          battles.length > 0 &&
+          <Title>Step 2: Vote for the armies you will fight for</Title>
+        }
+        { battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
+        {/* in case no battle, but still question */}
+        { (battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
+      </>
+      )
+    }
+    console.log('take2')
+    return (
+      <InbetweenCard battles={battles} />
+    )
+  };
+
   return (
     <Switch>
       <StyledCanvas>
@@ -177,20 +205,7 @@ const Battle: React.FC = () => {
               <iframe title="promo" style={{ width: "90vw", height: "50.6vw", margin: "40px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />}
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
-            {battles.length > 0 &&
-              <Title>Step 2: Vote for the armies you will fight for</Title>
-            }
-            {battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
-            {/* in case no battle, but still question */}
-            {(battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
-
-            {!battles.length &&
-              <>
-              <Title>Loading Battles...</Title>
-                {/* <Title>Voting is closed. Check back soon to see the winners.</Title>
-                <NextBattle>Next battle begins at 19:00 UTC</NextBattle> */}
-              </>
-            }
+            {battleFields()}
             <Title>How battles work </Title>
             <Instructions />
             <Title>Leaderboard</Title>

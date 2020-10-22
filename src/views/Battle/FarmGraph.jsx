@@ -82,7 +82,7 @@ const calcPercentChange = (start, end) => {
 	return final.toFixed(1);
 }
 
-const FarmGraph = ({ farm, order }) => {
+const FarmGraph = ({ farm }) => {
 	const [price, setPrice] = useState(null);
 	const [marketCap, setMarketCap] = useState(null);
 	const [graphData, setGraphData] = useState(null);

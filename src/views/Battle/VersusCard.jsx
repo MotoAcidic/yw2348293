@@ -55,10 +55,10 @@ const Versus = ({ battles, question }) => {
 		farm1: farms.find(farm => farm.id === battles[1].pool1.name) || farmTemplate,
 		farm2: farms.find(farm => farm.id === battles[1].pool2.name) || farmTemplate
 	}
-	battle1.farm1.votes = battles[0].pool1.totalVotes.toFixed(0);
-	battle1.farm2.votes = battles[0].pool2.totalVotes.toFixed(0);
-	battle2.farm1.votes = battles[1].pool1.totalVotes.toFixed(0);
-	battle2.farm2.votes = battles[1].pool2.totalVotes.toFixed(0);
+	battle1.farm1.votes = battles[0].pool1.totalVotes;
+	battle1.farm2.votes = battles[0].pool2.totalVotes;
+	battle2.farm1.votes = battles[1].pool1.totalVotes;
+	battle2.farm2.votes = battles[1].pool2.totalVotes;
 
 	const pick1 = (g) => {
 		console.log("battleID", battles[0]._id, g);
@@ -181,7 +181,7 @@ const Versus = ({ battles, question }) => {
 					<VersusContainer>
 						<Options>
 							<VersusItem>
-								<FarmGraph farm={battle1.farm1} order={1} />
+								<FarmGraph farm={battle1.farm1} />
 								<ButtonContainer onClick={() => pick1(1)}>
 									{checked1 === 1 ? (
 										<img alt="check" src={checkedIcon} width="30px" />
@@ -192,7 +192,7 @@ const Versus = ({ battles, question }) => {
 							</VersusItem>
 							<Divider />
 							<VersusItem>
-								<FarmGraph farm={battle1.farm2} order={2} />
+								<FarmGraph farm={battle1.farm2} />
 								<ButtonContainer onClick={() => pick1(2)}>
 									{checked1 === 2 ? (
 										<img alt="check" src={checkedIcon} width="30px" />
@@ -210,7 +210,7 @@ const Versus = ({ battles, question }) => {
 					<VersusContainer>
 						<Options>
 							<VersusItem>
-								<FarmGraph farm={battle2.farm1} order={1} />
+								<FarmGraph farm={battle2.farm1} />
 								<ButtonContainer onClick={() => pick2(1)}>
 									{checked2 === 1 ? (
 										<img alt="check" src={checkedIcon} width="30px" />
@@ -221,7 +221,7 @@ const Versus = ({ battles, question }) => {
 							</VersusItem>
 							<Divider />
 							<VersusItem>
-								<FarmGraph farm={battle2.farm2} order={2} />
+								<FarmGraph farm={battle2.farm2} />
 								<ButtonContainer onClick={() => pick2(2)}>
 									{checked2 === 2 ? (
 										<img alt="check" src={checkedIcon} width="30px" />

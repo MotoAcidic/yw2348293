@@ -85,38 +85,38 @@ const Instructions: React.FC = () => {
     <Rectangle>
       <RecDesc>
         <MilestoneRow>
-          <img className="milestone-image" src={img_1} />
+          <img className="milestone-image" alt="milestone" src={img_1} />
           <MilestoneText>
             Your staked WAR is never at risk, but your daily rewards are fought over in battle!
 
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>
-          <img className="milestone-image" src={img_2} />
+          <img className="milestone-image" alt="milestone" src={img_2} />
           <MilestoneText>
             Fight with the winning army and win 50% of the losers rewards!
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>
-          <img className="milestone-image" src={img_3} />
+          <img className="milestone-image" alt="milestone" src={img_3} />
           <MilestoneText>
             Leave a battle before it ends (18:00 UTC) and your votes/rewards for that day will not be counted!
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>
-          <img className="milestone-image" src={img_4} />
+          <img className="milestone-image" alt="milestone" src={img_4} />
           <MilestoneText>
             You can only vote once per day. Votes and Rewards are tallied by how much you have staked in battle when voting ends (18:00 UTC). Early and late voters earn the same.
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>
-          <img className="milestone-image" src={img_5} />
+          <img className="milestone-image" alt="milestone" src={img_5} />
           <MilestoneText>
             Battles end at 18:00 UTC daily and start again at 19:00 UTC.
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>
-          <img className="milestone-image" src={img_6} />
+          <img className="milestone-image" alt="milestone" src={img_6} />
           <MilestoneText>
             $WAR Rewards will only show in your account after battles end and votes are tallied.
               </MilestoneText>

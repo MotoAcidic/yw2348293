@@ -56,8 +56,8 @@ const Versus = ({ battles, question }) => {
 			farm1: farms.find(farm => farm.id === battles.pool1.name) || farmTemplate,
 			farm2: farms.find(farm => farm.id === battles.pool2.name) || farmTemplate
 		}
-		battle.farm1.votes = battles.pool1.totalVotes.toFixed(0);
-		battle.farm2.votes = battles.pool2.totalVotes.toFixed(0);
+		battle.farm1.votes = battles.pool1.totalVotes;
+		battle.farm2.votes = battles.pool2.totalVotes;
 	}
 
 	const pick = (g) => {
@@ -165,7 +165,7 @@ const Versus = ({ battles, question }) => {
 					<CountDown />
 					<Options>
 						<VersusItem>
-							<FarmGraph farm={battle.farm1} order={1} />
+							<FarmGraph farm={battle.farm1} />
 							<ButtonContainer onClick={() => pick(1)}>
 								{checked === 1 ? (
 									<img src={checkedIcon} width="30px" />
@@ -176,7 +176,7 @@ const Versus = ({ battles, question }) => {
 						</VersusItem>
 						<Divider />
 						<VersusItem>
-							<FarmGraph farm={battle.farm2} order={2} />
+							<FarmGraph farm={battle.farm2} />
 							<ButtonContainer onClick={() => pick(2)}>
 								{checked === 2 ? (
 									<img src={checkedIcon} width="30px" />

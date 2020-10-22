@@ -21,7 +21,7 @@ const FarmGraph = ({ farm1, farm2 }) => {
   return (
     <VotingBalance>
       <SubTitle>
-        Current Votes
+        Voting Balance
       </SubTitle>
       <StyledContent>
         <CardIcon1>{farm1.icon}</CardIcon1>

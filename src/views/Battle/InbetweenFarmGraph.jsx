@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 import './swal.css'
 import { Chart } from 'react-charts'
-import Fight from "../../assets/img/fight@2x.png";
+import moment from "moment";
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -83,29 +83,47 @@ const calcPercentChange = (start, end) => {
 }
 
 const FarmGraph = ({ farm }) => {
-	const [price, setPrice] = useState(null);
-	const [marketCap, setMarketCap] = useState(null);
+	const [prices, setPrices] = useState(null);
 	const [graphData, setGraphData] = useState(null);
 	const [recentChange, setRecentChange] = useState(null);
+	const [percentOfDay, setPercentOfDay] = useState(0);
+	const [days, setDays] = useState({ prev: null, next: null });
 
 	useEffect(() => {
-		if (!price) {
+		if (!prices) {
 			axios.get(`https://api.coingecko.com/api/v3/coins/${getGeckoId(farm.id)}/market_chart?vs_currency=usd&days=1`).then(res => {
-				const { market_caps, prices } = res.data;
-				// console.log(farm.id, market_caps, prices);
-				setMarketCap(numberWithCommas(market_caps[market_caps.length - 1][1].toFixed(0)));
-				setPrice(numberWithCommas(prices[prices.length - 1][1].toFixed(2)));
+				let { prices } = res.data;
+
+				let start;
+				const format = 'hh:mm:ss';
+				if (moment.utc().isBetween(moment.utc('19:00:00', format), moment.utc('23:59:59', format))) {
+					start = moment.utc().startOf('hour').hours(18).unix()
+				} else {
+					start = moment.utc().subtract(1, 'days').startOf('hour').hours(18).unix();
+				}
+
+				setDays({ prev: moment.unix(start).utc().format('MM/DD'), next: moment.unix(start).utc().add(1, 'days').format('MM/DD') })
+				for (let i = 0; i < prices.length; i++) {
+					// console.log("price", prices[i][0], start);
+					if (prices[i][0] / 1000 >= start) {
+						prices = prices.slice(i);
+						break;
+					}
+				}
+				const curr = prices[prices.length - 1][0] / 1000;
+				const percent = (curr - start) / 864;
+				setPercentOfDay(percent);
+
+				// console.log("curr: ", curr, "\nstart: ", start, "\ndiff: ", curr - start, "\n%: ", percent);
+
+				setRecentChange(calcPercentChange(prices[0][1], prices[prices.length - 1][1]))
+				setPrices(prices);
 				let chartData = [];
-				// For using 2 days (24 data points)
-				// const start = Math.floor(prices.length / 2);
-				// for (let i = start; i < prices.length; i++) {
-				// 	chartData.push([i, prices[i][1]]);
-				// }
 				for (let i = 0; i < prices.length; i++) {
 					chartData.push([i, prices[i][1]]);
 				}
-				setRecentChange(calcPercentChange(prices[0][1], prices[prices.length - 1][1]))
 				setGraphData(chartData);
+
 			})
 		}
 	}, [])
@@ -134,41 +152,138 @@ const FarmGraph = ({ farm }) => {
 
 	return (
 		<StyledContent>
-			<StyledTitle>{farm.id}</StyledTitle>
-			<Text>${price}</Text>
-			<SubTitle>Market Cap</SubTitle>
-			<Text>{marketCap !== "0" ? "$" + marketCap : "unknown"}</Text>
-			<SubTitle>Recent Change</SubTitle>
-			{recentChange >= 0 ?
-				<GreenText>+{recentChange}%</GreenText>
-				:
-				<RedText>{recentChange}%</RedText>
-			}
+			<TopContent>
+				<StyledCardIcon>{farm.icon}</StyledCardIcon>
+				<TopArea>
+					<StyledTitle>{farm.id}</StyledTitle>
+					<Text>${prices && prices[prices.length - 1][1].toFixed(2)}</Text>
+				</TopArea>
+				<TopArea>
+					<SubTitle>Recent Change</SubTitle>
+					{recentChange >= 0 ?
+						<GreenText>+{recentChange}%</GreenText>
+						:
+						<RedText>{recentChange}%</RedText>
+					}
+				</TopArea>
+			</TopContent>
 			{graphData &&
 				<ChartContainer>
-					<Chart data={data} axes={axes} series={series} />
+
+
+					<div style={{ width: `${percentOfDay}%`, height: '60px' }}>
+						<Chart data={data} axes={axes} series={series} />
+					</div>
+					<ChartPrices>
+						<Left>
+							<Date>
+								{days.prev}
+							</Date>
+							<Price>
+								${prices && prices[0][1].toFixed(2)}
+							</Price>
+						</Left>
+						<Right>
+							<Date>
+								{days.next}
+
+							</Date>
+							<Price>
+								${prices && prices[prices.length - 1][1].toFixed(2)}
+							</Price>
+
+						</Right>
+					</ChartPrices>
 				</ChartContainer>
 			}
 		</StyledContent>
 	)
 }
 
+const Price = styled.div`
+font-family: "Gilroy";
+font-size: 16px;
+font-weight: normal;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+color: #ffffff;`
+
+const Date = styled.div`
+font-family: "GilroyMedium";
+font-size: 16px;
+font-weight: normal;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+color: #ffffff;
+margin-bottom: 10px;
+`
+
+const Right = styled.div`
+display: flex;
+flex-direction: column;
+align-items: flex-end;`
+
+const Left = styled.div`
+display: flex;
+flex-direction: column;
+align-items: flex-start;`
+
+const ChartPrices = styled.div`
+width: 100%;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+margin-top: 10px;
+`
+
+const TopArea = styled.div`
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+height: 100%;
+margin-right: 40px;
+`
+
+const StyledCardIcon = styled.div`
+  font-size: 60px;
+  align-items: center;
+  display: flex;
+	justify-content: center;
+	margin-right: 20px;
+`;
+
+const TopContent = styled.div`
+display: flex;
+flex-direction: row;
+flex-wrap: nowrap;
+align-items: center;
+width: 100%;
+height: 80px;
+margin-bottom: 20px;
+`
 
 const ChartContainer = styled.div`
-height: 40px;
-width: 170px;
-margin-bottom: 10px;
+width: 100%;
+margin-bottom: 20px;
 `
 
 const StyledContent = styled.div`
   display: flex;
 	flex-direction: column;
+	width: 100%;
 	height: 100%;
+	align-items: center;
 `
 
 const StyledTitle = styled.div`
 font-family: "Gilroy";
-font-size: 28px;
+font-size: 20px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
@@ -177,13 +292,13 @@ letter-spacing: normal;
 text-align: center;
 color: #ffffff;
 	text-align: left;
-margin-bottom: 5px;
+margin-bottom: 16px;
 `
 
 const SubTitle = styled.div`
 font-family: "Gilroy";
-margin-bottom: 5px;
 font-size: 20px;
+margin-bottom: 16px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
@@ -194,8 +309,8 @@ color: #ffffff;
 	text-align: left;
 `
 const Text = styled.div`
-font-family: "Gilroy";
-font-size: 16px;
+font-family: "GilroyMedium";
+font-size: 18px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
@@ -204,36 +319,32 @@ letter-spacing: normal;
 text-align: center;
 color: #ffffff;
 	text-align: left;
-	margin-bottom: 10px;
 	letter-spacing: 1px;
 `
 const GreenText = styled.div`
-font-family: "Gilroy";
-font-size: 16px;
+font-family: "GilroyMedium";
+font-size: 18px;
+
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 text-align: center;
-color: #ffffff;
 	text-align: left;
-	margin-bottom: 10px;
 	letter-spacing: 1px;
 	color: #38ff00;
 `
 const RedText = styled.div`
-font-family: "Gilroy";
-font-size: 16px;
+font-family: "GilroyMedium";
+font-size: 18px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 text-align: center;
-color: #ffffff;
 	text-align: left;
-	margin-bottom: 10px;
 	letter-spacing: 1px;
 	color: #ff4343;
 

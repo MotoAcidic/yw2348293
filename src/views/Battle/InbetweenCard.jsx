@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import useFarms from '../../hooks/useFarms'
 import './swal.css'
-import FarmGraph from "./FarmGraph";
+import FarmGraph from "./InbetweenFarmGraph";
 import VotingBalance from "./VotingBalance";
-import DailyQuestion from "./DailyQuestion.jsx";
 import CountDown from "./InbetweenCountDown";
 
 function isMobile() {
@@ -46,13 +45,9 @@ const Inbetween = ({ battles }) => {
       		</RecDesc>
 					<VersusContainer>
 						<Options>
-							<VersusItem>
-								<FarmGraph farm={battle1.farm1} />
-							</VersusItem>
+							<FarmGraph farm={battle1.farm1} />
 							<Divider />
-							<VersusItem>
-								<FarmGraph farm={battle1.farm2} />
-							</VersusItem>
+							<FarmGraph farm={battle1.farm2} />
 						</Options>
 
 						<VotingBalance farm1={battle1.farm1} farm2={battle1.farm2} />
@@ -61,13 +56,9 @@ const Inbetween = ({ battles }) => {
 
 					<VersusContainer>
 						<Options>
-							<VersusItem>
-								<FarmGraph farm={battle2.farm1} />
-							</VersusItem>
+							<FarmGraph farm={battle2.farm1} />
 							<Divider />
-							<VersusItem>
-								<FarmGraph farm={battle2.farm2} />
-							</VersusItem>
+							<FarmGraph farm={battle2.farm2} />
 						</Options>
 						<VotingBalance farm1={battle2.farm1} farm2={battle2.farm2} />
 					</VersusContainer>
@@ -99,6 +90,7 @@ align-items: center;`
 const Divider = !isMobile() ? styled.div`
 background-color: rgba(256,256,256,0.3);
 width: 2px;
+margin: 0 40px 0 40px;
 ` : styled.div`
 height: 2px;
 width: 80%;
@@ -120,7 +112,7 @@ font-family: "Gilroy";
 	`;
 
 const VersusContainer = !isMobile() ? styled.div`
-width: 1000px;
+width: 920px;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -135,8 +127,8 @@ letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
 border: solid 2px rgba(255, 183, 0, 0.3);
-background-color: #142C49;
-padding: 60px 40px 60px 40px;
+background-color: rgba(256,256,256,0.08);
+padding: 40px;
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;

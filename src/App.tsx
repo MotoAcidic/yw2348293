@@ -21,7 +21,8 @@ import About from './views/About/About'
 import Roadmap from './views/Roadmap/Roadmap'
 import theme from './theme'
 import { createGlobalStyle } from 'styled-components';
-import Gilroy from "./assets/fonts/Gilroy-Bold.otf";
+import GilroyBold from "./assets/fonts/Gilroy-Bold.otf";
+import GilroyMed from "./assets/fonts/Gilroy-Medium.otf";
 import SFMono from "./assets/fonts/SFMonoSemibold.woff";
 
 const GlobalStyle = createGlobalStyle`
@@ -35,10 +36,18 @@ const GlobalStyle = createGlobalStyle`
 
 @font-face {
   font-family: "Gilroy";
-  src: local(Gilroy-Bold), url(${Gilroy}) format("opentype");
+  src: local(Gilroy-Bold), url(${GilroyBold}) format("opentype");
   font-weight: bold;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "GilroyMedium";
+  src: local(Gilroy-Med), url(${GilroyMed}) format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 `;
 
@@ -84,14 +93,14 @@ const Providers: React.FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       {/* change the ChainId below here for the preffered network when testing, 1 main 3 ropsten 42 kovan */}
-      <UseWalletProvider chainId={1}        connectors={{
-          walletconnect: { rpcUrl: 'https://mainnet.eth.aragon.network/' },
-        }}>
+      <UseWalletProvider chainId={1} connectors={{
+        walletconnect: { rpcUrl: 'https://mainnet.eth.aragon.network/' },
+      }}>
         <YamProvider>
           <TransactionProvider>
             <ModalsProvider>
               <FarmsProvider>
-      <GlobalStyle />
+                <GlobalStyle />
 
                 {children}
               </FarmsProvider>

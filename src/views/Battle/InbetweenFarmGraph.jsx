@@ -96,7 +96,7 @@ const FarmGraph = ({ farm }) => {
 
 				let start;
 				const format = 'hh:mm:ss';
-				if (moment.utc().isBetween(moment.utc('19:00:00', format), moment.utc('23:59:59', format))) {
+				if (moment.utc().isBetween(moment.utc('18:00:00', format), moment.utc('23:59:59', format))) {
 					start = moment.utc().startOf('hour').hours(18).unix()
 				} else {
 					start = moment.utc().subtract(1, 'days').startOf('hour').hours(18).unix();
@@ -271,6 +271,7 @@ margin-bottom: 20px;
 const ChartContainer = styled.div`
 width: 100%;
 margin-bottom: 20px;
+max-width: 420px;
 `
 
 const StyledContent = styled.div`

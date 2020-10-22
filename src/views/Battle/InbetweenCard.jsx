@@ -72,10 +72,6 @@ const Inbetween = ({ battles }) => {
 const Space = styled.div`
 height: 80px;`
 
-const VersusItem = styled.div`
-display: flex;
-flex-direction: column;`
-
 const Options = !isMobile() ? styled.div`
 width: 100%;
 display: flex;
@@ -89,8 +85,10 @@ align-items: center;`
 
 const Divider = !isMobile() ? styled.div`
 background-color: rgba(256,256,256,0.3);
-width: 2px;
+min-width: 2px;
 margin: 0 40px 0 40px;
+height: 200px;
+
 ` : styled.div`
 height: 2px;
 width: 80%;

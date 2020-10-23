@@ -70,11 +70,7 @@ const About: React.FC = () => {
     }
   }, [yam, account, farms, farms[0]]);
 
-  let currentPrice = 0;
-
-  if (curPrice) {
-    currentPrice = curPrice;
-  }
+  let currentPrice = curPrice || 0;
 
   return (
     <StyledCanvas>

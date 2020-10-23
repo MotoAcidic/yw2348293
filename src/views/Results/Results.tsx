@@ -7,17 +7,12 @@ import useYam from "../../hooks/useYam";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 import Background from '../../assets/img/bg3.svg'
-import Pool3 from "./Pool3";
 import useFarms from "../../hooks/useFarms";
+import Uniswap from "../../assets/img/uniswap@2x.png";
 import { getWarStaked } from "../../yamUtils";
 import { getStats } from "./utils";
-import VersusCard from "./VersusCard.jsx";
-import SingleVersusCard from "./VersusCardSingle.jsx";
 import BattleHistory from './PreviousBattles'
 import OldBattleHistory from './OldPreviousBattles'
-import Schedule from './Schedule'
-import Instructions from "./Instructions";
-import InbetweenCard from "./InbetweenCard";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -46,15 +41,12 @@ const Battle: React.FC = () => {
   let [farms] = useFarms()
   const yam = useYam()
   let [warStaked, setWarStaked] = useState({
-    warStaked: new BigNumber(0)
+    warStaked: new BigNumber(0),
+    circSupply: new BigNumber(0)
   });
   const { account, connect } = useWallet()
-  let [inbetween, setInbetween] = useState(false);
-  let [battles, setBattles] = useState([])
   let [leaderboard, setLeaderboard] = useState([])
   let [previousBattles, setPreviousBattles] = useState([])
-  let [schedule, setSchedule] = useState([])
-  let [dailyQuestion, setDailyQuestion] = useState();
   let [oldLeaderboard, setOldLeaderboard] = useState([]);
   let [oldPreviousBattles, setOldPreviousBattles] = useState([]);
 
@@ -64,7 +56,7 @@ const Battle: React.FC = () => {
       curPrice,
       // nextRebase,
       targetPrice,
-      totalSupply,
+      totalSupply
     },
     setStats
   ] = useState<OverviewData>({});
@@ -84,47 +76,41 @@ const Battle: React.FC = () => {
 
   useEffect(() => {
     console.log("using effect");
-    if (yam && account && farms && farms[0]) {
+    if (yam && account && farms.length) {
       fetchStats();
     }
     if (yam && farms) {
-      console.log(farms);
       fetchWarStaked(farms);
     }
-    if (battles.length === 0) {
+    if (!leaderboard.length) {
       axios.post(`${getServerURI()}/api/season-info`, ({ season: 1 })).then(res => {
-        console.log("s1battlews");
         let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
           return b.votes - a.votes;
         });
-        console.log("s1battles", res.data);
-        console.log(lb);
+        console.log("old results", res.data, lb);
         setOldLeaderboard(lb);
         setOldPreviousBattles(res.data.history);
       }).catch(err => {
         console.log(err);
       })
-      axios.get(`${getServerURI()}/api/battles`).then(res => {
+      axios.post(`${getServerURI()}/api/results`).then(res => {
+        console.log("results", res.data);
         let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
           return b.votes - a.votes;
         });
-        if (res.data.inbetween) setInbetween(true);
-        console.log("battles", res.data);
         setLeaderboard(lb);
         setPreviousBattles(res.data.history)
-        setBattles(res.data.battles)
-        setSchedule(res.data.schedule)
-        setDailyQuestion(res.data.dailyQuestion);
       }).catch(err => {
         console.log(err);
       })
     }
-  }, [yam, account, farms, farms[0]]);
+  }, [yam, account, farms]);
 
   let leaderboardContent;
   let oldLeaderboardContent;
 
-  if (farms[0]) {
+  if (farms.length) {
+    console.log("optimize");
     leaderboard = leaderboard.slice(0, 5);
     leaderboardContent = leaderboard.map((item, index) => {
       const votes = Number(item.votes.toFixed(0));
@@ -133,6 +119,7 @@ const Battle: React.FC = () => {
       let rank = "th";
       if (index === 0) rank = "st";
       if (index === 1) rank = "nd";
+      if (index === 2) rank = "rd";
       return (
         <LeaderBoardItem key={index}>
           <StyledContent>
@@ -152,6 +139,7 @@ const Battle: React.FC = () => {
       let rank = "th";
       if (index === 0) rank = "st";
       if (index === 1) rank = "nd";
+      if (index === 2) rank = "rd";
       return (
         <LeaderBoardItem key={index}>
           <StyledContent>
@@ -166,32 +154,7 @@ const Battle: React.FC = () => {
     })
   }
 
-  const battleFields = () => {
-    if (!battles.length) {
-      return (<>
-        <Title>Loading Battles...</Title>
-        <NextBattle />
-        {/* <Title>Voting is closed. Check back soon to see the winners.</Title>
-        <NextBattle>Next battle begins at 19:00 UTC</NextBattle> */}
-      </>)
-    } else if (!inbetween) {
-      console.log('take1')
-      return (<>
-        {
-          battles.length > 0 &&
-          <Title>Step 2: Vote for the armies you will fight for</Title>
-        }
-        { battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
-        {/* in case no battle, but still question */}
-        { (battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
-      </>
-      )
-    }
-    console.log('take2')
-    return (
-      <InbetweenCard battles={battles} />
-    )
-  };
+  let currentPrice = curPrice || 0;
 
   return (
     <Switch>
@@ -199,23 +162,46 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
-            {!isMobile() ?
-              <iframe title="promo" style={{ width: "500px", height: "281.25px", margin: "10px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
-              :
-              <iframe title="promo" style={{ width: "90vw", height: "50.6vw", margin: "40px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />}
-            <Title>Step 1: Stake $WAR to enter the arena</Title>
-            <Pool3 />
-            {battleFields()}
-            <Title>How battles work </Title>
-            <Instructions />
+            <TopDisplayContainer>
+              <DisplayItem>
+                $War Price:&nbsp;
+              {currentPrice
+                  ? `$${Number(currentPrice).toLocaleString(undefined, {
+                    minimumFractionDigits: 4,
+                    maximumFractionDigits: 4
+                  })}`
+                  : "-"}
+              </DisplayItem>
+              <DisplayItem>
+                Supply Staked:&nbsp;
+              {warStaked && !warStaked.warStaked.eq(0)
+                  ? `${Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}%`
+                  : "-"}
+              </DisplayItem>
+              <DisplayItem>
+                Marketcap:&nbsp;
+              {currentPrice && warStaked && !warStaked.circSupply.eq(0)
+                  ? `$${Number(warStaked.circSupply.multipliedBy(currentPrice).dividedBy(10 ** 18).toFixed(2)).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}`
+                  : "-"}
+              </DisplayItem>
+              <StyledA
+                style={{ marginTop: "-5px" }}
+                href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
+                target="_blank"
+              />
+            </TopDisplayContainer>
+            <BigTitle>Season 2!</BigTitle>
             <Title>Leaderboard</Title>
             <LeaderBoard>{leaderboardContent}</LeaderBoard>
-            <Title>Schedule</Title>
-            <Schedule schedule={schedule} />
-            {previousBattles.length && <Title>Results</Title>}
             <BattleHistory history={previousBattles} />
-            <Title>Season 1</Title>
-            <S1Seperator />
+            <Seperator/>
+            <Title>Season 1 Leaderboard</Title>
             <OldLeaderBoard>{oldLeaderboardContent}</OldLeaderBoard>
             <OldBattleHistory history={oldPreviousBattles} />
           </Page>
@@ -225,23 +211,94 @@ const Battle: React.FC = () => {
   );
 };
 
-const NextBattle = styled.div`
-  margin-bottom: 80px;
-  font-size: 18px;
-  font-family: "Gilroy";
-  color: white;
-`
-
-const S1Seperator = !isMobile() ? styled.div`
-  width: 400px;
+const Seperator = !isMobile() ? styled.div`
+  width: 1000px;
   height: 1px;
-  margin-bottom: 40px;
+  margin-bottom: 80px;
   background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
 ` : styled.div`
   width: 90vw;
   height: 1px;
   background-color: rgba(256,256,256,0.5);
-  margin-bottom: 40px;`
+  margin-bottom: 80px;`
+
+const BigTitle = styled.div`
+font-family: "Gilroy";
+  font-size: 60px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: rgb(255, 204, 74);
+  max-width: 80vw;
+  margin: -30px auto 40px;
+`
+
+const StyledA = styled.a`
+  cursor: pointer;
+  display: flex;
+  background-image: url(${Uniswap});
+  background-size: cover;
+  background-position: center;
+  height: 30px;
+  opacity: 0.9;
+  width: 137px;
+  transition: all .1s linear;
+  &:hover {
+    opacity: 1;
+  }
+`
+
+const TopDisplayContainer = !isMobile()
+  ? styled.div`
+        width:80vw;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        margin: 16px auto 80px auto;
+      `
+  : styled.div`
+        width: 60vw;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        margin: 60px auto 40px auto;
+        display: flex;
+        flex-wrap: wrap;
+      `;
+
+const DisplayItem = !isMobile()
+  ? styled.div`
+        color: white;
+        font-family: "Gilroy";
+        font-size: 18px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        color: #ffffff;
+        opacity: 0.9;
+      `
+  : styled.div`
+        width: 100%;
+        margin-bottom: 10px;
+        color: white;
+        text-align: center;
+        font-family: "Gilroy";
+        font-size: 18px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        opacity: 0.9;
+        color: #ffffff;
+      `;
 
 const StyledCardIcon = styled.div`
   font-size: 60px;

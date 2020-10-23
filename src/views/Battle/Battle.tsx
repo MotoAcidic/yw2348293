@@ -215,7 +215,6 @@ const Battle: React.FC = () => {
             {previousBattles.length && <Title>Results</Title>}
             <BattleHistory history={previousBattles} />
             <Title>Season 1</Title>
-            <S1Seperator />
             <OldLeaderBoard>{oldLeaderboardContent}</OldLeaderBoard>
             <OldBattleHistory history={oldPreviousBattles} />
           </Page>
@@ -231,17 +230,6 @@ const NextBattle = styled.div`
   font-family: "Gilroy";
   color: white;
 `
-
-const S1Seperator = !isMobile() ? styled.div`
-  width: 400px;
-  height: 1px;
-  margin-bottom: 40px;
-  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
-` : styled.div`
-  width: 90vw;
-  height: 1px;
-  background-color: rgba(256,256,256,0.5);
-  margin-bottom: 40px;`
 
 const StyledCardIcon = styled.div`
   font-size: 60px;

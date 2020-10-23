@@ -4,6 +4,7 @@ import WinnerChalice from "../../assets/img/win@2x.png";
 import useFarms from '../../hooks/useFarms'
 import './swal.css'
 import moment from 'moment';
+import PriceHistoryCard from './PriceHistoryCard';
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -15,8 +16,7 @@ function isMobile() {
 }
 
 function getDay() {
-	let day = Math.floor((((Date.now() / 1000 + 3600) - 1601406000) / 86400) + 1)
-	// console.log(day);
+	let day = Math.floor((((Date.now() / 1000) - 1601406000) / 86400) + 1)
 	return day
 }
 
@@ -25,7 +25,7 @@ const Versus = ({ history }) => {
 	if (!history.length) {
 		return null
 	}
-	console.log("dis history", history);
+	console.log("previousBattles", history);
 
 	let currSeasonHistory = []
 
@@ -46,8 +46,11 @@ const Versus = ({ history }) => {
 
 	currSeasonHistory = currSeasonHistory.map(item => {
 		let pool1, pool2, pool3, pool4, winner1, winner2
-		if (item.length === 0) {
-			return null
+		if (item.length === 0) return null;
+		const startDate = moment("09-28", 'MM-DD').add(item[0].day, 'day').format('MMM Do');
+		if (item[0].usesPercentChange) {
+			if (item[0].day === getDay() - 1) return null;
+			return (<PriceHistoryCard farms={farms} startDate={startDate} item={item} />)
 		}
 		if (item.length === 2) {
 			pool1 = farms.find(farm => farm.id === item[0].pool1.name)
@@ -61,9 +64,7 @@ const Versus = ({ history }) => {
 			pool2 = farms.find(farm => farm.id === item[0].pool2.name)
 			winner1 = item[0].pool1.totalVotes - item[0].pool2.totalVotes > 0 ? 1 : 2
 		}
-
-		const startDate = moment("09-28", 'MM-DD').add(item[0].day, 'day').format('MMM Do');
-
+		console.log("?", item);
 		return (
 			<VSContentContainer>
 				<div>{startDate}</div>
@@ -142,7 +143,7 @@ const Versus = ({ history }) => {
 	return (
 		<>
 			{currSeasonHistory.length > 0 &&
-				<Title>Season 2</Title>}
+				<Title>Season 2 Battle History</Title>}
 			<SeasonContainer>
 				{currSeasonHistory}
 			</SeasonContainer>
@@ -186,8 +187,7 @@ margin-bottom: 40px;
 `
 
 const Percent = styled.div`
-width: 20%;
-font-family: "Gilroy";
+	font-family: "Gilroy";
   font-size: 16px;
   font-weight: normal;
   font-stretch: normal;
@@ -198,8 +198,8 @@ font-family: "Gilroy";
 `
 
 const Divider = styled.div`
-margin-left: 10%;
-width: 80%;
+	margin-left: 10%;
+	width: 80%;
   height: 2px;
   opacity: 0.5;
   background-color: #ffffff;
@@ -207,7 +207,6 @@ width: 80%;
 
 
 const StyledCardIcon = styled.div`
-
 font-size: 40px;
 height: 62px;
 width: 62px;

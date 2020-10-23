@@ -77,7 +77,7 @@ const About: React.FC = () => {
       <BackgroundSection />
       <ContentContainer>
         <Page>
-        <TopDisplayContainer>
+          <TopDisplayContainer>
             <DisplayItem>
               $War Price:&nbsp;
               {currentPrice
@@ -99,7 +99,7 @@ const About: React.FC = () => {
             <DisplayItem>
               Marketcap:&nbsp;
               {currentPrice && warStaked && !warStaked.circSupply.eq(0)
-                ? `$${Number(warStaked.circSupply.multipliedBy(currentPrice).dividedBy(10**18).toFixed(2)).toLocaleString(undefined, {
+                ? `$${Number(warStaked.circSupply.multipliedBy(currentPrice).dividedBy(10 ** 18).toFixed(2)).toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
                 })}`
@@ -126,51 +126,39 @@ const About: React.FC = () => {
             <Rectangle>
               <RecTitle>What are $WAR tokens used for?</RecTitle>
               <RecDesc>
-                WAR tokens are staked in YieldWars to allow token holders to
-                vote, earn yield, and wage war on crypto communities. They will
-                also be used for our future governance platform to decide future
-                versions of YieldWars.
+                $WAR tokens are staked in our Battle Arena to allow token holders to vote, earn yield, and place bets on YieldWars.com They are also used for governance around what communities can be added/subtracted from the arena and what products to bet on.
               </RecDesc>
             </Rectangle>
             <Rectangle>
               <RecTitle>$WAR Tokenomics</RecTitle>
               <RecDesc>
-                There are 2,800,000 WAR Tokens distributed over the course of 30
-                days, with 50% in Farming and Liquidity Pools, 40% in Seasons 1
-                + 2 as Battle Rewards, and 10% in team rewards, distributed
-                equally with other token distributions, and not to ever be sold
-                for more than 10% per daily volume.{" "}
+                There are 2,800,000 WAR Tokens in total. The majority have been given out in Farming and Battle Rewards to jumpstart the community. We have enough rewards to give out through Season 4, but before then we aim to pay out $WAR token holders with profits made on bets placed on our system. Ten percent of all $WAR bets are re-distributed to $WAR yields, $WAR LP holders, and the $WAR Community Chest (DAO).
+              </RecDesc>
+            </Rectangle>
+            <Rectangle>
+              <RecTitle>How does the Battle Arena work?</RecTitle>
+              <RecDesc>
+                Every day we set up head to head battles, where crypto communities face off against each other and $WAR token holders vote on who they think will win. The winners used to be decided strictly based on voting, but now the winners can also be chosen based on changes in MarketCap Price. Please read the game rules on the battle page for a full outline on the most up to date rules.
               </RecDesc>
             </Rectangle>
             <Rectangle>
               <RecTitle>What was the reason for launching YieldWars?</RecTitle>
               <RecDesc>
-                We were looking at current DeFi projects and thought things were
-                pretty lame. We wanted to build a DeFi game that would bring all
-                the communities together and incentivize users to engage in
-                daily voting, first in YieldWars, and eventually on our
-                governance platform to build the future of YieldWars with us.
+                We were looking at current DeFi projects and thought it would be cool if there was something to do with the asset other than farming. We loved how engaged Farming made everyone, so we decided to see what we could come up with to make a fun crypto community game out of it.
               </RecDesc>
             </Rectangle>
             <Rectangle>
               <RecTitle>What is the Future Roadmap?</RecTitle>
               <RecDesc>
-                Season 1 is about growing the community and introducing everyone
-                to the right game mechanics. In Season 2 we will go ham and
-                expand the teams from 16 to 32 and really try to bring the
-                overall crypto community together in this. We have some big
-                plans for after that, but we would like the community to voice
-                in and decide what we do to evolve things after Season 2, but we
-                can see it going a lot of ways. Think of this as like watching
-                Sports for Degens.{" "}
+                We think Degen gambling and engagement is going to be our focus, so we are exploring lots of ways to make that happen. We’re a team that likes to move fast and experiment, so feel free to reach out to the General and provide him some feedback if you have any @YieldWars
               </RecDesc>
             </Rectangle>
           </FAQSection>
-          <Roadmap/>
+          <Roadmap />
           <Title>Official Medium Posts</Title>
           <MediumSection>
             <TextSection>
-            <LinkSection>
+              <LinkSection>
                 <a
                   className="medium-link"
                   style={{ color: "white" }}
@@ -178,11 +166,11 @@ const About: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                 Announcing YieldWars 2.0
+                  Announcing YieldWars 2.0
                 </a>
                 Oct 21
               </LinkSection>
-            <LinkSection>
+              <LinkSection>
                 <a
                   className="medium-link"
                   style={{ color: "white" }}
@@ -194,7 +182,7 @@ const About: React.FC = () => {
                 </a>
                 Oct 19
               </LinkSection>
-            <LinkSection>
+              <LinkSection>
                 <a
                   className="medium-link"
                   style={{ color: "white" }}
@@ -384,8 +372,8 @@ const Rectangle = !isMobile()
       margin-bottom: 20px;
     `;
 
-    const TopDisplayContainer = !isMobile()
-    ? styled.div`
+const TopDisplayContainer = !isMobile()
+  ? styled.div`
         width:80vw;
         display: flex;
         flex-direction: row;
@@ -393,7 +381,7 @@ const Rectangle = !isMobile()
         justify-content: space-evenly;
         margin: 16px auto 80px auto;
       `
-    : styled.div`
+  : styled.div`
         width: 60vw;
         display: flex;
         flex-wrap: wrap;
@@ -404,9 +392,9 @@ const Rectangle = !isMobile()
         display: flex;
         flex-wrap: wrap;
       `;
-  
-  const DisplayItem = !isMobile()
-    ? styled.div`
+
+const DisplayItem = !isMobile()
+  ? styled.div`
         color: white;
         font-family: "Gilroy";
         font-size: 18px;
@@ -418,7 +406,7 @@ const Rectangle = !isMobile()
         color: #ffffff;
         opacity: 0.9;
       `
-    : styled.div`
+  : styled.div`
         width: 100%;
         margin-bottom: 10px;
         color: white;

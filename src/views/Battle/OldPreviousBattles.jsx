@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import useFarms from '../../hooks/useFarms'
 import WinnerChalice from "../../assets/img/win@2x.png";
+import moment from 'moment';
 import './swal.css'
 
 function isMobile() {
@@ -59,19 +60,12 @@ const Versus = ({ history }) => {
 			pool2 = farms.find(farm => farm.id === item[0].pool2.name)
 			winner1 = item[0].pool1.totalVotes - item[0].pool2.totalVotes > 0 ? 1 : 2
 		}
-		let day = "";
-		if (item[0].day - 2 < 0) {
-			day = "Sept 29th";
-		} else if (item[0].day === 0) {
-			day = "Sept 30th";
-		} else {
-			day = "Oct " + (item[0].day - 2);
-		}
 
-		// console.log(item[0].pool1.totalVotes);
+		const startDate = moment("09-28", 'MM-DD').add(item[0].day, 'day').format('MMM Do');
+
 		return (
 			<VSContentContainer>
-				{item[0].day - 2 ? <div>{day}</div> : <div>Sept 30th</div>}
+				{item[0].day - 2 ? <div>{startDate}</div> : <div>Sept 30th</div>}
 				{item.length === 1 && <Space />}
 				<VersusItem>
 					<VersusCard>

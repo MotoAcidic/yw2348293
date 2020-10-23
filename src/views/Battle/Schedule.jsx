@@ -1,16 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import {
-	Route,
-	Switch,
-	useRouteMatch,
-} from 'react-router-dom'
 import styled from 'styled-components'
-
 import useYam from '../../hooks/useYam'
 import { useWallet } from 'use-wallet'
 import useFarms from '../../hooks/useFarms'
 import Cookie from 'universal-cookie'
 import './swal.css'
+import moment from 'moment';
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -69,9 +64,11 @@ const Versus = ({ schedule }) => {
 			return null
 		}
 
+		const startDate = moment("09-28", 'MM-DD').add(item[0].day, 'day').format('MMM Do');
+
 		return (
 			<VSContentContainer>
-				<div>Oct {item[0].day - 2}</div>
+				<div>{startDate}</div>
 				<Container>
 					<VersusItem>
 						<VersusCard>

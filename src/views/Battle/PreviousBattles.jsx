@@ -1,38 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import {
-	Route,
-	Switch,
-	useRouteMatch,
-} from 'react-router-dom'
 import styled from 'styled-components'
-
-import Button from '../../components/Button'
-import Card from '../../components/Card'
-import CardContent from '../../components/CardContent'
-import CardIcon from '../../components/CardIcon'
-import Page from '../../components/Page'
-import checkedIcon from '../../assets/img/checked.png'
-import uncheckedIcon from '../../assets/img/unchecked.png'
-
-import { getAPR, getPoolEndTime } from '../../yamUtils'
-import useYam from '../../hooks/useYam'
-import { useWallet } from 'use-wallet'
-
 import WinnerChalice from "../../assets/img/win@2x.png";
-
-import Landscape from '../../assets/img/landscapebig.png'
-import Sky from '../../assets/img/skybig.png'
-import TallSky from '../../assets/img/tallsky.png'
-import FightInstructions from '../../assets/img/flightinstructions.png'
-
 import useFarms from '../../hooks/useFarms'
-import useFarm from '../../hooks/useFarm'
-import { Farm } from '../../contexts/Farms'
-import Cookie from 'universal-cookie'
-import axios from 'axios'
-import Swal from 'sweetalert2'
-import Win from '../../assets/img/win.png'
 import './swal.css'
+import moment from 'moment';
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -43,20 +14,14 @@ function isMobile() {
 	}
 }
 
-function getServerURI() {
-	if (window.location.hostname === 'localhost') {
-		return 'http://localhost:5000'
-	}
-	return 'https://yieldwars-api.herokuapp.com'
+function getDay() {
+	let day = Math.floor((((Date.now() / 1000 + 3600) - 1601406000) / 86400) + 1)
+	// console.log(day);
+	return day
 }
-
-let cookie = new Cookie()
-
 
 const Versus = ({ history }) => {
 	let [farms] = useFarms()
-	const yam = useYam()
-	const { account, connect } = useWallet()
 	if (!history.length) {
 		return null
 	}
@@ -68,7 +33,6 @@ const Versus = ({ history }) => {
 		return a.day - b.day
 	})
 	for (let i = 0; i < sortedHistory.length; i++) {
-
 		if (i + 1 < sortedHistory.length && sortedHistory[i].day === sortedHistory[i + 1].day) {
 			currSeasonHistory.push([sortedHistory[i], sortedHistory[i + 1]]);
 			i++;
@@ -77,13 +41,8 @@ const Versus = ({ history }) => {
 		}
 	}
 
-	// for (let i = 0; i < history.length / 2; i++) {
-	// 	prevSeasonHistory.push(history.filter(item => item.day - 1 === i))
-	// }
-
 	currSeasonHistory.reverse()
-
-	// console.log("prev: ", prevSeasonHistory, "\ncurr: ", currSeasonHistory);
+	console.log("curr: ", currSeasonHistory);
 
 	currSeasonHistory = currSeasonHistory.map(item => {
 		let pool1, pool2, pool3, pool4, winner1, winner2
@@ -103,10 +62,11 @@ const Versus = ({ history }) => {
 			winner1 = item[0].pool1.totalVotes - item[0].pool2.totalVotes > 0 ? 1 : 2
 		}
 
-		// console.log(item[0].pool1.totalVotes);
+		const startDate = moment("09-28", 'MM-DD').add(item[0].day, 'day').format('MMM Do');
+
 		return (
 			<VSContentContainer>
-				<div>Oct {item[0].day - 2}</div>
+				<div>{startDate}</div>
 				{item.length === 1 && <Space />}
 				<VersusItem>
 					<VersusCard>
@@ -176,14 +136,13 @@ const Versus = ({ history }) => {
 	})
 
 	if (currSeasonHistory.length % 3 === 2) {
-		currSeasonHistory.push(<FillCard/>)
+		currSeasonHistory.push(<FillCard />)
 	}
 
 	return (
 		<>
 			{currSeasonHistory.length > 0 &&
-				<Title>Season 2</Title>
-			}
+				<Title>Season 2</Title>}
 			<SeasonContainer>
 				{currSeasonHistory}
 			</SeasonContainer>

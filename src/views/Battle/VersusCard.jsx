@@ -175,7 +175,7 @@ const Versus = ({ battles, question }) => {
 			{battles &&
 				<>
 					<RecDesc>
-						Which token price will change by a greater % in 24 hours?
+						Which token price will perform better in 24 hours?
       		</RecDesc>
 					<CountDown />
 					<VersusContainer>

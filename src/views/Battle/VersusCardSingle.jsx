@@ -160,7 +160,7 @@ const Versus = ({ battles, question }) => {
 			{battles &&
 				<VersusContainer>
 					<RecDesc>
-						Which token price will change by a greater % in 24 hours?
+						Which token price will perform better in 24 hours?
      	 	</RecDesc>
 					<CountDown />
 					<Options>
@@ -168,9 +168,9 @@ const Versus = ({ battles, question }) => {
 							<FarmGraph farm={battle.farm1} />
 							<ButtonContainer onClick={() => pick(1)}>
 								{checked === 1 ? (
-									<img src={checkedIcon} width="30px" />
+									<img alt="check" src={checkedIcon} width="30px" />
 								) : (
-										<img src={uncheckedIcon} width="30px" />
+										<img alt="check" src={uncheckedIcon} width="30px" />
 									)}
 							</ButtonContainer>
 						</VersusItem>
@@ -179,9 +179,9 @@ const Versus = ({ battles, question }) => {
 							<FarmGraph farm={battle.farm2} />
 							<ButtonContainer onClick={() => pick(2)}>
 								{checked === 2 ? (
-									<img src={checkedIcon} width="30px" />
+									<img alt="check" src={checkedIcon} width="30px" />
 								) : (
-										<img src={uncheckedIcon} width="30px" />
+										<img alt="check" src={uncheckedIcon} width="30px" />
 									)}
 							</ButtonContainer>
 						</VersusItem>

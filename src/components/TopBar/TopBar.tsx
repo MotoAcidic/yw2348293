@@ -22,8 +22,8 @@ const TopBar: React.FC = () => {
   return (
     <StyledTopBar>
       <Notice>
-        ⚔️ 🚨  WAR is an experiment in DeFi Gambling. DYOR.<a style={{color: 'white', margin: "0 4px 0 4px",}} target="_blank"
-        rel="noopener noreferrer" href="https://medium.com/@yieldwars/announcing-yieldwars-2-0-the-next-evolution-of-the-defi-battle-royale-6b1f15755209">Learn More.</a>  🚨⚔️
+        ⚔️ 🚨  WAR is an experiment in Degen Gambling. DYOR.<a style={{ color: 'white', margin: "0 4px 0 4px", }} target="_blank"
+          rel="noopener noreferrer" href="https://medium.com/@yieldwars/announcing-yieldwars-2-0-the-next-evolution-of-the-defi-battle-royale-6b1f15755209">Learn More.</a>  🚨⚔️
       </Notice>
 
       {isMobile() ? (
@@ -63,7 +63,7 @@ const TopBar: React.FC = () => {
 }
 
 const Notice = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 30px;
   display: flex;
   align-items: center;

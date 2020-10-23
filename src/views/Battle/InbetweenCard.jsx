@@ -4,7 +4,7 @@ import useFarms from '../../hooks/useFarms'
 import './swal.css'
 import FarmGraph from "./InbetweenFarmGraph";
 import VotingBalance from "./VotingBalance";
-import CountDown from "./InbetweenCountDown";
+import CountDown from "./CountDown";
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -26,42 +26,43 @@ const Inbetween = ({ battles }) => {
 		farm1: farms.find(farm => farm.id === battles[0].pool1.name) || farmTemplate,
 		farm2: farms.find(farm => farm.id === battles[0].pool2.name) || farmTemplate
 	}
-	let battle2 = {
-		farm1: farms.find(farm => farm.id === battles[1].pool1.name) || farmTemplate,
-		farm2: farms.find(farm => farm.id === battles[1].pool2.name) || farmTemplate
-	}
 	battle1.farm1.votes = battles[0].pool1.totalVotes;
 	battle1.farm2.votes = battles[0].pool2.totalVotes;
-	battle2.farm1.votes = battles[1].pool1.totalVotes;
-	battle2.farm2.votes = battles[1].pool2.totalVotes;
+	let battle2 = null;
+	if (battles[1]) {
+		battle2 = {
+			farm1: farms.find(farm => farm.id === battles[1].pool1.name) || farmTemplate,
+			farm2: farms.find(farm => farm.id === battles[1].pool2.name) || farmTemplate
+		}
+		battle2.farm1.votes = battles[1].pool1.totalVotes;
+		battle2.farm2.votes = battles[1].pool2.totalVotes;
+	}
+
+	console.log("inbeetwix", battles);
 
 	return (
 		<>
 			{battles &&
 				<>
 					<CountDown />
-					<RecDesc>
-						Which token price will perform better in 24 hours?
-      		</RecDesc>
 					<VersusContainer>
 						<Options>
 							<FarmGraph farm={battle1.farm1} />
 							<Divider />
 							<FarmGraph farm={battle1.farm2} />
 						</Options>
-
 						<VotingBalance farm1={battle1.farm1} farm2={battle1.farm2} />
-
 					</VersusContainer>
-
-					<VersusContainer>
-						<Options>
-							<FarmGraph farm={battle2.farm1} />
-							<Divider />
-							<FarmGraph farm={battle2.farm2} />
-						</Options>
-						<VotingBalance farm1={battle2.farm1} farm2={battle2.farm2} />
-					</VersusContainer>
+					{battle2 &&
+						<VersusContainer>
+							<Options>
+								<FarmGraph farm={battle2.farm1} />
+								<Divider />
+								<FarmGraph farm={battle2.farm2} />
+							</Options>
+							<VotingBalance farm1={battle2.farm1} farm2={battle2.farm2} />
+						</VersusContainer>
+					}
 				</>
 			}
 			<Space />

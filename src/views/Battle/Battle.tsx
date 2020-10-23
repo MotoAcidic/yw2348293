@@ -121,22 +121,17 @@ const Battle: React.FC = () => {
         <Title>Loading Battles...</Title>
         <NextBattle />
       </>)
-    } else if (!inbetween) {
-      console.log('take1')
-      return (<>
-        {
-          battles.length > 0 &&
-          <Title>Step 2: Vote for the armies you will fight for</Title>
-        }
-        { battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
-        {/* in case no battle, but still question */}
-        { (battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
-      </>
-      )
     }
-    console.log('take2')
-    return (
-      <InbetweenCard battles={battles} />
+    return (<>
+      {
+        battles.length > 0 &&
+        <Title>Step 2: Vote for which token will perform better over 24 hours
+        </Title>
+      }
+      { battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
+      {/* in case no battle, but still question */}
+      { (battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
+    </>
     )
   };
 
@@ -153,6 +148,10 @@ const Battle: React.FC = () => {
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
             {battleFields()}
+            {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator/> : null}
+            {prevDayBattles.length > 0 &&
+              <InbetweenCard battles={prevDayBattles} />
+            }
             <Title>How battles work </Title>
             <Instructions />
             <Title>Schedule</Title>
@@ -163,6 +162,17 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const Seperator = !isMobile() ? styled.div`
+  width: 1000px;
+  height: 1px;
+  margin-bottom: 80px;
+  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
+` : styled.div`
+  width: 90vw;
+  height: 1px;
+  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
+  margin-bottom: 80px;`
 
 const NextBattle = styled.div`
   margin-bottom: 80px;

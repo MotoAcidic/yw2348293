@@ -13,7 +13,7 @@ import './swal.css'
 import FarmGraph from "./FarmGraph";
 import VotingBalance from "./VotingBalance";
 import DailyQuestion from "./DailyQuestion.jsx";
-import CountDown from "./CountDown";
+import CountDown from "./BigCountDown";
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -46,7 +46,6 @@ const Versus = ({ battles, question }) => {
 		name: "THINKING Errors"
 	}
 
-	console.log("battlesszzz", battles)
 	let battle1 = {
 		farm1: farms.find(farm => farm.id === battles[0].pool1.name) || farmTemplate,
 		farm2: farms.find(farm => farm.id === battles[0].pool2.name) || farmTemplate
@@ -175,7 +174,7 @@ const Versus = ({ battles, question }) => {
 			{battles &&
 				<>
 					<RecDesc>
-						Which token price will perform better in 24 hours?
+						Voting Ends and the Battle Begins in
       		</RecDesc>
 					<CountDown />
 					<VersusContainer>
@@ -202,9 +201,7 @@ const Versus = ({ battles, question }) => {
 								</ButtonContainer>
 							</VersusItem>
 						</Options>
-
 						<VotingBalance farm1={battle1.farm1} farm2={battle1.farm2} />
-
 					</VersusContainer>
 
 					<VersusContainer>
@@ -285,8 +282,6 @@ font-family: "Gilroy";
   letter-spacing: normal;
   text-align: center;
   color: #ffffff;
-	color: #ffffff;
-	margin-bottom: 10px;
 	`;
 
 const ButtonContainer = styled.div`

@@ -13,8 +13,6 @@ import { getWarStaked } from "../../yamUtils";
 import { getStats } from "./utils";
 import VersusCard from "./VersusCard.jsx";
 import SingleVersusCard from "./VersusCardSingle.jsx";
-import BattleHistory from './PreviousBattles'
-import OldBattleHistory from './OldPreviousBattles'
 import Schedule from './Schedule'
 import Instructions from "./Instructions";
 import InbetweenCard from "./InbetweenCard";
@@ -59,12 +57,8 @@ const Battle: React.FC = () => {
   const { account, connect } = useWallet()
   let [inbetween, setInbetween] = useState(false);
   let [battles, setBattles] = useState([])
-  let [leaderboard, setLeaderboard] = useState([])
-  let [previousBattles, setPreviousBattles] = useState([])
   let [schedule, setSchedule] = useState([])
   let [dailyQuestion, setDailyQuestion] = useState();
-  let [oldLeaderboard, setOldLeaderboard] = useState([]);
-  let [oldPreviousBattles, setOldPreviousBattles] = useState([]);
 
   const [
     {
@@ -176,130 +170,6 @@ const NextBattle = styled.div`
   font-family: "Gilroy";
   color: white;
 `
-
-const StyledCardIcon = styled.div`
-  font-size: 60px;
-  height: 80px;
-  width: 80px;
-  border-radius: 40px;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-`;
-
-
-const LeaderBoardItem = !isMobile()
-  ? styled.div`
-  text-align: center;
-  min-width: 120px;
-  width: 17%;
-  height: 200px;
-  border-radius: 8px;
-  border: solid 2px rgba(255, 183, 0, 0.3);
-  background-color: rgba(256,256,256,0.08);
-  font-family: "Gilroy";
-  font-size: 20px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  margin-bottom: 20px;`
-  : styled.div`
-  text-align: center;
-  width: 40%;
-  min-width: 200px;
-  height: 200px;
-  border-radius: 8px;
-  border: solid 2px rgba(255, 183, 0, 0.3);
-  background-color: rgba(256,256,256,0.08);
-  font-family: "Gilroy";
-  font-size: 20px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  padding: 20px 0 20px 0;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-bottom: 20px;`;
-
-const LeaderBoard = !isMobile() ? styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 80%;
-  max-width: 1200px;
-  margin-bottom: 60px;
-` : styled.div`
-  display: flex;
-  width: 90vw;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  margin-bottom: 60px;
-`;
-
-const OldLeaderBoard = !isMobile() ? styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 80%;
-  max-width: 1200px;
-  margin-bottom: 60px;
-` : styled.div`
-  display: flex;
-  width: 90vw;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  margin-bottom: 60px;
-`;
-
-const StyledVotes = styled.h4`
-  margin: 0;
-  font-family: "Gilroy";
-  font-size: 16px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  text-align: center;
-  color: #ffffff;
-  padding: 0;
-`;
-
-const StyledTitle = styled.h4`
-  margin: 0;
-  font-family: "Gilroy";
-  font-size: 20px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  text-align: center;
-  color: #ffffff;
-  padding: 0;
-`;
-
-const StyledContent = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  height: 100%;
-`;
 
 const Title = styled.div`
 font-family: "Gilroy";

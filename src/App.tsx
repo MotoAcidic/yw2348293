@@ -17,8 +17,9 @@ import Farms from './views/Farms'
 import Farm from './views/Farm'
 import Splash from './views/Splash/Splash'
 import Battle from './views/Battle/Battle'
+import Results from './views/Results/Results'
+
 import About from './views/About/About'
-import Roadmap from './views/Roadmap/Roadmap'
 import theme from './theme'
 import { createGlobalStyle } from 'styled-components';
 import GilroyBold from "./assets/fonts/Gilroy-Bold.otf";
@@ -76,11 +77,11 @@ const App: React.FC = () => {
             <Route path="/battle" exact>
               <Battle />
             </Route>
-            <Route path="/faq" exact>
-              <About />
+            <Route path="/results" exact>
+              <Results />
             </Route>
-            <Route path="/roadmap" exact>
-              <Roadmap />
+            <Route path="/about" exact>
+              <About />
             </Route>
           </Switch>
         </Router>

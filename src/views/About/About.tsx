@@ -9,6 +9,7 @@ import { useWallet } from "use-wallet";
 import { getWarStaked } from "../../yamUtils";
 import { getStats } from "./utils";
 import Uniswap from "../../assets/img/uniswap@2x.png";
+import Roadmap from "./Roadmap";
 
 export interface OverviewData {
   circSupply?: string;
@@ -169,9 +170,34 @@ const About: React.FC = () => {
               </RecDesc>
             </Rectangle>
           </FAQSection>
+          <Roadmap/>
           <Title>Official Medium Posts</Title>
           <MediumSection>
             <TextSection>
+            <LinkSection>
+                <a
+                  className="medium-link"
+                  style={{ color: "white" }}
+                  href="https://yieldwars.medium.com/announcing-yieldwars-2-0-the-next-evolution-of-the-defi-battle-royale-6b1f15755209"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                 Announcing YieldWars 2.0
+                </a>
+                Oct 21
+              </LinkSection>
+            <LinkSection>
+                <a
+                  className="medium-link"
+                  style={{ color: "white" }}
+                  href="https://yieldwars.medium.com/introducing-the-yieldwars-foundation-91354de67424"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Introducing The YieldWars Foundation
+                </a>
+                Oct 19
+              </LinkSection>
             <LinkSection>
                 <a
                   className="medium-link"

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 import './swal.css'
 import { Chart } from 'react-charts'
+import Fight from "../../assets/img/fight@2x.png";
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {

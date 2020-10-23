@@ -55,7 +55,7 @@ const Battle: React.FC = () => {
     warStaked: new BigNumber(0)
   });
   const { account, connect } = useWallet()
-  let [inbetween, setInbetween] = useState(false);
+  let [prevDayBattles, setPrevDayBattles] = useState([]);
   let [battles, setBattles] = useState([])
   let [schedule, setSchedule] = useState([])
   let [dailyQuestion, setDailyQuestion] = useState();
@@ -95,8 +95,8 @@ const Battle: React.FC = () => {
     }
     if (battles.length === 0) {
       axios.get(`${getServerURI()}/api/battles`).then(res => {
-        if (res.data.inbetween) setInbetween(true);
         console.log("battles", res.data);
+        setPrevDayBattles(res.data.prevDayBattles);
         setBattles(res.data.battles)
         setSchedule(res.data.schedule)
         setDailyQuestion(res.data.dailyQuestion);

@@ -18,6 +18,7 @@ import OldBattleHistory from './OldPreviousBattles'
 import Schedule from './Schedule'
 import Instructions from "./Instructions";
 import InbetweenCard from "./InbetweenCard";
+import moment from "moment";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -26,6 +27,13 @@ function isMobile() {
     return false;
   }
 }
+
+function switchingBattles() {
+  let day = Math.floor((((Date.now() / 1000) - 1601406000) / 86400) + 1)
+  let tomorrow = Math.floor(((Date.now() / 1000 + 3600 - 1601406000) / 86400) + 1)
+  return (tomorrow > day);
+}
+
 
 function getServerURI() {
   if (window.location.hostname === "localhost") {
@@ -92,26 +100,9 @@ const Battle: React.FC = () => {
       fetchWarStaked(farms);
     }
     if (battles.length === 0) {
-      axios.post(`${getServerURI()}/api/season-info`, ({ season: 1 })).then(res => {
-        console.log("s1battlews");
-        let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
-          return b.votes - a.votes;
-        });
-        console.log("s1battles", res.data);
-        console.log(lb);
-        setOldLeaderboard(lb);
-        setOldPreviousBattles(res.data.history);
-      }).catch(err => {
-        console.log(err);
-      })
       axios.get(`${getServerURI()}/api/battles`).then(res => {
-        let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
-          return b.votes - a.votes;
-        });
         if (res.data.inbetween) setInbetween(true);
         console.log("battles", res.data);
-        setLeaderboard(lb);
-        setPreviousBattles(res.data.history)
         setBattles(res.data.battles)
         setSchedule(res.data.schedule)
         setDailyQuestion(res.data.dailyQuestion);
@@ -121,58 +112,20 @@ const Battle: React.FC = () => {
     }
   }, [yam, account, farms, farms[0]]);
 
-  let leaderboardContent;
-  let oldLeaderboardContent;
-
-  if (farms[0]) {
-    leaderboard = leaderboard.slice(0, 5);
-    leaderboardContent = leaderboard.map((item, index) => {
-      const votes = Number(item.votes.toFixed(0));
-
-      let pool = farms.find(farm => farm.id === item.pool);
-      let rank = "th";
-      if (index === 0) rank = "st";
-      if (index === 1) rank = "nd";
-      return (
-        <LeaderBoardItem key={index}>
-          <StyledContent>
-            {index + 1}
-            {rank}
-            <StyledCardIcon>{pool.icon}</StyledCardIcon>
-            <StyledTitle>{pool.name}</StyledTitle>
-            <StyledVotes>{votes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} votes</StyledVotes>
-          </StyledContent>
-        </LeaderBoardItem>
-      )
-    })
-    oldLeaderboard = oldLeaderboard.slice(0, 5);
-    oldLeaderboardContent = oldLeaderboard.map((item, index) => {
-      const votes = Number(item.votes.toFixed(0));
-      let pool = farms.find(farm => farm.id === item.pool);
-      let rank = "th";
-      if (index === 0) rank = "st";
-      if (index === 1) rank = "nd";
-      return (
-        <LeaderBoardItem key={index}>
-          <StyledContent>
-            {index + 1}
-            {rank}
-            <StyledCardIcon>{pool.icon}</StyledCardIcon>
-            <StyledTitle>{pool.name}</StyledTitle>
-            <StyledVotes>{votes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} votes</StyledVotes>
-          </StyledContent>
-        </LeaderBoardItem>
-      )
-    })
-  }
 
   const battleFields = () => {
+    if (switchingBattles()) {
+      const minutesLeft = 60 - parseInt(moment().format("mm"))
+
+      return (<>
+        <Title>We're Switching Out Battles</Title>
+        <NextBattle>Come back in {minutesLeft} minutes</NextBattle>
+      </>)
+    }
     if (!battles.length) {
       return (<>
         <Title>Loading Battles...</Title>
         <NextBattle />
-        {/* <Title>Voting is closed. Check back soon to see the winners.</Title>
-        <NextBattle>Next battle begins at 19:00 UTC</NextBattle> */}
       </>)
     } else if (!inbetween) {
       console.log('take1')
@@ -208,15 +161,8 @@ const Battle: React.FC = () => {
             {battleFields()}
             <Title>How battles work </Title>
             <Instructions />
-            <Title>Leaderboard</Title>
-            <LeaderBoard>{leaderboardContent}</LeaderBoard>
             <Title>Schedule</Title>
             <Schedule schedule={schedule} />
-            {previousBattles.length && <Title>Results</Title>}
-            <BattleHistory history={previousBattles} />
-            <Title>Season 1</Title>
-            <OldLeaderBoard>{oldLeaderboardContent}</OldLeaderBoard>
-            <OldBattleHistory history={oldPreviousBattles} />
           </Page>
         </ContentContainer>
       </StyledCanvas>

@@ -1,9 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import WinnerChalice from "../../assets/img/win@2x.png";
-import useFarms from '../../hooks/useFarms'
 import './swal.css'
-import moment from 'moment';
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -12,11 +10,6 @@ function isMobile() {
 	else {
 		return false
 	}
-}
-
-function getDay() {
-	let day = Math.floor((((Date.now() / 1000) - 1601406000) / 86400) + 1)
-	return day
 }
 
 const PriceHistoryCard = ({ farms, startDate, item }) => {
@@ -113,6 +106,7 @@ background-image: url(${WinnerChalice});
 `
 
 const Space = styled.div`height: 61px;`
+
 const GreenPercent = styled.div`
 	font-family: "GilroyMedium";
   font-size: 16px;

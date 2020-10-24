@@ -6,6 +6,7 @@ import uncheckedIcon from '../../assets/img/unchecked.png'
 import useYam from '../../hooks/useYam'
 import { useWallet } from 'use-wallet'
 import DailyQuestion from "./DailyQuestion.jsx";
+import BetCard from "./BetCard";
 
 import useFarms from '../../hooks/useFarms'
 import Cookie from 'universal-cookie'
@@ -44,6 +45,7 @@ const Versus = ({ battles, question }) => {
 	const [voted, setVoted] = useState(false)
 	const [checked, setChecked] = useState(parseInt(cookie.get(battles._id)))
 	const [questionResponse, setQuestionResponse] = useState("");
+	const [bet, setBet] = useState({farm: "", war: 0});
 	const farmTemplate = {
 		icon: "🤔",
 		name: "THINKING Errors"
@@ -191,11 +193,10 @@ const Versus = ({ battles, question }) => {
 				</VersusContainer>
 			</>
 			}
-
+			{battle && <BetCard battle={battle} bet={bet} setBet={() => setBet(bet)}/>}
 			{question &&
 				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} />
 			}
-
 			{account ? <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button> :
 				<RecDesc>
 					connect your wallet to participate

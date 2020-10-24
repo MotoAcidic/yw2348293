@@ -14,6 +14,7 @@ import FarmGraph from "./FarmGraph";
 import VotingBalance from "./VotingBalance";
 import DailyQuestion from "./DailyQuestion.jsx";
 import CountDown from "./BigCountDown";
+import BetCard from "./BetCard";
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -41,6 +42,7 @@ const Versus = ({ battles, question }) => {
 	const [checked1, setChecked1] = useState(parseInt(cookie.get(battles[0]._id)))
 	const [checked2, setChecked2] = useState(parseInt(cookie.get(battles[1]._id)))
 	const [questionResponse, setQuestionResponse] = useState(null);
+	const [bet, setBet] = useState({ farm: "", war: 0 });
 	const farmTemplate = {
 		icon: "🤔",
 		name: "THINKING Errors"
@@ -235,6 +237,7 @@ const Versus = ({ battles, question }) => {
 			{question &&
 				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} voted={voted} />
 			}
+			{/* {battles && <BetCard battles={battles} bet={bet} setBet={() => setBet(bet)} />} */}
 			{account ? <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button> :
 				<RecDesc>
 					connect your wallet to participate

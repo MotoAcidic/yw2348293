@@ -48,9 +48,14 @@ const GlobalStyle = createGlobalStyle`
   font-weight: normal;
   font-style: normal;
 }
-
-
 `;
+
+
+if (
+  window.location.hostname !== 'localhost'
+) {
+  console.log = function () { }
+}
 
 const App: React.FC = () => {
   return (

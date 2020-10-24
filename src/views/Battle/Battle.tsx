@@ -150,6 +150,7 @@ const Battle: React.FC = () => {
               <iframe title="promo" style={{ width: "90vw", height: "50.6vw", margin: "40px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />}
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
+            <BigTitle>Season 2 Semifinals!</BigTitle>
             {battleFields()}
             {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
             {prevDayBattles.length > 0 &&
@@ -165,6 +166,19 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const BigTitle = styled.div`
+font-family: "Gilroy";
+  font-size: 60px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: rgb(255, 204, 74);
+  max-width: 80vw;
+  margin: -30px auto 40px;
+`
 
 const Seperator = !isMobile() ? styled.div`
   width: 1000px;

@@ -18,7 +18,7 @@ function getGeckoId(coin) {
 	coin = coin.toLowerCase();
 	switch (coin) {
 		case "snx":
-			return "aave-snx";
+			return "havven";
 		case "yfi":
 			return "yearn-finance";
 		case "comp":

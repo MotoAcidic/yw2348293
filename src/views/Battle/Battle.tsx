@@ -55,7 +55,7 @@ const Battle: React.FC = () => {
     warStaked: new BigNumber(0)
   });
   const { account, connect } = useWallet()
-  let [inbetween, setInbetween] = useState(false);
+  let [prevDayBattles, setPrevDayBattles] = useState([]);
   let [battles, setBattles] = useState([])
   let [schedule, setSchedule] = useState([])
   let [dailyQuestion, setDailyQuestion] = useState();
@@ -95,8 +95,8 @@ const Battle: React.FC = () => {
     }
     if (battles.length === 0) {
       axios.get(`${getServerURI()}/api/battles`).then(res => {
-        if (res.data.inbetween) setInbetween(true);
         console.log("battles", res.data);
+        setPrevDayBattles(res.data.prevDayBattles);
         setBattles(res.data.battles)
         setSchedule(res.data.schedule)
         setDailyQuestion(res.data.dailyQuestion);
@@ -115,18 +115,18 @@ const Battle: React.FC = () => {
         <Title>We're Switching Out Battles</Title>
         <NextBattle>Come back in {minutesLeft} minutes</NextBattle>
       </>)
-    }
-    if (!battles.length) {
+    } else if (!battles.length && !prevDayBattles.length) {
       return (<>
         <Title>Loading Battles...</Title>
         <NextBattle />
       </>)
-    } else if (!inbetween) {
-      console.log('take1')
+    } else if (battles.length) {
+
       return (<>
         {
           battles.length > 0 &&
-          <Title>Step 2: Vote for the armies you will fight for</Title>
+          <Title>Step 2: Vote for which token will perform better over 24 hours
+        </Title>
         }
         { battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
         {/* in case no battle, but still question */}
@@ -134,10 +134,8 @@ const Battle: React.FC = () => {
       </>
       )
     }
-    console.log('take2')
-    return (
-      <InbetweenCard battles={battles} />
-    )
+    return null;
+
   };
 
   return (
@@ -152,7 +150,12 @@ const Battle: React.FC = () => {
               <iframe title="promo" style={{ width: "90vw", height: "50.6vw", margin: "40px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />}
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
+            <BigTitle>Season 2 Semifinals!</BigTitle>
             {battleFields()}
+            {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
+            {prevDayBattles.length > 0 &&
+              <InbetweenCard battles={prevDayBattles} />
+            }
             <Title>How battles work </Title>
             <Instructions />
             <Title>Schedule</Title>
@@ -163,6 +166,30 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const BigTitle = styled.div`
+font-family: "Gilroy";
+  font-size: 60px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: rgb(255, 204, 74);
+  max-width: 80vw;
+  margin: -30px auto 40px;
+`
+
+const Seperator = !isMobile() ? styled.div`
+  width: 1000px;
+  height: 1px;
+  margin-bottom: 80px;
+  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
+` : styled.div`
+  width: 90vw;
+  height: 1px;
+  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
+  margin-bottom: 80px;`
 
 const NextBattle = styled.div`
   margin-bottom: 80px;

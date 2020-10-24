@@ -46,7 +46,7 @@ class CountDown extends React.Component {
 	render() {
 		return (
 			<Desc>
-				{this.state.inBetween ? "Next vote starts in" : "Voting ends in"}
+				{this.state.inBetween ? "Next battle starts in" : "Battle ends in"}
 				<Countdown>
 					<Item>
 						{this.state.hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}

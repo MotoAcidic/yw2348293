@@ -219,7 +219,7 @@ const Seperator = !isMobile() ? styled.div`
 ` : styled.div`
   width: 90vw;
   height: 1px;
-  background-color: rgba(256,256,256,0.5);
+  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
   margin-bottom: 80px;`
 
 const BigTitle = styled.div`

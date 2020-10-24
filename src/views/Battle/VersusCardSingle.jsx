@@ -15,7 +15,7 @@ import Warning from "../../assets/img/warning@2x.png";
 import './swal.css'
 import FarmGraph from "./FarmGraph";
 import VotingBalance from "./VotingBalance";
-import CountDown from "./CountDown";
+import CountDown from "./BigCountDown";
 
 
 function isMobile() {
@@ -157,12 +157,12 @@ const Versus = ({ battles, question }) => {
 
 	return (
 		<>
-			{battles &&
+			{battles && <>
+				<RecDesc>
+					Voting Ends and the Battle Begins in
+      		</RecDesc>
+				<CountDown />
 				<VersusContainer>
-					<RecDesc>
-						Which token price will perform better in 24 hours?
-     	 	</RecDesc>
-					<CountDown />
 					<Options>
 						<VersusItem>
 							<FarmGraph farm={battle.farm1} />
@@ -189,6 +189,7 @@ const Versus = ({ battles, question }) => {
 					<VotingBalance farm1={battle.farm1} farm2={battle.farm2} />
 
 				</VersusContainer>
+			</>
 			}
 
 			{question &&
@@ -238,9 +239,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   text-align: center;
   color: #ffffff;
-	color: #ffffff;
-	margin: 0 20px 20px 20px;
-`;
+	`;
 
 const Space = styled.div`
 height: 80px;`

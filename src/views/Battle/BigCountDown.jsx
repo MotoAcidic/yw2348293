@@ -39,59 +39,27 @@ class CountDown extends React.Component {
 
 	render() {
 		return (
-			<Desc>
-				<Title>
-					Current battle ending in
-					</Title>
-				<Countdown>
-					<Item>
-						{this.state.hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-						{/* <TimerText>Hours</TimerText> */}
-					</Item>
-					<div>:</div>
-					<Item>
-						{this.state.minutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-						{/* <TimerText>Minutes</TimerText> */}
-					</Item>
-					<div>:</div>
-					<Item>
-						{this.state.seconds.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-						{/* <TimerText>Seconds</TimerText> */}
-					</Item>
-				</Countdown>
-			</Desc>
+			<Countdown>
+				<Item>
+					{this.state.hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+				</Item>
+				<div>:</div>
+				<Item>
+					{this.state.minutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+				</Item>
+				<div>:</div>
+				<Item>
+					{this.state.seconds.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+				</Item>
+			</Countdown>
 		)
 	}
 }
-
-const Title = styled.div`
-font-family: "Gilroy";
-  font-size: 30px;
-	font-stretch: normal;
-  font-style: normal;
-  letter-spacing: normal;
-  text-align: center;
-	color: #ffffff;
-	margin-bottom: 20px;
-`
 
 const Item = styled.div`
 text-align: center;
 `
 
-const Desc = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-font-family: "Gilroy";
-  font-size: 20px;
-	font-stretch: normal;
-  font-style: normal;
-  letter-spacing: normal;
-  text-align: center;
-	color: #ffffff;
-	margin-bottom: 20px;
-`;
 
 const Countdown = styled.div`
 display: flex;
@@ -102,7 +70,8 @@ font-family: "Gilroy";
   font-stretch: normal;
   font-style: normal;
   letter-spacing: 2px;
-  color: #ffb700;
+	color: #ffb700;
+	margin-bottom: 10px;
 `
 
 

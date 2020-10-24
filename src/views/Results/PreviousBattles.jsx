@@ -87,7 +87,6 @@ const Versus = ({ history }) => {
 						<StyledContent>
 							{winner1 === 2 ? <WinningCardIcon>{pool2.icon}</WinningCardIcon> : <StyledCardIcon>{pool2.icon}</StyledCardIcon>}
 							{winner1 === 2 && <Chalice />}
-
 							<StyledTitle>{pool2.name}</StyledTitle>
 							<Percent>{
 								((parseInt(item[0].pool2.totalVotes, 10) /
@@ -106,7 +105,6 @@ const Versus = ({ history }) => {
 								<StyledContent>
 									{winner2 === 1 ? <WinningCardIcon>{pool3.icon}</WinningCardIcon> : <StyledCardIcon>{pool3.icon}</StyledCardIcon>}
 									{winner2 === 1 && <Chalice />}
-
 									<StyledTitle>{pool3.name}</StyledTitle>
 									<Percent>{
 										((parseInt(item[1].pool1.totalVotes, 10) /
@@ -142,8 +140,10 @@ const Versus = ({ history }) => {
 
 	return (
 		<>
-			{currSeasonHistory.length > 0 &&
-				<Title>Season 2 Battle History</Title>}
+			{currSeasonHistory.length > 0 &&<>
+				<Title>Season 2 Battle History</Title>
+				<SubTitle>listed dates are when voting occured</SubTitle>
+				</>}
 			<SeasonContainer>
 				{currSeasonHistory}
 			</SeasonContainer>
@@ -151,6 +151,18 @@ const Versus = ({ history }) => {
 		</>
 	)
 }
+
+const SubTitle = styled.div`
+font-family: "GilroyMedium";
+  font-size: 14px;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  max-width: 80vw;
+  margin: 0 auto 20px auto;
+`;
 
 const FillCard = styled.div`
 width: 30%;
@@ -205,7 +217,6 @@ const Divider = styled.div`
   background-color: #ffffff;
 `
 
-
 const StyledCardIcon = styled.div`
 font-size: 40px;
 height: 62px;
@@ -239,7 +250,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-  margin: 20px auto 20px auto;
+  margin: 20px auto 5px;
 `;
 
 const VSContentContainer = styled.div`

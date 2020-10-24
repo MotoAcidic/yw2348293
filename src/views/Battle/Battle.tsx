@@ -115,24 +115,27 @@ const Battle: React.FC = () => {
         <Title>We're Switching Out Battles</Title>
         <NextBattle>Come back in {minutesLeft} minutes</NextBattle>
       </>)
-    }
-    if (!battles.length) {
+    } else if (!battles.length && !prevDayBattles.length) {
       return (<>
         <Title>Loading Battles...</Title>
         <NextBattle />
       </>)
-    }
-    return (<>
-      {
-        battles.length > 0 &&
-        <Title>Step 2: Vote for which token will perform better over 24 hours
+    } else if (battles.length) {
+
+      return (<>
+        {
+          battles.length > 0 &&
+          <Title>Step 2: Vote for which token will perform better over 24 hours
         </Title>
-      }
-      { battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
-      {/* in case no battle, but still question */}
-      { (battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
-    </>
-    )
+        }
+        { battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
+        {/* in case no battle, but still question */}
+        { (battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
+      </>
+      )
+    }
+    return null;
+
   };
 
   return (
@@ -148,7 +151,7 @@ const Battle: React.FC = () => {
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
             {battleFields()}
-            {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator/> : null}
+            {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
             {prevDayBattles.length > 0 &&
               <InbetweenCard battles={prevDayBattles} />
             }

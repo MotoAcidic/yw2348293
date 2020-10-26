@@ -68,10 +68,6 @@ function getGeckoId(coin) {
 	}
 }
 
-function numberWithCommas(x) {
-	return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-}
-
 const calcPercentChange = (start, end) => {
 	let final = 0;
 	if (start > end) {
@@ -148,7 +144,7 @@ const FarmGraph = ({ farm }) => {
 		[]
 	);
 
-	// console.log("farm", farm)
+	console.log("farm", farm)
 
 	return (
 		<StyledContent>

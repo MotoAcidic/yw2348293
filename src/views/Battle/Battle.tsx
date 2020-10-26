@@ -107,38 +107,42 @@ const Battle: React.FC = () => {
   }, [yam, account, farms, farms[0]]);
 
 
-  const battleFields = () => {
-    if (switchingBattles()) {
-      const minutesLeft = 60 - parseInt(moment().format("mm"))
+  let content;
 
-      return (<>
-        <Title>We're Switching Out Battles</Title>
-        <NextBattle>Come back in {minutesLeft} minutes</NextBattle>
-      </>)
-    }
-    if (!battles.length) {
-      return (<>
-        <Title>Loading Battles...</Title>
-        <NextBattle />
-      </>)
-    } else if (!inbetween) {
-      console.log('take1')
-      return (<>
-        {
-          battles.length > 0 &&
-          <Title>Step 2: Vote for the armies you will fight for</Title>
-        }
-        { battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
-        {/* in case no battle, but still question */}
-        { (battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
-      </>
-      )
-    }
+  if (switchingBattles()) {
+    const minutesLeft = 60 - parseInt(moment().format("mm"))
+
+    content = (<>
+      <Title>We're Switching Out Battles</Title>
+      <NextBattle>Come back in {minutesLeft} minutes</NextBattle>
+    </>)
+  }
+  else if (!battles.length) {
+    content = (<>
+      <Title>Loading Battles...</Title>
+      <NextBattle />
+    </>)
+  }
+  else if (!inbetween) {
+    console.log('take1')
+    content = (<>
+      {
+        battles.length > 0 &&
+        <Title>Step 2: Vote for the armies you will fight for</Title>
+      }
+      {battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
+      {/* in case no battle, but still question */}
+      {(battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
+    </>
+    )
+  }
+  else {
     console.log('take2')
-    return (
+    content = (
       <InbetweenCard battles={battles} />
     )
-  };
+  }
+
 
   return (
     <Switch>
@@ -152,7 +156,7 @@ const Battle: React.FC = () => {
               <iframe title="promo" style={{ width: "90vw", height: "50.6vw", margin: "40px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />}
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
-            {battleFields()}
+            {content}
             <Title>How battles work </Title>
             <Instructions />
             <Title>Schedule</Title>

@@ -45,7 +45,6 @@ const Versus = ({ battles, question }) => {
 	const [voted, setVoted] = useState(false)
 	const [checked, setChecked] = useState(parseInt(cookie.get(battles._id)))
 	const [questionResponse, setQuestionResponse] = useState("");
-	const [bet, setBet] = useState({farm: "", war: 0});
 	const farmTemplate = {
 		icon: "🤔",
 		name: "THINKING Errors"
@@ -193,7 +192,7 @@ const Versus = ({ battles, question }) => {
 				</VersusContainer>
 			</>
 			}
-			{battle && <BetCard battle={battle} bet={bet} setBet={() => setBet(bet)}/>}
+			{battle && <BetCard battle={battle}/>}
 			{question &&
 				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} />
 			}

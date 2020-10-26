@@ -47,12 +47,9 @@ color: #ffb700;
   padding-right: ${props => props.theme.spacing[3]}px;
   text-decoration: none;
   &:hover {
-    opacity: 1;
   color: #ffcb46;
-
   }
   &.active {
-    opacity: 1;
     text-decoration: underline;
     color: white;
   }

@@ -66,7 +66,6 @@ const CardIcon1 = styled.div`
 	font-size: 40px;
 	height: 40px;
   width: 40px;
-  margin-
   border-radius: 50%;
   align-items: center;
   display: flex;

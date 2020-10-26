@@ -23,13 +23,12 @@ function getServerURI() {
 
 
 
-const Bet = ({ battle, bet, setBet }) => {
-	const getFarm = () => {
-		if (!bet.farm) return battle.farm1.id;
-		return battle.farm2.id;
-	}
-	const [farm, setFarm] = useState(getFarm());
-	const [war, setWar] = useState(bet.war);
+const Bet = ({ battle }) => {
+
+	const [farm, setFarm] = useState(battle.farm1.id);
+	const [war, setWar] = useState(0);
+	const [disabled, setDisabled] = useState(false)
+	const [farmBets, setFarmBets] = useState([]);
 
 	const { account, connect } = useWallet()
 
@@ -43,6 +42,21 @@ const Bet = ({ battle, bet, setBet }) => {
 
 	const handleInput = e => {
 		setWar(e.value);
+	}
+
+	useEffect(() => {
+		//if get bet then set farm & war and set disabled
+
+		setFarmBets([15095, 9443]);
+
+		// const getFarm = () => {
+		// 	if (!bet.farm) return battle.farm1.id;
+		// 	return battle.farm2.id;
+		// }
+	}, [])
+
+	const placeBet = () => {
+
 	}
 
 	return (
@@ -64,12 +78,69 @@ const Bet = ({ battle, bet, setBet }) => {
 					WAR
 					</InputContainer>
 				</Top>
-				<Button size="xlg" onClick={setBet(farm, war)} disabled={!account ? true : false}>Increase Your Bet</Button>
+				<Button size="xlg" onClick={placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
+				<Text>
+					Current Bets
+				</Text>
+				<Bottom>
+					<Bets>
+						<CardIcon>{battle.farm1.icon}</CardIcon>
+						<AmountBet>
+							{farmBets.length > 0 && '$' + farmBets[0].toLocaleString()}
+						</AmountBet>
+					</Bets>
+					<Bets>
+						<AmountBet>
+							{farmBets.length > 0 && '$' + farmBets[1].toLocaleString()}
+						</AmountBet>
+						<CardIcon>{battle.farm2.icon}</CardIcon>
+					</Bets>
+				</Bottom>
 			</VersusContainer>
-			<Space />
 		</>
 	)
 }
+
+const AmountBet = styled.div`
+font-family: Gilroy;
+font-size: 18px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;`
+
+const CardIcon = styled.div`
+	font-size: 40px;
+	height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 0 15px;
+`
+const Bets = styled.div`
+display: flex;
+align-items: center;`
+
+const Bottom = styled.div`
+width: 100%;
+display: flex;
+justify-content: space-between;`
+
+const Text = styled.div`
+font-family: "Gilroy";
+font-size: 22px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+margin-top: 20px;
+`
 
 const Input = styled.input`
 font-family: "SF Mono Semibold";
@@ -173,7 +244,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 font-size: 30px;
-margin: 0 auto 20px auto;
+margin: 0 auto 40px auto;
 font-family: "Gilroy";
 font-weight: bold;
 font-stretch: normal;

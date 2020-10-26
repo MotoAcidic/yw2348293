@@ -108,14 +108,15 @@ const Battle: React.FC = () => {
 
 
   const battleFields = () => {
-    if (switchingBattles()) {
-      const minutesLeft = 60 - parseInt(moment().format("mm"))
+    // if (switchingBattles()) {
+    //   const minutesLeft = 60 - parseInt(moment().format("mm"))
 
-      return (<>
-        <Title>We're Switching Out Battles</Title>
-        <NextBattle>Come back in {minutesLeft} minutes</NextBattle>
-      </>)
-    } else if (!battles.length && !prevDayBattles.length) {
+    //   return (<>
+    //     <Title>We're Switching Out Battles</Title>
+    //     <NextBattle>Come back in {minutesLeft} minutes</NextBattle>
+    //   </>)
+    // } else 
+    if (!battles.length && !prevDayBattles.length) {
       return (<>
         <Title>Loading Battles...</Title>
         <NextBattle />

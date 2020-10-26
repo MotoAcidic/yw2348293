@@ -6,7 +6,7 @@ import logo from '../../assets/img/logo.png'
 const Logo: React.FC = () => {
   return (
     <StyledLogo>
-      <img src={logo} height="40px"/>
+      <img src={logo} alt="logo" height="40px"/>
       <StyledText>YieldWars</StyledText>
     </StyledLogo>
   )

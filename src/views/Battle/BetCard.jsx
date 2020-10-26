@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Button from '../../components/Button'
 import { useWallet } from "use-wallet";
+import useModal from '../../hooks/useModal'
+import RulesModal from "./BetRulesModal";
 import Cookie from 'universal-cookie'
 import './swal.css'
 
@@ -29,10 +31,9 @@ const Bet = ({ battle }) => {
 	const [war, setWar] = useState(0);
 	const [disabled, setDisabled] = useState(false)
 	const [farmBets, setFarmBets] = useState([]);
+	const [presentRulesModal] = useModal(<RulesModal />);
 
 	const { account, connect } = useWallet()
-
-	// const otherFarm = battle.find(farm => farm.id !== bet.farm);
 
 	console.log("bet bet bet?", battle);
 
@@ -96,10 +97,29 @@ const Bet = ({ battle }) => {
 						<CardIcon>{battle.farm2.icon}</CardIcon>
 					</Bets>
 				</Bottom>
+				<ModalLink onClick={presentRulesModal}>
+					Betting Rules »
+				</ModalLink>
 			</VersusContainer>
 		</>
 	)
 }
+
+const ModalLink = styled.div`
+font-family: Gilroy;
+font-size: 18px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffb700;
+cursor: pointer;
+text-decoration: underline;
+&:hover {
+  color: #ffcb46;
+}
+`
 
 const AmountBet = styled.div`
 font-family: Gilroy;
@@ -139,7 +159,7 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
-margin-top: 20px;
+margin: 30px 0 5px 0;
 `
 
 const Input = styled.input`

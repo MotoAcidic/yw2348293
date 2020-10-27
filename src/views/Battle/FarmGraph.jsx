@@ -67,9 +67,7 @@ function getGeckoId(coin) {
 	}
 }
 
-function numberWithCommas(x) {
-	return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-}
+
 
 const calcPercentChange = (start, end) => {
 	let final = 0;
@@ -91,9 +89,9 @@ const FarmGraph = ({ farm }) => {
 		if (!price) {
 			axios.get(`https://api.coingecko.com/api/v3/coins/${getGeckoId(farm.id)}/market_chart?vs_currency=usd&days=1`).then(res => {
 				const { market_caps, prices } = res.data;
-				// console.log(farm.id, market_caps, prices);
-				setMarketCap(numberWithCommas(market_caps[market_caps.length - 1][1].toFixed(0)));
-				setPrice(numberWithCommas(prices[prices.length - 1][1].toFixed(2)));
+				console.log(farm.id, market_caps, prices);
+				setMarketCap(market_caps[market_caps.length - 1][1].toFixed(0));
+				setPrice(prices[prices.length - 1][1].toFixed(2));
 				let chartData = [];
 				// For using 2 days (24 data points)
 				// const start = Math.floor(prices.length / 2);
@@ -129,7 +127,7 @@ const FarmGraph = ({ farm }) => {
 		[]
 	);
 
-	// console.log("farm", farm)
+	console.log("farm", farm)
 
 	return (
 		<StyledContent>

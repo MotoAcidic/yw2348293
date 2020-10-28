@@ -23,12 +23,14 @@ interface VotesModalProps extends ModalProps {
     earnToken: string,
     icon: string,
     name: string,
+    totalVotes: number,
   },
   pool2: {
     depositToken: string,
     earnToken: string,
     icon: string,
     name: string,
+    totalVotes: number,
   },
   winner: number
 }
@@ -43,6 +45,8 @@ function getServerURI() {
 const VotesModal: React.FC<VotesModalProps> = ({ battleId, pool1, pool2, winner }) => {
   const [pool1Votes, setPool1Votes] = useState([]);
   const [pool2Votes, setPool2Votes] = useState([]);
+  const [pool1Total, setPool1Total] = useState("");
+  const [pool2Total, setPool2Total] = useState("");
   // const [usesPercentChange, setUsesPercentChange] = useState([]);
 
   console.log("jfwi", pool1, pool2)
@@ -68,6 +72,8 @@ const VotesModal: React.FC<VotesModalProps> = ({ battleId, pool1, pool2, winner 
         </Votes>
       </TR>)
 
+      setPool1Total("Votes: " + res.data.pool1.totalVotes.toLocaleString('en-US', { maximumFractionDigits: 4 }));
+      setPool2Total("Votes: " + res.data.pool2.totalVotes.toLocaleString('en-US', { maximumFractionDigits: 4 }));
       setPool1Votes(pool1Rows);
       setPool2Votes(pool2Rows);
       // setUsesPercentChange(res.data.usesPercentChange);
@@ -85,8 +91,10 @@ const VotesModal: React.FC<VotesModalProps> = ({ battleId, pool1, pool2, winner 
           {winner === 1 ? <WinningCardIcon>{pool1.icon}</WinningCardIcon> : <StyledCardIcon>{pool1.icon}</StyledCardIcon>}
           {winner === 1 && <Chalice />}
           <StyledTitle>{pool1.name}</StyledTitle>
+          <TotalVotes>
+            {pool1Total}
+          </TotalVotes>
           <TableContainer>
-
             <Table>
               {pool1Votes}
             </Table>
@@ -96,8 +104,10 @@ const VotesModal: React.FC<VotesModalProps> = ({ battleId, pool1, pool2, winner 
           {winner === 2 ? <WinningCardIcon>{pool2.icon}</WinningCardIcon> : <StyledCardIcon>{pool2.icon}</StyledCardIcon>}
           {winner === 2 && <Chalice />}
           <StyledTitle>{pool2.name}</StyledTitle>
+          <TotalVotes>
+            {pool2Total}
+          </TotalVotes>
           <TableContainer>
-
             <Table>
               {pool2Votes}
             </Table>
@@ -107,6 +117,19 @@ const VotesModal: React.FC<VotesModalProps> = ({ battleId, pool1, pool2, winner 
     </Modallg>
   )
 }
+
+const TotalVotes = styled.h4`
+font-family: "Gilroy";
+font-size: 18px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+color: #003677;
+margin: 0 auto 20px auto;
+`
 
 const Table = styled.table`
 font-size: 12px;
@@ -129,8 +152,6 @@ padding-left: 20px;
 `
 
 const StyledTitle = styled.h4`
-width: 80%;
-margin: 0;
 font-family: "Gilroy";
 font-size: 30px;
 font-weight: bold;

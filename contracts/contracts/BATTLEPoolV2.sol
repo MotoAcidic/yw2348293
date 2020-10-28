@@ -44,7 +44,8 @@ import "./LPTokenWrapper.sol";
 contract BATTLEPoolV2 is LPTokenWrapper, IRewardDistributionRecipient {
     using EnumerableBytes32Set for EnumerableBytes32Set.Bytes32Set;
 
-    IERC20 public constant war = IERC20(0xf4A81C18816C9B0AB98FAC51B36Dcb63b0E58Fde);
+    //IERC20 public constant war = IERC20(0xf4A81C18816C9B0AB98FAC51B36Dcb63b0E58Fde);
+    IERC20 public constant war = IERC20(0x5896E1c50E4D2d315052aAd8383D7104C3891CD6); // temp fake token (FWAR) for testing
 
     string public desc;
 

@@ -2,11 +2,8 @@ import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
 import { useWallet } from 'use-wallet'
-
 import useModal from '../../../hooks/useModal'
-
 import Button from '../../Button'
-
 import AdvertisementFormModal from './AdvertisementFormModal'
 
 interface AccountButtonProps { }

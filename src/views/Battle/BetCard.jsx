@@ -35,8 +35,6 @@ const Bet = ({ battle }) => {
 
 	const { account, connect } = useWallet()
 
-	console.log("bet bet bet?", battle);
-
 	const handleChange = e => {
 		setFarm(e.value);
 	}

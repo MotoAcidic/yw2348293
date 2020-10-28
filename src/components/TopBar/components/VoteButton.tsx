@@ -1,11 +1,8 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
-
 import { useWallet } from 'use-wallet'
-
 import useModal from '../../../hooks/useModal'
 import { formatAddress } from '../../../utils'
-
 import Button from '../../Button'
 
 import VoteModal from './VoteModal'

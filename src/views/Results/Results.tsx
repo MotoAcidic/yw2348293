@@ -11,8 +11,8 @@ import useFarms from "../../hooks/useFarms";
 import Uniswap from "../../assets/img/uniswap@2x.png";
 import { getWarStaked } from "../../yamUtils";
 import { getStats } from "./utils";
-import BattleHistory from './PreviousBattles'
-import OldBattleHistory from './OldPreviousBattles'
+import S2Battles from './S2Battles'
+import S1Battles from './S1Battles'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -46,9 +46,9 @@ const Battle: React.FC = () => {
   });
   const { account, connect } = useWallet()
   let [leaderboard, setLeaderboard] = useState([])
-  let [previousBattles, setPreviousBattles] = useState([])
-  let [oldLeaderboard, setOldLeaderboard] = useState([]);
-  let [oldPreviousBattles, setOldPreviousBattles] = useState([]);
+  let [s2Battles, setS2Battles] = useState([])
+  let [s1Leaderboard, setS1Leaderboard] = useState([]);
+  let [s1Battles, setS1Battles] = useState([]);
 
   const [
     {
@@ -75,7 +75,6 @@ const Battle: React.FC = () => {
   );
 
   useEffect(() => {
-    console.log("using effect");
     if (yam && account && farms.length) {
       fetchStats();
     }
@@ -86,73 +85,63 @@ const Battle: React.FC = () => {
       axios.post(`${getServerURI()}/api/season-info`, ({ season: 1 })).then(res => {
         let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
           return b.votes - a.votes;
-        });
-        console.log("old results", res.data, lb);
-        setOldLeaderboard(lb);
-        setOldPreviousBattles(res.data.history);
+        }).slice(0, 5);
+        const leaderboardContent = lb.map((item, index) => {
+          const votes = Number(item.votes.toFixed(0));
+          let pool = farms.find(farm => farm.id === item.pool);
+          let rank = "th";
+          if (index === 0) rank = "st";
+          if (index === 1) rank = "nd";
+          if (index === 2) rank = "rd";
+          return (
+            <LeaderBoardItem key={index}>
+              <StyledContent>
+                {index + 1}
+                {rank}
+                <StyledCardIcon>{pool.icon}</StyledCardIcon>
+                <StyledTitle>{pool.name}</StyledTitle>
+                <StyledVotes>{votes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} votes</StyledVotes>
+              </StyledContent>
+            </LeaderBoardItem>
+          )
+        })
+        // console.log("old results", res.data, lb);
+        setS1Leaderboard(leaderboardContent);
+        setS1Battles(res.data.history);
       }).catch(err => {
         console.log(err);
       })
       axios.post(`${getServerURI()}/api/results`).then(res => {
-        console.log("results", res.data);
+        // console.log("results", res.data);
         let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
           return b.votes - a.votes;
-        });
-        setLeaderboard(lb);
-        setPreviousBattles(res.data.history)
+        }).slice(0, 5);
+        const leaderboardContent = lb.map((item, index) => {
+          const votes = Number(item.votes.toFixed(0));
+          let pool = farms.find(farm => farm.id === item.pool);
+          let rank = "th";
+          if (index === 0) rank = "st";
+          if (index === 1) rank = "nd";
+          if (index === 2) rank = "rd";
+          return (
+            <LeaderBoardItem key={index}>
+              <StyledContent>
+                {index + 1}
+                {rank}
+                <StyledCardIcon>{pool.icon}</StyledCardIcon>
+                <StyledTitle>{pool.name}</StyledTitle>
+                <StyledVotes>{votes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} votes</StyledVotes>
+              </StyledContent>
+            </LeaderBoardItem>
+          )
+        })
+        setLeaderboard(leaderboardContent);
+        setS2Battles(res.data.history)
       }).catch(err => {
         console.log(err);
       })
     }
   }, [yam, account, farms]);
-
-  let leaderboardContent;
-  let oldLeaderboardContent;
-
-  if (farms.length) {
-    console.log("optimize");
-    leaderboard = leaderboard.slice(0, 5);
-    leaderboardContent = leaderboard.map((item, index) => {
-      const votes = Number(item.votes.toFixed(0));
-
-      let pool = farms.find(farm => farm.id === item.pool);
-      let rank = "th";
-      if (index === 0) rank = "st";
-      if (index === 1) rank = "nd";
-      if (index === 2) rank = "rd";
-      return (
-        <LeaderBoardItem key={index}>
-          <StyledContent>
-            {index + 1}
-            {rank}
-            <StyledCardIcon>{pool.icon}</StyledCardIcon>
-            <StyledTitle>{pool.name}</StyledTitle>
-            <StyledVotes>{votes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} votes</StyledVotes>
-          </StyledContent>
-        </LeaderBoardItem>
-      )
-    })
-    oldLeaderboard = oldLeaderboard.slice(0, 5);
-    oldLeaderboardContent = oldLeaderboard.map((item, index) => {
-      const votes = Number(item.votes.toFixed(0));
-      let pool = farms.find(farm => farm.id === item.pool);
-      let rank = "th";
-      if (index === 0) rank = "st";
-      if (index === 1) rank = "nd";
-      if (index === 2) rank = "rd";
-      return (
-        <LeaderBoardItem key={index}>
-          <StyledContent>
-            {index + 1}
-            {rank}
-            <StyledCardIcon>{pool.icon}</StyledCardIcon>
-            <StyledTitle>{pool.name}</StyledTitle>
-            <StyledVotes>{votes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} votes</StyledVotes>
-          </StyledContent>
-        </LeaderBoardItem>
-      )
-    })
-  }
 
   let currentPrice = curPrice || 0;
 
@@ -196,14 +185,14 @@ const Battle: React.FC = () => {
                 target="_blank"
               />
             </TopDisplayContainer>
-            <BigTitle>Season 2!</BigTitle>
-            <Title>Leaderboard</Title>
-            <LeaderBoard>{leaderboardContent}</LeaderBoard>
-            <BattleHistory history={previousBattles} />
-            <Seperator/>
+            <BigTitle>Off Season</BigTitle>
+            <Title>Season 2 Leaderboard</Title>
+            <LeaderBoard>{leaderboard}</LeaderBoard>
+            <S2Battles history={s2Battles} />
+            <Seperator />
             <Title>Season 1 Leaderboard</Title>
-            <OldLeaderBoard>{oldLeaderboardContent}</OldLeaderBoard>
-            <OldBattleHistory history={oldPreviousBattles} />
+            <S1LeaderBoard>{s1Leaderboard}</S1LeaderBoard>
+            <S1Battles history={s1Battles} />
           </Page>
         </ContentContainer>
       </StyledCanvas>
@@ -371,7 +360,7 @@ const LeaderBoard = !isMobile() ? styled.div`
   margin-bottom: 60px;
 `;
 
-const OldLeaderBoard = !isMobile() ? styled.div`
+const S1LeaderBoard = !isMobile() ? styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

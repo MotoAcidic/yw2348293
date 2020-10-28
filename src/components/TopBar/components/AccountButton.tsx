@@ -1,14 +1,7 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
-
 import { useWallet } from 'use-wallet'
-
-import useModal from '../../../hooks/useModal'
-import { formatAddress } from '../../../utils'
-
 import Button from '../../Button'
-
-import AccountModal from './AccountModal'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -42,9 +35,7 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
   )
 }
 
-const StyledAccountButton = styled.div`
-
-`
+const StyledAccountButton = styled.div``
 
 const Oval = styled.div`
 width: 8px;

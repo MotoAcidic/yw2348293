@@ -110,7 +110,6 @@ const VotesModal: React.FC<VotesModalProps> = ({ battleId, pool1, pool2, winner 
 
 const Table = styled.table`
 font-size: 12px;
-margin-top: 20px;
 `
 
 const TableContainer = styled.div`
@@ -141,7 +140,7 @@ line-height: 1;
 letter-spacing: normal;
 text-align: center;
 color: #003677;
-margin-top: 20px;
+margin: 20px auto 20px auto;
 `
 
 const StyledCardIcon = styled.div`

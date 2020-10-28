@@ -102,7 +102,7 @@ library SafeERC20 {
         // or when resetting it to zero. To increase and decrease it, use
         // 'safeIncreaseAllowance' and 'safeDecreaseAllowance'
         // solhint-disable-next-line max-line-length
-        require((value === 0) || (token.allowance(address(this), spender) === 0),
+        require((value == 0) || (token.allowance(address(this), spender) == 0),
             "SafeERC20: approve from non-zero to non-zero allowance"
         );
         callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));
@@ -153,7 +153,7 @@ contract IRewardDistributionRecipient is Ownable {
     function notifyRewardAmount(uint256 reward, uint256 _duration) external;
 
     modifier onlyRewardDistribution() {
-        require(_msgSender() === rewardDistribution, "Caller is not reward distribution");
+        require(_msgSender() == rewardDistribution, "Caller is not reward distribution");
         _;
     }
 

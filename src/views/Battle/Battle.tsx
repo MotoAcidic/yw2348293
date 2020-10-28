@@ -151,7 +151,7 @@ const Battle: React.FC = () => {
               <iframe title="promo" style={{ width: "90vw", height: "50.6vw", margin: "40px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />}
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
-            <BigTitle>Season 2 Semifinals!</BigTitle>
+            <BigTitle>Season 2 Finals!</BigTitle>
             {battleFields()}
             {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
             {prevDayBattles.length > 0 &&

@@ -36,7 +36,9 @@ const PopularityCard = ({ farms, startDate, item }) => {
 		<VSContentContainer>
 			<div>{startDate}</div>
 			{item.length === 1 && <Space />}
-			<VersusItem onClick={presentVotesModal1}>
+			<VersusItem
+			// onClick={presentVotesModal1}
+			>
 				<VersusCard>
 					<StyledContent>
 						{winner1 === 1 ? <WinningCardIcon>{pool1.icon}</WinningCardIcon> : <StyledCardIcon>{pool1.icon}</StyledCardIcon>}
@@ -67,7 +69,9 @@ const PopularityCard = ({ farms, startDate, item }) => {
 			{item.length === 2 && (
 				<>
 					<Divider />
-					<VersusItem onClick={presentVotesModal2}>
+					<VersusItem
+					// onClick={presentVotesModal2}
+					>
 						<VersusCard>
 							<StyledContent>
 								{winner2 === 1 ? <WinningCardIcon>{pool3.icon}</WinningCardIcon> : <StyledCardIcon>{pool3.icon}</StyledCardIcon>}
@@ -216,11 +220,11 @@ flex-direction: row;
 align-items: center;
 font-size: 16px;
 border-radius: 10px;
-cursor: pointer;
-transition: all .1s linear;
-&:hover {
-  background-color: rgba(256,256,256,0.05);
-}
+// cursor: pointer;
+// transition: all .1s linear;
+// &:hover {
+//   background-color: rgba(256,256,256,0.05);
+// }
 `
 
 export default PopularityCard

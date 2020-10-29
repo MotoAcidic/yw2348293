@@ -13,6 +13,8 @@ import { getWarStaked } from "../../yamUtils";
 import { getStats } from "./utils";
 import VersusCard from "./VersusCard.jsx";
 import SingleVersusCard from "./VersusCardSingle.jsx";
+import PersVersusCard from "./PersVersusCard.jsx";
+import SinglePersVersusCard from "./PersVersusCardSingle.jsx";
 import Schedule from './Schedule'
 import Instructions from "./Instructions";
 import InbetweenCard from "./InbetweenCard";
@@ -58,6 +60,8 @@ const Battle: React.FC = () => {
   let [prevDayBattles, setPrevDayBattles] = useState([]);
   let [battles, setBattles] = useState([])
   let [schedule, setSchedule] = useState([])
+  let [persBattles, setPersBattles] = useState([])
+  let [persSchedule, setPersSchedule] = useState([])
   let [dailyQuestion, setDailyQuestion] = useState();
 
   const [
@@ -104,6 +108,15 @@ const Battle: React.FC = () => {
         console.log(err);
       })
     }
+    if (persBattles.length === 0) {
+      axios.get(`${getServerURI()}/api/pers-battles`).then(res => {
+        console.log("battles", res.data);
+        setPersBattles(res.data.battles)
+        setPersSchedule(res.data.schedule)
+      }).catch(err => {
+        console.log(err);
+      })
+    }
   }, [yam, account, farms, farms[0]]);
 
 
@@ -116,23 +129,51 @@ const Battle: React.FC = () => {
     //     <NextBattle>Come back in {minutesLeft} minutes</NextBattle>
     //   </>)
     // } else 
+    console.log(battles);
+
     if (!battles.length && !prevDayBattles.length) {
-      return (<>
-        <Title>Loading Battles...</Title>
-        <NextBattle />
-      </>)
+      return (
+        <>
+          <Title>Loading Battles...</Title>
+          <NextBattle />
+        </>
+      )
     } else if (battles.length) {
 
-      return (<>
-        {
-          battles.length > 0 &&
-          <Title>Step 2: Vote for which token will perform better over 24 hours
-        </Title>
-        }
-        { battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
-        {/* in case no battle, but still question */}
-        { (battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
-      </>
+      return (
+        <>
+          {battles.length > 0 &&
+            <Title>Step 2: Vote for which token will perform better over 24 hours</Title>
+          }
+          {battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
+          {/* in case no battle, but still question */}
+          {(battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
+        </>
+      )
+    }
+    return null;
+
+  };
+
+  const persBattleFields = () => {
+    console.log(persBattles);
+
+    if (!persBattles.length) {
+      return (
+        <>
+          <Title>Loading Battles...</Title>
+          <NextBattle />
+        </>
+      )
+    } else if (persBattles.length) {
+      return (
+        <>
+          {persBattles.length > 0 &&
+            <Title>Step 2: Vote for which twitter personality will perform better over 24 hours</Title>
+          }
+          {persBattles.length === 2 && <PersVersusCard battles={persBattles} />}
+          {persBattles.length === 1 && <SinglePersVersusCard battles={persBattles} />}
+        </>
       )
     }
     return null;
@@ -148,7 +189,8 @@ const Battle: React.FC = () => {
             {!isMobile() ?
               <iframe title="promo" style={{ width: "500px", height: "281.25px", margin: "10px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
               :
-              <iframe title="promo" style={{ width: "90vw", height: "50.6vw", margin: "40px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />}
+              <iframe title="promo" style={{ width: "90vw", height: "50.6vw", margin: "40px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
+            }
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
             <BigTitle>Season 2 Finals!</BigTitle>
@@ -161,6 +203,10 @@ const Battle: React.FC = () => {
             <Instructions />
             <Title>Schedule</Title>
             <Schedule schedule={schedule} />
+
+            <BigTitle>Personality Battles!</BigTitle>
+            {persBattleFields()}
+            {/* <Schedule schedule={persSchedule} /> */}
           </Page>
         </ContentContainer>
       </StyledCanvas>

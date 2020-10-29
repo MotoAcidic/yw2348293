@@ -1,23 +1,24 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Button from '../../components/Button'
+import CardIcon from '../../components/CardIcon'
 import checkedIcon from '../../assets/img/checked.png'
 import uncheckedIcon from '../../assets/img/unchecked.png'
+
 import useYam from '../../hooks/useYam'
 import { useWallet } from 'use-wallet'
 import DailyQuestion from "./DailyQuestion.jsx";
-import BetCard from "./BetCard";
-
 import useFarms from '../../hooks/useFarms'
 import Cookie from 'universal-cookie'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import Warning from "../../assets/img/warning@2x.png";
+import BettingCardSingle from "./VersusCardSingle";
 import './swal.css'
-import FarmGraph from "./FarmGraph";
+import Countdown from "./CountDown";
+import moment from "moment";
 import VotingBalance from "./VotingBalance";
-import CountDown from "./BigCountDown";
-
+import personalities from './personalities'
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -37,28 +38,21 @@ function getServerURI() {
 
 let cookie = new Cookie()
 
-const Versus = ({ battles, question }) => {
+const Versus = ({ battles }) => {
 	battles = battles[0]
-	let [farms] = useFarms()
 	const yam = useYam()
 	const { account, connect } = useWallet()
+	console.log(battles);
 	const [voted, setVoted] = useState(false)
-	const [checked, setChecked] = useState(parseInt(cookie.get(battles._id)))
-	const [questionResponse, setQuestionResponse] = useState("");
-	const farmTemplate = {
-		icon: "🤔",
-		name: "THINKING Errors"
-	}
+	const [checked, setChecked] = useState(false);
 
 	let battle;
 	if (battles) {
 
 		battle = {
-			farm1: farms.find(farm => farm.id === battles.pool1.name) || farmTemplate,
-			farm2: farms.find(farm => farm.id === battles.pool2.name) || farmTemplate
+			pers1: personalities.find(person => person.handle === battles.pool1.name),
+			pers2: personalities.find(person => person.handle === battles.pool2.name)
 		}
-		battle.farm1.votes = battles.pool1.totalVotes;
-		battle.farm2.votes = battles.pool2.totalVotes;
 	}
 
 	const pick = (g) => {
@@ -68,7 +62,7 @@ const Versus = ({ battles, question }) => {
 
 	const castVote = async () => {
 		let vote;
-		if (!checked && !questionResponse)
+		if (!checked)
 			return
 
 		if (!battles) {
@@ -78,9 +72,9 @@ const Versus = ({ battles, question }) => {
 		}
 
 		if (checked === 1)
-			vote = battle.farm1.id
+			vote = battle.pers1.handle
 		if (checked === 2)
-			vote = battle.farm2.id
+			vote = battle.pers1.handle
 		const signature = await yam.web3.eth.personal.sign(JSON.stringify({
 			address: account,
 			vote: [
@@ -90,7 +84,7 @@ const Versus = ({ battles, question }) => {
 				}
 			]
 		}), account).catch(err => console.log(err))
-		axios.post(`${getServerURI()}/api/vote`, {
+		axios.post(`${getServerURI()}/api/pers-vote`, {
 			address: account,
 			vote: [
 				{
@@ -98,10 +92,9 @@ const Versus = ({ battles, question }) => {
 					_id: battles._id,
 				}
 			],
-			questionResponse,
 			sig: signature
 		}).then(res => {
-			setVoted(true);
+			setVoted(true)
 			Swal.fire({
 				title: 'Your votes have been recorded successfully!',
 				text: 'Come back tomorrow. All rewards will be distributed tomorrow at 16:00 UTC',
@@ -134,9 +127,8 @@ const Versus = ({ battles, question }) => {
 	}
 
 	useEffect(() => {
-
 		if (account) {
-			axios.post(`${getServerURI()}/api/status`, {
+			axios.post(`${getServerURI()}/api/pers-status`, {
 				address: account,
 			}).then(res => {
 				console.log("here", res.data);
@@ -145,28 +137,23 @@ const Versus = ({ battles, question }) => {
 				console.log(err);
 			})
 		}
-		if (question) {
-			setQuestionResponse(cookie.get(question._id));
-		}
 		if (battles) {
 			setChecked(cookie.get(battles._id))
 		}
-
-	}, [account, question, battles])
-
-	console.log("farmzz", battle);
+	}, [account, battles])
 
 	return (
 		<>
-			{battles && <>
-				<RecDesc>
-					Voting Ends and the Battle Begins in
-      			</RecDesc>
-				<CountDown />
+			{battles &&
 				<VersusContainer>
 					<Options>
 						<VersusItem>
-							<FarmGraph farm={battle.farm1} />
+							<StyledContent>
+								<StyledTitle>Bio</StyledTitle>
+								<Text>{battle.pers1.handle}</Text>
+								<SubTitle>Followers</SubTitle>
+								<Text>{battle.pers1.followerCount}</Text>
+							</StyledContent>
 							<ButtonContainer onClick={() => pick(1)}>
 								{checked === 1 ? (
 									<img alt="check" src={checkedIcon} width="30px" />
@@ -177,9 +164,14 @@ const Versus = ({ battles, question }) => {
 						</VersusItem>
 						<Divider />
 						<VersusItem>
-							<FarmGraph farm={battle.farm2} />
-							<ButtonContainer onClick={() => pick(2)}>
-								{checked === 2 ? (
+							<StyledContent>
+								<StyledTitle>Bio</StyledTitle>
+								<Text>{battle.pers2.handle}</Text>
+								<SubTitle>Followers</SubTitle>
+								<Text>{battle.pers2.followerCount}</Text>
+							</StyledContent>
+							<ButtonContainer onClick={() => pick(1)}>
+								{checked === 1 ? (
 									<img alt="check" src={checkedIcon} width="30px" />
 								) : (
 										<img alt="check" src={uncheckedIcon} width="30px" />
@@ -187,15 +179,10 @@ const Versus = ({ battles, question }) => {
 							</ButtonContainer>
 						</VersusItem>
 					</Options>
-					<VotingBalance farm1={battle.farm1} farm2={battle.farm2} />
-
 				</VersusContainer>
-			</>
 			}
-			{battle && <BetCard battle={battle}/>}
-			{question &&
-				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} />
-			}
+
+
 			{account ? <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button> :
 				<RecDesc>
 					connect your wallet to participate
@@ -205,6 +192,7 @@ const Versus = ({ battles, question }) => {
 		</>
 	)
 }
+
 
 const VersusItem = styled.div`
 display: flex;
@@ -286,5 +274,88 @@ font-family: "Gilroy";
 	border-radius: 8px;
 	border: solid 2px rgba(255, 183, 0, 0.3);
 	background-color: rgba(256,256,256,0.08);`
+
+const ChartContainer = styled.div`
+height: 40px;
+width: 170px;
+margin-bottom: 10px;
+`
+
+const StyledContent = styled.div`
+  display: flex;
+	flex-direction: column;
+	height: 100%;
+`
+
+const StyledTitle = styled.div`
+font-family: "Gilroy";
+font-size: 28px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+color: #ffffff;
+	text-align: left;
+margin-bottom: 5px;
+`
+
+const SubTitle = styled.div`
+font-family: "Gilroy";
+margin-bottom: 5px;
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+color: #ffffff;
+	text-align: left;
+`
+const Text = styled.div`
+font-family: "Gilroy";
+font-size: 16px;
+font-weight: normal;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+color: #ffffff;
+	text-align: left;
+	margin-bottom: 10px;
+	letter-spacing: 1px;
+`
+const GreenText = styled.div`
+font-family: "Gilroy";
+font-size: 16px;
+font-weight: normal;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+	text-align: left;
+	margin-bottom: 10px;
+	letter-spacing: 1px;
+	color: #38ff00;
+`
+const RedText = styled.div`
+font-family: "Gilroy";
+font-size: 16px;
+font-weight: normal;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+	text-align: left;
+	margin-bottom: 10px;
+	letter-spacing: 1px;
+	color: #ff4343;
+
+`
 
 export default Versus

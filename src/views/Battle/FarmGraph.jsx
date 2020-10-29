@@ -67,6 +67,8 @@ function getGeckoId(coin) {
 	}
 }
 
+
+
 const calcPercentChange = (start, end) => {
 	let final = 0;
 	if (start > end) {
@@ -87,7 +89,7 @@ const FarmGraph = ({ farm }) => {
 		if (!price) {
 			axios.get(`https://api.coingecko.com/api/v3/coins/${getGeckoId(farm.id)}/market_chart?vs_currency=usd&days=1`).then(res => {
 				const { market_caps, prices } = res.data;
-				// console.log(farm.id, market_caps, prices);
+				console.log(farm.id, market_caps, prices);
 				setMarketCap(market_caps[market_caps.length - 1][1].toFixed(0));
 				setPrice(prices[prices.length - 1][1].toFixed(2));
 				let chartData = [];
@@ -125,7 +127,7 @@ const FarmGraph = ({ farm }) => {
 		[]
 	);
 
-	// console.log("farm", farm)
+	console.log("farm", farm)
 
 	return (
 		<StyledContent>

@@ -57,11 +57,12 @@ if (
   console.log = function () { }
 }
 
+
+
 const App: React.FC = () => {
   return (
     <Providers>
       <StyledCanvas>
-
         <Router>
           <Switch>
             <Route path="/splash" exact>
@@ -73,12 +74,6 @@ const App: React.FC = () => {
             <Route path="/farms/:farmId">
               <Farm />
             </Route>
-            {/* <Route path="/earn" exact>
-                <Earns />
-              </Route> */}
-            {/* <Route path="/earn/:earnId">
-                <Earn /> 
-              </Route> */}
             <Route path="/battle" exact>
               <Battle />
             </Route>

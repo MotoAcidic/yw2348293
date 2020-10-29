@@ -119,7 +119,7 @@ const WarPool: React.FC = () => {
 		return (
 			<MobileInfoContainer>
 				<WarTopContainer>
-					<Title>War Pool</Title>
+					<Title>War Pool (pool closed)</Title>
 					<StyledDetails>
 						<StyledDetail>APR</StyledDetail>
 						<StyledDetail>{apr.toFixed(3)}%</StyledDetail>
@@ -157,7 +157,7 @@ const WarPool: React.FC = () => {
 	return (
 		<InfoContainer>
 			<WarTopContainer>
-				<Title>War Pool</Title>
+				<Title>War Pool (pool closed)</Title>
 				<StyledDetails>
 					<StyledDetail>APR</StyledDetail>
 					<StyledDetail>{apr.toFixed(3)}%</StyledDetail>

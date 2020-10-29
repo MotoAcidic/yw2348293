@@ -68,7 +68,6 @@ function getGeckoId(coin) {
 	}
 }
 
-
 const calcPercentChange = (start, end) => {
 	let final = 0;
 	if (start > end) {
@@ -145,7 +144,7 @@ const FarmGraph = ({ farm }) => {
 		[]
 	);
 
-	// console.log("farm", farm)
+	console.log("farm", farm)
 
 	return (
 		<StyledContent>

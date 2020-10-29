@@ -236,7 +236,7 @@ const Versus = ({ battles, question }) => {
 			{question &&
 				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} voted={voted} />
 			}
-			{battles && <BetCard battles={battles} />}
+			{battles && <BetCard battle={battles} />}
 			{account ? <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button> :
 				<RecDesc>
 					connect your wallet to participate

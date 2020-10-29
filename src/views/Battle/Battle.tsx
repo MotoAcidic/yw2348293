@@ -15,8 +15,13 @@ import VersusCard from "./VersusCard.jsx";
 import SingleVersusCard from "./VersusCardSingle.jsx";
 import Schedule from './Schedule'
 import Instructions from "./Instructions";
+import Uniswap from "../../assets/img/uniswap@2x.png";
 import InbetweenCard from "./InbetweenCard";
 import moment from "moment";
+import BetCard from "./PoliticalBetCard";
+import Biden from "../../assets/img/biden.png";
+import Trump from "../../assets/img/trump.png";
+
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -52,13 +57,30 @@ const Battle: React.FC = () => {
   let [farms] = useFarms()
   const yam = useYam()
   let [warStaked, setWarStaked] = useState({
-    warStaked: new BigNumber(0)
+    warStaked: new BigNumber(0),
+    circSupply: new BigNumber(0)
   });
   const { account, connect } = useWallet()
   let [prevDayBattles, setPrevDayBattles] = useState([]);
-  let [battles, setBattles] = useState([])
+  let [battles, setBattles] = useState(
+    {
+    day: 31,
+    finished: false,
+    farm1: {
+      name: "Trump",
+      totalVotes: 69,
+      votes: [],
+      _id: "5f9b43ee4b79944b40bb0c06"
+    },
+    farm2: {
+      name: "Biden",
+      totalVotes: 420,
+      votes: [],
+      _id: "5f9b43ee4b79944b40bb0c06",
+    }
+  }
+)
   let [schedule, setSchedule] = useState([])
-  let [dailyQuestion, setDailyQuestion] = useState();
 
   const [
     {
@@ -70,6 +92,10 @@ const Battle: React.FC = () => {
     },
     setStats
   ] = useState<OverviewData>({});
+
+  let currentPrice = curPrice || 0;
+
+  console.log("disbattles", battles);
 
   const fetchStats = useCallback(async () => {
     const statsData = await getStats(yam);
@@ -93,51 +119,8 @@ const Battle: React.FC = () => {
       console.log(farms);
       fetchWarStaked(farms);
     }
-    if (battles.length === 0) {
-      axios.get(`${getServerURI()}/api/battles`).then(res => {
-        console.log("battles", res.data);
-        setPrevDayBattles(res.data.prevDayBattles);
-        setBattles(res.data.battles)
-        setSchedule(res.data.schedule)
-        setDailyQuestion(res.data.dailyQuestion);
-      }).catch(err => {
-        console.log(err);
-      })
-    }
   }, [yam, account, farms, farms[0]]);
 
-
-  const battleFields = () => {
-    // if (switchingBattles()) {
-    //   const minutesLeft = 60 - parseInt(moment().format("mm"))
-
-    //   return (<>
-    //     <Title>We're Switching Out Battles</Title>
-    //     <NextBattle>Come back in {minutesLeft} minutes</NextBattle>
-    //   </>)
-    // } else 
-    if (!battles.length && !prevDayBattles.length) {
-      return (<>
-        <Title>Loading Battles...</Title>
-        <NextBattle />
-      </>)
-    } else if (battles.length) {
-
-      return (<>
-        {
-          battles.length > 0 &&
-          <Title>Step 2: Vote for which token will perform better over 24 hours
-        </Title>
-        }
-        { battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
-        {/* in case no battle, but still question */}
-        { (battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
-      </>
-      )
-    }
-    return null;
-
-  };
 
   return (
     <Switch>
@@ -145,28 +128,76 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
-            {!isMobile() ?
-              <iframe title="promo" style={{ width: "500px", height: "281.25px", margin: "10px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
-              :
-              <iframe title="promo" style={{ width: "90vw", height: "50.6vw", margin: "40px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />}
+          <TopDisplayContainer>
+            <DisplayItem>
+              $War Price:&nbsp;
+              {currentPrice
+                ? `$${Number(currentPrice).toLocaleString(undefined, {
+                  minimumFractionDigits: 4,
+                  maximumFractionDigits: 4
+                })}`
+                : "-"}
+            </DisplayItem>
+            <DisplayItem>
+              Supply Staked:&nbsp;
+              {warStaked && !warStaked.warStaked.eq(0)
+                ? `${Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })}%`
+                : "-"}
+            </DisplayItem>
+            <DisplayItem>
+              Marketcap:&nbsp;
+              {currentPrice && warStaked && !warStaked.circSupply.eq(0)
+                ? `$${Number(warStaked.circSupply.multipliedBy(currentPrice).dividedBy(10 ** 18).toFixed(2)).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })}`
+                : "-"}
+            </DisplayItem>
+            <StyledA
+              style={{ marginTop: "-5px" }}
+              href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
+              target="_blank"
+            />
+          </TopDisplayContainer>
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
-            <BigTitle>Season 2 Finals!</BigTitle>
-            {battleFields()}
-            {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
-            {prevDayBattles.length > 0 &&
-              <InbetweenCard battles={prevDayBattles} />
-            }
-            <Title>How battles work </Title>
-            <Instructions />
-            <Title>Schedule</Title>
-            <Schedule schedule={schedule} />
+            <BigTitle>Election Betting</BigTitle>
+			        {battles && <BetCard battle={battles} />}
+              <VersusContainer>
+                <VersusBackground>
+                  <Candidate1 src={Trump}/>
+
+                  <Candidate2 src={Biden}/>
+                    
+                </VersusBackground>
+              </VersusContainer>
           </Page>
         </ContentContainer>
       </StyledCanvas>
     </Switch>
   );
 };
+
+const Candidate2 = styled.img`
+width: 50%;
+height: 100%;
+border-radius: 0 8px 8px 0;
+`
+
+
+const Candidate1 = styled.img`
+width: 50%;
+height: 100%;
+border-radius: 8px 0 0 8px;
+`
+
+const VersusBackground = styled.div`
+width: 100%;
+height: 100%;
+display: flex;`
 
 const BigTitle = styled.div`
 font-family: "Gilroy";
@@ -232,5 +263,107 @@ const ContentContainer = styled.div`
   width: 100%;
   text-align: center;
 `;
+
+
+const TopDisplayContainer = !isMobile()
+  ? styled.div`
+        width:80vw;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        margin: 16px auto 80px auto;
+      `
+  : styled.div`
+        width: 60vw;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        margin: 60px auto 40px auto;
+        display: flex;
+        flex-wrap: wrap;
+      `;
+
+const DisplayItem = !isMobile()
+  ? styled.div`
+        color: white;
+        font-family: "Gilroy";
+        font-size: 18px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        color: #ffffff;
+        opacity: 0.9;
+      `
+  : styled.div`
+        width: 100%;
+        margin-bottom: 10px;
+        color: white;
+        text-align: center;
+        font-family: "Gilroy";
+        font-size: 18px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        opacity: 0.9;
+        color: #ffffff;
+      `;
+
+      const StyledA = styled.a`
+  cursor: pointer;
+  display: flex;
+  background-image: url(${Uniswap});
+  background-size: cover;
+  background-position: center;
+  height: 30px;
+  opacity: 0.9;
+  width: 137px;
+  transition: all .1s linear;
+  &:hover {
+    opacity: 1;
+  }
+`
+
+
+const VersusContainer = !isMobile() ? styled.div`
+width: 1000px;
+display: flex;
+align-items: center;
+font-size: 30px;
+margin: 0 auto 40px auto;
+font-family: "Gilroy";
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+border-radius: 8px;
+border: solid 2px rgba(255, 183, 0, 0.3);
+background-color: rgba(256,256,256,0.08);
+// padding: 20px;
+` : styled.div`
+margin: 0 0 40px 0;
+width: 90vw;
+display: flex;
+flex-direction: column;
+font-family: "Gilroy";
+  font-size: 25px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+	color: #ffffff;
+	// padding: 20px;
+	border-radius: 8px;
+	border: solid 2px rgba(255, 183, 0, 0.3);
+	background-color: rgba(256,256,256,0.08);`
 
 export default Battle;

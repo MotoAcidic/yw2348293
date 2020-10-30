@@ -12,6 +12,7 @@ import UNIPairJson from './uni2.json';
 import UNIRouterJson from './uniR.json';
 
 import WARPoolJson from '../clean_build/contracts/WARPool.json';
+import ElectionBettingJson from '../clean_build/contracts/ElectionBetting.json';
 
 import PricingJson from '../clean_build/contracts/Pricing.json';
 
@@ -39,7 +40,9 @@ export class Contracts {
     this.war = new this.web3.eth.Contract(ERC20Json.abi);
     this.pricing = new this.web3.eth.Contract(PricingJson.abi);
     this.weth_token = new this.web3.eth.Contract(ERC20Json.abi);
-
+    this.election_betting = new this.web3.eth.Contract(ElectionBettingJson.abi);
+    this.fwar = new this.web3.eth.Contract(ERC20Json.abi);
+    
     //s2
     this.send_token = new this.web3.eth.Contract(ERC20Json.abi);
     this.hate_token = new this.web3.eth.Contract(ERC20Json.abi);
@@ -108,6 +111,8 @@ export class Contracts {
     this.unipool_token.setProvider(provider);
     this.pricing.setProvider(provider);
     this.weth_token.setProvider(provider);
+    this.election_betting.setProvider(provider);
+    this.fwar.setProvider(provider);
     const contracts = [
       { contract: this.war, json: WARJson },
       //s2
@@ -203,6 +208,8 @@ export class Contracts {
     this.uni_router.options.address = addressMap["UNIRouter"];
     this.pricing.options.address = addressMap["Pricing"];
     this.weth_token.options.address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+    this.election_betting.options.address = addressMap["ElectionBetting"];
+    this.fwar.options.address = addressMap["fwar"];
 
     this.pools = [
       //s2
@@ -265,6 +272,8 @@ export class Contracts {
     this.battlepool_token.options.from = account;
     this.uni_router.options.from = account;
     this.pricing.options.from = account;
+    this.election_betting.options.from = account;
+    this.fwar.options.from = account;
   }
 
   async callContractFunction(

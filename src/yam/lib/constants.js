@@ -86,6 +86,9 @@ if (chainId === 1) {
     UNIRouter: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
 
     Pricing: "0xA056b5a1fC97ea86D949cdB67Be4950e29942421",
+
+    ElectionBetting: "0x533Fc51f9796E4aA4c5b462218069F68034A635c",
+    fwar: "0x5896e1c50e4d2d315052aad8383d7104c3891cd6"
   }
 } else { // 42 = kovan
   addressMap = {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import Button from '../../components/Button'
+import Button from '../../../components/Button'
 import { useWallet } from "use-wallet";
-import useModal from '../../hooks/useModal'
+import useModal from '../../../hooks/useModal'
 import RulesModal from "./BetRulesModal";
 import Cookie from 'universal-cookie'
 import './swal.css'

@@ -18,7 +18,7 @@ import Instructions from "./Instructions";
 import Uniswap from "../../../assets/img/uniswap@2x.png";
 import InbetweenCard from "./InbetweenCard";
 import moment from "moment";
-import BetCard from "./PoliticalBetCard";
+import BetCard from "./PoliticalBetCard.jsx";
 import Biden from "../../../assets/img/biden.png";
 import Trump from "../../../assets/img/trump.png";
 

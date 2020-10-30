@@ -4,7 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import Page from "../../../components/Page";
 import useYam from "../../../hooks/useYam";
-import useBet from "../../../hooks/useBet";
+// import useBet from "../../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 import Background from '../../../assets/img/bg3.svg'
@@ -61,7 +61,7 @@ export interface OverviewData {
 const Battle: React.FC = () => {
   let [farms] = useFarms()
   const yam = useYam()
-  const bet = useBet()
+  // const bet = useBet()
   let [warStaked, setWarStaked] = useState({
     warStaked: new BigNumber(0),
     circSupply: new BigNumber(0)
@@ -90,7 +90,6 @@ const Battle: React.FC = () => {
   let [schedule, setSchedule] = useState([])
 
 
-  console.log("dis da bet", bet)
 
   const [
     {

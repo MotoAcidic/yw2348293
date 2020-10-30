@@ -12,7 +12,6 @@ import DisclaimerModal from './components/DisclaimerModal'
 import FarmsProvider from './contexts/Farms'
 import ModalsProvider from './contexts/Modals'
 import YamProvider from './contexts/YamProvider'
-import BetProvider from './contexts/BetProvider'
 import TransactionProvider from './contexts/Transactions'
 import useModal from './hooks/useModal'
 import Farms from './views/Farms'
@@ -109,16 +108,14 @@ const Providers: React.FC = ({ children }) => {
         walletconnect: { rpcUrl: 'https://mainnet.eth.aragon.network/' },
       }}>
         <YamProvider>
-          <BetProvider>
-            <TransactionProvider>
-              <ModalsProvider>
-                <FarmsProvider>
-                  <GlobalStyle />
-                  {children}
-                </FarmsProvider>
-              </ModalsProvider>
-            </TransactionProvider>
-          </BetProvider>
+          <TransactionProvider>
+            <ModalsProvider>
+              <FarmsProvider>
+                <GlobalStyle />
+                {children}
+              </FarmsProvider>
+            </ModalsProvider>
+          </TransactionProvider>
         </YamProvider>
       </UseWalletProvider>
     </ThemeProvider>

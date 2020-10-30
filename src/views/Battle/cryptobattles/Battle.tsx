@@ -17,6 +17,7 @@ import Schedule from './Schedule'
 import Instructions from "./Instructions";
 import InbetweenCard from "./InbetweenCard";
 import moment from "moment";
+import Spacer from "../../components/Spacer";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -155,12 +156,15 @@ const Battle: React.FC = () => {
             }
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
-            <BigTitle>Season 2 Finals!</BigTitle>
-            {battleFields()}
+            <BigTitle>Mid Season</BigTitle>
+            <Title>We've got big things in store. Come back soon.</Title>
+            <Spacer/>
+            <Spacer/>
+            {/* {battleFields()}
             {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
             {prevDayBattles.length > 0 &&
               <InbetweenCard battles={prevDayBattles} />
-            }
+            } */}
             <Title>How battles work </Title>
             <Instructions />
             <Title>Schedule</Title>

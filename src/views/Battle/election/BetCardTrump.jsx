@@ -5,6 +5,9 @@ import { useWallet } from "use-wallet";
 import useModal from '../../../hooks/useModal'
 import RulesModal from "./BetRulesModal";
 import Cookie from 'universal-cookie'
+import Modal, { ModalProps } from '../../../components/Modal'
+import Container from '../../../components/Container'
+
 import './swal.css'
 
 function isMobile() {
@@ -29,7 +32,7 @@ const Bet = ({ battle }) => {
 	const [war, setWar] = useState(0);
 	const [disabled, setDisabled] = useState(false)
 	const [farmBets, setFarmBets] = useState([]);
-	const [presentRulesModal] = useModal(<RulesModal />);
+	// const [presentRulesModal] = useModal(<RulesModal />);
 
 	const { account, connect } = useWallet()
 
@@ -56,47 +59,46 @@ const Bet = ({ battle }) => {
 	}
 
 	return (
-		<StyledModal>
-			{/* <CardContent> */}
-			<VersusContainer>
-				<Top>
-					<Select onChange={handleChange}>
-						<option value={battle.farm1.id}>
-							{battle.farm1.name + " to Win"}
-						</option>
-						<option value={battle.farm2.id}>
-							{battle.farm2.name + " to Win"}
-						</option>
-					</Select>
-					<InputContainer>
-						<Input value={war} onChange={handleInput} />
+		<Container size="sm">
+			<StyledModal>
+				{/* <CardContent> */}
+				<VersusContainer>
+					<Top>
+						<Select onChange={handleChange}>
+							<option value={battle.farm1.id}>
+								{battle.farm1.name + " to Win"}
+							</option>
+							<option value={battle.farm2.id}>
+								{battle.farm2.name + " to Win"}
+							</option>
+						</Select>
+						<InputContainer>
+							<Input value={war} onChange={handleInput} />
 					WAR
 					</InputContainer>
-				</Top>
-				<Button size="xlg" onClick={placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
-				<Text>
-					Current Bets
+					</Top>
+					<Button size="xlg" onClick={placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
+					<Text>
+						Current Bets
 				</Text>
-				<Bottom>
-					<Bets>
-						<CardIcon>{battle.farm1.icon}</CardIcon>
-						<AmountBet>
-							{farmBets.length > 0 && '$' + farmBets[0].toLocaleString()}
-						</AmountBet>
-					</Bets>
-					<Bets>
-						<AmountBet>
-							{farmBets.length > 0 && '$' + farmBets[1].toLocaleString()}
-						</AmountBet>
-						<CardIcon>{battle.farm2.icon}</CardIcon>
-					</Bets>
-				</Bottom>
-				<ModalLink onClick={presentRulesModal}>
-					Betting Rules »
-				</ModalLink>
-			</VersusContainer>
-			{/* </CardContent> */}
-		</StyledModal>
+					<Bottom>
+						<Bets>
+							<CardIcon>{battle.farm1.icon}</CardIcon>
+							<AmountBet>
+								{farmBets.length > 0 && '$' + farmBets[0].toLocaleString()}
+							</AmountBet>
+						</Bets>
+						<Bets>
+							<AmountBet>
+								{farmBets.length > 0 && '$' + farmBets[1].toLocaleString()}
+							</AmountBet>
+							<CardIcon>{battle.farm2.icon}</CardIcon>
+						</Bets>
+					</Bottom>
+				</VersusContainer>
+				{/* </CardContent> */}
+			</StyledModal>
+		</Container>
 	)
 }
 
@@ -243,12 +245,10 @@ margin-bottom: 20px;
 justify-content: space-between;`
 
 const VersusContainer = !isMobile() ? styled.div`
-width: 480px;
 display: flex;
 flex-direction: column;
 align-items: center;
 font-size: 30px;
-margin: 0 auto 40px auto;
 font-family: "Gilroy";
 font-weight: bold;
 font-stretch: normal;
@@ -258,7 +258,7 @@ letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
 border: solid 2px rgba(255, 183, 0, 0.3);
-background-color: rgba(4,2,43,0.7);
+background-color: rgba(4,2,43,1);
 padding: 20px;
 ` : styled.div`
 margin: 0 0 40px 0;

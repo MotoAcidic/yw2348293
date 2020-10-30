@@ -18,11 +18,13 @@ import Instructions from "./Instructions";
 import Uniswap from "../../../assets/img/uniswap@2x.png";
 import InbetweenCard from "./InbetweenCard";
 import moment from "moment";
-import BetCard from "./PoliticalBetCard.jsx";
+import BetModalTrump from "./BetCardTrump.jsx";
+import BetModalBiden from "./BetCardBiden.jsx";
 import Biden from "../../../assets/img/biden.png";
 import Trump from "../../../assets/img/trump.png";
 import AmericanFlag from "../../../assets/img/american-flag.jpg";
-
+import useModal from '../../../hooks/useModal'
+import Rules from './BetRulesModal'
 
 
 function isMobile() {
@@ -63,6 +65,7 @@ const Battle: React.FC = () => {
     circSupply: new BigNumber(0)
   });
   const { account, connect } = useWallet()
+  let [modal, setShowModal] = useState(false);
   let [prevDayBattles, setPrevDayBattles] = useState([]);
   let [battles, setBattles] = useState(
     {
@@ -111,6 +114,18 @@ const Battle: React.FC = () => {
     },
     [yam, setWarStaked]
   );
+
+  const [onPresentTrumpModal] = useModal(
+		<BetModalTrump
+			battle={battles}
+		/>
+  )
+  
+  const [onPresentBidenModal] = useModal(
+		<BetModalBiden
+			battle={battles}
+		/>
+	)
 
   useEffect(() => {
     console.log("using effect");
@@ -167,17 +182,15 @@ const Battle: React.FC = () => {
             <Title>Who Will Win?</Title>
             <VersusContainer>
               <VersusBackground>
-                <Candidate1 src={Trump} />
+                <Candidate1 src={Trump} onClick={onPresentTrumpModal} />
 
-                <Candidate2 src={Biden} />
+                <Candidate2 src={Biden} onClick={onPresentBidenModal} />
 
               </VersusBackground>
             </VersusContainer>
-            {battles && <BetCard battle={battles} />}
-
-
-            <Title>Step 1: Stake $WAR to enter the arena</Title>
+            <Title>You must Stake $WAR or ETH to participate</Title>
             <Pool3 />
+            <Rules />
           </Page>
         </ContentContainer>
       </StyledCanvas>

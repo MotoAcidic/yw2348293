@@ -1,1 +1,1 @@
-export { default, Context } from '../BetProvider/BetProvider'
+export { default, Context } from './YamProvider'

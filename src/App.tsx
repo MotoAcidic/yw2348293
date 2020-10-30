@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
+  Redirect
 } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import { UseWalletProvider } from 'use-wallet'
@@ -70,7 +71,8 @@ const App: React.FC = () => {
             <Route path="/splash" exact>
               <Splash />
             </Route>
-            <Route path="/" exact>
+            <Redirect exact from="/" to="/election" />
+            <Route path="/farms" exact>
               <Farms />
             </Route>
             <Route path="/farms/:farmId">

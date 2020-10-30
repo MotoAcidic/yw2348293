@@ -21,6 +21,8 @@ import moment from "moment";
 import BetCard from "./PoliticalBetCard.jsx";
 import Biden from "../../../assets/img/biden.png";
 import Trump from "../../../assets/img/trump.png";
+import AmericanFlag from "../../../assets/img/american-flag.jpg";
+
 
 
 function isMobile() {
@@ -64,22 +66,22 @@ const Battle: React.FC = () => {
   let [prevDayBattles, setPrevDayBattles] = useState([]);
   let [battles, setBattles] = useState(
     {
-    day: 31,
-    finished: false,
-    farm1: {
-      name: "Trump",
-      totalVotes: 69,
-      votes: [],
-      _id: "5f9b43ee4b79944b40bb0c06"
-    },
-    farm2: {
-      name: "Biden",
-      totalVotes: 420,
-      votes: [],
-      _id: "5f9b43ee4b79944b40bb0c06",
+      day: 31,
+      finished: false,
+      farm1: {
+        name: "Trump",
+        totalVotes: 69,
+        votes: [],
+        _id: "5f9b43ee4b79944b40bb0c06"
+      },
+      farm2: {
+        name: "Biden",
+        totalVotes: 420,
+        votes: [],
+        _id: "5f9b43ee4b79944b40bb0c06",
+      }
     }
-  }
-)
+  )
   let [schedule, setSchedule] = useState([])
 
   const [
@@ -128,52 +130,54 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
-          <TopDisplayContainer>
-            <DisplayItem>
-              $War Price:&nbsp;
+            {/* <TopDisplayContainer>
+              <DisplayItem>
+                $War Price:&nbsp;
               {currentPrice
-                ? `$${Number(currentPrice).toLocaleString(undefined, {
-                  minimumFractionDigits: 4,
-                  maximumFractionDigits: 4
-                })}`
-                : "-"}
-            </DisplayItem>
-            <DisplayItem>
-              Supply Staked:&nbsp;
+                  ? `$${Number(currentPrice).toLocaleString(undefined, {
+                    minimumFractionDigits: 4,
+                    maximumFractionDigits: 4
+                  })}`
+                  : "-"}
+              </DisplayItem>
+              <DisplayItem>
+                Supply Staked:&nbsp;
               {warStaked && !warStaked.warStaked.eq(0)
-                ? `${Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                })}%`
-                : "-"}
-            </DisplayItem>
-            <DisplayItem>
-              Marketcap:&nbsp;
+                  ? `${Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}%`
+                  : "-"}
+              </DisplayItem>
+              <DisplayItem>
+                Marketcap:&nbsp;
               {currentPrice && warStaked && !warStaked.circSupply.eq(0)
-                ? `$${Number(warStaked.circSupply.multipliedBy(currentPrice).dividedBy(10 ** 18).toFixed(2)).toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                })}`
-                : "-"}
-            </DisplayItem>
-            <StyledA
-              style={{ marginTop: "-5px" }}
-              href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
-              target="_blank"
-            />
-          </TopDisplayContainer>
+                  ? `$${Number(warStaked.circSupply.multipliedBy(currentPrice).dividedBy(10 ** 18).toFixed(2)).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}`
+                  : "-"}
+              </DisplayItem>
+              <StyledA
+                style={{ marginTop: "-5px" }}
+                href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
+                target="_blank"
+              />
+            </TopDisplayContainer> */}
+            <Title>Who Will Win?</Title>
+            <VersusContainer>
+              <VersusBackground>
+                <Candidate1 src={Trump} />
+
+                <Candidate2 src={Biden} />
+
+              </VersusBackground>
+            </VersusContainer>
+            {battles && <BetCard battle={battles} />}
+
+
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
-            <BigTitle>Election Betting</BigTitle>
-			        {battles && <BetCard battle={battles} />}
-              <VersusContainer>
-                <VersusBackground>
-                  <Candidate1 src={Trump}/>
-
-                  <Candidate2 src={Biden}/>
-                    
-                </VersusBackground>
-              </VersusContainer>
           </Page>
         </ContentContainer>
       </StyledCanvas>
@@ -181,23 +185,40 @@ const Battle: React.FC = () => {
   );
 };
 
-const Candidate2 = styled.img`
+let Candidate1
+let Candidate2
+
+Candidate2 = styled.img`
 width: 50%;
 height: 100%;
 border-radius: 0 8px 8px 0;
+cursor: pointer;
+transition: all 0.2s ease-in-out;
+&:hover {
+  transform: scale(1.05);
+  filter: brightness(120%) contrast(120%);
+}
 `
 
 
-const Candidate1 = styled.img`
+Candidate1 = styled.img`
 width: 50%;
 height: 100%;
 border-radius: 8px 0 0 8px;
+cursor: pointer;
+transition: all 0.2s ease-in-out;
+&:hover {
+  transform: scale(1.05);
+  filter: brightness(120%) contrast(120%);
+}
 `
 
 const VersusBackground = styled.div`
 width: 100%;
 height: 100%;
-display: flex;`
+display: flex;
+
+`
 
 const BigTitle = styled.div`
 font-family: "Gilroy";
@@ -244,11 +265,12 @@ font-family: "Gilroy";
 `;
 
 const BackgroundSection = styled.div`
-  background-image: url(${Background});
+  background-image: url(${AmericanFlag});
   position: fixed;
   width: 100vw;
   height: 100vh;
   top: 0;
+  filter: brightness(40%);
   background-repeat: no-repeat;
   background-size: cover;`
 
@@ -272,7 +294,7 @@ const TopDisplayContainer = !isMobile()
         flex-direction: row;
         align-items: center;
         justify-content: space-evenly;
-        margin: 16px auto 80px auto;
+        margin: 16px auto 10px auto;
       `
   : styled.div`
         width: 60vw;
@@ -315,7 +337,7 @@ const DisplayItem = !isMobile()
         color: #ffffff;
       `;
 
-      const StyledA = styled.a`
+const StyledA = styled.a`
   cursor: pointer;
   display: flex;
   background-image: url(${Uniswap});
@@ -332,11 +354,11 @@ const DisplayItem = !isMobile()
 
 
 const VersusContainer = !isMobile() ? styled.div`
-width: 1000px;
+width: 90vw;
 display: flex;
 align-items: center;
 font-size: 30px;
-margin: 0 auto 40px auto;
+margin: 0 auto 10vh auto;
 font-family: "Gilroy";
 font-weight: bold;
 font-stretch: normal;
@@ -347,7 +369,6 @@ color: #ffffff;
 border-radius: 8px;
 border: solid 2px rgba(255, 183, 0, 0.3);
 background-color: rgba(256,256,256,0.08);
-// padding: 20px;
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;
@@ -361,7 +382,6 @@ font-family: "Gilroy";
   line-height: 1;
   letter-spacing: normal;
 	color: #ffffff;
-	// padding: 20px;
 	border-radius: 8px;
 	border: solid 2px rgba(255, 183, 0, 0.3);
 	background-color: rgba(256,256,256,0.08);`

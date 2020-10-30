@@ -23,8 +23,6 @@ function getServerURI() {
 	return 'https://yieldwars-api.herokuapp.com'
 }
 
-
-
 const Bet = ({ battle }) => {
 
 	const [farm, setFarm] = useState(battle.farm1.id);
@@ -58,6 +56,8 @@ const Bet = ({ battle }) => {
 	}
 
 	return (
+		<StyledModal>
+			{/* <CardContent> */}
 			<VersusContainer>
 				<Top>
 					<Select onChange={handleChange}>
@@ -95,8 +95,18 @@ const Bet = ({ battle }) => {
 					Betting Rules »
 				</ModalLink>
 			</VersusContainer>
+			{/* </CardContent> */}
+		</StyledModal>
 	)
 }
+
+const StyledModal = styled.div`
+border-radius: 8px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 100000;
+`
 
 const ModalLink = styled.div`
 font-family: Gilroy;
@@ -248,7 +258,7 @@ letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
 border: solid 2px rgba(255, 183, 0, 0.3);
-background-color: rgba(256,256,256,0.08);
+background-color: rgba(4,2,43,0.7);
 padding: 20px;
 ` : styled.div`
 margin: 0 0 40px 0;

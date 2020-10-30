@@ -373,7 +373,7 @@ const InfoContainer = !isMobile() ? styled.div`
 width: 1000px;
   border-radius: 8px;
   border: solid 2px rgba(255, 183, 0, 0.3);
-  background-color: rgba(256,256,256,0.08);
+  background-color: rgba(4,2,43,0.7);
 
 	margin: 20px auto 80px auto;
 `: styled.div`

@@ -17,7 +17,7 @@ import Schedule from './Schedule'
 import Instructions from "./Instructions";
 import InbetweenCard from "./InbetweenCard";
 import moment from "moment";
-import Spacer from "../../components/Spacer";
+import Spacer from "../../../components/Spacer";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -106,42 +106,6 @@ const Battle: React.FC = () => {
       })
     }
   }, [yam, account, farms, farms[0]]);
-
-
-  const battleFields = () => {
-    // if (switchingBattles()) {
-    //   const minutesLeft = 60 - parseInt(moment().format("mm"))
-
-    //   return (<>
-    //     <Title>We're Switching Out Battles</Title>
-    //     <NextBattle>Come back in {minutesLeft} minutes</NextBattle>
-    //   </>)
-    // } else 
-    console.log(battles);
-
-    if (!battles.length && !prevDayBattles.length) {
-      return (
-        <>
-          <Title>Loading Battles...</Title>
-          <NextBattle />
-        </>
-      )
-    } else if (battles.length) {
-
-      return (
-        <>
-          {battles.length > 0 &&
-            <Title>Step 2: Vote for which token will perform better over 24 hours</Title>
-          }
-          {battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
-          {/* in case no battle, but still question */}
-          {(battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
-        </>
-      )
-    }
-    return null;
-
-  };
 
   return (
     <Switch>

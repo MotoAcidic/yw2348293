@@ -16,7 +16,9 @@ import useModal from './hooks/useModal'
 import Farms from './views/Farms'
 import Farm from './views/Farm'
 import Splash from './views/Splash/Splash'
-import Battle from './views/Battle/Battle'
+import CryptoBattle from './views/Battle/cryptobattles/Battle'
+import InfluencerBattle from './views/Battle/influencerbattles/Battle'
+import Election from './views/Battle/election/Battle'
 import Results from './views/Results/Results'
 
 import About from './views/About/About'
@@ -74,8 +76,14 @@ const App: React.FC = () => {
             <Route path="/farms/:farmId">
               <Farm />
             </Route>
-            <Route path="/battle" exact>
-              <Battle />
+            <Route path="/crypto-battle" exact>
+              <CryptoBattle />
+            </Route>
+            <Route path="/influencer-battle" exact>
+              <InfluencerBattle />
+            </Route>
+            <Route path="/election" exact>
+              <Election />
             </Route>
             <Route path="/results" exact>
               <Results />

@@ -17,6 +17,7 @@ import Schedule from './Schedule'
 import Instructions from "./Instructions";
 import InbetweenCard from "./InbetweenCard";
 import moment from "moment";
+import Spacer from "../../../components/Spacer";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -106,42 +107,6 @@ const Battle: React.FC = () => {
     }
   }, [yam, account, farms, farms[0]]);
 
-
-  const battleFields = () => {
-    // if (switchingBattles()) {
-    //   const minutesLeft = 60 - parseInt(moment().format("mm"))
-
-    //   return (<>
-    //     <Title>We're Switching Out Battles</Title>
-    //     <NextBattle>Come back in {minutesLeft} minutes</NextBattle>
-    //   </>)
-    // } else 
-    console.log(battles);
-
-    if (!battles.length && !prevDayBattles.length) {
-      return (
-        <>
-          <Title>Loading Battles...</Title>
-          <NextBattle />
-        </>
-      )
-    } else if (battles.length) {
-
-      return (
-        <>
-          {battles.length > 0 &&
-            <Title>Step 2: Vote for which token will perform better over 24 hours</Title>
-          }
-          {battles.length === 2 && <VersusCard battles={battles} question={dailyQuestion} />}
-          {/* in case no battle, but still question */}
-          {(battles.length === 1 || (battles.length !== 2 && dailyQuestion)) && <SingleVersusCard battles={battles} question={dailyQuestion} />}
-        </>
-      )
-    }
-    return null;
-
-  };
-
   return (
     <Switch>
       <StyledCanvas>
@@ -155,12 +120,15 @@ const Battle: React.FC = () => {
             }
             <Title>Step 1: Stake $WAR to enter the arena</Title>
             <Pool3 />
-            <BigTitle>Season 2 Finals!</BigTitle>
-            {battleFields()}
+            <BigTitle>Mid Season</BigTitle>
+            <Title>We've got big things in store. Come back soon.</Title>
+            <Spacer/>
+            <Spacer/>
+            {/* {battleFields()}
             {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
             {prevDayBattles.length > 0 &&
               <InbetweenCard battles={prevDayBattles} />
-            }
+            } */}
             <Title>How battles work </Title>
             <Instructions />
             <Title>Schedule</Title>

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import Page from "../../../components/Page";
 import useYam from "../../../hooks/useYam";
+import useBet from "../../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 import Background from '../../../assets/img/bg3.svg'
@@ -60,6 +61,7 @@ export interface OverviewData {
 const Battle: React.FC = () => {
   let [farms] = useFarms()
   const yam = useYam()
+  const bet = useBet()
   let [warStaked, setWarStaked] = useState({
     warStaked: new BigNumber(0),
     circSupply: new BigNumber(0)
@@ -86,6 +88,9 @@ const Battle: React.FC = () => {
     }
   )
   let [schedule, setSchedule] = useState([])
+
+
+  console.log("dis da bet", bet)
 
   const [
     {
@@ -138,6 +143,8 @@ const Battle: React.FC = () => {
     }
   }, [yam, account, farms, farms[0]]);
 
+
+  // betContract.methods.
 
   return (
     <Switch>
@@ -207,9 +214,10 @@ height: 100%;
 border-radius: 0 8px 8px 0;
 cursor: pointer;
 transition: all 0.2s ease-in-out;
+filter: brightness(95%) contrast(95%);
 &:hover {
   transform: scale(1.05);
-  filter: brightness(120%) contrast(120%);
+  filter: brightness(105%) contrast(105%);
 }
 `
 
@@ -220,9 +228,10 @@ height: 100%;
 border-radius: 8px 0 0 8px;
 cursor: pointer;
 transition: all 0.2s ease-in-out;
+filter: brightness(95%) contrast(95%);
 &:hover {
   transform: scale(1.05);
-  filter: brightness(120%) contrast(120%);
+  filter: brightness(105%) contrast(105%);
 }
 `
 

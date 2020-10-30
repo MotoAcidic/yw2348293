@@ -91,6 +91,10 @@ contract ElectionBetting is IRewardDistributionRecipient {
         _;
     }
 
+    constructor() public {
+        rewardDistribution = msg.sender;
+    }
+
     function ETHBet(Candidate candidate) public payable checkStatus {
         require(msg.value != 0, "no ether sent");
         if (candidate == Candidate.Biden) {

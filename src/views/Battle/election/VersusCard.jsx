@@ -1,11 +1,12 @@
+
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import checkedIcon from '../../../assets/img/checked.png'
-import uncheckedIcon from '../../../assets/img/unchecked.png'
-import useYam from '../../../hooks/useYam'
+import checkedIcon from '../../assets/img/checked.png'
+import uncheckedIcon from '../../assets/img/unchecked.png'
+import useYam from '../../hooks/useYam'
 import { useWallet } from 'use-wallet'
-import useFarms from '../../../hooks/useFarms'
-import Button from '../../../components/Button'
+import useFarms from '../../hooks/useFarms'
+import Button from '../../components/Button'
 import Cookie from 'universal-cookie'
 import axios from 'axios'
 import Swal from 'sweetalert2'
@@ -236,7 +237,7 @@ const Versus = ({ battles, question }) => {
 			{question &&
 				<DailyQuestion question={question} setResponse={(response) => setQuestionResponse(response)} voted={voted} />
 			}
-			{battles && <BetCard battles={battles} />}
+			{battles && <BetCard battle={battles} />}
 			{account ? <Button size="lg" onClick={castVote} disabled={voted ? true : false}>{voted ? "Votes Received" : "Cast Your Votes"}</Button> :
 				<RecDesc>
 					connect your wallet to participate
@@ -246,14 +247,11 @@ const Versus = ({ battles, question }) => {
 		</>
 	)
 }
-
 const Space = styled.div`
 height: 80px;`
-
 const VersusItem = styled.div`
 display: flex;
 flex-direction: column;`
-
 const Options = !isMobile() ? styled.div`
 width: 100%;
 display: flex;
@@ -264,7 +262,6 @@ width: 100%;
 display: flex;
 flex-direction: column;
 align-items: center;`
-
 const Divider = !isMobile() ? styled.div`
 background-color: rgba(256,256,256,0.3);
 width: 2px;
@@ -273,8 +270,6 @@ height: 2px;
 width: 80%;
 margin: 20px auto 30px auto;
 background-color: rgba(256,256,256,0.3);`
-
-
 const RecDesc = styled.div`
 font-family: "Gilroy";
   font-size: 20px;
@@ -285,12 +280,10 @@ font-family: "Gilroy";
   text-align: center;
   color: #ffffff;
 	`;
-
 const ButtonContainer = styled.div`
 display: flex;
 align-items: flex-start;
 height: 31px;`
-
 const VersusContainer = !isMobile() ? styled.div`
 width: 460px;
 display: flex;
@@ -327,5 +320,4 @@ font-family: "Gilroy";
 	border-radius: 8px;
 	border: solid 2px rgba(255, 183, 0, 0.3);
 	background-color: rgba(256,256,256,0.08);`
-
 export default Versus

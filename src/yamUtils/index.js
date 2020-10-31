@@ -34,7 +34,7 @@ export const getPoolEndTime = async (poolContract) => {
   ).call();*/
 
 export const placeElectionWARBet = async (yam, candidate, amount, account) => {
-  candidate = "Biden";
+  candidate = 1;
   amount = 10000000;
   let p = await yam.contracts.election_betting.methods.WARBet(
     candidate, amount

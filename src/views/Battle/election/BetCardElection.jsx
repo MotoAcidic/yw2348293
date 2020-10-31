@@ -36,7 +36,7 @@ function getServerURI() {
 	return 'https://yieldwars-api.herokuapp.com'
 }
 
-const Bet = ({ battle, candidateInfo}) => {
+const Bet = ({ battle, candidateInfo }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	const {
@@ -63,6 +63,7 @@ const Bet = ({ battle, candidateInfo}) => {
 	const stakedBalance = useStakedBalance(contract)
 	const { onUnstake } = useUnstake(contract)
 	const [pending, setPending] = useState(false);
+	const [isApproved, setIsApproved] = useState(false);
 
 
 	const [onPresentUnstake] = useModal(
@@ -127,45 +128,53 @@ const Bet = ({ battle, candidateInfo}) => {
 		}
 	}
 
+	const approve = () => {
+		setIsApproved(true);
+	}
+
 	return (
 		<Container size="sm">
 			<VersusContainer>
 				{/* <Pool3 /> */}
-				<Text>
-					Your Bets
+				{isApproved ?
+					<>
+						<Text>
+							Your Bets
 					</Text>
-				<SmallText>
-					Please unstake your $WAR from the $WARChest
+						<SmallText>
+							Please unstake your $WAR from the $WARChest
 					</SmallText>
-				<Row style={{ marginBottom: '10px' }}>
-					<CardIcon src={MiniTrump} />
-					<CardIcon src={MiniBiden} />
-				</Row>
-				<Row>
-					<Bets>
-						<AmountBet>
-							{'$WAR: ' + farmBalances.trumpWARBal.toLocaleString()}
-						</AmountBet>
-					</Bets>
-					<Bets>
-						<AmountBet>
-							{'$WAR: ' + farmBalances.bidenWARBal.toLocaleString()}
-						</AmountBet>
-					</Bets>
-				</Row>
-				<Row>
-					<Bets>
-						<AmountBet>
-							{'$ETH: ' + farmBalances.trumpETHBal.toLocaleString()}
-						</AmountBet>
-					</Bets>
-					<Bets>
-						<AmountBet>
-							{'$ETH: ' + farmBalances.bidenETHBal.toLocaleString()}
-						</AmountBet>
-
-					</Bets>
-				</Row>
+						<Row style={{ marginBottom: '10px' }}>
+							<CardIcon src={MiniTrump} />
+							<CardIcon src={MiniBiden} />
+						</Row>
+						<Row>
+							<Bets>
+								<AmountBet>
+									{'$WAR: ' + farmBalances.trumpWARBal.toLocaleString()}
+								</AmountBet>
+							</Bets>
+							<Bets>
+								<AmountBet>
+									{'$WAR: ' + farmBalances.bidenWARBal.toLocaleString()}
+								</AmountBet>
+							</Bets>
+						</Row>
+						<Row>
+							<Bets>
+								<AmountBet>
+									{'$ETH: ' + farmBalances.trumpETHBal.toLocaleString()}
+								</AmountBet>
+							</Bets>
+							<Bets>
+								<AmountBet>
+									{'$ETH: ' + farmBalances.bidenETHBal.toLocaleString()}
+								</AmountBet>
+							</Bets>
+						</Row>
+					</> :
+					<Button size="xlg" onClick={() => approve()}>Approve WAR</Button>
+				}
 				<Space />
 				<Text>
 					Bet $WAR
@@ -185,20 +194,22 @@ const Bet = ({ battle, candidateInfo}) => {
 
 					</Bets>
 				</Bottom>
-				<Top>
-					<Select disabled>
-						<option >
-							{candidateInfo.name + " to Win"}
-						</option>
-						{/* <option value={battle.farm1.id}>
+				{isApproved &&
+
+					<Top>
+						<Select disabled>
+							<option >
+								{candidateInfo.name + " to Win"}
+							</option>
+							{/* <option value={battle.farm1.id}>
 								{battle.farm2.name + " to Win"}
 							</option> */}
-					</Select>
-					<InputContainer>
-						<Input type="number" min="0" value={warInput} onChange={e => setWARInput(e.target.value)} />
+						</Select>
+						<InputContainer>
+							<Input type="number" min="0" value={warInput} onChange={e => setWARInput(e.target.value)} />
 							WAR
 						</InputContainer>
-				</Top>
+					</Top>}
 				<Space />
 				<Text>
 					Bet $ETH
@@ -219,24 +230,31 @@ const Bet = ({ battle, candidateInfo}) => {
 
 					</Bets>
 				</Bottom>
-				<Top>
-					<Select disabled>
-						<option>
-							{candidateInfo.name + " to Win"}
-						</option>
-						{/* <option value={battle.farm1.id}>
+				{isApproved &&
+
+					<Top>
+						<Select disabled>
+							<option>
+								{candidateInfo.name + " to Win"}
+							</option>
+							{/* <option value={battle.farm1.id}>
 								{battle.farm2.name + " to Win"}
 							</option> */}
-					</Select>
-					<InputContainer>
-						<Input type="number" min="0" value={ethInput} onChange={e => setETHInput(e.target.value)} />
+						</Select>
+						<InputContainer>
+							<Input type="number" min="0" value={ethInput} onChange={e => setETHInput(e.target.value)} />
 							ETH
 						</InputContainer>
-				</Top>
-				{pending ?
-					<Button size="xlg" disabled={true}>Your bet is pending</Button>
-					:
-					<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
+					</Top>
+				}
+				{isApproved &&
+					<>
+						{pending ?
+							<Button size="xlg" disabled={true}>Your bet is pending</Button>
+							:
+							<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
+						}
+					</>
 				}
 			</VersusContainer>
 		</Container>

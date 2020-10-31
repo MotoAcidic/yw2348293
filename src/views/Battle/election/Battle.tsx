@@ -151,9 +151,6 @@ const Battle: React.FC = () => {
     e.stopPropagation()
   }
 
-
-  // betContract.methods.
-
   return (
     <Switch>
       <StyledCanvas>
@@ -299,7 +296,7 @@ const NextBattle = styled.div`
   color: white;
 `
 
-const Title = !isMobile ? styled.div`
+const Title = !isMobile() ? styled.div`
 font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;

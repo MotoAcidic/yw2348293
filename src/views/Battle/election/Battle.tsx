@@ -112,8 +112,7 @@ const Battle: React.FC = () => {
     [yam, setWarStaked]
   );
 
-  const onClickTrump = (event) => {
-    event.stopPropogation();
+  const onClickTrump = (e) => {
     if (!account) {
       connect('injected')
     }
@@ -121,8 +120,7 @@ const Battle: React.FC = () => {
     setShowModal(true)
   }
 
-  const onClickBiden = (event) => {
-    event.stopPropogation();
+  const onClickBiden = (e) => {
     if (!account) {
       connect('injected')
     }
@@ -140,6 +138,14 @@ const Battle: React.FC = () => {
       fetchWarStaked(farms);
     }
   }, [yam, account, farms, farms[0]]);
+
+  const closeModal = (event) => {
+    if (event) {
+      event.stopPropagation()
+      setShowModal(false)
+    }
+
+  }
 
 
   // betContract.methods.
@@ -194,7 +200,7 @@ const Battle: React.FC = () => {
               </VersusBackground>
             </VersusContainer>
             <div style={modal ? { display: 'block' } : { display: 'none' }}>
-              <Modal onClick={() => setShowModal(false)}>
+              <Modal onClick={(e) => closeModal(e)}>
                 <div style={{ pointerEvents: 'visible' }}>
                   <BetModalElection
                     battle={battles}

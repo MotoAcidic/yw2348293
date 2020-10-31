@@ -77,8 +77,8 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	// const [allowance, setAllowance] = useState(0);
 	
 	const tokenContract = useMemo(() => {
-		return getContract(ethereum, "0x533Fc51f9796E4aA4c5b462218069F68034A635c")
-	}, [ethereum, "0x533Fc51f9796E4aA4c5b462218069F68034A635c"])
+		return getContract(ethereum, "0x5896e1c50e4d2d315052aad8383d7104c3891cd6")
+	}, [ethereum, "0x5896e1c50e4d2d315052aad8383d7104c3891cd6"])
 
 	const { onApprove } = useApprove(tokenContract, electionContract)
 	const allowance = useAllowance(tokenContract, electionContract)
@@ -117,10 +117,10 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 
 	const placeBet = () => {
 		if (yam && account) {
-			if (stakedBalance) {
-				claimAndUnstake()
-				return
-			}
+			// if (stakedBalance) {
+			// 	claimAndUnstake()
+			// 	return
+			// }
 			if (warInput < 0 || ethInput < 0) {
 				Swal.fire('Please enter a valid value to bet!')
 				return

@@ -15,7 +15,9 @@ const BetRulesModal: React.FC<ModalProps> = ({ onDismiss }) => {
         <StyledCard>
           <StyledCardContent>
             <Image src={logo} alt="logo" />
-            <ModalTitle text="Betting Rules" />
+            <Title>
+              Betting Rules
+            </Title>
             <ModalSpacer>
               <Label />
               <ModalContent>
@@ -30,12 +32,22 @@ const BetRulesModal: React.FC<ModalProps> = ({ onDismiss }) => {
               <ModalContent>
                 3. 10% of winnings go to the house, which is redistributed to $WAR token holders
           </ModalContent>
+          <ModalContent>
+                4. Bet WAR is taken from your wallet. Please unstake your WAR from the $WARchest if you would like to use it to bet.
+          </ModalContent>
             </ModalSpacer>
           </StyledCardContent>
         </StyledCard>
       </StyledModal>
   )
 }
+
+const Title = styled.div`
+  font-family: "Gilroy";
+  color: #ffb700;
+  font-size: 30px;
+  margin: 10px 0;
+  `
 
 const StyledCardContent = styled.div`
   display: flex;
@@ -50,8 +62,9 @@ width: 100%;
 margin: auto;
 min-width: 300px;
   border-radius: 8px;
-    border: solid 2px rgba(255, 183, 0, 0.3);
-  background-color: rgba(256,256,256, 1);
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  border: solid 1px rgba(255, 183, 0, 0.5);
+  background-color: rgba(4,2,43,0.7);
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -68,7 +81,6 @@ font-family: "Gilroy";
 
 const StyledModal = styled.div`
   border-radius: 12px;
-  box-shadow: 24px 24px 48px -24px ${props => props.theme.color.grey[600]};
   position: relative;
   width: 600px;
 `
@@ -86,78 +98,14 @@ font-stretch: normal;
 font-style: normal;
 line-height: 1.5;
 letter-spacing: normal;
-color: #003677;
+color: white;
 margin: 10px;
-}`
+text-align: left;
+`
 
 const ModalSpacer = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
 `
-
-const ModalSpacerWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: ${props => props.theme.spacing[4]}px;
-`
-
-const ModalSpacerActions = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  margin-top: ${props => props.theme.spacing[4]}px;
-`
-const StyledInputWrapper = styled.div`
-  align-items: center;
-  background-color: ${props => props.theme.color.grey[200]};
-  border-radius: ${props => props.theme.borderRadius}px;
-  box-shadow: 4px 4px 8px ${props => props.theme.color.grey[300]},
-    inset -6px -6px 12px ${props => props.theme.color.grey[100]};
-  display: flex;
-  width: 300px;
-  height: 50px;
-  text-align: left;
-  padding: 0 ${props => props.theme.spacing[1]}px;
-`
-const StyledtextField = styled.div`
-  align-items: center;
-  background-color: ${props => props.theme.color.grey[200]};
-  border-radius: ${props => props.theme.borderRadius}px;
-  box-shadow: inset 4px 4px 8px ${props => props.theme.color.grey[300]},
-    inset -6px -6px 12px ${props => props.theme.color.grey[100]};
-  display: flex;
-  width: 300px;
-  height: 100px;
-  text-align: left;
-  padding: 0 ${props => props.theme.spacing[2]}px;
-`
-
-const StyledInput = styled.textarea`
-  background: none;
-  border: 0;
-  color: ${props => props.theme.color.grey[600]};
-  font-size: 18px;
-  flex: 1;
-  height: 100px;
-  margin: 2px;
-  padding: 0;
-  outline: none;
-`
-
-const Styledsubmit = styled.input`
-  cursor: pointer;
-  text-align: center;
-  background: none;
-  border: 0;
-  color: ${props => props.theme.color.grey[600]};
-  font-size: 18px;
-  flex: 1;
-  height: 30px;
-  margin: 0;
-  padding: 0;
-  outline: none;
-`
-
 export default BetRulesModal

@@ -16,7 +16,7 @@ import UnstakeModal from './UnstakeModal'
 import useFarm from '../../../hooks/useFarm'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
-import { placeElectionWARBet, getCurrentBets, getCurrentBalances } from '../../../yamUtils'
+import { placeElectionWARBet, placeElectionETHBet, getCurrentBets, getCurrentBalances } from '../../../yamUtils'
 import Swal from 'sweetalert2';
 
 function isMobile() {
@@ -111,15 +111,19 @@ const Bet = ({ battle, candidateInfo }) => {
 			// 	claimAndUnstake()
 			// 	return
 			// }
-			if (ethInput) {
+			if (warInput) {
 				const candidate = ethContender === "Biden to Win" ? 1 : 2;
-				placeElectionWARBet(yam, candidate, warInput, account);
+				console.log("War Bet", candidate, warInput)
+				placeElectionWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => console.log("war return", ret))
 				setPending(true)
-			} else if (warInput) {
+			}
+			if (ethInput) {
 				const candidate = warContender === "Biden to Win" ? 1 : 2;
-				placeElectionWARBet(yam, candidate, ethInput, account);
+				console.log("Eth Bet", candidate, ethInput)
+				placeElectionETHBet(yam, candidate, parseFloat(ethInput), account);
 				setPending(true)
-			} else {
+			}
+			if (!ethInput && !warInput) {
 				Swal.fire("Place a bet for a candidate!");
 			}
 		}
@@ -142,24 +146,24 @@ const Bet = ({ battle, candidateInfo }) => {
 					<Row>
 						<Bets>
 							<AmountBet>
-								{'$WAR' + farmBalances.trumpWARBal.toLocaleString()}
+								{'$WAR: ' + farmBalances.trumpWARBal.toLocaleString()}
 							</AmountBet>
 						</Bets>
 						<Bets>
 							<AmountBet>
-								{'$WAR' + farmBalances.bidenWARBal.toLocaleString()}
+								{'$WAR: ' + farmBalances.bidenWARBal.toLocaleString()}
 							</AmountBet>
 						</Bets>
 					</Row>
 					<Row>
 						<Bets>
 							<AmountBet>
-								{'$ETH' + farmBalances.trumpETHBal.toLocaleString()}
+								{'$ETH: ' + farmBalances.trumpETHBal.toLocaleString()}
 							</AmountBet>
 						</Bets>
 						<Bets>
 							<AmountBet>
-								{'$ETH' + farmBalances.bidenETHBal.toLocaleString()}
+								{'$ETH: ' + farmBalances.bidenETHBal.toLocaleString()}
 							</AmountBet>
 
 						</Bets>
@@ -172,19 +176,19 @@ const Bet = ({ battle, candidateInfo }) => {
 						<Bets>
 							<CardIcon src={MiniTrump} />
 							<AmountBet>
-								{'$' + farmBets.trumpWARPot.toLocaleString()}
+								{farmBets.trumpWARPot.toLocaleString() + " $WAR"}
 							</AmountBet>
 						</Bets>
 						<Bets>
 							<AmountBet>
-								{'$' + farmBets.bidenWARPot.toLocaleString()}
+								{farmBets.bidenWARPot.toLocaleString() + " $WAR"}
 							</AmountBet>
 							<CardIcon src={MiniBiden} />
 
 						</Bets>
 					</Bottom>
 					<Top>
-						<Select onChange={handleWARChange} disabled>
+						<Select disabled onChange={handleWARChange}>
 							<option value={candidateInfo.id}>
 								{candidateInfo.name + " to Win"}
 							</option>
@@ -193,7 +197,7 @@ const Bet = ({ battle, candidateInfo }) => {
 							</option> */}
 						</Select>
 						<InputContainer>
-							<Input type="number" value={warInput} onChange={e => setWARInput(e.target.value)} />
+							<Input type="number" min="0" value={warInput} onChange={e => setWARInput(e.target.value)} />
 							WAR
 						</InputContainer>
 					</Top>
@@ -206,19 +210,19 @@ const Bet = ({ battle, candidateInfo }) => {
 							<CardIcon src={MiniTrump} />
 
 							<AmountBet>
-								{'$' + farmBets.trumpETHPot.toLocaleString()}
+								{farmBets.trumpETHPot.toLocaleString() + " $ETH"}
 							</AmountBet>
 						</Bets>
 						<Bets>
 							<AmountBet>
-								{'$' + farmBets.bidenWARPot.toLocaleString()}
+								{farmBets.bidenWARPot.toLocaleString() + " $ETH"}
 							</AmountBet>
 							<CardIcon src={MiniBiden} />
 
 						</Bets>
 					</Bottom>
 					<Top>
-						<Select onChange={handleETHChange} disabled>
+						<Select disabled onChange={handleETHChange}>
 							<option value={candidateInfo.id}>
 								{candidateInfo.name + " to Win"}
 							</option>
@@ -227,7 +231,7 @@ const Bet = ({ battle, candidateInfo }) => {
 							</option> */}
 						</Select>
 						<InputContainer>
-							<Input type="number" value={ethInput} onChange={e => setETHInput(e.target.value)} />
+							<Input type="number" min="0" value={ethInput} onChange={e => setETHInput(e.target.value)} />
 					ETH
 					</InputContainer>
 					</Top>

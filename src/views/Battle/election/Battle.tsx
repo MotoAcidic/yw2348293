@@ -76,15 +76,9 @@ const Battle: React.FC = () => {
       finished: false,
       farm1: {
         name: "Trump",
-        totalVotes: 69,
-        votes: [],
-        _id: "5f9b43ee4b79944b40bb0c06",
       },
       farm2: {
         name: "Biden",
-        totalVotes: 420,
-        votes: [],
-        _id: "5f9b43ee4b79944b40bb0c06",
       }
     }
   )
@@ -104,8 +98,6 @@ const Battle: React.FC = () => {
   ] = useState<OverviewData>({});
 
   let currentPrice = curPrice || 0;
-
-  console.log("disbattles", battles);
 
   const fetchStats = useCallback(async () => {
     const statsData = await getStats(yam);

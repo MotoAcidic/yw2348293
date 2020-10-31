@@ -172,12 +172,12 @@ const Bet = ({ battle, candidateInfo }) => {
 						<Bets>
 							<CardIcon src={MiniTrump} />
 							<AmountBet>
-								{'$' + farmBets.trumpWARPot.toLocaleString()}
+								{farmBets.trumpWARPot.toLocaleString() + " $WAR"}
 							</AmountBet>
 						</Bets>
 						<Bets>
 							<AmountBet>
-								{'$' + farmBets.bidenWARPot.toLocaleString()}
+								{farmBets.bidenWARPot.toLocaleString() + " $WAR"}
 							</AmountBet>
 							<CardIcon src={MiniBiden} />
 
@@ -193,7 +193,7 @@ const Bet = ({ battle, candidateInfo }) => {
 							</option> */}
 						</Select>
 						<InputContainer>
-							<Input type="number" value={warInput} onChange={e => setWARInput(e.target.value)} />
+							<Input type="number" min="0" value={warInput} onChange={e => setWARInput(e.target.value)} />
 							WAR
 						</InputContainer>
 					</Top>
@@ -206,12 +206,12 @@ const Bet = ({ battle, candidateInfo }) => {
 							<CardIcon src={MiniTrump} />
 
 							<AmountBet>
-								{'$' + farmBets.trumpETHPot.toLocaleString()}
+								{farmBets.trumpETHPot.toLocaleString() + " $ETH"}
 							</AmountBet>
 						</Bets>
 						<Bets>
 							<AmountBet>
-								{'$' + farmBets.bidenWARPot.toLocaleString()}
+								{farmBets.bidenWARPot.toLocaleString() + " $ETH"}
 							</AmountBet>
 							<CardIcon src={MiniBiden} />
 
@@ -227,7 +227,7 @@ const Bet = ({ battle, candidateInfo }) => {
 							</option> */}
 						</Select>
 						<InputContainer>
-							<Input type="number" value={ethInput} onChange={e => setETHInput(e.target.value)} />
+							<Input type="number" min="0" value={ethInput} onChange={e => setETHInput(e.target.value)} />
 					ETH
 					</InputContainer>
 					</Top>

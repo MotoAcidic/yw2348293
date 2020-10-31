@@ -33,7 +33,10 @@ export const getPoolEndTime = async (poolContract) => {
   ]
 ).call();*/
 
-
+export const getElectionContracts = async (yam) => {
+  const election = yam.contract.election_betting
+  return election
+}
 
 export const stake = async (poolContract, amount, account) => {
   let now = new Date().getTime() / 1000;

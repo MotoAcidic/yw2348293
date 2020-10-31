@@ -52,7 +52,6 @@ const WarPool: React.FC = () => {
 		name: '',
 		icon: ''
 	}
-	
 
 	const tokenContract = useMemo(() => {
 		return getContract(ethereum as provider, depositTokenAddress)

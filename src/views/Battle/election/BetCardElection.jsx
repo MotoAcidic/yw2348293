@@ -8,19 +8,20 @@ import Cookie from 'universal-cookie'
 import Container from '../../../components/Container'
 import MiniBiden from "../../../assets/img/biden@2x.png";
 import MiniTrump from "../../../assets/img/trump@2x.png";
-import useYam from '../../../hooks/useYam'
-import './swal.css'
-import { harvest, getBattleAPR } from '../../../yamUtils'
-import UnstakeModal from './UnstakeModal'
 import useFarm from '../../../hooks/useFarm'
+import useYam from '../../../hooks/useYam'
+import { getDisplayBalance } from '../../../utils/formatBalance'
+import { provider } from 'web3-core'
+import useApprove from '../../../hooks/useApprove'
+import './swal.css'
+import UnstakeModal from './UnstakeModal'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
-import useApprove from '../../../hooks/useApprove'
 import useAllowance from '../../../hooks/useAllowance'
 import { placeElectionWARBet, placeElectionETHBet, getCurrentBets, getCurrentBalances } from '../../../yamUtils'
 import Swal from 'sweetalert2';
+import { getElectionContracts, harvest } from '../../../yamUtils'
 import Pool3 from "./Pool3";
-import { provider } from 'web3-core'
 import { getContract } from '../../../utils/erc20'
 
 
@@ -97,6 +98,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		harvest(contract, account);
 		onPresentUnstake()
 	}
+
 
 	useEffect(() => {
 		const getBets = async () => {

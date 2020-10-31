@@ -27,6 +27,7 @@ import useModal from '../../../hooks/useModal'
 import Rules from './BetRulesModal'
 import Swal from 'sweetalert2';
 import './swal.css'
+import AccountModal from "../../../components/TopBar/components/AdvertisementFormModal";
 
 
 
@@ -63,14 +64,7 @@ export interface OverviewData {
 const Battle: React.FC = () => {
   let [farms] = useFarms()
   const yam = useYam()
-  // const bet = useBet()
-  let [warStaked, setWarStaked] = useState({
-    warStaked: new BigNumber(0),
-    circSupply: new BigNumber(0)
-  });
-  const { account, connect } = useWallet()
-  let [modal, setShowModal] = useState(false);
-  let [prevDayBattles, setPrevDayBattles] = useState([]);
+
   let [battles, setBattles] = useState(
     {
       finished: false,
@@ -82,6 +76,14 @@ const Battle: React.FC = () => {
       }
     }
   )
+  let [warStaked, setWarStaked] = useState({
+    warStaked: new BigNumber(0),
+    circSupply: new BigNumber(0)
+  });
+  const { account, connect } = useWallet()
+  let [modal, setShowModal] = useState(false);
+  let [candidate, setCandidate] = useState(battles.farm1);
+
   let [schedule, setSchedule] = useState([])
 
 
@@ -112,33 +114,23 @@ const Battle: React.FC = () => {
     [yam, setWarStaked]
   );
 
-  const onClickTrump = () => {
+  const onClickTrump = (event) => {
+    event.stopPropogation();
     if (!account) {
       connect('injected')
     }
-    onPresentTrumpModal()
+    setCandidate(battles.farm1)
+    setShowModal(true)
   }
 
-  const onClickBiden = () => {
+  const onClickBiden = (event) => {
+    event.stopPropogation();
     if (!account) {
       connect('injected')
     }
-    onPresentBidenModal()
+    setCandidate(battles.farm2)
+    setShowModal(true)
   }
-
-  const [onPresentTrumpModal] = useModal(
-		<BetModalElection
-      battle={battles}
-      candidateInfo={battles.farm1}
-		/>
-  )
-  
-  const [onPresentBidenModal] = useModal(
-		<BetModalElection
-      battle={battles}
-      candidateInfo={battles.farm2}
-		/>
-	)
 
   useEffect(() => {
     console.log("using effect");
@@ -197,12 +189,22 @@ const Battle: React.FC = () => {
             <Title>Who Will Win?</Title>
             <VersusContainer>
               <VersusBackground>
-                <Candidate1 src={Trump} onClick={onClickTrump} />
+                <Candidate1 src={Trump} onClick={(e) => onClickTrump(e)} />
 
-                <Candidate2 src={Biden} onClick={onClickBiden} />
+                <Candidate2 src={Biden} onClick={(e) => onClickBiden(e)} />
 
               </VersusBackground>
             </VersusContainer>
+            <div style={modal ? { display: 'block' } : { display: 'none' }}>
+              <Modal onClick={() => setShowModal(false)}>
+                <div style={{ pointerEvents: 'visible' }}>
+                  <BetModalElection
+                    battle={battles}
+                    candidateInfo={candidate}
+                  />
+                </div>
+              </Modal>
+            </div>
             <Pool3 />
             <Rules />
           </Page>
@@ -211,6 +213,17 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const Modal = styled.div`
+border-radius: 8px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100000;
+  background-color: rgba(0, 0, 0, 0.2);
+  top: 0px;
+  left: 0px;
+`
 
 let Candidate1
 let Candidate2
@@ -222,7 +235,7 @@ border-radius: 0 8px 8px 0;
 cursor: pointer;
 transition: all 0.2s ease-in-out;
 &:hover {
-  transform: scale(1.05);
+          transform: scale(1.05);
   filter: brightness(110%) contrast(110%);
 }
 `
@@ -235,7 +248,7 @@ border-radius: 8px 0 0 8px;
 cursor: pointer;
 transition: all 0.2s ease-in-out;
 &:hover {
-  transform: scale(1.05);
+          transform: scale(1.05);
   filter: brightness(110%) contrast(110%);
 }
 `
@@ -375,7 +388,7 @@ const StyledA = styled.a`
   width: 137px;
   transition: all .1s linear;
   &:hover {
-    opacity: 1;
+          opacity: 1;
   }
 `
 

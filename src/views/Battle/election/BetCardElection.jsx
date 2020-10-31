@@ -5,7 +5,6 @@ import { useWallet } from "use-wallet";
 import useModal from '../../../hooks/useModal'
 import RulesModal from "./BetRulesModal";
 import Cookie from 'universal-cookie'
-import Modal, { ModalProps } from '../../../components/Modal'
 import Container from '../../../components/Container'
 import MiniBiden from "../../../assets/img/biden@2x.png";
 import MiniTrump from "../../../assets/img/trump@2x.png";
@@ -18,6 +17,8 @@ import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
 import { placeElectionWARBet, placeElectionETHBet, getCurrentBets, getCurrentBalances } from '../../../yamUtils'
 import Swal from 'sweetalert2';
+import Pool3 from "./Pool3";
+
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -35,7 +36,7 @@ function getServerURI() {
 	return 'https://yieldwars-api.herokuapp.com'
 }
 
-const Bet = ({ battle, candidateInfo }) => {
+const Bet = ({ battle, candidateInfo}) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	const {
@@ -128,117 +129,116 @@ const Bet = ({ battle, candidateInfo }) => {
 
 	return (
 		<Container size="sm">
-			<StyledModal>
-				<VersusContainer>
-					<Text>
-						Your Bets
+			<VersusContainer>
+				{/* <Pool3 /> */}
+				<Text>
+					Your Bets
 					</Text>
-					<SmallText>
-						Please unstake your $WAR from the $WARChest
+				<SmallText>
+					Please unstake your $WAR from the $WARChest
 					</SmallText>
-					<Row style={{ marginBottom: '10px' }}>
-						<CardIcon src={MiniTrump} />
-						<CardIcon src={MiniBiden} />
-					</Row>
-					<Row>
-						<Bets>
-							<AmountBet>
-								{'$WAR: ' + farmBalances.trumpWARBal.toLocaleString()}
-							</AmountBet>
-						</Bets>
-						<Bets>
-							<AmountBet>
-								{'$WAR: ' + farmBalances.bidenWARBal.toLocaleString()}
-							</AmountBet>
-						</Bets>
-					</Row>
-					<Row>
-						<Bets>
-							<AmountBet>
-								{'$ETH: ' + farmBalances.trumpETHBal.toLocaleString()}
-							</AmountBet>
-						</Bets>
-						<Bets>
-							<AmountBet>
-								{'$ETH: ' + farmBalances.bidenETHBal.toLocaleString()}
-							</AmountBet>
+				<Row style={{ marginBottom: '10px' }}>
+					<CardIcon src={MiniTrump} />
+					<CardIcon src={MiniBiden} />
+				</Row>
+				<Row>
+					<Bets>
+						<AmountBet>
+							{'$WAR: ' + farmBalances.trumpWARBal.toLocaleString()}
+						</AmountBet>
+					</Bets>
+					<Bets>
+						<AmountBet>
+							{'$WAR: ' + farmBalances.bidenWARBal.toLocaleString()}
+						</AmountBet>
+					</Bets>
+				</Row>
+				<Row>
+					<Bets>
+						<AmountBet>
+							{'$ETH: ' + farmBalances.trumpETHBal.toLocaleString()}
+						</AmountBet>
+					</Bets>
+					<Bets>
+						<AmountBet>
+							{'$ETH: ' + farmBalances.bidenETHBal.toLocaleString()}
+						</AmountBet>
 
-						</Bets>
-					</Row>
-					<Space />
-					<Text>
-						Bet $WAR
+					</Bets>
+				</Row>
+				<Space />
+				<Text>
+					Bet $WAR
 					</Text>
-					<Bottom>
-						<Bets>
-							<CardIcon src={MiniTrump} />
-							<AmountBet>
-								{farmBets.trumpWARPot.toLocaleString() + " $WAR"}
-							</AmountBet>
-						</Bets>
-						<Bets>
-							<AmountBet>
-								{farmBets.bidenWARPot.toLocaleString() + " $WAR"}
-							</AmountBet>
-							<CardIcon src={MiniBiden} />
+				<Bottom>
+					<Bets>
+						<CardIcon src={MiniTrump} />
+						<AmountBet>
+							{farmBets.trumpWARPot.toLocaleString() + " $WAR"}
+						</AmountBet>
+					</Bets>
+					<Bets>
+						<AmountBet>
+							{farmBets.bidenWARPot.toLocaleString() + " $WAR"}
+						</AmountBet>
+						<CardIcon src={MiniBiden} />
 
-						</Bets>
-					</Bottom>
-					<Top>
-						<Select disabled>
-							<option value={candidateInfo.id}>
-								{candidateInfo.name + " to Win"}
-							</option>
-							{/* <option value={battle.farm1.id}>
+					</Bets>
+				</Bottom>
+				<Top>
+					<Select disabled>
+						<option >
+							{candidateInfo.name + " to Win"}
+						</option>
+						{/* <option value={battle.farm1.id}>
 								{battle.farm2.name + " to Win"}
 							</option> */}
-						</Select>
-						<InputContainer>
-							<Input type="number" min="0" value={warInput} onChange={e => setWARInput(e.target.value)} />
+					</Select>
+					<InputContainer>
+						<Input type="number" min="0" value={warInput} onChange={e => setWARInput(e.target.value)} />
 							WAR
 						</InputContainer>
-					</Top>
-					<Space />
-					<Text>
-						Bet $ETH
+				</Top>
+				<Space />
+				<Text>
+					Bet $ETH
 					</Text>
-					<Bottom>
-						<Bets>
-							<CardIcon src={MiniTrump} />
+				<Bottom>
+					<Bets>
+						<CardIcon src={MiniTrump} />
 
-							<AmountBet>
-								{farmBets.trumpETHPot.toLocaleString() + " $ETH"}
-							</AmountBet>
-						</Bets>
-						<Bets>
-							<AmountBet>
-								{farmBets.bidenETHPot.toLocaleString() + " $ETH"}
-							</AmountBet>
-							<CardIcon src={MiniBiden} />
+						<AmountBet>
+							{farmBets.trumpETHPot.toLocaleString() + " $ETH"}
+						</AmountBet>
+					</Bets>
+					<Bets>
+						<AmountBet>
+							{farmBets.bidenETHPot.toLocaleString() + " $ETH"}
+						</AmountBet>
+						<CardIcon src={MiniBiden} />
 
-						</Bets>
-					</Bottom>
-					<Top>
-						<Select disabled>
-							<option value={candidateInfo.id}>
-								{candidateInfo.name + " to Win"}
-							</option>
-							{/* <option value={battle.farm1.id}>
+					</Bets>
+				</Bottom>
+				<Top>
+					<Select disabled>
+						<option>
+							{candidateInfo.name + " to Win"}
+						</option>
+						{/* <option value={battle.farm1.id}>
 								{battle.farm2.name + " to Win"}
 							</option> */}
-						</Select>
-						<InputContainer>
-							<Input type="number" min="0" value={ethInput} onChange={e => setETHInput(e.target.value)} />
-					ETH
-					</InputContainer>
-					</Top>
-					{pending ?
-						<Button size="xlg" disabled={true}>Your bet is pending</Button>
-						:
-						<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
-					}
-				</VersusContainer>
-			</StyledModal>
+					</Select>
+					<InputContainer>
+						<Input type="number" min="0" value={ethInput} onChange={e => setETHInput(e.target.value)} />
+							ETH
+						</InputContainer>
+				</Top>
+				{pending ?
+					<Button size="xlg" disabled={true}>Your bet is pending</Button>
+					:
+					<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
+				}
+			</VersusContainer>
 		</Container>
 	)
 }
@@ -246,13 +246,6 @@ const Bet = ({ battle, candidateInfo }) => {
 const Space = styled.div`
 height: 20px;`
 
-const StyledModal = styled.div`
-border-radius: 8px;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  z-index: 100000;
-`
 
 const AmountBet = styled.div`
 font-family: Gilroy;

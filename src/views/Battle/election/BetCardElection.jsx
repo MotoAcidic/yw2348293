@@ -208,7 +208,7 @@ const Bet = ({ battle, candidateInfo }) => {
 						</Bets>
 						<Bets>
 							<AmountBet>
-								{farmBets.bidenWARPot.toLocaleString() + " $ETH"}
+								{farmBets.bidenETHPot.toLocaleString() + " $ETH"}
 							</AmountBet>
 							<CardIcon src={MiniBiden} />
 

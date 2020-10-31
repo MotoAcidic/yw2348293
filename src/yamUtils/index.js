@@ -26,20 +26,19 @@ export const getPoolEndTime = async (poolContract) => {
   return await poolContract.methods.periodFinish().call()
 }
 
-  /*let p = await yam.contracts.uni_router.methods.getAmountsOut(
-    new BigNumber(1000000000000000000),
-    [
-      "0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"
-    ]
-  ).call();*/
+/*let p = await yam.contracts.uni_router.methods.getAmountsOut(
+  new BigNumber(1000000000000000000),
+  [
+    "0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"
+  ]
+).call();*/
 
 export const placeElectionWARBet = async (yam, candidate, amount, account) => {
-  candidate = 1;
-  amount = 10000000;
+  console.log("here we go", candidate, amount, account);
   let p = await yam.contracts.election_betting.methods.WARBet(
     candidate, amount
   )
-  .send({ from: account })
+    .send({ from: account })
   return (p);
 }
 
@@ -688,8 +687,8 @@ export const getCurrentBets = async (yam) => {
   const bidenETHPot = new BigNumber(await yam.contracts.election_betting.methods.bidenETHPot().call());
   const trumpWARPot = new BigNumber(await yam.contracts.election_betting.methods.trumpWARPot().call());
   const bidenWARPot = new BigNumber(await yam.contracts.election_betting.methods.bidenWARPot().call());
-  
-  return ({trumpETHPot, bidenETHPot, trumpWARPot, bidenWARPot});
+
+  return ({ trumpETHPot, bidenETHPot, trumpWARPot, bidenWARPot });
 }
 
 export const getCurrentBalances = async (yam, account) => {
@@ -698,6 +697,6 @@ export const getCurrentBalances = async (yam, account) => {
   const bidenETHBal = new BigNumber(await yam.contracts.election_betting.methods.bidenETHBet(account).call());
   const trumpWARBal = new BigNumber(await yam.contracts.election_betting.methods.trumpWARBet(account).call());
   const bidenWARBal = new BigNumber(await yam.contracts.election_betting.methods.bidenWARBet(account).call());
-  
-  return ({trumpETHBal, bidenETHBal, trumpWARBal, bidenWARBal});
+
+  return ({ trumpETHBal, bidenETHBal, trumpWARBal, bidenWARBal });
 }

@@ -73,7 +73,7 @@ const Bet = ({ battle }) => {
 		if (yam && account) {
 			if (ethInput) {
 				const candidate = ethContender === "Biden to Win" ? 1 : 2;
-				placeElectionWARBet(yam, candidate, ethInput, account);
+				placeElectionWARBet(yam, candidate, warInput, account);
 			} else if (warInput) {
 				const candidate = warContender === "Biden to Win" ? 1 : 2;
 				placeElectionWARBet(yam, candidate, ethInput, account);

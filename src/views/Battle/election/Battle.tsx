@@ -217,7 +217,7 @@ const Battle: React.FC = () => {
 
 const ModalBlock = styled.div`
 width: 534px;
-height: 552px;
+height: 0px;
 margin-top: 20vh;
 `
 

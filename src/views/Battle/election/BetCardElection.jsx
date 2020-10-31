@@ -53,7 +53,7 @@ const Bet = ({ battle, candidateInfo }) => {
 		name: '',
 		icon: ''
 	}
-	console.log(useFarm('BATTLEPOOL'));
+
 	const [ethContender, setETHContender] = useState(battle.farm1.id);
 	const [warContender, setWARContender] = useState(battle.farm1.id);
 	const [ethInput, setETHInput] = useState(0);
@@ -63,9 +63,6 @@ const Bet = ({ battle, candidateInfo }) => {
 	const [farmBalances, setFarmBalances] = useState({ trumpETHBal: 0, bidenETHBal: 0, trumpWARBal: 0, bidenWARBal: 0 });
 	const stakedBalance = useStakedBalance(contract)
 	const { onUnstake } = useUnstake(contract)
-
-
-
 
 	const handleETHChange = e => {
 		setETHContender(e.target.value);
@@ -108,10 +105,10 @@ const Bet = ({ battle, candidateInfo }) => {
 
 	const placeBet = () => {
 		if (yam && account) {
-			if (stakedBalance) {
-				claimAndUnstake()
-				return
-			}
+			// if (stakedBalance) {
+			// 	claimAndUnstake()
+			// 	return
+			// }
 			if (ethInput) {
 				const candidate = ethContender === "Biden to Win" ? 1 : 2;
 				placeElectionWARBet(yam, candidate, warInput, account);
@@ -131,6 +128,9 @@ const Bet = ({ battle, candidateInfo }) => {
 					<Text>
 						Your Bets
 					</Text>
+					<SmallText>
+						Please unstake your $WAR from the warchest
+					</SmallText>
 					<Row style={{ marginBottom: '10px'}}>
 						<CardIcon src={MiniTrump} />
 						<CardIcon src={MiniBiden} />
@@ -291,6 +291,18 @@ const Text = styled.div`
 font-family: "Gilroy";
 font-size: 22px;
 font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+margin-bottom: 5px;
+`
+
+const SmallText = styled.div`
+font-family: "Gilroy";
+font-size: 14px;
+font-weight: 100;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;

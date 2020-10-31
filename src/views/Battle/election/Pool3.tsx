@@ -57,7 +57,8 @@ const WarPool: React.FC = () => {
 	const tokenContract = useMemo(() => {
 		return getContract(ethereum as provider, depositTokenAddress)
 	}, [ethereum, depositTokenAddress])
-
+	console.log(contract, tokenContract);
+	
 
 	const { onReward } = useReward(contract)
 	const earnings = useEarnings(contract)

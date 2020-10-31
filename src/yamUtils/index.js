@@ -698,15 +698,13 @@ export const placeElectionWARBet = async (yam, candidate, amount, account) => {
   console.log("war bet: ", candidate, amount, account);
   let p = await yam.contracts.election_betting.methods.WARBet(
     candidate, amount
-  )
-    .send({ from: account, gas: 300000 })
+  ).send({ from: account, gas: 300000 })
   return (p);
 }
 
 export const placeElectionETHBet = async (yam, candidate, amount, account) => {
   let p = await yam.contracts.election_betting.methods.ETHBet(
     candidate, amount
-  )
-  .send({ from: account })
+  ).send({ from: account })
   return (p);
 }

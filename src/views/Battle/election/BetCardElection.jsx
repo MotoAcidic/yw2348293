@@ -63,6 +63,8 @@ const Bet = ({ battle, candidateInfo }) => {
 	const [farmBalances, setFarmBalances] = useState({ trumpETHBal: 0, bidenETHBal: 0, trumpWARBal: 0, bidenWARBal: 0 });
 	const stakedBalance = useStakedBalance(contract)
 	const { onUnstake } = useUnstake(contract)
+	const [pending, setPending] = useState(false);
+
 
 	const handleETHChange = e => {
 		setETHContender(e.target.value);
@@ -112,9 +114,11 @@ const Bet = ({ battle, candidateInfo }) => {
 			if (ethInput) {
 				const candidate = ethContender === "Biden to Win" ? 1 : 2;
 				placeElectionWARBet(yam, candidate, warInput, account);
+				setPending(true)
 			} else if (warInput) {
 				const candidate = warContender === "Biden to Win" ? 1 : 2;
 				placeElectionWARBet(yam, candidate, ethInput, account);
+				setPending(true)
 			} else {
 				Swal.fire("Place a bet for a candidate!");
 			}
@@ -131,7 +135,7 @@ const Bet = ({ battle, candidateInfo }) => {
 					<SmallText>
 						Please unstake your $WAR from the warchest
 					</SmallText>
-					<Row style={{ marginBottom: '10px'}}>
+					<Row style={{ marginBottom: '10px' }}>
 						<CardIcon src={MiniTrump} />
 						<CardIcon src={MiniBiden} />
 					</Row>
@@ -180,7 +184,7 @@ const Bet = ({ battle, candidateInfo }) => {
 						</Bets>
 					</Bottom>
 					<Top>
-						<Select onChange={handleWARChange}>
+						<Select onChange={handleWARChange} disabled>
 							<option value={candidateInfo.id}>
 								{candidateInfo.name + " to Win"}
 							</option>
@@ -214,7 +218,7 @@ const Bet = ({ battle, candidateInfo }) => {
 						</Bets>
 					</Bottom>
 					<Top>
-						<Select onChange={handleETHChange}>
+						<Select onChange={handleETHChange} disabled>
 							<option value={candidateInfo.id}>
 								{candidateInfo.name + " to Win"}
 							</option>
@@ -227,7 +231,11 @@ const Bet = ({ battle, candidateInfo }) => {
 					ETH
 					</InputContainer>
 					</Top>
-					<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
+					{pending ?
+						<Button size="xlg" disabled={true}>Your bet is pending</Button>
+						:
+						<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
+					}
 				</VersusContainer>
 			</StyledModal>
 		</Container>

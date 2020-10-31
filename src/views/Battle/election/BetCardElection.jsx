@@ -109,13 +109,17 @@ const Bet = ({ battle, candidateInfo }) => {
 			// 	claimAndUnstake()
 			// 	return
 			// }
-			if (ethInput) {
+			if (warInput) {
 				const candidate = ethContender === "Biden to Win" ? 1 : 2;
-				placeElectionWARBet(yam, candidate, warInput, account);
-			} else if (warInput) {
+				console.log("War Bet", candidate, warInput)
+				placeElectionWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => console.log("war return", ret))
+			}
+			if (ethInput) {
 				const candidate = warContender === "Biden to Win" ? 1 : 2;
-				placeElectionWARBet(yam, candidate, ethInput, account);
-			} else {
+				console.log("Eth Bet", candidate, ethInput)
+				placeElectionWARBet(yam, candidate, parseFloat(ethInput), account);
+			}
+			if (!ethInput && !warInput) {
 				Swal.fire("Place a bet for a candidate!");
 			}
 		}
@@ -131,31 +135,31 @@ const Bet = ({ battle, candidateInfo }) => {
 					<SmallText>
 						Please unstake your $WAR from the warchest
 					</SmallText>
-					<Row style={{ marginBottom: '10px'}}>
+					<Row style={{ marginBottom: '10px' }}>
 						<CardIcon src={MiniTrump} />
 						<CardIcon src={MiniBiden} />
 					</Row>
 					<Row>
 						<Bets>
 							<AmountBet>
-								{'$WAR' + farmBalances.trumpWARBal.toLocaleString()}
+								{'$WAR: ' + farmBalances.trumpWARBal.toLocaleString()}
 							</AmountBet>
 						</Bets>
 						<Bets>
 							<AmountBet>
-								{'$WAR' + farmBalances.bidenWARBal.toLocaleString()}
+								{'$WAR: ' + farmBalances.bidenWARBal.toLocaleString()}
 							</AmountBet>
 						</Bets>
 					</Row>
 					<Row>
 						<Bets>
 							<AmountBet>
-								{'$ETH' + farmBalances.trumpETHBal.toLocaleString()}
+								{'$ETH: ' + farmBalances.trumpETHBal.toLocaleString()}
 							</AmountBet>
 						</Bets>
 						<Bets>
 							<AmountBet>
-								{'$ETH' + farmBalances.bidenETHBal.toLocaleString()}
+								{'$ETH: ' + farmBalances.bidenETHBal.toLocaleString()}
 							</AmountBet>
 
 						</Bets>

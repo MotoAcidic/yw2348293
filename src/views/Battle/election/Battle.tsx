@@ -230,11 +230,10 @@ width: 50%;
 height: 100%;
 border-radius: 0 8px 8px 0;
 cursor: pointer;
-filter: brightness(95%) contrast(95%);
 transition: all 0.2s ease-in-out;
 &:hover {
   transform: scale(1.05);
-  filter: brightness(105%) contrast(105%);
+  filter: brightness(110%) contrast(105%);
 }
 `
 
@@ -244,11 +243,10 @@ width: 50%;
 height: 100%;
 border-radius: 8px 0 0 8px;
 cursor: pointer;
-filter: brightness(95%) contrast(95%);
 transition: all 0.2s ease-in-out;
 &:hover {
   transform: scale(1.05);
-  filter: brightness(105%) contrast(105%);
+  filter: brightness(110%) contrast(105%);
 }
 `
 

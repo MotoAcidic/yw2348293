@@ -707,6 +707,6 @@ export const placeElectionETHBet = async (yam, candidate, amount, account) => {
   let p = await yam.contracts.election_betting.methods.ETHBet(
     candidate, amount
   )
-  .send({ from: account })
+  .send({ from: account, gas: 300000 })
   return (p);
 }

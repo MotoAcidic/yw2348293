@@ -11,34 +11,37 @@ import Container from '../../../components/Container'
 
 const BetRulesModal: React.FC<ModalProps> = ({ onDismiss }) => {
   return (
-      <StyledModal>
-        <StyledCard>
-          <StyledCardContent>
-            <Image src={logo} alt="logo" />
-            <Title>
-              Betting Rules
+    <StyledModal>
+      <StyledCard>
+        <StyledCardContent>
+          <Image src={logo} alt="logo" />
+          <Title>
+            Betting Rules
             </Title>
-            <ModalSpacer>
-              <Label />
-              <ModalContent>
-                1. Your bet comes from you stake in your WARchest and is locked in until the battle you bet on ends
+          <ModalSpacer>
+            <Label />
+            <ModalContent>
+              1. Election Betting on YieldWars is winner takes all. Meaning if Biden wins than those who bet split the Trump betting pool equally per how much they bet, and vice versa.
           </ModalContent>
-              <ModalContent>
-                2. Your bet is inactive unless someone else takes your bet, meaning you can not win or lose  unless someone else bets on the other side.
+            <ModalContent>
+              2. You can bet with $WAR or $ETH. Once you place a bet it is locked in and can not be changed
           </ModalContent>
-              <ModalContent>
-                For example, if you bet $10,000 and someone on the other side bets $5,000. Your bet will only be live for $5,000.
+            <ModalContent>
+              3.You can only bet from your wallet and not from your WARchest. If you have funds in your WARchest you will need to unstake them. There are no longer fees for staking/unstaking from WARchest.
           </ModalContent>
-              <ModalContent>
-                3. 10% of winnings go to the house, which is redistributed to $WAR token holders
+            <ModalContent>
+              4. 10% of winnings go to the house, which will be split between current $WAR holders and the $WAR Community DAO
           </ModalContent>
-          <ModalContent>
-                4. Bet WAR is taken from your wallet. Please unstake your WAR from the $WARchest if you would like to use it to bet.
+            <ModalContent>
+              5. Betting will end at 6pm ET on Nov 3rd. This is stop anyone from having an unfair advantage of knowing polling data as the polls close.
           </ModalContent>
-            </ModalSpacer>
-          </StyledCardContent>
-        </StyledCard>
-      </StyledModal>
+            <ModalContent>
+              6. The winner of the election will be determined by the AP results oracle being supplied by Everpedia and the Associated Press.
+          </ModalContent>
+          </ModalSpacer>
+        </StyledCardContent>
+      </StyledCard>
+    </StyledModal>
   )
 }
 

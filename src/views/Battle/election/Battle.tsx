@@ -140,11 +140,7 @@ const Battle: React.FC = () => {
   }, [yam, account, farms, farms[0]]);
 
   const closeModal = (event) => {
-    event.stopPropagation()
-    if (event) {
-      setShowModal(false)
-    }
-
+    setShowModal(false)
   }
 
   const stopProp = (e) => {
@@ -202,12 +198,12 @@ const Battle: React.FC = () => {
             </VersusContainer>
             <div style={modal ? { display: 'block' } : { display: 'none' }}>
               <Modal onClick={(e) => closeModal(e)}>
-                <div onClick={(e) => stopProp(e)}style={{ pointerEvents: 'visible' }}>
+                <ModalBlock onClick={(e) => stopProp(e)} style={{width: '600px'}} >
                   <BetModalElection
                     battle={battles}
                     candidateInfo={candidate}
                   />
-                </div>
+                </ModalBlock>
               </Modal>
             </div>
             <Pool3 />
@@ -219,6 +215,12 @@ const Battle: React.FC = () => {
   );
 };
 
+const ModalBlock = styled.div`
+width: 534px;
+height: 552px;
+margin-top: 20vh;
+`
+
 const Modal = styled.div`
 border-radius: 8px;
   position: absolute;
@@ -228,6 +230,8 @@ border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.2);
   top: 0px;
   left: 0px;
+  display: flex;
+  justify-content: center;
 `
 
 let Candidate1

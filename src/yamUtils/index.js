@@ -692,7 +692,7 @@ export const getCurrentBalances = async (yam, account) => {
   const bidenETHBal = new BigNumber(await yam.contracts.election_betting.methods.bidenETHBet(account).call()) / precision;
   const trumpWARBal = new BigNumber(await yam.contracts.election_betting.methods.trumpWARBet(account).call()) / precision;
   const bidenWARBal = new BigNumber(await yam.contracts.election_betting.methods.bidenWARBet(account).call()) / precision;
-  
+
 
   return ({ trumpETHBal, bidenETHBal, trumpWARBal, bidenWARBal });
 }
@@ -705,23 +705,20 @@ export const getCurrentBalances = async (yam, account) => {
 // .stake((new BigNumber(amount).times(precision)).toString())
 
 export const placeElectionWARBet = async (yam, candidate, amount, account) => {
-  console.log("war bet: ", candidate, amount, account);
-  const precision = new BigNumber(10).pow(18);
-  let p = await yam.contracts.election_betting.methods.WARBet(
-    candidate, new BigNumber(amount).times(precision).toString()
-  )
-    .send({ from: account, gas: 200000 })
-  return (p);
+    console.log("war bet: ", candidate, amount, account);
+    const precision = new BigNumber(10).pow(18);
+    let p = await yam.contracts.election_betting.methods.WARBet(
+      candidate, new BigNumber(amount).times(precision).toString()
+    )
+      .send({ from: account, gas: 200000 })
+    return (p);
 }
 
 export const placeElectionETHBet = async (yam, candidate, amount, account) => {
-  // let p = await yam.contracts.election_betting.methods.ETHBet(
-  //   candidate, amount
-  // )
-  console.log("weth bet: ", candidate, amount, account);
+  console.log("eth bet: ", candidate, amount, account);
   const precision = new BigNumber(10).pow(18);
 
   let p = await yam.contracts.election_betting.methods.ETHBet(candidate)
-  .send({ from: account, value: new BigNumber(amount).times(precision).toString(), gas: 200000 });
+    .send({ from: account, value: new BigNumber(amount).times(precision).toString(), gas: 200000 });
   return (p);
 }

@@ -29,8 +29,6 @@ import Swal from 'sweetalert2';
 import './swal.css'
 import AccountModal from "../../../components/TopBar/components/AdvertisementFormModal";
 
-
-
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
     return true;
@@ -142,11 +140,11 @@ const Battle: React.FC = () => {
   }, [yam, account, farms, farms[0]]);
 
   const closeModal = (event) => {
-    if (event) {
-      event.stopPropagation()
-      setShowModal(false)
-    }
+    setShowModal(false)
+  }
 
+  const stopProp = (e) => {
+    e.stopPropagation()
   }
 
 
@@ -203,12 +201,12 @@ const Battle: React.FC = () => {
             </VersusContainer>
             <div style={modal ? { display: 'block' } : { display: 'none' }}>
               <Modal onClick={(e) => closeModal(e)}>
-                <div style={{ pointerEvents: 'auto' }}>
+                <ModalBlock onClick={(e) => stopProp(e)} style={{width: '600px'}} >
                   <BetModalElection
                     battle={battles}
                     candidateInfo={candidate}
                   />
-                </div>
+                </ModalBlock>
               </Modal>
             </div>
             <Pool3 />
@@ -220,6 +218,12 @@ const Battle: React.FC = () => {
   );
 };
 
+const ModalBlock = styled.div`
+width: 534px;
+height: 552px;
+margin-top: 20vh;
+`
+
 const Modal = styled.div`
 border-radius: 8px;
   position: absolute;
@@ -229,6 +233,8 @@ border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.2);
   top: 0px;
   left: 0px;
+  display: flex;
+  justify-content: center;
 `
 
 let Candidate1
@@ -297,7 +303,7 @@ const NextBattle = styled.div`
   color: white;
 `
 
-const Title = styled.div`
+const Title = !isMobile ? styled.div`
 font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
@@ -308,6 +314,18 @@ font-family: "Gilroy";
   color: #ffffff;
   max-width: 80vw;
   margin-bottom: 20px;
+` : styled.div`
+font-family: "Gilroy";
+  font-size: 30px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  max-width: 80vw;
+  margin-bottom: 20px;
+  margin-top: 40px;
 `;
 
 const BackgroundSection = styled.div`

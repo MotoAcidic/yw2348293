@@ -225,7 +225,7 @@ cursor: pointer;
 transition: all 0.2s ease-in-out;
 &:hover {
   transform: scale(1.05);
-  filter: brightness(110%) contrast(105%);
+  filter: brightness(110%) contrast(110%);
 }
 `
 
@@ -238,7 +238,7 @@ cursor: pointer;
 transition: all 0.2s ease-in-out;
 &:hover {
   transform: scale(1.05);
-  filter: brightness(110%) contrast(105%);
+  filter: brightness(110%) contrast(110%);
 }
 `
 

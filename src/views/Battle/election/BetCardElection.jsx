@@ -61,6 +61,8 @@ const Bet = ({ battle, candidateInfo }) => {
 	const [farmBalances, setFarmBalances] = useState({ trumpETHBal: 0, bidenETHBal: 0, trumpWARBal: 0, bidenWARBal: 0 });
 	const stakedBalance = useStakedBalance(contract)
 	const { onUnstake } = useUnstake(contract)
+	const [pending, setPending] = useState(false);
+
 
 	const [onPresentUnstake] = useModal(
 		<UnstakeModal
@@ -102,7 +104,8 @@ const Bet = ({ battle, candidateInfo }) => {
 			if (warInput) {
 				const candidate = candidateInfo.name === "Biden" ? 1 : 2;
 				console.log("War Bet", candidate, warInput)
-				placeElectionWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => console.log("war return:", ret))
+				placeElectionWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => console.log("war return", ret))
+				setPending(true)
 			}
 			if (ethInput) {
 				console.log("whale whale whale", candidateInfo.name)
@@ -111,6 +114,7 @@ const Bet = ({ battle, candidateInfo }) => {
 				placeElectionETHBet(yam, candidate, parseFloat(ethInput), account).then((ret) => {
 					console.log("eth return: ", ret)
 				})
+				setPending(true)
 			}
 			if (!ethInput && !warInput) {
 				Swal.fire("Place a bet for a candidate!");
@@ -224,7 +228,11 @@ const Bet = ({ battle, candidateInfo }) => {
 					ETH
 					</InputContainer>
 					</Top>
-					<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
+					{pending ?
+						<Button size="xlg" disabled={true}>Your bet is pending</Button>
+						:
+						<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
+					}
 				</VersusContainer>
 			</StyledModal>
 		</Container>

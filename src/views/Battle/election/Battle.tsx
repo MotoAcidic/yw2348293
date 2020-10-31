@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { Switch } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -7,24 +7,20 @@ import useYam from "../../../hooks/useYam";
 // import useBet from "../../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
-import Background from '../../../assets/img/bg3.svg'
 import Pool3 from "./Pool3";
 import useFarms from "../../../hooks/useFarms";
 import { getWarStaked } from "../../../yamUtils";
 import { getStats } from "./utils";
-import VersusCard from "./VersusCard.jsx";
-import SingleVersusCard from "./VersusCardSingle.jsx";
-import Schedule from './Schedule'
-import Instructions from "./Instructions";
+
 import Uniswap from "../../../assets/img/uniswap@2x.png";
-import InbetweenCard from "./InbetweenCard";
-import moment from "moment";
+
 import BetModalElection from "./BetCardElection.jsx";
 import Biden from "../../../assets/img/biden.png";
 import Trump from "../../../assets/img/trump.png";
 import AmericanFlag from "../../../assets/img/american-flag.jpg";
 import useModal from '../../../hooks/useModal'
 import Rules from './BetRulesModal'
+import useFarm from '../../../hooks/useFarm'
 import Swal from 'sweetalert2';
 import './swal.css'
 import AccountModal from "../../../components/TopBar/components/AdvertisementFormModal";
@@ -42,7 +38,6 @@ function switchingBattles() {
   let tomorrow = Math.floor(((Date.now() / 1000 + 3600 - 1601406000) / 86400) + 1)
   return (tomorrow > day);
 }
-
 
 function getServerURI() {
   if (window.location.hostname === "localhost") {
@@ -74,18 +69,6 @@ const Battle: React.FC = () => {
       }
     }
   )
-  let [warStaked, setWarStaked] = useState({
-    warStaked: new BigNumber(0),
-    circSupply: new BigNumber(0)
-  });
-  const { account, connect } = useWallet()
-  let [modal, setShowModal] = useState(false);
-  let [candidate, setCandidate] = useState(battles.farm1);
-
-  let [schedule, setSchedule] = useState([])
-
-
-
   const [
     {
       circSupply,
@@ -96,13 +79,21 @@ const Battle: React.FC = () => {
     },
     setStats
   ] = useState<OverviewData>({});
-
-  let currentPrice = curPrice || 0;
+  let [warStaked, setWarStaked] = useState({
+    warStaked: new BigNumber(0),
+    circSupply: new BigNumber(0)
+  });
+  const { account, connect, ethereum } = useWallet()
 
   const fetchStats = useCallback(async () => {
     const statsData = await getStats(yam);
     setStats(statsData);
   }, [yam, setStats]);
+  let [modal, setShowModal] = useState(false);
+  let [candidate, setCandidate] = useState(battles.farm1);
+
+
+  let currentPrice = curPrice || 0;
 
   const fetchWarStaked = useCallback(
     async pools => {
@@ -198,7 +189,7 @@ const Battle: React.FC = () => {
             </VersusContainer>
             <div style={modal ? { display: 'block' } : { display: 'none' }}>
               <Modal onClick={(e) => closeModal(e)}>
-                <ModalBlock onClick={(e) => stopProp(e)} style={{width: '600px'}} >
+                <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
                   <BetModalElection
                     battle={battles}
                     candidateInfo={candidate}

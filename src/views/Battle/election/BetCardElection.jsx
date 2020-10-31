@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useMemo } from 'react'
 import styled from 'styled-components'
 import Button from '../../../components/Button'
 import { useWallet } from "use-wallet";
@@ -8,15 +8,19 @@ import Cookie from 'universal-cookie'
 import Container from '../../../components/Container'
 import MiniBiden from "../../../assets/img/biden@2x.png";
 import MiniTrump from "../../../assets/img/trump@2x.png";
-import useYam from '../../../hooks/useYam'
-import './swal.css'
-import { harvest, getBattleAPR } from '../../../yamUtils'
-import UnstakeModal from './UnstakeModal'
 import useFarm from '../../../hooks/useFarm'
+import useYam from '../../../hooks/useYam'
+import { getDisplayBalance } from '../../../utils/formatBalance'
+import { provider } from 'web3-core'
+import useApprove from '../../../hooks/useApprove'
+import './swal.css'
+import UnstakeModal from './UnstakeModal'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
+import { getContract } from '../../../utils/erc20'
 import { placeElectionWARBet, placeElectionETHBet, getCurrentBets, getCurrentBalances } from '../../../yamUtils'
 import Swal from 'sweetalert2';
+import { getElectionContracts, harvest } from '../../../yamUtils'
 import Pool3 from "./Pool3";
 
 
@@ -38,7 +42,7 @@ function getServerURI() {
 
 const Bet = ({ battle, candidateInfo }) => {
 	const yam = useYam()
-	const { account, connect } = useWallet()
+
 	const {
 		contract,
 		depositToken,
@@ -55,6 +59,16 @@ const Bet = ({ battle, candidateInfo }) => {
 		icon: ''
 	}
 
+
+
+	// const contract = getElectionContracts(yam);
+  const { account, connect, ethereum } = useWallet()
+  // const depositTokenAddress = "0x533Fc51f9796E4aA4c5b462218069F68034A635c";
+  // const tokenContract = useMemo(() => {
+  //   return getContract(ethereum as provider, depositTokenAddress)
+	// }, [ethereum, depositTokenAddress])
+	// const { onApprove } = useApprove(tokenContract, contract)
+	
 	const [ethInput, setETHInput] = useState(0);
 	const [warInput, setWARInput] = useState(0);
 	const [disabled, setDisabled] = useState(false)
@@ -80,6 +94,7 @@ const Bet = ({ battle, candidateInfo }) => {
 		harvest(contract, account);
 		onPresentUnstake()
 	}
+
 
 	useEffect(() => {
 		const getBets = async () => {

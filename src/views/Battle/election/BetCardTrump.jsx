@@ -17,6 +17,7 @@ import {
 	getCurrentBets,
 } from '../../../yamUtils'
 import { isConstructorDeclaration } from 'typescript';
+import Swal from 'sweetalert2';
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -35,8 +36,10 @@ function getServerURI() {
 }
 
 const Bet = ({ battle }) => {
-	const [farm, setFarm] = useState(battle.farm1.id);
-	const [war, setWar] = useState(0);
+	const [ethContender, setETHContender] = useState(battle.farm1.id);
+	const [warContender, setWARContender] = useState(battle.farm1.id);
+	const [ethInput, setETHInput] = useState(0);
+	const [warInput, setWARInput] = useState(0);
 	const [disabled, setDisabled] = useState(false)
 	const [farmBets, setFarmBets] = useState({ trumpETHPot: 0, bidenETHPot: 0, trumpWARPot: 0, bidenWARPot: 0 });
 	// const [presentRulesModal] = useModal(<RulesModal />);
@@ -44,12 +47,12 @@ const Bet = ({ battle }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 
-	const handleChange = e => {
-		setFarm(e.value);
+	const handleETHChange = e => {
+		setETHContender(e.target.value);
 	}
 
-	const handleInput = e => {
-		setWar(e.value);
+	const handleWARChange = e => {
+		setWARContender(e.target.value);
 	}
 
 	useEffect(() => {
@@ -67,7 +70,17 @@ const Bet = ({ battle }) => {
 	}, [yam])
 
 	const placeBet = () => {
-		
+		if (yam && account) {
+			if (ethInput) {
+				const candidate = ethContender === "Biden to Win" ? 1 : 2;
+				placeElectionWARBet(yam, candidate, ethInput, account);
+			} else if (warInput) {
+				const candidate = warContender === "Biden to Win" ? 1 : 2;
+				placeElectionWARBet(yam, candidate, ethInput, account);
+			} else {
+				Swal.fire("Place a bet for a candidate!");
+			}
+		}
 	}
 
 	return (
@@ -94,7 +107,7 @@ const Bet = ({ battle }) => {
 						</Bets>
 					</Bottom>
 					<Top>
-						<Select onChange={handleChange}>
+						<Select onChange={handleWARChange}>
 							<option value={battle.farm2.id}>
 								{battle.farm1.name + " to Win"}
 							</option>
@@ -103,7 +116,7 @@ const Bet = ({ battle }) => {
 							</option>
 						</Select>
 						<InputContainer>
-							<Input value={war} onChange={handleInput} />
+							<Input type="number" value={warInput} onChange={e => setWARInput(e.target.value)} />
 					WAR
 					</InputContainer>
 					</Top>
@@ -128,7 +141,7 @@ const Bet = ({ battle }) => {
 						</Bets>
 					</Bottom>
 					<Top>
-						<Select onChange={handleChange}>
+						<Select onChange={handleETHChange}>
 							<option value={battle.farm2.id}>
 								{battle.farm1.name + " to Win"}
 							</option>
@@ -137,12 +150,12 @@ const Bet = ({ battle }) => {
 							</option>
 						</Select>
 						<InputContainer>
-							<Input value={war} onChange={handleInput} />
+							<Input type="number" value={ethInput} onChange={e => setETHInput(e.target.value)} />
 					ETH
 					</InputContainer>
 					</Top>
 
-					<Button size="xlg" onClick={placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
+					<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
 				</VersusContainer>
 				{/* </CardContent> */}
 			</StyledModal>

@@ -21,7 +21,7 @@ const BetRulesModal: React.FC<ModalProps> = ({ onDismiss }) => {
           2. Your bet is inactive unless someone else takes your bet, meaning you can not win or lose  unless someone else bets on the other side.
           </ModalContent>
         <ModalContent>
-          For example, if you bet $10,000 and someone on the other side bets $5,000.Your bet will only be live for $5,000.
+          For example, if you bet $10,000 and someone on the other side bets $5,000. Your bet will only be live for $5,000.
           </ModalContent>
         <ModalContent>
           3. 10% of winnings go to the house, which is redistributed to $WAR token holders

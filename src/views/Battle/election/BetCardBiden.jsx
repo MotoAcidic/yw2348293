@@ -7,6 +7,8 @@ import RulesModal from "./BetRulesModal";
 import Cookie from 'universal-cookie'
 import Modal, { ModalProps } from '../../../components/Modal'
 import Container from '../../../components/Container'
+import MiniBiden from "../../../assets/img/biden@2x.png";
+import MiniTrump from "../../../assets/img/trump@2x.png";
 
 import './swal.css'
 
@@ -55,14 +57,36 @@ const Bet = ({ battle }) => {
 		// }
 	}, [])
 
-	const placeBet = () => {
+	const placeBetWAR = () => {
 	}
+
+	const placeBetETH = () => {
+	}
+
 
 	return (
 		<Container size="sm">
 			<StyledModal>
 				{/* <CardContent> */}
 				<VersusContainer>
+					<Text>
+						$WAR Bets
+				</Text>
+					<Bottom>
+						<Bets>
+							<CardIcon src={MiniTrump} />
+							<AmountBet>
+								{farmBets.length > 0 && '$' + farmBets[0].toLocaleString()}
+							</AmountBet>
+						</Bets>
+						<Bets>
+							<AmountBet>
+								{farmBets.length > 0 && '$' + farmBets[1].toLocaleString()}
+							</AmountBet>
+							<CardIcon src={MiniBiden} />
+
+						</Bets>
+					</Bottom>
 					<Top>
 						<Select onChange={handleChange}>
 							<option value={battle.farm2.id}>
@@ -77,13 +101,14 @@ const Bet = ({ battle }) => {
 					WAR
 					</InputContainer>
 					</Top>
-					<Button size="xlg" onClick={placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
+					<Space/>
 					<Text>
-						Current Bets
+						$ETH Bets
 				</Text>
 					<Bottom>
 						<Bets>
-							<CardIcon>{battle.farm1.icon}</CardIcon>
+							<CardIcon src={MiniTrump} />
+
 							<AmountBet>
 								{farmBets.length > 0 && '$' + farmBets[0].toLocaleString()}
 							</AmountBet>
@@ -92,15 +117,35 @@ const Bet = ({ battle }) => {
 							<AmountBet>
 								{farmBets.length > 0 && '$' + farmBets[1].toLocaleString()}
 							</AmountBet>
-							<CardIcon>{battle.farm2.icon}</CardIcon>
+							<CardIcon src={MiniBiden} />
+
 						</Bets>
 					</Bottom>
+					<Top>
+						<Select onChange={handleChange}>
+							<option value={battle.farm2.id}>
+								{battle.farm2.name + " to Win"}
+							</option>
+							<option value={battle.farm1.id}>
+								{battle.farm1.name + " to Win"}
+							</option>
+						</Select>
+						<InputContainer>
+							<Input value={war} onChange={handleInput} />
+					ETH
+					</InputContainer>
+					</Top>
+
+					<Button size="xlg" onClick={placeBetWAR()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
 				</VersusContainer>
 				{/* </CardContent> */}
 			</StyledModal>
 		</Container>
 	)
 }
+
+const Space = styled.div`
+height: 20px;`
 
 const StyledModal = styled.div`
 border-radius: 8px;
@@ -109,21 +154,6 @@ border-radius: 8px;
   height: 100%;
   z-index: 100000;
 `
-
-const ModalLink = styled.div`
-font-family: Gilroy;
-font-size: 18px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: #ffb700;
-cursor: pointer;
-text-decoration: underline;
-&:hover {
-  color: #ffcb46;
-}`
 
 const AmountBet = styled.div`
 font-family: Gilroy;
@@ -135,8 +165,7 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;`
 
-const CardIcon = styled.div`
-	font-size: 40px;
+const CardIcon = styled.img`
 	height: 40px;
   width: 40px;
   border-radius: 50%;
@@ -147,7 +176,8 @@ const CardIcon = styled.div`
 `
 const Bets = styled.div`
 display: flex;
-align-items: center;`
+align-items: center;
+margin-bottom: 10px;`
 
 const Bottom = styled.div`
 width: 100%;
@@ -163,7 +193,7 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
-margin: 30px 0 5px 0;
+margin-bottom: 5px;
 `
 
 const Input = styled.input`
@@ -185,7 +215,6 @@ margin-right: 10px;
 
 const InputContainer = styled.div`
 width: 170px;
-padding-top: 2px;
 border-radius: 8px;
 box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
 border: solid 1px rgba(255, 183, 0, 0.5);

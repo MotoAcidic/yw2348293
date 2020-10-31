@@ -7,8 +7,16 @@ import RulesModal from "./BetRulesModal";
 import Cookie from 'universal-cookie'
 import Modal, { ModalProps } from '../../../components/Modal'
 import Container from '../../../components/Container'
-
+import MiniBiden from "../../../assets/img/biden@2x.png";
+import MiniTrump from "../../../assets/img/trump@2x.png";
+import useYam from '../../../hooks/useYam'
 import './swal.css'
+
+import {
+	placeElectionWARBet,
+	getCurrentBets,
+} from '../../../yamUtils'
+import { isConstructorDeclaration } from 'typescript';
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -27,13 +35,13 @@ function getServerURI() {
 }
 
 const Bet = ({ battle }) => {
-
 	const [farm, setFarm] = useState(battle.farm1.id);
 	const [war, setWar] = useState(0);
 	const [disabled, setDisabled] = useState(false)
-	const [farmBets, setFarmBets] = useState([]);
+	const [farmBets, setFarmBets] = useState({ trumpETHPot: 0, bidenETHPot: 0, trumpWARPot: 0, bidenWARPot: 0 });
 	// const [presentRulesModal] = useModal(<RulesModal />);
 
+	const yam = useYam()
 	const { account, connect } = useWallet()
 
 	const handleChange = e => {
@@ -45,17 +53,21 @@ const Bet = ({ battle }) => {
 	}
 
 	useEffect(() => {
-		//if get bet then set farm & war and set disabled
+		const getBets = async () => {
+			const bets = await getCurrentBets(yam);
+			console.log("gotbets", bets);
+			setFarmBets(bets);
+		}
+		console.log("got da yams???", yam)
+		if (yam) {
+			console.log("got da yams");
+			getBets();
+		}
 
-		setFarmBets([15095, 9443]);
-
-		// const getFarm = () => {
-		// 	if (!bet.farm) return battle.farm1.id;
-		// 	return battle.farm2.id;
-		// }
-	}, [])
+	}, [yam])
 
 	const placeBet = () => {
+		
 	}
 
 	return (
@@ -63,12 +75,30 @@ const Bet = ({ battle }) => {
 			<StyledModal>
 				{/* <CardContent> */}
 				<VersusContainer>
+					<Text>
+						$WAR Bets
+				</Text>
+					<Bottom>
+						<Bets>
+							<CardIcon src={MiniTrump} />
+							<AmountBet>
+								{'$' + farmBets.trumpWARPot.toLocaleString()}
+							</AmountBet>
+						</Bets>
+						<Bets>
+							<AmountBet>
+								{'$' + farmBets.bidenWARPot.toLocaleString()}
+							</AmountBet>
+							<CardIcon src={MiniBiden} />
+
+						</Bets>
+					</Bottom>
 					<Top>
 						<Select onChange={handleChange}>
-							<option value={battle.farm1.id}>
+							<option value={battle.farm2.id}>
 								{battle.farm1.name + " to Win"}
 							</option>
-							<option value={battle.farm2.id}>
+							<option value={battle.farm1.id}>
 								{battle.farm2.name + " to Win"}
 							</option>
 						</Select>
@@ -77,30 +107,51 @@ const Bet = ({ battle }) => {
 					WAR
 					</InputContainer>
 					</Top>
-					<Button size="xlg" onClick={placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
+					<Space />
 					<Text>
-						Current Bets
+						$ETH Bets
 				</Text>
 					<Bottom>
 						<Bets>
-							<CardIcon>{battle.farm1.icon}</CardIcon>
+							<CardIcon src={MiniTrump} />
+
 							<AmountBet>
-								{farmBets.length > 0 && '$' + farmBets[0].toLocaleString()}
+								{'$' + farmBets.trumpETHPot.toLocaleString()}
 							</AmountBet>
 						</Bets>
 						<Bets>
 							<AmountBet>
-								{farmBets.length > 0 && '$' + farmBets[1].toLocaleString()}
+								{'$' + farmBets.bidenWARPot.toLocaleString()}
 							</AmountBet>
-							<CardIcon>{battle.farm2.icon}</CardIcon>
+							<CardIcon src={MiniBiden} />
+
 						</Bets>
 					</Bottom>
+					<Top>
+						<Select onChange={handleChange}>
+							<option value={battle.farm2.id}>
+								{battle.farm1.name + " to Win"}
+							</option>
+							<option value={battle.farm1.id}>
+								{battle.farm2.name + " to Win"}
+							</option>
+						</Select>
+						<InputContainer>
+							<Input value={war} onChange={handleInput} />
+					ETH
+					</InputContainer>
+					</Top>
+
+					<Button size="xlg" onClick={placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
 				</VersusContainer>
 				{/* </CardContent> */}
 			</StyledModal>
 		</Container>
 	)
 }
+
+const Space = styled.div`
+height: 20px;`
 
 const StyledModal = styled.div`
 border-radius: 8px;
@@ -109,21 +160,6 @@ border-radius: 8px;
   height: 100%;
   z-index: 100000;
 `
-
-const ModalLink = styled.div`
-font-family: Gilroy;
-font-size: 18px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: #ffb700;
-cursor: pointer;
-text-decoration: underline;
-&:hover {
-  color: #ffcb46;
-}`
 
 const AmountBet = styled.div`
 font-family: Gilroy;
@@ -135,8 +171,7 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;`
 
-const CardIcon = styled.div`
-	font-size: 40px;
+const CardIcon = styled.img`
 	height: 40px;
   width: 40px;
   border-radius: 50%;
@@ -147,7 +182,8 @@ const CardIcon = styled.div`
 `
 const Bets = styled.div`
 display: flex;
-align-items: center;`
+align-items: center;
+margin-bottom: 10px;`
 
 const Bottom = styled.div`
 width: 100%;
@@ -163,7 +199,7 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
-margin: 30px 0 5px 0;
+margin-bottom: 5px;
 `
 
 const Input = styled.input`
@@ -185,7 +221,6 @@ margin-right: 10px;
 
 const InputContainer = styled.div`
 width: 170px;
-padding-top: 2px;
 border-radius: 8px;
 box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
 border: solid 1px rgba(255, 183, 0, 0.5);

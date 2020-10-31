@@ -28,6 +28,7 @@ import useModal from '../../../hooks/useModal'
 import Rules from './BetRulesModal'
 
 
+
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
     return true;
@@ -71,13 +72,12 @@ const Battle: React.FC = () => {
   let [prevDayBattles, setPrevDayBattles] = useState([]);
   let [battles, setBattles] = useState(
     {
-      day: 31,
       finished: false,
       farm1: {
         name: "Trump",
         totalVotes: 69,
         votes: [],
-        _id: "5f9b43ee4b79944b40bb0c06"
+        _id: "5f9b43ee4b79944b40bb0c06",
       },
       farm2: {
         name: "Biden",

@@ -16,7 +16,7 @@ import UnstakeModal from './UnstakeModal'
 import useFarm from '../../../hooks/useFarm'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
-import { placeElectionWARBet, getCurrentBets, getCurrentBalances } from '../../../yamUtils'
+import { placeElectionWARBet, placeElectionETHBet, getCurrentBets, getCurrentBalances } from '../../../yamUtils'
 import Swal from 'sweetalert2';
 
 function isMobile() {
@@ -117,7 +117,7 @@ const Bet = ({ battle, candidateInfo }) => {
 			if (ethInput) {
 				const candidate = warContender === "Biden to Win" ? 1 : 2;
 				console.log("Eth Bet", candidate, ethInput)
-				placeElectionWARBet(yam, candidate, parseFloat(ethInput), account);
+				placeElectionETHBet(yam, candidate, parseFloat(ethInput), account);
 			}
 			if (!ethInput && !warInput) {
 				Swal.fire("Place a bet for a candidate!");

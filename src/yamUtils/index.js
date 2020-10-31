@@ -708,9 +708,9 @@ export const placeElectionWARBet = async (yam, candidate, amount, account) => {
   console.log("war bet: ", candidate, amount, account);
   const precision = new BigNumber(10).pow(18);
   let p = await yam.contracts.election_betting.methods.WARBet(
-    candidate, 
-    new BigNumber(amount).times(precision).toString()
-  ).send({ from: account, gas: 200000 })
+    candidate, new BigNumber(amount).times(precision).toString()
+  )
+    .send({ from: account, gas: 200000 })
   return (p);
 }
 

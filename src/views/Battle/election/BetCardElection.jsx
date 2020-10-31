@@ -54,8 +54,6 @@ const Bet = ({ battle, candidateInfo }) => {
 		icon: ''
 	}
 
-	const [ethContender, setETHContender] = useState(battle.farm1.id);
-	const [warContender, setWARContender] = useState(battle.farm1.id);
 	const [ethInput, setETHInput] = useState(0);
 	const [warInput, setWARInput] = useState(0);
 	const [disabled, setDisabled] = useState(false)
@@ -63,14 +61,6 @@ const Bet = ({ battle, candidateInfo }) => {
 	const [farmBalances, setFarmBalances] = useState({ trumpETHBal: 0, bidenETHBal: 0, trumpWARBal: 0, bidenWARBal: 0 });
 	const stakedBalance = useStakedBalance(contract)
 	const { onUnstake } = useUnstake(contract)
-
-	const handleETHChange = e => {
-		setETHContender(e.target.value);
-	}
-
-	const handleWARChange = e => {
-		setWARContender(e.target.value);
-	}
 
 	const [onPresentUnstake] = useModal(
 		<UnstakeModal
@@ -110,14 +100,17 @@ const Bet = ({ battle, candidateInfo }) => {
 			// 	return
 			// }
 			if (warInput) {
-				const candidate = ethContender === "Biden to Win" ? 1 : 2;
+				const candidate = candidateInfo.name === "Biden" ? 1 : 2;
 				console.log("War Bet", candidate, warInput)
-				placeElectionWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => console.log("war return", ret))
+				placeElectionWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => console.log("war return:", ret))
 			}
 			if (ethInput) {
-				const candidate = warContender === "Biden to Win" ? 1 : 2;
+				console.log("whale whale whale", candidateInfo.name)
+				const candidate = candidateInfo.name === "Biden" ? 1 : 2;
 				console.log("Eth Bet", candidate, ethInput)
-				placeElectionETHBet(yam, candidate, parseFloat(ethInput), account);
+				placeElectionETHBet(yam, candidate, parseFloat(ethInput), account).then((ret) => {
+					console.log("eth return: ", ret)
+				})
 			}
 			if (!ethInput && !warInput) {
 				Swal.fire("Place a bet for a candidate!");
@@ -184,7 +177,7 @@ const Bet = ({ battle, candidateInfo }) => {
 						</Bets>
 					</Bottom>
 					<Top>
-						<Select disabled onChange={handleWARChange}>
+						<Select disabled>
 							<option value={candidateInfo.id}>
 								{candidateInfo.name + " to Win"}
 							</option>
@@ -218,7 +211,7 @@ const Bet = ({ battle, candidateInfo }) => {
 						</Bets>
 					</Bottom>
 					<Top>
-						<Select disabled onChange={handleETHChange}>
+						<Select disabled>
 							<option value={candidateInfo.id}>
 								{candidateInfo.name + " to Win"}
 							</option>

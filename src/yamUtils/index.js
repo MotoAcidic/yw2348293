@@ -33,15 +33,6 @@ export const getPoolEndTime = async (poolContract) => {
     ]
   ).call();*/
 
-export const placeElectionWARBet = async (yam, candidate, amount, account) => {
-  candidate = 1;
-  amount = 10000000;
-  let p = await yam.contracts.election_betting.methods.WARBet(
-    candidate, amount
-  )
-  .send({ from: account })
-  return (p);
-}
 
 export const stake = async (poolContract, amount, account) => {
   let now = new Date().getTime() / 1000;
@@ -700,4 +691,12 @@ export const getCurrentBalances = async (yam, account) => {
   const bidenWARBal = new BigNumber(await yam.contracts.election_betting.methods.bidenWARBet(account).call());
   
   return ({trumpETHBal, bidenETHBal, trumpWARBal, bidenWARBal});
+}
+
+export const placeElectionWARBet = async (yam, candidate, amount, account) => {
+  let p = await yam.contracts.election_betting.methods.WARBet(
+    candidate, amount
+  )
+  .send({ from: account })
+  return (p);
 }

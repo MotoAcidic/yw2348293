@@ -26,12 +26,12 @@ export const getPoolEndTime = async (poolContract) => {
   return await poolContract.methods.periodFinish().call()
 }
 
-  /*let p = await yam.contracts.uni_router.methods.getAmountsOut(
-    new BigNumber(1000000000000000000),
-    [
-      "0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"
-    ]
-  ).call();*/
+/*let p = await yam.contracts.uni_router.methods.getAmountsOut(
+  new BigNumber(1000000000000000000),
+  [
+    "0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD", "0xd0A1E359811322d97991E03f863a0C30C2cF029C"
+  ]
+).call();*/
 
 
 export const stake = async (poolContract, amount, account) => {
@@ -679,8 +679,8 @@ export const getCurrentBets = async (yam) => {
   const bidenETHPot = new BigNumber(await yam.contracts.election_betting.methods.bidenETHPot().call());
   const trumpWARPot = new BigNumber(await yam.contracts.election_betting.methods.trumpWARPot().call());
   const bidenWARPot = new BigNumber(await yam.contracts.election_betting.methods.bidenWARPot().call());
-  
-  return ({trumpETHPot, bidenETHPot, trumpWARPot, bidenWARPot});
+
+  return ({ trumpETHPot, bidenETHPot, trumpWARPot, bidenWARPot });
 }
 
 export const getCurrentBalances = async (yam, account) => {

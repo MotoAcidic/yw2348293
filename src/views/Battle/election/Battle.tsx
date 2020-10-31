@@ -203,7 +203,7 @@ const Battle: React.FC = () => {
             </VersusContainer>
             <div style={modal ? { display: 'block' } : { display: 'none' }}>
               <Modal onClick={(e) => closeModal(e)}>
-                <div style={{ pointerEvents: 'visible' }}>
+                <div style={{ pointerEvents: 'auto' }}>
                   <BetModalElection
                     battle={battles}
                     candidateInfo={candidate}

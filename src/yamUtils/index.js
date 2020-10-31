@@ -722,3 +722,21 @@ export const placeElectionETHBet = async (yam, candidate, amount, account) => {
     .send({ from: account, value: new BigNumber(amount).times(precision).toString(), gas: 200000 });
   return (p);
 }
+
+export const getElectionContracts = (yam) => {
+  
+  if (!yam || !yam.contracts) {
+    return null
+  }
+  const election = yam.contracts.election_betting
+  return election
+}
+
+export const getFwarContract = (yam) => {
+
+  if (!yam || !yam.contracts) {
+    return null
+  }
+  const election = yam.contracts.fwar
+  return election
+}

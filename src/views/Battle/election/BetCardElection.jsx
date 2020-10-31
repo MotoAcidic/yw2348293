@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import styled from 'styled-components'
 import Button from '../../../components/Button'
 import { useWallet } from "use-wallet";
@@ -15,9 +15,13 @@ import UnstakeModal from './UnstakeModal'
 import useFarm from '../../../hooks/useFarm'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
+import useApprove from '../../../hooks/useApprove'
+import useAllowance from '../../../hooks/useAllowance'
 import { placeElectionWARBet, placeElectionETHBet, getCurrentBets, getCurrentBalances } from '../../../yamUtils'
 import Swal from 'sweetalert2';
 import Pool3 from "./Pool3";
+import { provider } from 'web3-core'
+import { getContract } from '../../../utils/erc20'
 
 
 function isMobile() {
@@ -36,9 +40,9 @@ function getServerURI() {
 	return 'https://yieldwars-api.herokuapp.com'
 }
 
-const Bet = ({ battle, candidateInfo }) => {
+const Bet = ({ battle, candidateInfo, electionContract }) => {
 	const yam = useYam()
-	const { account, connect } = useWallet()
+	const { account, connect, ethereum } = useWallet()
 	const {
 		contract,
 		depositToken,
@@ -55,6 +59,10 @@ const Bet = ({ battle, candidateInfo }) => {
 		icon: ''
 	}
 
+	// const tokenContract = useMemo(() => {
+	// 	return getContract(ethereum, depositTokenAddress)
+	// }, [ethereum, depositTokenAddress])
+
 	const [ethInput, setETHInput] = useState(0);
 	const [warInput, setWARInput] = useState(0);
 	const [disabled, setDisabled] = useState(false)
@@ -64,7 +72,16 @@ const Bet = ({ battle, candidateInfo }) => {
 	const { onUnstake } = useUnstake(contract)
 	const [pending, setPending] = useState(false);
 	const [isApproved, setIsApproved] = useState(false);
+	// const [onApprove, setOnApprove] = useState(null);
+	// const [allowance, setAllowance] = useState(0);
+	
+	const tokenContract = useMemo(() => {
+		return getContract(ethereum, "0x533Fc51f9796E4aA4c5b462218069F68034A635c")
+	}, [ethereum, "0x533Fc51f9796E4aA4c5b462218069F68034A635c"])
 
+	const { onApprove } = useApprove(tokenContract, electionContract)
+	const allowance = useAllowance(tokenContract, electionContract)
+	console.log(allowance);
 
 	const [onPresentUnstake] = useModal(
 		<UnstakeModal
@@ -91,7 +108,6 @@ const Bet = ({ battle, candidateInfo }) => {
 		}
 		console.log("got da yams???", yam)
 		if (yam) {
-			console.log("got da yams");
 			getBets();
 		}
 
@@ -99,10 +115,10 @@ const Bet = ({ battle, candidateInfo }) => {
 
 	const placeBet = () => {
 		if (yam && account) {
-			// if (stakedBalance) {
-			// 	claimAndUnstake()
-			// 	return
-			// }
+			if (stakedBalance) {
+				claimAndUnstake()
+				return
+			}
 			if (warInput < 0 || ethInput < 0) {
 				Swal.fire('Please enter a valid value to bet!')
 				return
@@ -128,15 +144,23 @@ const Bet = ({ battle, candidateInfo }) => {
 		}
 	}
 
-	const approve = () => {
-		setIsApproved(true);
-	}
+	const handleApprove = useCallback(async () => {
+		try {
+			const txHash = await onApprove()
+			console.log(txHash);
+			// user rejected tx or didn't go thru
+			if (!txHash) {
+			}
+		} catch (e) {
+			console.log(e)
+		}
+	}, [onApprove])
 
 	return (
 		<Container size="sm">
 			<VersusContainer>
 				{/* <Pool3 /> */}
-				{isApproved ?
+				{allowance.toNumber() ?
 					<>
 						<Text>
 							Your Bets
@@ -173,7 +197,7 @@ const Bet = ({ battle, candidateInfo }) => {
 							</Bets>
 						</Row>
 					</> :
-					<Button size="xlg" onClick={() => approve()}>Approve WAR</Button>
+					<Button size="xlg" onClick={() => handleApprove()}>Approve WAR</Button>
 				}
 				<Space />
 				<Text>
@@ -194,7 +218,7 @@ const Bet = ({ battle, candidateInfo }) => {
 
 					</Bets>
 				</Bottom>
-				{isApproved &&
+				{allowance.toNumber() &&
 
 					<Top>
 						<Select disabled>
@@ -230,7 +254,7 @@ const Bet = ({ battle, candidateInfo }) => {
 
 					</Bets>
 				</Bottom>
-				{isApproved &&
+				{allowance.toNumber() &&
 
 					<Top>
 						<Select disabled>
@@ -247,7 +271,7 @@ const Bet = ({ battle, candidateInfo }) => {
 						</InputContainer>
 					</Top>
 				}
-				{isApproved &&
+				{allowance.toNumber() &&
 					<>
 						{pending ?
 							<Button size="xlg" disabled={true}>Your bet is pending</Button>

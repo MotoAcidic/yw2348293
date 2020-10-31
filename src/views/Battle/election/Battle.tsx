@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { Switch } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -10,7 +10,7 @@ import { useWallet } from "use-wallet";
 import Background from '../../../assets/img/bg3.svg'
 import Pool3 from "./Pool3";
 import useFarms from "../../../hooks/useFarms";
-import { getWarStaked } from "../../../yamUtils";
+import { getWarStaked, getElectionContracts } from "../../../yamUtils";
 import { getStats } from "./utils";
 import VersusCard from "./VersusCard.jsx";
 import SingleVersusCard from "./VersusCardSingle.jsx";
@@ -28,6 +28,9 @@ import Rules from './BetRulesModal'
 import Swal from 'sweetalert2';
 import './swal.css'
 import AccountModal from "../../../components/TopBar/components/AdvertisementFormModal";
+import { getContract } from '../../../utils/erc20'
+import { provider } from 'web3-core'
+
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -78,13 +81,11 @@ const Battle: React.FC = () => {
     warStaked: new BigNumber(0),
     circSupply: new BigNumber(0)
   });
-  const { account, connect } = useWallet()
+  const { account, connect, ethereum } = useWallet()
   let [modal, setShowModal] = useState(false);
   let [candidate, setCandidate] = useState(battles.farm1);
 
   let [schedule, setSchedule] = useState([])
-
-
 
   const [
     {
@@ -147,6 +148,8 @@ const Battle: React.FC = () => {
     e.stopPropagation()
   }
 
+  const electionContract = getElectionContracts(yam)
+
   return (
     <Switch>
       <StyledCanvas>
@@ -198,11 +201,13 @@ const Battle: React.FC = () => {
             </VersusContainer>
             <div style={modal ? { display: 'block' } : { display: 'none' }}>
               <Modal onClick={(e) => closeModal(e)}>
-                <ModalBlock onClick={(e) => stopProp(e)} style={{width: '600px'}} >
-                  <BetModalElection
+                <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
+                  {yam && <BetModalElection
                     battle={battles}
                     candidateInfo={candidate}
+                    electionContract={electionContract}
                   />
+                  }
                 </ModalBlock>
               </Modal>
             </div>

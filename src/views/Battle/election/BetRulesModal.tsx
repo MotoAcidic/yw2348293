@@ -8,6 +8,14 @@ import Modalmd, { ModalProps } from '../../../components/Modal'
 import ModalTitle from '../../../components/ModalTitle'
 import Container from '../../../components/Container'
 
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 
 const BetRulesModal: React.FC<ModalProps> = ({ onDismiss }) => {
   return (
@@ -82,10 +90,14 @@ font-family: "Gilroy";
   margin-bottom: 40px;
 `
 
-const StyledModal = styled.div`
+const StyledModal = !isMobile() ? styled.div`
   border-radius: 12px;
   position: relative;
   width: 600px;
+` : styled.div`
+border-radius: 12px;
+position: relative;
+width: 95vw;
 `
 
 const Image = styled.img`

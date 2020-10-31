@@ -28,8 +28,6 @@ import Rules from './BetRulesModal'
 import Swal from 'sweetalert2';
 import './swal.css'
 
-
-
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
     return true;
@@ -280,7 +278,7 @@ const NextBattle = styled.div`
   color: white;
 `
 
-const Title = styled.div`
+const Title = !isMobile ? styled.div`
 font-family: "Gilroy";
   font-size: 30px;
   font-weight: bold;
@@ -291,6 +289,18 @@ font-family: "Gilroy";
   color: #ffffff;
   max-width: 80vw;
   margin-bottom: 20px;
+` : styled.div`
+font-family: "Gilroy";
+  font-size: 30px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  max-width: 80vw;
+  margin-bottom: 20px;
+  margin-top: 40px;
 `;
 
 const BackgroundSection = styled.div`

@@ -33,14 +33,7 @@ export const getPoolEndTime = async (poolContract) => {
   ]
 ).call();*/
 
-export const placeElectionWARBet = async (yam, candidate, amount, account) => {
-  console.log("here we go", candidate, amount, account);
-  let p = await yam.contracts.election_betting.methods.WARBet(
-    candidate, amount
-  )
-    .send({ from: account, gas: 300000 })
-  return (p);
-}
+
 
 export const stake = async (poolContract, amount, account) => {
   let now = new Date().getTime() / 1000;
@@ -697,6 +690,23 @@ export const getCurrentBalances = async (yam, account) => {
   const bidenETHBal = new BigNumber(await yam.contracts.election_betting.methods.bidenETHBet(account).call());
   const trumpWARBal = new BigNumber(await yam.contracts.election_betting.methods.trumpWARBet(account).call());
   const bidenWARBal = new BigNumber(await yam.contracts.election_betting.methods.bidenWARBet(account).call());
+  
+  return ({trumpETHBal, bidenETHBal, trumpWARBal, bidenWARBal});
+}
 
-  return ({ trumpETHBal, bidenETHBal, trumpWARBal, bidenWARBal });
+export const placeElectionWARBet = async (yam, candidate, amount, account) => {
+  console.log("war bet: ", candidate, amount, account);
+  let p = await yam.contracts.election_betting.methods.WARBet(
+    candidate, amount
+  )
+    .send({ from: account, gas: 300000 })
+  return (p);
+}
+
+export const placeElectionETHBet = async (yam, candidate, amount, account) => {
+  let p = await yam.contracts.election_betting.methods.ETHBet(
+    candidate, amount
+  )
+  .send({ from: account })
+  return (p);
 }

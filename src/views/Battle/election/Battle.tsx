@@ -114,16 +114,14 @@ const Battle: React.FC = () => {
 
   const onClickTrump = () => {
     if (!account) {
-      Swal.fire('Please connect your wallet')
-      return
+      connect('injected')
     }
     onPresentTrumpModal()
   }
 
   const onClickBiden = () => {
     if (!account) {
-      Swal.fire('Please connect your wallet')
-      return
+      connect('injected')
     }
     onPresentBidenModal()
   }

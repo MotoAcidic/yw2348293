@@ -111,14 +111,18 @@ const Bet = ({ battle, candidateInfo }) => {
 			// 	claimAndUnstake()
 			// 	return
 			// }
+			if (warInput < 0 || ethInput < 0) {
+				Swal.fire('Please enter a valid value to bet!')
+				return
+			}
 			if (warInput) {
-				const candidate = ethContender === "Biden to Win" ? 1 : 2;
+				const candidate = ethContender === "Biden" ? 1 : 2;
 				console.log("War Bet", candidate, warInput)
 				placeElectionWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => console.log("war return", ret))
 				setPending(true)
 			}
 			if (ethInput) {
-				const candidate = warContender === "Biden to Win" ? 1 : 2;
+				const candidate = warContender === "Biden" ? 1 : 2;
 				console.log("Eth Bet", candidate, ethInput)
 				placeElectionETHBet(yam, candidate, parseFloat(ethInput), account);
 				setPending(true)
@@ -137,7 +141,7 @@ const Bet = ({ battle, candidateInfo }) => {
 						Your Bets
 					</Text>
 					<SmallText>
-						Please unstake your $WAR from the warchest
+						Please unstake your $WAR from the $WARChest
 					</SmallText>
 					<Row style={{ marginBottom: '10px' }}>
 						<CardIcon src={MiniTrump} />

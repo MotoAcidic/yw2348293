@@ -180,7 +180,7 @@ const Bet = ({ battle, candidateInfo }) => {
 						</Bets>
 					</Bottom>
 					<Top>
-						<Select onChange={handleWARChange}>
+						<Select disabled onChange={handleWARChange}>
 							<option value={candidateInfo.id}>
 								{candidateInfo.name + " to Win"}
 							</option>
@@ -214,7 +214,7 @@ const Bet = ({ battle, candidateInfo }) => {
 						</Bets>
 					</Bottom>
 					<Top>
-						<Select onChange={handleETHChange}>
+						<Select disabled onChange={handleETHChange}>
 							<option value={candidateInfo.id}>
 								{candidateInfo.name + " to Win"}
 							</option>

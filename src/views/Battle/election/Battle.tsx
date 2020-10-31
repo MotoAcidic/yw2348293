@@ -140,11 +140,15 @@ const Battle: React.FC = () => {
   }, [yam, account, farms, farms[0]]);
 
   const closeModal = (event) => {
+    event.stopPropagation()
     if (event) {
-      event.stopPropagation()
       setShowModal(false)
     }
 
+  }
+
+  const stopProp = (e) => {
+    e.stopPropagation()
   }
 
 
@@ -201,7 +205,7 @@ const Battle: React.FC = () => {
             </VersusContainer>
             <div style={modal ? { display: 'block' } : { display: 'none' }}>
               <Modal onClick={(e) => closeModal(e)}>
-                <div style={{ pointerEvents: 'visible' }}>
+                <div onClick={(e) => stopProp(e)}style={{ pointerEvents: 'visible' }}>
                   <BetModalElection
                     battle={battles}
                     candidateInfo={candidate}

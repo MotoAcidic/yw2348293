@@ -6,30 +6,72 @@ import logo from '../../../assets/img/logo.png'
 import Label from '../../../components/Label'
 import Modalmd, { ModalProps } from '../../../components/Modal'
 import ModalTitle from '../../../components/ModalTitle'
+import Container from '../../../components/Container'
+
 
 const BetRulesModal: React.FC<ModalProps> = ({ onDismiss }) => {
   return (
-    <Modalmd>
-      <Image src={logo} alt="logo"/>    
-      <ModalTitle text="Betting Rules" />
-      <ModalSpacer>
-        <Label />
-        <ModalContent>
-          1. Your bet comes from you stake in your WARchest and is locked in until the battle you bet on ends
+      <StyledModal>
+        <StyledCard>
+          <StyledCardContent>
+            <Image src={logo} alt="logo" />
+            <ModalTitle text="Betting Rules" />
+            <ModalSpacer>
+              <Label />
+              <ModalContent>
+                1. Your bet comes from you stake in your WARchest and is locked in until the battle you bet on ends
           </ModalContent>
-        <ModalContent>
-          2. Your bet is inactive unless someone else takes your bet, meaning you can not win or lose  unless someone else bets on the other side.
+              <ModalContent>
+                2. Your bet is inactive unless someone else takes your bet, meaning you can not win or lose  unless someone else bets on the other side.
           </ModalContent>
-        <ModalContent>
-          For example, if you bet $10,000 and someone on the other side bets $5,000. Your bet will only be live for $5,000.
+              <ModalContent>
+                For example, if you bet $10,000 and someone on the other side bets $5,000. Your bet will only be live for $5,000.
           </ModalContent>
-        <ModalContent>
-          3. 10% of winnings go to the house, which is redistributed to $WAR token holders
+              <ModalContent>
+                3. 10% of winnings go to the house, which is redistributed to $WAR token holders
           </ModalContent>
-      </ModalSpacer>
-    </Modalmd>
+            </ModalSpacer>
+          </StyledCardContent>
+        </StyledCard>
+      </StyledModal>
   )
 }
+
+const StyledCardContent = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 16px;
+  height: 100%;
+`
+
+const StyledCard = styled.div`
+width: 100%;
+margin: auto;
+min-width: 300px;
+  border-radius: 8px;
+    border: solid 2px rgba(255, 183, 0, 0.3);
+  background-color: rgba(256,256,256, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+font-family: "Gilroy";
+  font-size: 25px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  margin-bottom: 40px;
+`
+
+const StyledModal = styled.div`
+  border-radius: 12px;
+  box-shadow: 24px 24px 48px -24px ${props => props.theme.color.grey[600]};
+  position: relative;
+  width: 600px;
+`
 
 const Image = styled.img`
 height: 80px;

@@ -19,13 +19,14 @@ import Instructions from "./Instructions";
 import Uniswap from "../../../assets/img/uniswap@2x.png";
 import InbetweenCard from "./InbetweenCard";
 import moment from "moment";
-import BetModalTrump from "./BetCardTrump.jsx";
-import BetModalBiden from "./BetCardBiden.jsx";
+import BetModalElection from "./BetCardElection.jsx";
 import Biden from "../../../assets/img/biden.png";
 import Trump from "../../../assets/img/trump.png";
 import AmericanFlag from "../../../assets/img/american-flag.jpg";
 import useModal from '../../../hooks/useModal'
 import Rules from './BetRulesModal'
+import Swal from 'sweetalert2';
+import './swal.css'
 
 
 
@@ -119,15 +120,33 @@ const Battle: React.FC = () => {
     [yam, setWarStaked]
   );
 
+  const onClickTrump = () => {
+    if (!account) {
+      Swal.fire('Please connect your wallet')
+      return
+    }
+    onPresentTrumpModal()
+  }
+
+  const onClickBiden = () => {
+    if (!account) {
+      Swal.fire('Please connect your wallet')
+      return
+    }
+    onPresentBidenModal()
+  }
+
   const [onPresentTrumpModal] = useModal(
-		<BetModalTrump
-			battle={battles}
+		<BetModalElection
+      battle={battles}
+      candidateInfo={battles.farm1}
 		/>
   )
   
   const [onPresentBidenModal] = useModal(
-		<BetModalBiden
-			battle={battles}
+		<BetModalElection
+      battle={battles}
+      candidateInfo={battles.farm2}
 		/>
 	)
 
@@ -188,13 +207,12 @@ const Battle: React.FC = () => {
             <Title>Who Will Win?</Title>
             <VersusContainer>
               <VersusBackground>
-                <Candidate1 src={Trump} onClick={onPresentTrumpModal} />
+                <Candidate1 src={Trump} onClick={onClickTrump} />
 
-                <Candidate2 src={Biden} onClick={onPresentBidenModal} />
+                <Candidate2 src={Biden} onClick={onClickBiden} />
 
               </VersusBackground>
             </VersusContainer>
-            <Title>You must Stake $WAR or ETH to participate</Title>
             <Pool3 />
             <Rules />
           </Page>

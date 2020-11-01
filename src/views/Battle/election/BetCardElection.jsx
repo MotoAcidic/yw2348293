@@ -77,8 +77,8 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	// const [allowance, setAllowance] = useState(0);
 
 	const tokenContract = useMemo(() => {
-		return getContract(ethereum, "0xF0037015bd137284f65B3842dd538ae204E32f2C")
-	}, [ethereum, "0xF0037015bd137284f65B3842dd538ae204E32f2C"])
+		return getContract(ethereum, "0x5896e1c50e4d2d315052aad8383d7104c3891cd6")
+	}, [ethereum, "0x5896e1c50e4d2d315052aad8383d7104c3891cd6"])
 
 	const { onApprove } = useApprove(tokenContract, electionContract)
 	const allowance = useAllowance(tokenContract, electionContract)
@@ -257,7 +257,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					<Space />
 					<Text>
 						Bet $ETH
-						</Text>
+					</Text>
 					<Top>
 						<Text>
 							{candidateInfo.name + " to Win"}
@@ -265,7 +265,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 						<InputContainer>
 							<Input disabled={pending ? true : false} type="number" min="0" value={ethInput} onChange={e => setETHInput(e.target.value)} />
 								ETH
-							</InputContainer>
+						</InputContainer>
 					</Top>
 					{pending ?
 						<BetPlaced>Your bet is pending. Check MetaMask for updates.</BetPlaced>
@@ -423,20 +423,21 @@ font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-color: #ffffff;
+color: rgb(255, 190, 26);
 margin-bottom: 5px;
 `
 
 const Text = styled.div`
 font-family: "Gilroy";
+color: rgb(255, 190, 26);
 font-size: 22px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-color: #ffffff;
 margin-bottom: 5px;
+align-items: center;
 `
 
 const SmallText = styled.div`
@@ -460,6 +461,7 @@ font-style: normal;
 letter-spacing: normal;
 color: #ffb700;
 text-align: right;
+height: 35px;
 width: 90%;
 background: none;
 border: none;

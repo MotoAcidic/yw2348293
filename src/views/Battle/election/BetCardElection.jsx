@@ -82,7 +82,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 
 	const { onApprove } = useApprove(tokenContract, electionContract)
 	const allowance = useAllowance(tokenContract, electionContract)
-	console.log(allowance);
+	// console.log(allowance);
 
 	const [onPresentUnstake] = useModal(
 		<UnstakeModal
@@ -105,10 +105,10 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 			const bets = await getCurrentBets(yam);
 			const balances = await getCurrentBalances(yam, account);
 			setFarmBalances(balances);
-			console.log("gotbets", bets);
+			// console.log("gotbets", bets);
 			setFarmBets(bets);
 		}
-		console.log("got da yams???", yam)
+		// console.log("got da yams???", yam)
 		if (yam) {
 			getBets();
 		}
@@ -127,17 +127,16 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 			}
 			if (warInput) {
 				const candidate = candidateInfo.name === "Biden" ? 1 : 2;
-				console.log("War Bet", candidate, warInput)
+				// console.log("War Bet", candidate, warInput)
 				setPending(true)
-				placeElectionWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => console.log("war return", ret))
+				placeElectionWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => setPending(false))
 			}
 			if (ethInput) {
-				console.log("whale whale whale", candidateInfo.name)
 				const candidate = candidateInfo.name === "Biden" ? 1 : 2;
-				console.log("Eth Bet", candidate, ethInput)
+				// console.log("Eth Bet", candidate, ethInput)
 				setPending(true)
 				placeElectionETHBet(yam, candidate, parseFloat(ethInput), account).then((ret) => {
-					console.log("eth return: ", ret)
+					setPending(false)
 				})
 			}
 			if (!ethInput && !warInput) {
@@ -162,42 +161,57 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		<Container size="sm">
 			<VersusContainer>
 				{/* <Pool3 /> */}
-				{allowance.toNumber() ?
+				{allowance.toNumber() > 0 ?
 					<>
-						<Text>
+						<TitleText>
 							Your Bets
-					</Text>
-						<SmallText>
-							Please unstake your $WAR from the $WARChest
-					</SmallText>
-						<Row style={{ marginBottom: '10px' }}>
-							<CardIcon src={MiniTrump} />
-							<CardIcon src={MiniBiden} />
-						</Row>
-						<Row>
-							<Bets>
-								<AmountBet>
-									{'$WAR: ' + farmBalances.trumpWARBal.toLocaleString()}
-								</AmountBet>
-							</Bets>
-							<Bets>
-								<AmountBet>
-									{'$WAR: ' + farmBalances.bidenWARBal.toLocaleString()}
-								</AmountBet>
-							</Bets>
-						</Row>
-						<Row>
-							<Bets>
-								<AmountBet>
-									{'$ETH: ' + farmBalances.trumpETHBal.toLocaleString()}
-								</AmountBet>
-							</Bets>
-							<Bets>
-								<AmountBet>
-									{'$ETH: ' + farmBalances.bidenETHBal.toLocaleString()}
-								</AmountBet>
-							</Bets>
-						</Row>
+					</TitleText>
+						<YourBets>
+							{!farmBalances.trumpWARBal > 0 && !farmBalances.trumpETHBal > 0 &&
+							!farmBalances.bidenWARBal > 0 && !farmBalances.bidenETHBal > 0 ?
+							<SmallText>none, place a bet!</SmallText> : null
+							}
+							{farmBalances.trumpWARBal > 0 || farmBalances.trumpETHBal > 0 ?
+								<Column>
+									<CardIcon src={MiniTrump} />
+									<Space />
+									{farmBalances.trumpWARBal > 0 &&
+										<Bets>
+											<AmountBet>
+												{'$WAR: ' + farmBalances.trumpWARBal.toLocaleString()}
+											</AmountBet>
+										</Bets>
+									}
+									{farmBalances.trumpETHBal > 0 &&
+										<Bets>
+											<AmountBet>
+												{'$ETH: ' + farmBalances.trumpETHBal.toLocaleString()}
+											</AmountBet>
+										</Bets>}
+								</Column> : null
+							}
+							{farmBalances.bidenWARBal > 0 || farmBalances.bidenETHBal > 0 ?
+								<Column>
+									<CardIcon src={MiniBiden} />
+									<Space />
+									{farmBalances.bidenWARBal > 0 &&
+										<Bets>
+											<AmountBet>
+												{'$WAR: ' + farmBalances.bidenWARBal.toLocaleString()}
+											</AmountBet>
+										</Bets>
+									}
+									{farmBalances.bidenETHBal > 0 &&
+										<Bets>
+											<AmountBet>
+												{'$ETH: ' + farmBalances.bidenETHBal.toLocaleString()}
+											</AmountBet>
+										</Bets>
+									}
+
+								</Column>
+								: null}
+						</YourBets>
 					</> :
 					<Button size="xlg" onClick={() => handleApprove()}>Approve WAR</Button>
 				}
@@ -220,14 +234,14 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 
 					</Bets>
 				</Bottom>
-				{allowance.toNumber() &&
+				{allowance.toNumber() > 0 &&
 
 					<Top>
 						<Text>
 							{candidateInfo.name + " to Win"}
 						</Text>
 						<InputContainer>
-							<Input type="number" min="0" value={warInput} onChange={e => setWARInput(e.target.value)} />
+							<Input disabled={pending ? true : false} type="number" min="0" value={warInput} onChange={e => setWARInput(e.target.value)} />
 							WAR
 						</InputContainer>
 					</Top>}
@@ -251,25 +265,28 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 
 					</Bets>
 				</Bottom>
-				{allowance.toNumber() &&
+				{allowance.toNumber() > 0 &&
 
 					<Top>
 						<Text>
 							{candidateInfo.name + " to Win"}
 						</Text>
 						<InputContainer>
-							<Input type="number" min="0" value={ethInput} onChange={e => setETHInput(e.target.value)} />
+							<Input disabled={pending ? true : false} type="number" min="0" value={ethInput} onChange={e => setETHInput(e.target.value)} />
 							ETH
 						</InputContainer>
 					</Top>
 				}
-				{allowance.toNumber() &&
+				{allowance.toNumber() > 0 &&
 					<>
 						{pending ?
-							<Button size="xlg" disabled={true}>Your bet is pending</Button>
+							<BetPlaced>Your bet is pending. Check MetaMask for updates.</BetPlaced>
 							:
 							<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
 						}
+						<SmallText>
+							Please unstake your $WAR from the $WARChest
+					</SmallText>
 					</>
 				}
 			</VersusContainer>
@@ -277,13 +294,34 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	)
 }
 
+const YourBets = styled.div`
+display: flex;
+width: 100%;
+justify-content: space-evenly;`
+
+const Column = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;`
+
+const BetPlaced = styled.div`
+color: rgb(255, 190, 26);
+font-family: Gilroy;
+font-size: 18px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+`
+
 const Space = styled.div`
 height: 20px;`
 
 
 const AmountBet = styled.div`
 font-family: Gilroy;
-font-size: 18px;
+font-size: 16px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
@@ -323,6 +361,18 @@ flex-wrap: nowrap;
 margin-bottom: 20px;
 justify-content: space-between;`
 
+const TitleText = styled.div`
+font-family: "Gilroy";
+font-size: 22px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+margin-bottom: 5px;
+`
+
 const Text = styled.div`
 font-family: "Gilroy";
 font-size: 22px;
@@ -344,7 +394,7 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
-margin-bottom: 5px;
+margin-top: 10px;
 `
 
 const Input = styled.input`

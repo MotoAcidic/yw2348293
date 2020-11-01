@@ -282,7 +282,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 						Please unstake your $WAR from the $WARChest
 					</SmallText>
 				</VersusContainer>
-				<Button size="xlg" onClick={() => redeemRewards()}>Redeem Rewards</Button>
+				{/* <Button size="xlg" onClick={() => redeemRewards()}>Redeem Rewards</Button> */}
 			</Container>
 		)
 	}

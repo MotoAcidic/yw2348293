@@ -433,7 +433,7 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: rgb(255, 190, 26);
-margin-bottom: 5px;
+margin-bottom: 10px;
 `
 
 const Text = styled.div`

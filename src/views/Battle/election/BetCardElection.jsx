@@ -383,6 +383,7 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 margin-bottom: 5px;
+align-items: center;
 `
 
 const SmallText = styled.div`

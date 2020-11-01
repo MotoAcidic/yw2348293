@@ -97,7 +97,8 @@ const Battle: React.FC = () => {
   }, [yam, setStats]);
   let [modal, setShowModal] = useState(false);
   let [candidate, setCandidate] = useState(battles.farm1);
-
+  let [hoverCandidate, setHoverCandidate] = useState("");
+  const [transitioning, setTransitioning] = useState(false);
 
   let currentPrice = curPrice || 0;
 
@@ -146,53 +147,43 @@ const Battle: React.FC = () => {
 
   const electionContract = getElectionContracts(yam)
 
+  const hoverOver = (candidate) => {
+    console.log("called", candidate, hoverCandidate)
+    if ((!candidate || !hoverCandidate) && !transitioning) {
+      console.log("1", candidate)
+      setHoverCandidate(candidate)
+    } else if (candidate !== hoverCandidate) {
+      console.log("2")
+      setTransitioning(true);
+      setHoverCandidate(null);
+      setTimeout(() => {
+        setHoverCandidate(candidate);
+        setTransitioning(false);
+      }, 180);
+    }
+  }
+
+  const hoverExit = () => {
+    setTimeout(() => {
+      setHoverCandidate(null);
+    }, 10);
+  }
+
+  const bidenStyle = hoverCandidate === "Biden" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)` } : null;
+  const trumpStyle = hoverCandidate === "Trump" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)` } : null;
+
   return (
     <Switch>
       <StyledCanvas>
         <BackgroundSection />
         <ContentContainer>
           <Page>
-            {/* <TopDisplayContainer>
-              <DisplayItem>
-                $War Price:&nbsp;
-              {currentPrice
-                  ? `$${Number(currentPrice).toLocaleString(undefined, {
-                    minimumFractionDigits: 4,
-                    maximumFractionDigits: 4
-                  })}`
-                  : "-"}
-              </DisplayItem>
-              <DisplayItem>
-                Supply Staked:&nbsp;
-              {warStaked && !warStaked.warStaked.eq(0)
-                  ? `${Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  })}%`
-                  : "-"}
-              </DisplayItem>
-              <DisplayItem>
-                Marketcap:&nbsp;
-              {currentPrice && warStaked && !warStaked.circSupply.eq(0)
-                  ? `$${Number(warStaked.circSupply.multipliedBy(currentPrice).dividedBy(10 ** 18).toFixed(2)).toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                  })}`
-                  : "-"}
-              </DisplayItem>
-              <StyledA
-                style={{ marginTop: "-5px" }}
-                href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
-                target="_blank"
-              />
-            </TopDisplayContainer> */}
+
             <Title>Who Will Win?</Title>
             <VersusContainer>
               <VersusBackground>
-                <Candidate1 src={Trump} onClick={(e) => onClickTrump(e)} />
-
-                <Candidate2 src={Biden} onClick={(e) => onClickBiden(e)} />
-
+                <Candidate1 style={trumpStyle} onMouseOver={() => hoverOver("Trump")} onMouseOut={() => hoverExit()}  src={Trump} onClick={(e) => onClickTrump(e)} />
+                <Candidate2 style={bidenStyle} onMouseOver={() => hoverOver("Biden")} onMouseOut={() => hoverExit()} src={Biden} onClick={(e) => onClickBiden(e)} />
               </VersusBackground>
             </VersusContainer>
             <div style={modal ? { display: 'block' } : { display: 'none' }}>
@@ -238,29 +229,20 @@ border-radius: 8px;
 let Candidate1
 let Candidate2
 
-Candidate2 = styled.img`
-width: 50%;
-height: 100%;
-border-radius: 0 8px 8px 0;
-cursor: pointer;
-transition: all 0.2s ease-in-out;
-&:hover {
-          transform: scale(1.05);
-  filter: brightness(110%) contrast(110%);
-}
-`
-
-
 Candidate1 = styled.img`
 width: 50%;
 height: 100%;
 border-radius: 8px 0 0 8px;
 cursor: pointer;
 transition: all 0.2s ease-in-out;
-&:hover {
-          transform: scale(1.05);
-  filter: brightness(110%) contrast(110%);
-}
+`
+
+Candidate2 = styled.img`
+width: 50%;
+height: 100%;
+border-radius: 0 8px 8px 0;
+cursor: pointer;
+transition: all 0.2s ease-in-out;
 `
 
 const VersusBackground = styled.div`

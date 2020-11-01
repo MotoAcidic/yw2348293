@@ -167,6 +167,10 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 							Your Bets
 					</TitleText>
 						<YourBets>
+							{!farmBalances.trumpWARBal > 0 && !farmBalances.trumpETHBal > 0 &&
+							!farmBalances.bidenWARBal > 0 && !farmBalances.bidenETHBal > 0 ?
+							<SmallText>none, place a bet!</SmallText> : null
+							}
 							{farmBalances.trumpWARBal > 0 || farmBalances.trumpETHBal > 0 ?
 								<Column>
 									<CardIcon src={MiniTrump} />
@@ -184,7 +188,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 												{'$ETH: ' + farmBalances.trumpETHBal.toLocaleString()}
 											</AmountBet>
 										</Bets>}
-								</Column> : <></>
+								</Column> : null
 							}
 							{farmBalances.bidenWARBal > 0 || farmBalances.bidenETHBal > 0 ?
 								<Column>
@@ -206,7 +210,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 									}
 
 								</Column>
-								: <></>}
+								: null}
 						</YourBets>
 					</> :
 					<Button size="xlg" onClick={() => handleApprove()}>Approve WAR</Button>

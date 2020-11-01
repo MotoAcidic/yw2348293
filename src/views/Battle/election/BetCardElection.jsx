@@ -229,19 +229,19 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 						<BetDisplay>
 							<CardIcon src={MiniTrump} />
 							<AmountBet>
-								{farmBets.trumpWARPot.toLocaleString() + " $WAR"}
+								{"$WAR: " + farmBets.trumpWARPot.toLocaleString()}
 							</AmountBet>
 							<AmountBet>
-								{farmBets.trumpETHPot.toLocaleString() + " $ETH"}
+								{"$ETH: " + farmBets.trumpETHPot.toLocaleString()}
 							</AmountBet>
 						</BetDisplay>
 						<BetDisplay>
 							<CardIcon src={MiniBiden} />
 							<AmountBet>
-								{farmBets.bidenWARPot.toLocaleString() + " $WAR"}
+								{"$WAR: " + farmBets.bidenWARPot.toLocaleString()}
 							</AmountBet>
 							<AmountBet>
-								{farmBets.bidenETHPot.toLocaleString() + " $ETH"}
+								{"$ETH: " + farmBets.bidenETHPot.toLocaleString()}
 							</AmountBet>
 						</BetDisplay>
 					</AllBets>

@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import './swal.css'
+import MiniBiden from "../../../assets/img/biden@2x.png";
+import MiniTrump from "../../../assets/img/trump@2x.png";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -11,11 +13,7 @@ function isMobile() {
   }
 }
 
-const FarmGraph = ({ farm1, farm2 }) => {
-
-  const votes1 = parseInt(farm1.votes);
-  const votes2 = parseInt(farm2.votes);
-
+const FarmGraph = ({ votes1, votes2 }) => {
   const percent1 = 100 * (votes1 / (votes1 + votes2))
   console.log('v1, v2, %: ', votes1, votes2, percent1);
   return (
@@ -24,20 +22,32 @@ const FarmGraph = ({ farm1, farm2 }) => {
         Voting Balance
       </SubTitle>
       <StyledContent>
-        <CardIcon1>{farm1.icon}</CardIcon1>
+      <CardIcon src={MiniTrump} />
+
         <BalanceBar>
-          <div style={{ backgroundColor: '#d270ff', height: '100%', borderRadius: "2px 0 0 2px", width: percent1 + '%' }} />
+          <div style={{ backgroundColor: '#AB1200', height: '100%', borderRadius: "2px 0 0 2px", width: percent1 + '%' }} />
         </BalanceBar>
-        <CardIcon2>{farm2.icon}</CardIcon2>
+        <CardIcon src={MiniBiden} />
+
       </StyledContent>
     </VotingBalance>
   )
 }
 
+const CardIcon = styled.img`
+	height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 0 15px;
+`
+
 const BalanceBar = styled.div`
 width: calc(100% - 110px);
 height: 20px;
-background-color: #70bfff;
+background-color: #0C438C;
 border-radius: 2px;
 `
 

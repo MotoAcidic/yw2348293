@@ -9,7 +9,7 @@ import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 import Pool3 from "./Pool3";
 import useFarms from "../../../hooks/useFarms";
-import { getWarStaked, getElectionContracts } from "../../../yamUtils";
+import { getWarStaked, getElectionContracts, getCurrentBets } from "../../../yamUtils";
 import { getStats } from "./utils";
 
 import Uniswap from "../../../assets/img/uniswap@2x.png";
@@ -26,6 +26,7 @@ import './swal.css'
 import AccountModal from "../../../components/TopBar/components/AdvertisementFormModal";
 import { getContract } from '../../../utils/erc20'
 import { provider } from 'web3-core'
+import PriceHistoryCard from "../../Results/PercentChangeCard";
 
 
 function isMobile() {
@@ -99,6 +100,7 @@ const Battle: React.FC = () => {
   let [candidate, setCandidate] = useState(battles.farm1);
   let [hoverCandidate, setHoverCandidate] = useState("");
   const [transitioning, setTransitioning] = useState(false);
+  const [roughBets, setRoughBets] = useState([]);
 
   let currentPrice = curPrice || 0;
 
@@ -126,6 +128,10 @@ const Battle: React.FC = () => {
     setShowModal(true)
   }
 
+  const getRoughBets = () => {
+    
+  }
+
   useEffect(() => {
     console.log("using effect");
     if (yam && account && farms && farms[0]) {
@@ -134,6 +140,10 @@ const Battle: React.FC = () => {
     if (yam && farms) {
       console.log(farms);
       fetchWarStaked(farms);
+
+    }
+    if (yam && !roughBets.length) {
+      getRoughBets();
     }
   }, [yam, account, farms, farms[0]]);
 

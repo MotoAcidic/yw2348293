@@ -29,16 +29,16 @@ const BetRulesModal: React.FC<ModalProps> = ({ onDismiss }) => {
           <ModalSpacer>
             <Label />
             <ModalContent>
-              1. Election Betting on YieldWars is winner takes all. Meaning if Biden wins than those who bet split the Trump betting pool equally per how much they bet, and vice versa.
+              1. Election Betting on YieldWars is winner takes all. Meaning if Biden wins then those who bet split the Trump betting pool equally per how much they bet, and vice versa.
           </ModalContent>
             <ModalContent>
-              2. You can bet with $WAR or $ETH. Once you place a bet it is locked in and can not be changed
+              2. You can bet with $WAR or $ETH. Once you place a bet it is locked in and can not be changed.
           </ModalContent>
             <ModalContent>
-              3.You can only bet from your wallet and not from your WARchest. If you have funds in your WARchest you will need to unstake them. There are no longer fees for staking/unstaking from WARchest.
+              3. You can only bet from your wallet and not from your WARchest. If you have funds in your WARchest you will need to unstake them. There are no longer fees for staking/unstaking from WARchest.
           </ModalContent>
             <ModalContent>
-              4. 10% of winnings go to the house, which will be split between current $WAR holders and the $WAR Community DAO
+              4. 10% of winnings go to the house, which will be split between current $WAR stakers/betters and the $WAR Community DAO.
           </ModalContent>
             <ModalContent>
               5. Betting will end at 22:00 UTC on Nov 3rd. This is stop anyone from having an unfair advantage of knowing polling data as the polls close.

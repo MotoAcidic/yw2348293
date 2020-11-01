@@ -704,13 +704,13 @@ export const getCurrentBalances = async (yam, account) => {
 // .stake((new BigNumber(amount).times(precision)).toString())
 
 export const placeElectionWARBet = async (yam, candidate, amount, account) => {
-    console.log("war bet: ", candidate, amount, account);
-    const precision = new BigNumber(10).pow(18);
-    let p = await yam.contracts.election_betting.methods.WARBet(
-      candidate, new BigNumber(amount).times(precision).toString()
-    )
-      .send({ from: account, gas: 200000 })
-    return (p);
+  console.log("war bet: ", candidate, amount, account);
+  const precision = new BigNumber(10).pow(18);
+  let p = await yam.contracts.election_betting.methods.WARBet(
+    candidate, new BigNumber(amount).times(precision).toString()
+  )
+    .send({ from: account, gas: 200000 })
+  return (p);
 }
 
 export const placeElectionETHBet = async (yam, candidate, amount, account) => {
@@ -723,7 +723,6 @@ export const placeElectionETHBet = async (yam, candidate, amount, account) => {
 }
 
 export const getElectionContracts = (yam) => {
-  
   if (!yam || !yam.contracts) {
     return null
   }
@@ -738,4 +737,18 @@ export const getFwarContract = (yam) => {
   }
   const election = yam.contracts.fwar
   return election
+}
+
+export const getElectionFinished = async (yam) => {
+  const electionFinished = await yam.contracts.election_betting.methods.winner().call();
+  return (electionFinished);
+}
+
+export const getElectionRewards = async (yam, account) => {
+  let p = await yam.contracts.election_betting.methods.getRewards().send({ from: account, gas: 200000 })
+    .on('transactionHash', tx => {
+      console.log("get election rewards", tx)
+      return tx.transactionHash
+    })
+  return (p);
 }

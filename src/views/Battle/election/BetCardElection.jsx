@@ -18,7 +18,7 @@ import UnstakeModal from './UnstakeModal'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
 import useAllowance from '../../../hooks/useAllowance'
-import { placeElectionWARBet, placeElectionETHBet, getCurrentBets, getCurrentBalances } from '../../../yamUtils'
+import { placeElectionWARBet, placeElectionETHBet, getCurrentBets, getCurrentBalances, getElectionRewards, getElectionFinished, redeem } from '../../../yamUtils'
 import Swal from 'sweetalert2';
 import { getElectionContracts, harvest } from '../../../yamUtils'
 import Pool3 from "./Pool3";
@@ -145,6 +145,12 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		}
 	}
 
+	const redeemRewards = async () => {
+		const done = await getElectionFinished(yam);
+		console.log("election finished?", done);
+		getElectionRewards(yam, account);
+	}
+
 	const handleApprove = useCallback(async () => {
 		try {
 			const txHash = await onApprove()
@@ -168,8 +174,8 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					</TitleText>
 						<YourBets>
 							{!farmBalances.trumpWARBal > 0 && !farmBalances.trumpETHBal > 0 &&
-							!farmBalances.bidenWARBal > 0 && !farmBalances.bidenETHBal > 0 ?
-							<SmallText>none, place a bet!</SmallText> : null
+								!farmBalances.bidenWARBal > 0 && !farmBalances.bidenETHBal > 0 ?
+								<SmallText>none, place a bet!</SmallText> : null
 							}
 							{farmBalances.trumpWARBal > 0 || farmBalances.trumpETHBal > 0 ?
 								<Column>
@@ -208,7 +214,6 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 											</AmountBet>
 										</Bets>
 									}
-
 								</Column>
 								: null}
 						</YourBets>
@@ -289,6 +294,9 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					</SmallText>
 					</>
 				}
+
+				<Button size="xlg" onClick={() => redeemRewards()}>Redeem Rewards</Button>
+
 			</VersusContainer>
 		</Container>
 	)
@@ -346,7 +354,8 @@ margin-bottom: 10px;`
 const Bottom = styled.div`
 width: 100%;
 display: flex;
-justify-content: space-between;`
+justify-content: space-between;
+`
 
 const Row = styled.div`
 width: 100%;
@@ -358,6 +367,7 @@ width: 100%;
 display: flex;
 flex-direction: row;
 flex-wrap: nowrap;
+align-items: center;
 margin-bottom: 20px;
 justify-content: space-between;`
 

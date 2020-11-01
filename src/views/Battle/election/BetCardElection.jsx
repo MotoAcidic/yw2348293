@@ -77,8 +77,8 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	// const [allowance, setAllowance] = useState(0);
 
 	const tokenContract = useMemo(() => {
-		return getContract(ethereum, "0x5896e1c50e4d2d315052aad8383d7104c3891cd6")
-	}, [ethereum, "0x5896e1c50e4d2d315052aad8383d7104c3891cd6"])
+		return getContract(ethereum, "0xF0037015bd137284f65B3842dd538ae204E32f2C")
+	}, [ethereum, "0xF0037015bd137284f65B3842dd538ae204E32f2C"])
 
 	const { onApprove } = useApprove(tokenContract, electionContract)
 	const allowance = useAllowance(tokenContract, electionContract)

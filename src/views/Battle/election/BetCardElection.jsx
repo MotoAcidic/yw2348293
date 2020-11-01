@@ -75,7 +75,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	const [isApproved, setIsApproved] = useState(false);
 	// const [onApprove, setOnApprove] = useState(null);
 	// const [allowance, setAllowance] = useState(0);
-	
+
 	const tokenContract = useMemo(() => {
 		return getContract(ethereum, "0x5896e1c50e4d2d315052aad8383d7104c3891cd6")
 	}, [ethereum, "0x5896e1c50e4d2d315052aad8383d7104c3891cd6"])
@@ -223,14 +223,9 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 				{allowance.toNumber() &&
 
 					<Top>
-						<Select disabled>
-							<option >
-								{candidateInfo.name + " to Win"}
-							</option>
-							{/* <option value={battle.farm1.id}>
-								{battle.farm2.name + " to Win"}
-							</option> */}
-						</Select>
+						<Text>
+							{candidateInfo.name + " to Win"}
+						</Text>
 						<InputContainer>
 							<Input type="number" min="0" value={warInput} onChange={e => setWARInput(e.target.value)} />
 							WAR
@@ -259,14 +254,9 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 				{allowance.toNumber() &&
 
 					<Top>
-						<Select disabled>
-							<option>
-								{candidateInfo.name + " to Win"}
-							</option>
-							{/* <option value={battle.farm1.id}>
-								{battle.farm2.name + " to Win"}
-							</option> */}
-						</Select>
+						<Text>
+							{candidateInfo.name + " to Win"}
+						</Text>
 						<InputContainer>
 							<Input type="number" min="0" value={ethInput} onChange={e => setETHInput(e.target.value)} />
 							ETH

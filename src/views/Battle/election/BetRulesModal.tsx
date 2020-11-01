@@ -41,10 +41,10 @@ const BetRulesModal: React.FC<ModalProps> = ({ onDismiss }) => {
               4. 10% of winnings go to the house, which will be split between current $WAR holders and the $WAR Community DAO
           </ModalContent>
             <ModalContent>
-              5. Betting will end at 6pm ET on Nov 3rd. This is stop anyone from having an unfair advantage of knowing polling data as the polls close.
+              5. Betting will end at 22:00 UTC on Nov 3rd. This is stop anyone from having an unfair advantage of knowing polling data as the polls close.
           </ModalContent>
             <ModalContent>
-              6. The winner of the election will be determined by the AP results oracle being supplied by Everpedia and the Associated Press.
+              6. The winner of the election will be determined by the AP results oracle being supplied by Everipedia and the Associated Press.
           </ModalContent>
           </ModalSpacer>
         </StyledCardContent>

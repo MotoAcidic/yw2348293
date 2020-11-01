@@ -207,8 +207,8 @@ const Battle: React.FC = () => {
                 </ModalBlock>
               </Modal>
             </div>
-            <Pool3 />
             <Rules />
+            <Pool3 />
           </Page>
         </ContentContainer>
       </StyledCanvas>

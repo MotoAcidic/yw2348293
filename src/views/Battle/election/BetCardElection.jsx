@@ -216,9 +216,9 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					<Button size="xlg" onClick={() => handleApprove()}>Approve WAR</Button>
 				}
 				<Space />
-				<Text>
+				<TitleText>
 					Bet $WAR
-					</Text>
+					</TitleText>
 				<Bottom>
 					<Bets>
 						<CardIcon src={MiniTrump} />
@@ -246,9 +246,9 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 						</InputContainer>
 					</Top>}
 				<Space />
-				<Text>
+				<TitleText>
 					Bet $ETH
-					</Text>
+					</TitleText>
 				<Bottom>
 					<Bets>
 						<CardIcon src={MiniTrump} />
@@ -375,13 +375,13 @@ margin-bottom: 5px;
 
 const Text = styled.div`
 font-family: "Gilroy";
+color: rgb(255, 190, 26);
 font-size: 22px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-color: #ffffff;
 margin-bottom: 5px;
 align-items: center;
 `
@@ -407,6 +407,7 @@ font-style: normal;
 letter-spacing: normal;
 color: #ffb700;
 text-align: right;
+height: 35px;
 width: 90%;
 background: none;
 border: none;

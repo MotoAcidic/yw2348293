@@ -18,9 +18,9 @@ const FarmGraph = ({ votes1, votes2 }) => {
   console.log('v1, v2, %: ', votes1, votes2, percent1);
   return (
     <VotingBalance>
-      <SubTitle>
+      {/* <SubTitle>
         Voting Balance
-      </SubTitle>
+      </SubTitle> */}
       <StyledContent>
       <CardIcon src={MiniTrump} />
 
@@ -69,7 +69,7 @@ const VotingBalance = styled.div`
 display: flex;
 flex-direction: column;
 width: 89%;
-margin: 20px auto 0 auto;
+margin: 0 auto 20px auto;
 `
 
 const CardIcon1 = styled.div`

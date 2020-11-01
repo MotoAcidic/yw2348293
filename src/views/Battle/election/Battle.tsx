@@ -27,7 +27,7 @@ import AccountModal from "../../../components/TopBar/components/AdvertisementFor
 import { getContract } from '../../../utils/erc20'
 import { provider } from 'web3-core'
 import PriceHistoryCard from "../../Results/PercentChangeCard";
-
+import VotingBalance from "./VotingBalance";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -100,7 +100,7 @@ const Battle: React.FC = () => {
   let [candidate, setCandidate] = useState(battles.farm1);
   let [hoverCandidate, setHoverCandidate] = useState("");
   const [transitioning, setTransitioning] = useState(false);
-  const [roughBets, setRoughBets] = useState([]);
+  const [roughBets, setRoughBets] = useState({ trump: 0, biden: 0 });
 
   let currentPrice = curPrice || 0;
 
@@ -128,8 +128,11 @@ const Battle: React.FC = () => {
     setShowModal(true)
   }
 
-  const getRoughBets = () => {
-    
+  const getRoughBets = async () => {
+    const bets = await getCurrentBets(yam);
+    const trump = (bets.trumpETHPot * 400) + (bets.trumpWARPot * 0.3);
+    const biden = (bets.bidenETHPot * 400) + (bets.bidenWARPot * 0.3);
+    setRoughBets({ trump, biden });
   }
 
   useEffect(() => {
@@ -142,10 +145,10 @@ const Battle: React.FC = () => {
       fetchWarStaked(farms);
 
     }
-    if (yam && !roughBets.length) {
+    if (yam && account && !roughBets.trump) {
       getRoughBets();
     }
-  }, [yam, account, farms, farms[0]]);
+  }, [yam, farms, farms[0]]);
 
   const closeModal = (event) => {
     setShowModal(false)
@@ -190,9 +193,13 @@ const Battle: React.FC = () => {
           <Page>
 
             <Title>Who Will Win?</Title>
+            {roughBets.trump > 0 &&
+              <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
+            }
+
             <VersusContainer>
               <VersusBackground>
-                <Candidate1 style={trumpStyle} onMouseOver={() => hoverOver("Trump")} onMouseOut={() => hoverExit()}  src={Trump} onClick={(e) => onClickTrump(e)} />
+                <Candidate1 style={trumpStyle} onMouseOver={() => hoverOver("Trump")} onMouseOut={() => hoverExit()} src={Trump} onClick={(e) => onClickTrump(e)} />
                 <Candidate2 style={bidenStyle} onMouseOver={() => hoverOver("Biden")} onMouseOut={() => hoverExit()} src={Biden} onClick={(e) => onClickBiden(e)} />
               </VersusBackground>
             </VersusContainer>
@@ -303,7 +310,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 ` : styled.div`
 font-family: "Gilroy";
   font-size: 30px;
@@ -314,7 +321,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-top: 40px;
 `;
 

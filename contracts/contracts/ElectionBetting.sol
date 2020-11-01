@@ -50,18 +50,17 @@ contract ElectionBetting is IRewardDistributionRecipient {
         Trump
     }
 
-    //IERC20 public constant war = IERC20(0xf4A81C18816C9B0AB98FAC51B36Dcb63b0E58Fde);
-    IERC20 public constant war = IERC20(0x5896E1c50E4D2d315052aAd8383D7104C3891CD6); // temp fake token (FWAR) for testing
+    IERC20 public constant war = IERC20(0xf4A81C18816C9B0AB98FAC51B36Dcb63b0E58Fde);
 
     string public constant desc = "US Election 2020 Battle: Biden vs Trump";
 
-    // TODO: set these to real timestamps
-    uint256 public constant starttime = 0;
-    uint256 public constant endtime = 2**256-1;
+    uint256 public constant endTime = 1604440800;
+    uint256 public constant lastClaimTime = endTime + 1 days * 365 * 0.25;
 
     bool public isPaused;
     bool public isCanceled;
     bool public isFinal;
+    bool public isFeesClaimed;
 
     Candidate public winner;
 
@@ -85,9 +84,8 @@ contract ElectionBetting is IRewardDistributionRecipient {
     modifier checkStatus() {
         require(!isFinal, "election is decided");
         require(!isCanceled, "election is canceled, claim your bet");
-        require(!isPaused, "betting is paused");
-        require(block.timestamp < endtime, "betting has ended");
-        require(block.timestamp >= starttime, "betting not started");
+        require(!isPaused, "betting not started");
+        require(block.timestamp < endTime, "betting has ended");
         _;
     }
 
@@ -148,6 +146,42 @@ contract ElectionBetting is IRewardDistributionRecipient {
         winner = candidate;
         isFinal = true;
     }
+    function getFees() external onlyRewardDistribution returns (uint256 ethFees, uint256 warFees) {
+        require(!isFeesClaimed, "fees claimed");
+        if (isFinal) {
+            isFeesClaimed = true;
+
+            if (winner == Candidate.Biden) {
+                ethFees = trumpETHPot.mul(1e19).div(1e20);
+                if (ethFees != 0) {
+                    _safeTransfer(ethFees, true);
+                }
+
+                warFees = trumpWARPot.mul(1e19).div(1e20);
+                if (warFees != 0) {
+                    _safeTransfer(warFees, false);
+                }
+            } else if (winner == Candidate.Trump) {
+                ethFees = bidenETHPot.mul(1e19).div(1e20);
+                if (ethFees != 0) {
+                    _safeTransfer(ethFees, true);
+                }
+
+                warFees = bidenWARPot.mul(1e19).div(1e20);
+                if (warFees != 0) {
+                    _safeTransfer(warFees, false);
+                }
+            }
+        }
+    }
+    function rescueFunds(address token) external onlyRewardDistribution {
+        require(block.timestamp >= lastClaimTime, "not allowed yet");
+        if (token == address(0)) {
+            Address.sendValue(msg.sender, address(this).balance);
+        } else {
+            IERC20(token).safeTransfer(msg.sender, IERC20(token).balanceOf(address(this)));
+        }
+    }
 
     function earned(address account) public view returns (uint256 ethEarnings, uint256 warEarnings) {
         if (isFinal) {
@@ -156,16 +190,31 @@ contract ElectionBetting is IRewardDistributionRecipient {
             uint256 _bidenWARBet = bidenWARBet[account];
             uint256 _trumpWARBet = trumpWARBet[account];
             
+            uint256 winnings;
+            uint256 fee;
+
             if (winner == Candidate.Biden && _bidenETHBet != 0) {
-                ethEarnings = trumpETHPot.mul(_bidenETHBet).div(bidenETHPot).add(_bidenETHBet);
+                winnings = trumpETHPot.mul(_bidenETHBet).div(bidenETHPot);
+                fee = winnings.mul(1e19).div(1e20);
+                winnings -= fee;
+                ethEarnings = _bidenETHBet.add(winnings);
             } else if (winner == Candidate.Trump && _trumpETHBet != 0) {
-                ethEarnings = bidenETHPot.mul(_trumpETHBet).div(trumpETHPot).add(_trumpETHBet);
+                winnings = bidenETHPot.mul(_trumpETHBet).div(trumpETHPot);
+                fee = winnings.mul(1e19).div(1e20);
+                winnings -= fee;
+                ethEarnings = _trumpETHBet.add(winnings);
             }
 
             if (winner == Candidate.Biden && _bidenWARBet != 0) {
-                warEarnings = trumpWARPot.mul(_bidenWARBet).div(bidenWARPot).add(_bidenWARBet);
+                winnings = trumpWARPot.mul(_bidenWARBet).div(bidenWARPot);
+                fee = winnings.mul(1e19).div(1e20);
+                winnings -= fee;
+                warEarnings = _bidenWARBet.add(winnings);
             } else if (winner == Candidate.Trump && _trumpWARBet != 0) {
-                warEarnings = bidenWARPot.mul(_trumpWARBet).div(trumpWARPot).add(_trumpWARBet);
+                winnings = bidenWARPot.mul(_trumpWARBet).div(trumpWARPot);
+                fee = winnings.mul(1e19).div(1e20);
+                winnings -= fee;
+                warEarnings = _trumpWARBet.add(winnings);
             }
         } else if (isCanceled) {
             ethEarnings = bidenETHBet[account] + trumpETHBet[account];
@@ -175,19 +224,36 @@ contract ElectionBetting is IRewardDistributionRecipient {
 
     function getRewards() public {
         require(isFinal || isCanceled, "election not decided");
-        
+
         (uint256 ethEarnings, uint256 warEarnings) = earned(msg.sender);
         if (ethEarnings != 0) {
             bidenETHBet[msg.sender] = 0;
             trumpETHBet[msg.sender] = 0;
-            Address.sendValue(msg.sender, ethEarnings);
+            _safeTransfer(ethEarnings, true);
         }
         if (warEarnings != 0) {
             bidenWARBet[msg.sender] = 0;
             trumpWARBet[msg.sender] = 0;
-            war.safeTransfer(msg.sender, warEarnings);
+            _safeTransfer(warEarnings, false);
         }
         emit EarningsPaid(msg.sender, ethEarnings, warEarnings);
+    }
+
+    function _safeTransfer(uint256 amount, bool isETH) internal {
+        uint256 balance;
+        if (isETH) {
+            balance = address(this).balance;
+            if (amount > balance) {
+                amount = balance;
+            }
+            Address.sendValue(msg.sender, amount);
+        } else {
+            balance = war.balanceOf(address(this));
+            if (amount > balance) {
+                amount = balance;
+            }
+            war.safeTransfer(msg.sender, amount);
+        }
     }
 
     // unused

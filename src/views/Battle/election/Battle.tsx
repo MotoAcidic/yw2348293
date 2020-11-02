@@ -9,7 +9,7 @@ import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 import Pool3 from "./Pool3";
 import useFarms from "../../../hooks/useFarms";
-import { getWarStaked, getElectionContracts, getCurrentBets } from "../../../yamUtils";
+import { getWarStaked, getElectionContracts, getCurrentBets, electionTVL } from "../../../yamUtils";
 import { getStats } from "./utils";
 
 import Uniswap from "../../../assets/img/uniswap@2x.png";
@@ -129,9 +129,9 @@ const Battle: React.FC = () => {
   }
 
   const getRoughBets = async () => {
-    const bets = await getCurrentBets(yam);
-    const trump = (bets.trumpETHPot * 400) + (bets.trumpWARPot * 0.3);
-    const biden = (bets.bidenETHPot * 400) + (bets.bidenWARPot * 0.3);
+    let tvl = await electionTVL(yam, account)
+    const trump = tvl.trumpTotal
+    const biden = tvl.bidenTotal
     setRoughBets({ trump, biden });
   }
 
@@ -185,6 +185,7 @@ const Battle: React.FC = () => {
   const bidenStyle = hoverCandidate === "Biden" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)` } : null;
   const trumpStyle = hoverCandidate === "Trump" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)` } : null;
 
+
   return (
     <Switch>
       <StyledCanvas>
@@ -194,7 +195,7 @@ const Battle: React.FC = () => {
 
             <Title>Who Will Win?</Title>
             {roughBets.trump > 0 &&
-              <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
+                <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
             }
 
             <VersusContainer>
@@ -223,6 +224,8 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+
 
 const ModalBlock = styled.div`
 width: 534px;

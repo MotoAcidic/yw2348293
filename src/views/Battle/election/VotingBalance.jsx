@@ -22,7 +22,7 @@ const FarmGraph = ({ votes1, votes2 }) => {
         Voting Balance
       </SubTitle> */}
       <StyledContent>
-      <CardIcon src={MiniTrump} />
+        <CardIcon src={MiniTrump} />
 
         <BalanceBar>
           <div style={{ backgroundColor: '#AB1200', height: '100%', borderRadius: "8px 0 0 8px", width: percent1 + '%', borderRight: "3px solid black" }} />
@@ -30,9 +30,22 @@ const FarmGraph = ({ votes1, votes2 }) => {
         <CardIcon src={MiniBiden} />
 
       </StyledContent>
+      <SmallText>${(votes1 + votes2).toFixed(2)}</SmallText>
     </VotingBalance>
   )
 }
+
+
+const SmallText = styled.div`
+font-family: "Gilroy";
+font-size: 14px;
+font-weight: 100;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+`
 
 const CardIcon = styled.img`
 	height: 50px;
@@ -70,7 +83,7 @@ const VotingBalance = styled.div`
 display: flex;
 flex-direction: column;
 width: 89%;
-margin: 0 auto 30px auto;
+margin: 0 auto 15px auto;
 `
 
 

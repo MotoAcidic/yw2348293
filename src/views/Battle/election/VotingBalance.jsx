@@ -30,7 +30,7 @@ const FarmGraph = ({ votes1, votes2 }) => {
         <CardIcon src={MiniBiden} />
 
       </StyledContent>
-      <SmallText>${(votes1 + votes2).toFixed(2)}</SmallText>
+      <SmallText>${(votes1 + votes2).toFixed(2).toLocaleString(2)}</SmallText>
     </VotingBalance>
   )
 }

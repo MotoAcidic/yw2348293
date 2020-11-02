@@ -313,7 +313,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 ` : styled.div`
 font-family: "Gilroy";
   font-size: 30px;

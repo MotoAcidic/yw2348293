@@ -30,7 +30,7 @@ const FarmGraph = ({ votes1, votes2 }) => {
         <CardIcon src={MiniBiden} />
 
       </StyledContent>
-      <SmallText>Volume: ${(votes1 + votes2).toLocaleString(undefined, { maximumFractionDigits: 2 })}</SmallText>
+      <SmallText>Volume: ${(votes1 + votes2).toLocaleString(undefined, { maximumFractionDigits: 2 })}💰</SmallText>
     </VotingBalance>
   )
 }
@@ -38,7 +38,7 @@ const FarmGraph = ({ votes1, votes2 }) => {
 
 const SmallText = styled.div`
 font-family: "Gilroy";
-font-size: 14px;
+font-size: 20px;
 font-weight: 100;
 font-stretch: normal;
 font-style: normal;

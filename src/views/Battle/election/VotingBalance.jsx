@@ -30,7 +30,7 @@ const FarmGraph = ({ votes1, votes2 }) => {
         <CardIcon src={MiniBiden} />
 
       </StyledContent>
-      <SmallText>TVL: ${(votes1 + votes2).toLocaleString(undefined, { maximumFractionDigits: 2 })}</SmallText>
+      <SmallText>Volume: ${(votes1 + votes2).toLocaleString(undefined, { maximumFractionDigits: 2 })}</SmallText>
     </VotingBalance>
   )
 }

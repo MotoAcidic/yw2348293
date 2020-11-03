@@ -5,207 +5,207 @@ const states = [
 	},
 	{
 		name: 'AK',
-		electoralVotes: null,
+		electoralVotes: 3,
 	},
 	{
 		name: 'AL',
-		electoralVotes: null,
+		electoralVotes: 9,
 	},
 	{
 		name: 'AR',
-		electoralVotes: null,
+		electoralVotes: 6,
 	},
 	{
 		name: 'AZ',
-		electoralVotes: null,
+		electoralVotes: 11,
 	},
 	{
 		name: 'CA',
-		electoralVotes: null,
+		electoralVotes: 55,
 	},
 	{
 		name: 'CO',
-		electoralVotes: null,
+		electoralVotes: 9,
 	},
 	{
 		name: 'CT',
-		electoralVotes: null,
+		electoralVotes: 7,
 	},
 	{
 		name: 'DC',
-		electoralVotes: null,
+		electoralVotes: 3,
 	},
 	{
 		name: 'DE',
-		electoralVotes: null,
+		electoralVotes: 3,
 	},
 	{
 		name: 'FL',
-		electoralVotes: null,
+		electoralVotes: 29,
 	},
 	{
 		name: 'GA',
-		electoralVotes: null,
+		electoralVotes: 16,
 	},
 	{
 		name: 'HI',
-		electoralVotes: null,
+		electoralVotes: 4,
 	},
 	{
 		name: 'IA',
-		electoralVotes: null,
+		electoralVotes: 6,
 	},
 	{
 		name: 'ID',
-		electoralVotes: null,
+		electoralVotes: 4,
 	},
 	{
 		name: 'IL',
-		electoralVotes: null,
+		electoralVotes: 20,
 	},
 	{
 		name: 'IN',
-		electoralVotes: null,
+		electoralVotes: 11,
 	},
 	{
 		name: 'KS',
-		electoralVotes: null,
+		electoralVotes: 6,
 	},
 	{
 		name: 'KY',
-		electoralVotes: null,
+		electoralVotes: 8,
 	},
 	{
 		name: 'LA',
-		electoralVotes: null,
+		electoralVotes: 8,
 	},
 	{
 		name: 'MA',
-		electoralVotes: null,
+		electoralVotes: 11,
 	},
 	{
 		name: 'MD',
-		electoralVotes: null,
+		electoralVotes: 10,
 	},
 	{
 		name: 'ME',
-		electoralVotes: null,
+		electoralVotes: 4,
 	},
 	{
 		name: 'MI',
-		electoralVotes: null,
+		electoralVotes: 16,
 	},
 	{
 		name: 'MN',
-		electoralVotes: null,
+		electoralVotes: 10,
 	},
 	{
 		name: 'MO',
-		electoralVotes: null,
+		electoralVotes: 10,
 	},
 	{
 		name: 'MS',
-		electoralVotes: null,
+		electoralVotes: 6,
 	},
 	{
 		name: 'MT',
-		electoralVotes: null,
+		electoralVotes: 3,
 	},
 	{
 		name: 'NC',
-		electoralVotes: null,
+		electoralVotes: 15,
 	},
 	{
 		name: 'ND',
-		electoralVotes: null,
+		electoralVotes: 3,
 	},
 	{
 		name: 'NE',
-		electoralVotes: null,
+		electoralVotes: 5,
 	},
 	{
 		name: 'NH',
-		electoralVotes: null,
+		electoralVotes: 4,
 	},
 	{
 		name: 'NJ',
-		electoralVotes: null,
+		electoralVotes: 14,
 	},
 	{
 		name: 'NM',
-		electoralVotes: null,
+		electoralVotes: 5,
 	},
 	{
 		name: 'NV',
-		electoralVotes: null,
+		electoralVotes: 6,
 	},
 	{
 		name: 'NY',
-		electoralVotes: null,
+		electoralVotes: 29,
 	},
 	{
 		name: 'OH',
-		electoralVotes: null,
+		electoralVotes: 18,
 	},
 	{
 		name: 'OK',
-		electoralVotes: null,
+		electoralVotes: 7,
 	},
 	{
 		name: 'OR',
-		electoralVotes: null,
+		electoralVotes: 7,
 	},
 	{
 		name: 'PA',
-		electoralVotes: null,
+		electoralVotes: 20,
 	},
 	{
 		name: 'RI',
-		electoralVotes: null,
+		electoralVotes: 4,
 	},
 	{
 		name: 'SC',
-		electoralVotes: null,
+		electoralVotes: 9,
 	},
 	{
 		name: 'SD',
-		electoralVotes: null,
+		electoralVotes: 3,
 	},
 	{
 		name: 'TN',
-		electoralVotes: null,
+		electoralVotes: 11,
 	},
 	{
 		name: 'TX',
-		electoralVotes: null,
+		electoralVotes: 38,
 	},
 	{
 		name: 'UT',
-		electoralVotes: null,
+		electoralVotes: 6,
 	},
 	{
 		name: 'VA',
-		electoralVotes: null,
+		electoralVotes: 13,
 	},
 	{
 		name: 'VT',
-		electoralVotes: null,
+		electoralVotes: 3,
 	},
 	{
 		name: 'WA',
-		electoralVotes: null,
+		electoralVotes: 12,
 	},
 	{
 		name: 'WI',
-		electoralVotes: null,
+		electoralVotes: 10,
 	},
 	{
 		name: 'WV',
-		electoralVotes: null,
+		electoralVotes: 5,
 	},
 	{
 		name: 'WY',
-		electoralVotes: null,
+		electoralVotes: 3,
 	}
 ]
 

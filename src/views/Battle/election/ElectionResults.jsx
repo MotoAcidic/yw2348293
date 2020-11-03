@@ -265,7 +265,7 @@ flex-wrap: nowrap;
 
 const BigTitle = styled.div`
 font-family: "Gilroy";
-font-size: 16px;
+font-size: 30px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;

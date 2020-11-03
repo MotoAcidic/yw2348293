@@ -205,14 +205,14 @@ const Seperator = !isMobile() ? styled.div`
 
 const BigTitle = styled.div`
 font-family: "Gilroy";
-  font-size: 60px;
+  font-size: 80px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 1;
   letter-spacing: normal;
   color: rgb(255, 204, 74);
-  max-width: 70vw;
+  max-width: 80vw;
   margin: 0 auto 20px;
 `
 

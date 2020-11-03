@@ -111,7 +111,7 @@ const About: React.FC = () => {
               target="_blank"
             />
           </TopDisplayContainer>
-          <Title>
+          {/* <Title>
             Frequently Asked Questions
           </Title>
           <FAQSection>
@@ -134,7 +134,7 @@ const About: React.FC = () => {
                 There are 2,800,000 WAR Tokens in total. The majority have been given out in Farming and Battle Rewards to jumpstart the community. We have enough rewards to give out through Season 4, but before then we aim to pay out $WAR token holders with profits made on bets placed on our system. Ten percent of all $WAR bets are re-distributed to $WAR yields, $WAR LP holders, and the $WAR Community Chest (DAO).
               </RecDesc>
             </Rectangle>
-            {/* <Rectangle>
+            <Rectangle>
               <RecTitle>How does the Battle Arena work?</RecTitle>
               <RecDesc>
                 Every day we set up head to head battles, where crypto communities face off against each other and $WAR token holders vote on who they think will win. The winners used to be decided strictly based on voting, but now the winners can also be chosen based on changes in MarketCap Price. Please read the game rules on the battle page for a full outline on the most up to date rules.
@@ -145,8 +145,8 @@ const About: React.FC = () => {
               <RecDesc>
                 We were looking at current DeFi projects and thought it would be cool if there was something to do with the asset other than farming. We loved how engaged Farming made everyone, so we decided to see what we could come up with to make a fun crypto community game out of it.
               </RecDesc>
-            </Rectangle> */}
-          </FAQSection>
+            </Rectangle>
+          </FAQSection> */}
           <Roadmap />
           <Title>Official Medium Posts</Title>
           <MediumSection>

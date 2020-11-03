@@ -135,7 +135,7 @@ const Farms: React.FC = () => {
                     target="_blank"
                   />
                 </TopDisplayContainer>
-            <BigTitle>THE FUTURE OF BETTING, TOURNAMENTS, AND PREDICTION MARKETS IS HERE!</BigTitle>
+            <BigTitle>The future of prediction markets, tournaments, and betting is here!</BigTitle>
             <Title>YieldWars is a competition platform, where you can battle (and earn yield) on almost anything</Title>
 
                 {/*<HelloBar>YieldWars Battle page will launch at 5pm PT today!!
@@ -190,22 +190,23 @@ font-family: "Gilroy";
   color: #ffffff;
   max-width: 70vw;
   margin: 0 auto 60px;
-`
-
-
-const Seperator = !isMobile() ? styled.div`
+  `
+  
+  
+  const Seperator = !isMobile() ? styled.div`
   width: 1000px;
   height: 1px;
   background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
-` : styled.div`
+  ` : styled.div`
   width: 90vw;
   height: 1px;
   background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
-`
-
-const BigTitle = styled.div`
-font-family: "Gilroy";
+  `
+  
+  const BigTitle = styled.div`
+  font-family: "Gilroy";
   font-size: 80px;
+  text-transform: uppercase;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;

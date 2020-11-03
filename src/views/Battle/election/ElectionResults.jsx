@@ -50,6 +50,14 @@ const ElectionStatusDisplay = () => {
 			let undecided = [];
 			let totalUndecided = 0;
 
+			results.sort(function (a, b) {
+				if (a.electoralVotes < b.electoralVotes) {
+					return 1;
+				} else {
+					return -1;
+				}
+			});
+
 			for (let i = 0; i < results.length; i++) {
 				if (results[i].name === "US") continue;
 				if (results[i].winner === "Biden") {
@@ -112,10 +120,8 @@ const ElectionStatusDisplay = () => {
 		<VersusContainer>
 			<Column>
 				<CardIcon src={MiniTrump} />
-
 				<SubTitle>{trumpTotal}</SubTitle>
 				<VotesColumn>
-
 					{trumpVotes}
 				</VotesColumn>
 			</Column>
@@ -123,9 +129,7 @@ const ElectionStatusDisplay = () => {
 			<Column>
 				<BigTitle>Undecided</BigTitle>
 				<SubTitle>{undecidedTotal}</SubTitle>
-
 				<VotesColumn>
-
 					{undecidedVotes}
 				</VotesColumn>
 			</Column>

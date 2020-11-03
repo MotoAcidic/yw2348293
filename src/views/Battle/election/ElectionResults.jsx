@@ -143,8 +143,8 @@ const ElectionStatusDisplay = () => {
 	)
 }
 const CardIcon = styled.img`
-	height: 100px;
-  width: 100px;
+	height: 200px;
+  width: 200px;
   border-radius: 50%;
   align-items: center;
   display: flex;
@@ -231,7 +231,7 @@ flex-wrap: nowrap;
 
 const BigTitle = styled.div`
 font-family: "Gilroy";
-  font-size: 30px;
+  font-size: 50px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -240,14 +240,14 @@ font-family: "Gilroy";
   color: rgb(255, 204, 74);
   max-width: 80vw;
 	margin: 0 auto 10px auto;
-	min-height: 100px;
+	min-height: 200px;
 	display: flex;
 	align-items: center;
 `
 
 const Column = styled.div`
 display: flex;
-width: 200px;
+width: 95%;
 flex-direction: column;
 align-items: center;
 `
@@ -263,7 +263,7 @@ const VersusContainer = !isMobile() ? styled.div`
 display: flex;
 flex-direction: row;
 flex-wrap: nowrap;
-justify-content: space-between;
+justify-content: space-evenly;
 font-size: 30px;
 font-family: "Gilroy";
 font-weight: bold;
@@ -276,8 +276,8 @@ border-radius: 8px;
 border: solid 2px rgba(255, 183, 0, 0.3);
 background-color: rgba(4,2,43,1);
 padding: 20px 0 20px;
-height: 470px;
-min-width: 602px;
+height: 600px;
+min-width: 1000px;
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;

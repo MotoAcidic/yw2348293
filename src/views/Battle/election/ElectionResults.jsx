@@ -154,7 +154,7 @@ const ElectionStatusDisplay = () => {
 }
 
 const Candidate = styled.img`
-width: 70%;
+width: 95%;
 border-radius: 8px;
 `
 

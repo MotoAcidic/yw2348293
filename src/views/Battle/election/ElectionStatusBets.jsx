@@ -272,7 +272,7 @@ border-radius: 8px;
 border: solid 2px rgba(255, 183, 0, 0.3);
 background-color: rgba(4,2,43,1);
 padding: 20px;
-height: 470px;
+height: 550px;
 min-width: 300px;
 ` : styled.div`
 margin: 0 0 40px 0;

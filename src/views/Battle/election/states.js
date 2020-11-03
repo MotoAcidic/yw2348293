@@ -5,6 +5,7 @@ import az from "../../../assets/img/stateflags/az.jpg";
 import ca from "../../../assets/img/stateflags/ca.jpg";
 import co from "../../../assets/img/stateflags/co.jpg";
 import ct from "../../../assets/img/stateflags/ct.jpg";
+import dc from '../../../assets/img/stateflags/dc.jpg'
 import de from "../../../assets/img/stateflags/de.jpg";
 import fl from "../../../assets/img/stateflags/fl.jpg";
 import ga from "../../../assets/img/stateflags/ga.jpg";
@@ -94,7 +95,7 @@ const states = [
 	{
 		name: 'DC',
 		electoralVotes: 3,
-		image: null
+		image: dc
 	},
 	{
 		name: 'DE',

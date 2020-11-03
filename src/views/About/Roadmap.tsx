@@ -47,58 +47,58 @@ const Roadmap = () => {
         <RecDesc>
           <MilestoneRow>
             <img className="milestone-image" alt="milestone" src={milestone_s1_1} />
-            <MilestoneText>
+            <MilestoneTextDone>
               Launch Daily Governance
-              </MilestoneText>
+              </MilestoneTextDone>
           </MilestoneRow>
           <MilestoneRow>
             <img className="milestone-image" alt="milestone" src={milestone_s1_2} />
-            <MilestoneText>
+            <MilestoneTextDone>
               Roadmap Announced and Jobs / Bounty Board
-              </MilestoneText>
+              </MilestoneTextDone>
           </MilestoneRow>
           <MilestoneRow>
             <img className="milestone-image" alt="milestone" src={milestone_s1_3} />
-            <MilestoneText>
+            <MilestoneTextDone>
               Based Rover Launch (if vote approved)
-              </MilestoneText>
+              </MilestoneTextDone>
           </MilestoneRow>
           <MilestoneRow>
             <img className="milestone-image" alt="milestone" src={milestone_s1_4} />
-            <MilestoneText>
+            <MilestoneTextDone>
               Airdropped NFT's for Season 1+2 participants and Finals Winners
-              </MilestoneText>
+              </MilestoneTextDone>
           </MilestoneRow>
           <MilestoneRow>
             <img className="milestone-image" alt="milestone" src={milestone_s1_5} />
-            <MilestoneText>
+            <MilestoneTextDone>
               Completed Security Review on Battles
-              </MilestoneText>
+              </MilestoneTextDone>
           </MilestoneRow>
           <Space />
           <MilestoneRow>
             <img className="milestone-image" alt="milestone" src={milestone_s2_1} />
-            <MilestoneText>
+            <MilestoneTextDone>
               Season 2 Begins with 24 Teams
-              </MilestoneText>
+              </MilestoneTextDone>
           </MilestoneRow>
           <MilestoneRow>
             <img className="milestone-image" alt="milestone" src={milestone_s2_2} />
-            <MilestoneText>
+            <MilestoneTextDone>
               Verifiable Voting
-              </MilestoneText>
+              </MilestoneTextDone>
           </MilestoneRow>
           <MilestoneRow>
             <img className="milestone-image" alt="milestone" src={milestone_s2_3} />
-            <MilestoneText>
+            <MilestoneTextDone>
               Ability to bet on winners in addition to vote
-              </MilestoneText>
+              </MilestoneTextDone>
           </MilestoneRow>
           <MilestoneRow>
             <img className="milestone-image" alt="milestone" src={milestone_s2_4} />
-            <MilestoneText>
+            <MilestoneTextDone>
               Experiment with different ways to choose winners, i.e. Token price changes
-              </MilestoneText>
+              </MilestoneTextDone>
           </MilestoneRow>
           <Space />
           <MilestoneRow>
@@ -188,6 +188,17 @@ font-style: normal;
 line-height: 1.33;
 letter-spacing: normal;
 color: #ffffff;`
+
+const MilestoneTextDone = styled.div`margin-left: 30px;
+font-family: "Gilroy";
+font-size: 18px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1.33;
+letter-spacing: normal;
+color: #cccccc;
+text-decoration: line-through;`
 
 const Space = styled.div`height: 20px`;
 

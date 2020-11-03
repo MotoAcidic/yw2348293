@@ -14,7 +14,7 @@ function isMobile() {
 const Nav: React.FC = () => {
   return (
     <StyledNav>
-      <StyledLink exact activeClassName="active" to="/farms">Farm</StyledLink>
+      <StyledLink exact activeClassName="active" to="/farms">Home</StyledLink>
       {/* <StyledLink exact activeClassName="active" to="/earn">Earn</StyledLink> */}
       {/* <StyledLink exact activeClassName="active" to="/battle">Battle</StyledLink> */}
       <StyledLink exact activeClassName="active" to="/election">Battle</StyledLink>

@@ -31,6 +31,7 @@ import { getContract } from '../../../utils/erc20'
 import { provider } from 'web3-core'
 import PriceHistoryCard from "../../Results/PercentChangeCard";
 import VotingBalance from "./VotingBalance";
+import Countdown from './CountDown'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -197,6 +198,7 @@ const Battle: React.FC = () => {
           <Page>
 
             <Title>Who Will Win?</Title>
+            <Countdown endTime={1604440800000} />
             {roughBets.trump > 0 &&
               <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
             }

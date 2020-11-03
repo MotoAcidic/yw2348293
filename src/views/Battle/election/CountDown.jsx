@@ -17,18 +17,18 @@ class CountDown extends React.Component {
 
 	componentDidMount() {
 
-		let endTime;
-		const format = 'hh:mm:ss';
-		if (moment.utc().isBetween(moment.utc('18:00:00', format), moment.utc('19:00:00', format))) {
-			this.setState({inBetween: true})
-			endTime = moment.utc().startOf('hour').hours(19)
-		} else {
-			if (moment.utc().isBetween(moment.utc('19:00:00', format), moment.utc('23:59:59', format))) {
-				endTime = moment.utc().add(1, 'days').startOf('hour').hours(18)
-			} else {
-				endTime = moment.utc().startOf('hour').hours(18)
-			}
-		}
+		let endTime = this.props.endTime;
+		// const format = 'hh:mm:ss';
+		// if (moment.utc().isBetween(moment.utc('18:00:00', format), moment.utc('19:00:00', format))) {
+		// 	this.setState({inBetween: true})
+		// 	endTime = moment.utc().startOf('hour').hours(19)
+		// } else {
+		// 	if (moment.utc().isBetween(moment.utc('19:00:00', format), moment.utc('23:59:59', format))) {
+		// 		endTime = moment.utc().add(1, 'days').startOf('hour').hours(18)
+		// 	} else {
+		// 		endTime = moment.utc().startOf('hour').hours(18)
+		// 	}
+		// }
 
 		let diffTime = endTime - moment.utc();
 		let duration = moment.duration(diffTime);
@@ -46,7 +46,7 @@ class CountDown extends React.Component {
 	render() {
 		return (
 			<Desc>
-				{this.state.inBetween ? "Next battle starts in" : "Battle ends in"}
+				betting ends @ 22:00 UTC
 				<Countdown>
 					<Item>
 						{this.state.hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
@@ -108,7 +108,7 @@ font-family: "Gilroy";
   font-stretch: normal;
   font-style: normal;
   letter-spacing: 2px;
-  color: #ffb700;
+  color: #ffffff;
 `
 
 

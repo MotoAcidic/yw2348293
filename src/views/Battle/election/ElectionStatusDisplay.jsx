@@ -17,17 +17,7 @@ const ElectionStatusDisplay = () => {
 	return (
 		<VotingBalance>
 			<div align="center">
-				<a href="https://www.270towin.com/maps/consensus-2020-electoral-map-forecast">
-					<img src="https://www.270towin.com/map-images/consensus-2020-electoral-map-forecast.png" width="800" />
-				</a>
-				<br />
-				<small>
-					<img src="https://www.270towin.com/uploads/3rd_party_270_30px.png" alt="" />
-					Click the map to create your own at
-					<a href="https://www.270towin.com/maps/consensus-2020-electoral-map-forecast">
-						270toWin.com
-					</a>
-				</small>
+				<iframe src="https://archive.graphicnews.com/en/gn_flash/swf-40500-40999/GN40630W/GN40630.html" />
 			</div>
     </VotingBalance>
   )

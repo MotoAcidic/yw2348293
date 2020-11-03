@@ -158,8 +158,8 @@ const ElectionStatusDisplay = () => {
 }
 
 const Loading = styled.img`
-	width: 500px;
-	height: 500px;
+	width: 200px;
+	height: 200px;
 `
 
 const Container = styled.div`

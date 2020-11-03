@@ -117,27 +117,27 @@ const ElectionStatusDisplay = () => {
 
 				<SubTitle>{trumpTotal}</SubTitle>
 				<VotesColumn>
-
+					{!results && <div>Loading...</div>}
 					{trumpVotes}
 				</VotesColumn>
 			</Column>
-			<Divider />
-			<Column>
+			<SmallColumn>
 				<BigTitle>Undecided</BigTitle>
 				<SubTitle>{undecidedTotal}</SubTitle>
 
 				<VotesColumn>
+					{!results  && <div>Loading...</div>}
 
 					{undecidedVotes}
 				</VotesColumn>
-			</Column>
-			<Divider />
+			</SmallColumn>
 			<Column>
 				<Candidate src={Biden} />
 
 				<SubTitle>{bidenTotal}</SubTitle>
 
 				<VotesColumn>
+					{!results && <div>Loading...</div>}
 
 					{bidenVotes}
 				</VotesColumn>
@@ -147,8 +147,7 @@ const ElectionStatusDisplay = () => {
 }
 
 const Candidate = styled.img`
-width: 50%;
-height: 100%;
+width: 70%;
 border-radius: 8px;
 `
 
@@ -172,6 +171,7 @@ line-height: 1;
 letter-spacing: normal;
 	color: white;
 	margin-bottom: 10px;
+	margin-top: 10px;
 `
 
 const VotesColumn = styled.div`
@@ -241,23 +241,27 @@ flex-wrap: nowrap;
 
 const BigTitle = styled.div`
 font-family: "Gilroy";
-  font-size: 50px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: rgb(255, 204, 74);
-  max-width: 80vw;
-	margin: 0 auto 10px auto;
-	min-height: 200px;
-	display: flex;
-	align-items: center;
+font-size: 16px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: rgb(255, 204, 74);
+margin-bottom: 10px;
+margin-top: 10px;
 `
 
 const Column = styled.div`
 display: flex;
 width: 95%;
+flex-direction: column;
+align-items: center;
+`
+
+const SmallColumn = styled.div`
+display: flex;
+width: 50%;
 flex-direction: column;
 align-items: center;
 `
@@ -283,10 +287,7 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
-// border: solid 2px rgba(255, 183, 0, 0.3);
-// background-color: rgba(4,2,43,1);
-padding: 20px 0 20px;
-height: 600px;
+height: 580px;
 min-width: 1000px;
 ` : styled.div`
 margin: 0 0 40px 0;

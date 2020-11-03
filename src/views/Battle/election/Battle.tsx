@@ -224,18 +224,20 @@ const Battle: React.FC = () => {
             </div> */}
               <Section>
                 {/* <ElectionDisplay /> */}
-                
+
                 {yam ? <ElectionResults /> : (
                   <div onClick={() => connect('injected')}>
                     Please connect your Wallet
                   </div>
                 )}
                 {yam && (
-                  <ElectionStatus
-                    battle={battles}
-                    candidateInfo={candidate}
-                    electionContract={electionContract}
-                  />
+                  <StatusBlock>
+                    <ElectionStatus
+                      battle={battles}
+                      candidateInfo={candidate}
+                      electionContract={electionContract}
+                    />
+                  </StatusBlock>
                 )}
               </Section>
 
@@ -271,6 +273,11 @@ const Section = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 40px;
+`
+
+const StatusBlock = styled.div`
+  width: 30%;
+  margin-right: 30px;
 `
 
 const InfoBlock = styled.div`

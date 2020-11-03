@@ -199,7 +199,9 @@ const Battle: React.FC = () => {
         <ContentContainer>
           <Page>
             <TopSection>
-              <Title>Who Will Win?</Title>
+              {yam &&
+                <Title>Who Will Win?</Title>
+              }
               {roughBets.trump > 0 &&
                 <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
               }
@@ -223,26 +225,42 @@ const Battle: React.FC = () => {
               </Modal>
             </div> */}
               <Section>
-                <ElectionDisplay />
-                {/* <ElectionResults /> */}
+                {/* <ElectionDisplay /> */}
+
+                {yam ? <ElectionResults /> : (
+                  <VersusContainer onClick={() => connect('injected')}>
+                    
+                    <BigTitle>
+
+                    Connect Your Wallet
+                    </BigTitle>
+                    <SubTitle>
+                      to view election status
+                    </SubTitle>
+                  </VersusContainer>
+                )}
                 {yam && (
-                  <ElectionStatus
-                    battle={battles}
-                    candidateInfo={candidate}
-                    electionContract={electionContract}
-                  />
+                  <StatusBlock>
+                    <ElectionStatus
+                      battle={battles}
+                      candidateInfo={candidate}
+                      electionContract={electionContract}
+                    />
+                  </StatusBlock>
                 )}
               </Section>
 
-              <InfoBlock>
-                <img src={everipediaLogo} width="20px" height="20px" />
-                <img src={chainlinkLogo} width="20px" height="20px" />
-                <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
+              {yam &&
+                <InfoBlock>
+                  <img src={everipediaLogo} width="20px" height="20px" />
+                  <img src={chainlinkLogo} width="20px" height="20px" />
+                  <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
               Election Results brought to you by AP + Everipedia. Powered by Chainlink.
               <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
-                <img src={chainlinkLogo} width="20px" height="20px" />
-                <img src={everipediaLogo} width="20px" height="20px" />
-              </InfoBlock>
+                  <img src={chainlinkLogo} width="20px" height="20px" />
+                  <img src={everipediaLogo} width="20px" height="20px" />
+                </InfoBlock>
+              }
             </TopSection>
 
             <Rules />
@@ -253,6 +271,33 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const SubTitle = styled.div`
+font-family: "Gilroy";
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+	color: white;
+	margin-bottom: 10px;
+`
+
+const BigTitle = styled.div`
+font-family: "Gilroy";
+  font-size: 50px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: rgb(255, 204, 74);
+  max-width: 80vw;
+	margin: 0 auto 20px auto;
+	display: flex;
+	align-items: center;
+`
 
 const TopSection = styled.div`
 min-height: 90vh;
@@ -266,6 +311,11 @@ const Section = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 40px;
+`
+
+const StatusBlock = styled.div`
+width: 30%;
+margin-right: 20px;
 `
 
 const InfoBlock = !isMobile() ? styled.div`
@@ -345,19 +395,6 @@ width: 100%;
 height: 100%;
 display: flex;
 
-`
-
-const BigTitle = styled.div`
-font-family: "Gilroy";
-  font-size: 60px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: rgb(255, 204, 74);
-  max-width: 80vw;
-  margin: -30px auto 40px;
 `
 
 const Seperator = !isMobile() ? styled.div`
@@ -493,9 +530,11 @@ const StyledA = styled.a`
 
 
 const VersusContainer = !isMobile() ? styled.div`
-width: 90vw;
+width: 600px;
+height: 140px;
 display: flex;
 align-items: center;
+justify-content: center;
 font-size: 30px;
 margin: 0 auto 5vh auto;
 font-family: "Gilroy";
@@ -504,10 +543,12 @@ font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
+flex-direction: column;
 color: #ffffff;
 border-radius: 8px;
 border: solid 2px rgba(255, 183, 0, 0.3);
-background-color: rgba(256,256,256,0.08);
+ background-color: rgba(4,2,43,0.4);
+ cursor: pointer;
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;
@@ -522,7 +563,8 @@ font-family: "Gilroy";
   letter-spacing: normal;
 	color: #ffffff;
 	border-radius: 8px;
-	border: solid 2px rgba(255, 183, 0, 0.3);
-	background-color: rgba(256,256,256,0.08);`
+  border: solid 2px rgba(255, 183, 0, 0.3);
+ background-color: rgba(4,2,43,0.4); 
+`
 
 export default Battle;

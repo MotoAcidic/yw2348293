@@ -179,7 +179,7 @@ const Farms: React.FC = () => {
   );
 };
 
-const Title = styled.div`
+const Title = !isMobile() ? styled.div`
 font-family: "Gilroy";
   font-size: 24px;
   font-weight: bold;
@@ -190,7 +190,18 @@ font-family: "Gilroy";
   color: #ffffff;
   max-width: 70vw;
   margin: 0 auto 60px;
-  `
+  ` : styled.div`
+  font-family: "Gilroy";
+    font-size: 18px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    color: #ffffff;
+    max-width: 70vw;
+    margin: auto;
+    `
   
   
   const Seperator = !isMobile() ? styled.div`
@@ -203,7 +214,7 @@ font-family: "Gilroy";
   background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
   `
   
-  const BigTitle = styled.div`
+  const BigTitle = !isMobile() ? styled.div`
   font-family: "Gilroy";
   font-size: 80px;
   text-transform: uppercase;
@@ -215,6 +226,18 @@ font-family: "Gilroy";
   color: rgb(255, 204, 74);
   max-width: 80vw;
   margin: 0 auto 20px;
+` : styled.div`
+font-family: "Gilroy";
+font-size: 40px;
+text-transform: uppercase;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: rgb(255, 204, 74);
+max-width: 90vw;
+margin: 0 auto 20px;
 `
 
 const Landing = styled.div`

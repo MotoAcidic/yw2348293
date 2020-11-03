@@ -238,7 +238,7 @@ const Battle: React.FC = () => {
   );
 };
 
-const InfoBlock = styled.div`
+const InfoBlock = !isMobile() ? styled.div`
 font-family: "Gilroy";
 color: rgb(255, 190, 26);
 font-size: 22px;
@@ -254,7 +254,23 @@ flex-direction: row;
 justify-content: space-evenly;
 align-items: center;
 width: 900px;
-`
+` : styled.div`
+font-family: "Gilroy";
+color: rgb(255, 190, 26);
+font-size: 18px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+margin-bottom: 2vh;
+align-items: center;
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+align-items: center;
+width: 90vw;
+` 
 
 const ModalBlock = styled.div`
 width: 534px;

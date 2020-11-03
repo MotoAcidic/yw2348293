@@ -31,7 +31,9 @@ import { getContract } from '../../../utils/erc20'
 import { provider } from 'web3-core'
 import PriceHistoryCard from "../../Results/PercentChangeCard";
 import VotingBalance from "./VotingBalance";
-import Countdown from './CountDown'
+import ElectionStatus from './ElectionStatusBets'
+import ElectionResults from "./ElectionResults";
+import ElectionDisplay from './ElectionStatusDisplay'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -196,14 +198,13 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
+            <TopSection>
+              <Title>Who Will Win?</Title>
+              {roughBets.trump > 0 &&
+                <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
+              }
 
-            <Title>Who Will Win?</Title>
-            <Countdown endTime={1604440800000} />
-            {roughBets.trump > 0 &&
-              <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
-            }
-
-            <VersusContainer>
+              {/* <VersusContainer>
               <VersusBackground>
                 <Candidate1 style={trumpStyle} onMouseOver={() => hoverOver("Trump")} onMouseOut={() => hoverExit()} src={Trump} onClick={(e) => onClickTrump(e)} />
                 <Candidate2 style={bidenStyle} onMouseOver={() => hoverOver("Biden")} onMouseOut={() => hoverExit()} src={Biden} onClick={(e) => onClickBiden(e)} />
@@ -220,16 +221,29 @@ const Battle: React.FC = () => {
                   }
                 </ModalBlock>
               </Modal>
-            </div>
-            <InfoBlock>
-              <img src={everipediaLogo} width="20px" height="20px" />
-              <img src={chainlinkLogo} width="20px" height="20px" />
-              <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
+            </div> */}
+              <Section>
+                <ElectionDisplay />
+                {/* <ElectionResults /> */}
+                {yam && (
+                  <ElectionStatus
+                    battle={battles}
+                    candidateInfo={candidate}
+                    electionContract={electionContract}
+                  />
+                )}
+              </Section>
+
+              <InfoBlock>
+                <img src={everipediaLogo} width="20px" height="20px" />
+                <img src={chainlinkLogo} width="20px" height="20px" />
+                <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
               Election Results brought to you by AP + Everipedia. Powered by Chainlink.
               <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
-              <img src={chainlinkLogo} width="20px" height="20px" />
-              <img src={everipediaLogo} width="20px" height="20px" />
-            </InfoBlock>
+                <img src={chainlinkLogo} width="20px" height="20px" />
+                <img src={everipediaLogo} width="20px" height="20px" />
+              </InfoBlock>
+            </TopSection>
 
             <Rules />
             <Pool3 />
@@ -240,6 +254,20 @@ const Battle: React.FC = () => {
   );
 };
 
+const TopSection = styled.div`
+min-height: 90vh;
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+align-items: center;
+`
+
+const Section = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 40px;
+`
+
 const InfoBlock = !isMobile() ? styled.div`
 font-family: "Gilroy";
 color: rgb(255, 190, 26);
@@ -249,7 +277,7 @@ font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-margin-bottom: 2vh;
+margin-bottom: 120px;
 align-items: center;
 display: flex;
 flex-direction: row;

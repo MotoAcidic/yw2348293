@@ -7,6 +7,8 @@ import useYam from "../../../hooks/useYam";
 import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 import MiniBiden from "../../../assets/img/biden@2x.png";
 import MiniTrump from "../../../assets/img/trump@2x.png";
+import Biden from "../../../assets/img/biden.png";
+import Trump from "../../../assets/img/trump.png";
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -111,7 +113,7 @@ const ElectionStatusDisplay = () => {
 	return (
 		<VersusContainer>
 			<Column>
-				<CardIcon src={MiniTrump} />
+				<Candidate src={Trump} />
 
 				<SubTitle>{trumpTotal}</SubTitle>
 				<VotesColumn>
@@ -131,7 +133,8 @@ const ElectionStatusDisplay = () => {
 			</Column>
 			<Divider />
 			<Column>
-				<CardIcon src={MiniBiden} />
+				<Candidate src={Biden} />
+
 				<SubTitle>{bidenTotal}</SubTitle>
 
 				<VotesColumn>
@@ -142,6 +145,13 @@ const ElectionStatusDisplay = () => {
 		</VersusContainer>
 	)
 }
+
+const Candidate = styled.img`
+width: 50%;
+height: 100%;
+border-radius: 8px;
+`
+
 const CardIcon = styled.img`
 	height: 100px;
   width: 100px;
@@ -273,8 +283,8 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
-border: solid 2px rgba(255, 183, 0, 0.3);
-background-color: rgba(4,2,43,1);
+// border: solid 2px rgba(255, 183, 0, 0.3);
+// background-color: rgba(4,2,43,1);
 padding: 20px 0 20px;
 height: 470px;
 min-width: 602px;

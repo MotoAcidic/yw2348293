@@ -72,7 +72,7 @@ const App: React.FC = () => {
               <Splash />
             </Route>
             <Redirect exact from="/" to="/election" />
-            <Route path="/farms" exact>
+            <Route path="/home" exact>
               <Farms />
             </Route>
             <Route path="/farms/:farmId">

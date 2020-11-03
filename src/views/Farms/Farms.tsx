@@ -95,69 +95,82 @@ const Farms: React.FC = () => {
   return (
     <Switch>
       <StyledCanvas>
-        <BackgroundSection/>
+        <BackgroundSection />
         <ContentContainer>
           <Page>
             <CardContainer>
-              <TopDisplayContainer>
-                <DisplayItem>
-                  $War Price:&nbsp;
+              <Landing>
+
+                <TopDisplayContainer>
+                  <DisplayItem>
+                    $War Price:&nbsp;
                   {currentPrice
-                    ? `$${Number(currentPrice).toLocaleString(undefined, {
-                      minimumFractionDigits: 4,
-                      maximumFractionDigits: 4
-                    })}`
-                    : "-"}
-                </DisplayItem>
-                <DisplayItem>
-                  Supply Staked:&nbsp;
+                      ? `$${Number(currentPrice).toLocaleString(undefined, {
+                        minimumFractionDigits: 4,
+                        maximumFractionDigits: 4
+                      })}`
+                      : "-"}
+                  </DisplayItem>
+                  <DisplayItem>
+                    Supply Staked:&nbsp;
                   {warStaked && !warStaked.warStaked.eq(0)
-                    ? `${Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2
-                    })}%`
-                    : "-"}
-                </DisplayItem>
-                <DisplayItem>
-                  Marketcap:&nbsp;
+                      ? `${Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                      })}%`
+                      : "-"}
+                  </DisplayItem>
+                  <DisplayItem>
+                    Marketcap:&nbsp;
                   {currentPrice && warStaked && !warStaked.circSupply.eq(0)
-                    ? `$${Number(warStaked.circSupply.multipliedBy(currentPrice).dividedBy(10**18).toFixed(2)).toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2
-                    })}`
-                    : "-"}
-                </DisplayItem>
-                <StyledA
-                  style={{marginTop: "-5px"}}
-                  href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
-                  target="_blank"
-                />
-              </TopDisplayContainer>
-              {/*<HelloBar>YieldWars Battle page will launch at 5pm PT today!!
+                      ? `$${Number(warStaked.circSupply.multipliedBy(currentPrice).dividedBy(10 ** 18).toFixed(2)).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                      })}`
+                      : "-"}
+                  </DisplayItem>
+                  <StyledA
+                    style={{ marginTop: "-5px" }}
+                    href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
+                    target="_blank"
+                  />
+                </TopDisplayContainer>
+            <BigTitle>The future of prediction markets, tournaments, and betting is here!</BigTitle>
+            <Title>YieldWars is a competition platform, where you can battle (and earn yield) on almost anything</Title>
+
+                {/*<HelloBar>YieldWars Battle page will launch at 5pm PT today!!
               Official statement on our telegram here: <a style={{color: 'white'}} href="https://t.me/YieldWarsOfficial/4548">https://t.me/YieldWarsOfficial/4548</a>
-              </HelloBar>*/}
-              <TextContainer>
+            </HelloBar>*/}
+                {!isMobile() ?
+                  <iframe title="promo" style={{ width: "650px", height: "365.4px", margin: "10px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
+                  :
+                  <iframe title="promo" style={{ width: "90vw", height: "50.6vw", margin: "40px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
+                }
+                {/* <TextContainer>
                 <LargeText>Select a farm</LargeText>
                 <SmallText>
-                  Earn WAR tokens by Farming the fields of Byzantium
+                Earn WAR tokens by Farming the fields of Byzantium
                 </SmallText>
-              </TextContainer>
-              {/* {diffTime > 0 && (
+              </TextContainer> */}
+                {/* {diffTime > 0 && (
                 <div>
-                  <Title>Pool 2 Begins:</Title>
-                  {isMobile() ? (
-                    <MobileCountDown launchDate={launch} />
+                <Title>Pool 2 Begins:</Title>
+                {isMobile() ? (
+                  <MobileCountDown launchDate={launch} />
                   ) : (
-                      <CountDown launchDate={launch} />
+                    <CountDown launchDate={launch} />
                     )}
-                </div>
-              )} */}
+                    </div>
+                  )} */}
+              </Landing>
+            <Seperator />
+
               <WarPool />
               <FarmCards />
               {/*<SectionDivider />
               <CountDownText>The War Begins:</CountDownText>
               <CountDown launchDate={start} />
-              <WarPool />*/}
+            <WarPool />*/}
             </CardContainer>
           </Page>
         </ContentContainer>
@@ -165,6 +178,70 @@ const Farms: React.FC = () => {
     </Switch>
   );
 };
+
+const Title = !isMobile() ? styled.div`
+font-family: "Gilroy";
+  font-size: 24px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  max-width: 70vw;
+  margin: 0 auto 60px;
+  ` : styled.div`
+  font-family: "Gilroy";
+    font-size: 18px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    color: #ffffff;
+    max-width: 70vw;
+    margin: auto;
+    `
+  
+  
+  const Seperator = !isMobile() ? styled.div`
+  width: 1000px;
+  height: 1px;
+  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
+  ` : styled.div`
+  width: 90vw;
+  height: 1px;
+  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
+  `
+  
+  const BigTitle = !isMobile() ? styled.div`
+  font-family: "Gilroy";
+  font-size: 80px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: rgb(255, 204, 74);
+  max-width: 80vw;
+  margin: 0 auto 20px;
+` : styled.div`
+font-family: "Gilroy";
+font-size: 40px;
+text-transform: uppercase;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: rgb(255, 204, 74);
+max-width: 90vw;
+margin: 0 auto 20px;
+`
+
+const Landing = styled.div`
+min-height: 90vh;`
 
 const StyledA = styled.a`
   cursor: pointer;

@@ -111,16 +111,15 @@ const About: React.FC = () => {
               target="_blank"
             />
           </TopDisplayContainer>
-          <Title>
+          {/* <Title>
             Frequently Asked Questions
           </Title>
           <FAQSection>
             <Rectangle>
               <RecTitle>What is YieldWars?</RecTitle>
               <RecDesc>
-                YieldWars is an experiment on degen game design, governance, and
-                community building. It is the ultimate battle royale to
-                determine which crypto community is the strongest.{" "}
+                YieldWars is an experiment on degen betting, governance, and
+                community building. It is a competition platform, where you can battle (and earn yield) on almost anything. 
               </RecDesc>
             </Rectangle>
             <Rectangle>
@@ -147,13 +146,7 @@ const About: React.FC = () => {
                 We were looking at current DeFi projects and thought it would be cool if there was something to do with the asset other than farming. We loved how engaged Farming made everyone, so we decided to see what we could come up with to make a fun crypto community game out of it.
               </RecDesc>
             </Rectangle>
-            <Rectangle>
-              <RecTitle>What is the Future Roadmap?</RecTitle>
-              <RecDesc>
-                We think Degen gambling and engagement is going to be our focus, so we are exploring lots of ways to make that happen. We’re a team that likes to move fast and experiment, so feel free to reach out to the General and provide him some feedback if you have any @YieldWars
-              </RecDesc>
-            </Rectangle>
-          </FAQSection>
+          </FAQSection> */}
           <Roadmap />
           <Title>Official Medium Posts</Title>
           <MediumSection>

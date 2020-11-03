@@ -459,42 +459,7 @@ text-align: right;
 display: flex;
 justify-content: flex-end;
 align-items: center;
-padding-right: 10px;
-`
-
-const Select = styled.select`
-	width: 280px;
-  height: 44px;
-  font-family: "Gilroy";
-  font-size: 30px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-  padding-left: 8px;
-	font-size: 18px;
-	border-radius: 8px;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-  border: solid 1px rgba(255, 183, 0, 0.5);
-	background-color: rgba(255, 255, 255, 0.2);
-	padding-right: 20px;
-  option {
-		color: black;
-		display: flex;
-		position: absolute;
-		top: 100%;
-		font-size: 18px;
-    white-space: pre;
-		min-height: 20px;
-		border: solid 1px rgba(255, 183, 0, 0.5);
-		background-color: rgba(255, 255, 255, 0.2) !important;
-		padding: 2px;
-  }
-`;
-
-
+padding-right: 10px;`
 
 const VersusContainer = !isMobile() ? styled.div`
 display: flex;
@@ -514,7 +479,7 @@ background-color: rgba(4,2,43,1);
 padding: 20px;
 ` : styled.div`
 margin: 0 0 40px 0;
-width: 90vw;
+max-width: 95wvw;
 display: flex;
 flex-direction: column;
 font-family: "Gilroy";
@@ -528,6 +493,7 @@ font-family: "Gilroy";
 	padding: 20px;
 	border-radius: 8px;
 	border: solid 2px rgba(255, 183, 0, 0.3);
-	background-color: rgba(256,256,256,0.08);`
+	background-color: rgba(4,2,43,1);
+	`
 
 export default Bet

@@ -15,72 +15,21 @@ function isMobile() {
 
 const ElectionStatusDisplay = () => {
 	return (
-		<VotingBalance>
-			<div align="center">
-				<a href="https://www.270towin.com/maps/consensus-2020-electoral-map-forecast">
-					<img src="https://www.270towin.com/map-images/consensus-2020-electoral-map-forecast.png" width="800" />
-				</a>
-				<br />
-				<small>
-					<img src="https://www.270towin.com/uploads/3rd_party_270_30px.png" alt="" />
-					Click the map to create your own at
-					<a href="https://www.270towin.com/maps/consensus-2020-electoral-map-forecast">
-						270toWin.com
-					</a>
-				</small>
-			</div>
-    </VotingBalance>
-  )
+		<a href="https://www.270towin.com/maps/consensus-2020-electoral-map-forecast"
+			target="_blank"
+			rel="noopener noreferrer">
+			<MapEmbed src="https://www.270towin.com/map-images/consensus-2020-electoral-map-forecast.png" width="800" />
+		</a>
+	)
 }
 
-
-const SmallText = styled.div`
-font-family: "Gilroy";
-font-size: 20px;
-font-weight: 100;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: #ffffff;
-`
-
-const CardIcon = styled.img`
-	height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin: 0 15px;
-`
-
-const BalanceBar = styled.div`
-width: calc(100% - 110px);
-height: 22px;
-background-color: #0C438C;
+const MapEmbed = styled.img`
 border: 3px solid black;
-border-radius: 8px;
-`
-
-const SubTitle = styled.div`
-font-family: "Gilroy";
-margin-bottom: 5px;
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-text-align: center;
-color: #ffffff;
-  
-`
+border-radius: 8px;`
 
 const VotingBalance = styled.div`
 display: flex;
 flex-direction: column;
-width: 89%;
 margin: 0 auto 15px auto;
 `
 

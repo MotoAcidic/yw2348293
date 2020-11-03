@@ -197,7 +197,7 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
-
+            <TopSection>
             <Title>Who Will Win?</Title>
             {roughBets.trump > 0 &&
               <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
@@ -221,7 +221,7 @@ const Battle: React.FC = () => {
                 </ModalBlock>
               </Modal>
             </div> */}
-            <>
+            <Section>
               <ElectionDisplay />
               {yam && (
                 <ElectionStatus
@@ -230,8 +230,7 @@ const Battle: React.FC = () => {
                   electionContract={electionContract}
                 />
               )}
-            </>
-
+            </Section>
 
             <InfoBlock>
               <img src={everipediaLogo} width="20px" height="20px" />
@@ -242,6 +241,7 @@ const Battle: React.FC = () => {
               <img src={chainlinkLogo} width="20px" height="20px" />
               <img src={everipediaLogo} width="20px" height="20px" />
             </InfoBlock>
+            </TopSection>
 
             <Rules />
             <Pool3 />
@@ -252,6 +252,20 @@ const Battle: React.FC = () => {
   );
 };
 
+const TopSection = styled.div`
+min-height: 90vh;
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+align-items: center;
+`
+
+const Section = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 40px;
+`
+
 const InfoBlock = styled.div`
 font-family: "Gilroy";
 color: rgb(255, 190, 26);
@@ -261,7 +275,7 @@ font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-margin-bottom: 2vh;
+margin-bottom: 120px;
 align-items: center;
 display: flex;
 flex-direction: row;

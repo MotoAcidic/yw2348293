@@ -55,6 +55,9 @@ import us from "../../../assets/img/american-flag.jpg";
 import states from './states'
 import { getLiveElectionResults } from '../../../yamUtils/index'
 import useYam from "../../../hooks/useYam";
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
+import MiniBiden from "../../../assets/img/biden@2x.png";
+import MiniTrump from "../../../assets/img/trump@2x.png";
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -230,8 +233,11 @@ const getFlag = (state) => {
 const ElectionStatusDisplay = () => {
 	const yam = useYam()
 	const [bidenVotes, setBidenVotes] = useState([]);
+	const [bidenTotal, setBidenTotal] = useState(0);
 	const [trumpVotes, setTrumpVotes] = useState([]);
+	const [trumpTotal, setTrumpTotal] = useState(0);
 	const [undecidedVotes, setUndecidedVotes] = useState([]);
+	const [undecidedTotal, setUndecidedTotal] = useState(0);
 	let [results, setResults] = useState([])
 
 
@@ -250,12 +256,16 @@ const ElectionStatusDisplay = () => {
 	useEffect(() => {
 		if (results) {
 			let biden = [];
+			let totalBiden = 0;
 			let trump = [];
+			let totalTrump = 0;
 			let undecided = [];
+			let totalUndecided = 0;
 
 			for (let i = 0; i < results.length; i++) {
 				if (results[i].name === "US") continue;
 				if (results[i].winner === "Biden") {
+					totalBiden += results[i].electoralVotes;
 					biden.push(
 						<StateVote>
 							<Left>
@@ -270,6 +280,7 @@ const ElectionStatusDisplay = () => {
 						</StateVote>
 					)
 				} else if (results[i].winner === "Trump") {
+					totalTrump += results[i].electoralVotes;
 					trump.push(
 						<StateVote>
 							<Left>
@@ -284,6 +295,7 @@ const ElectionStatusDisplay = () => {
 						</StateVote>
 					)
 				} else {
+					totalUndecided += results[i].electoralVotes;
 					undecided.push(
 						<StateVote>
 							<Left>
@@ -298,17 +310,22 @@ const ElectionStatusDisplay = () => {
 						</StateVote>
 					)
 				}
+				setBidenTotal(totalBiden);
+				setTrumpTotal(totalTrump);
+				setUndecidedTotal(totalUndecided);
+				setBidenVotes(biden);
+				setTrumpVotes(trump);
+				setUndecidedVotes(undecided);
 			}
-			setBidenVotes(biden);
-			setTrumpVotes(trump);
-			setUndecidedVotes(undecided);
 		}
 	}, [results])
 
 	return (
 		<VersusContainer>
 			<Column>
-				<BigTitle>Trump</BigTitle>
+				<CardIcon src={MiniTrump} />
+
+				<SubTitle>{trumpTotal}</SubTitle>
 				<VotesColumn>
 
 					{trumpVotes}
@@ -317,6 +334,8 @@ const ElectionStatusDisplay = () => {
 			<Divider />
 			<Column>
 				<BigTitle>Undecided</BigTitle>
+				<SubTitle>{undecidedTotal}</SubTitle>
+
 				<VotesColumn>
 
 					{undecidedVotes}
@@ -324,7 +343,9 @@ const ElectionStatusDisplay = () => {
 			</Column>
 			<Divider />
 			<Column>
-				<BigTitle>Biden</BigTitle>
+				<CardIcon src={MiniBiden} />
+				<SubTitle>{bidenTotal}</SubTitle>
+
 				<VotesColumn>
 
 					{bidenVotes}
@@ -333,6 +354,27 @@ const ElectionStatusDisplay = () => {
 		</VersusContainer>
 	)
 }
+const CardIcon = styled.img`
+	height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 0 0 10px 0;
+`
+
+const SubTitle = styled.div`
+font-family: "Gilroy";
+font-size: 16px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+	color: white;
+	margin-bottom: 10px;
+`
 
 const VotesColumn = styled.div`
 width: 80%;
@@ -409,7 +451,10 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: rgb(255, 204, 74);
   max-width: 80vw;
-  margin: 0 auto 40px;
+	margin: 0 auto 10px auto;
+	min-height: 100px;
+	display: flex;
+	align-items: center;
 `
 
 const Column = styled.div`

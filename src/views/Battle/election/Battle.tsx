@@ -31,6 +31,8 @@ import { getContract } from '../../../utils/erc20'
 import { provider } from 'web3-core'
 import PriceHistoryCard from "../../Results/PercentChangeCard";
 import VotingBalance from "./VotingBalance";
+import ElectionStatus from './ElectionStatusBets'
+import ElectionDisplay from './ElectionStatusDisplay'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -201,7 +203,7 @@ const Battle: React.FC = () => {
               <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
             }
 
-            <VersusContainer>
+            {/* <VersusContainer>
               <VersusBackground>
                 <Candidate1 style={trumpStyle} onMouseOver={() => hoverOver("Trump")} onMouseOut={() => hoverExit()} src={Trump} onClick={(e) => onClickTrump(e)} />
                 <Candidate2 style={bidenStyle} onMouseOver={() => hoverOver("Biden")} onMouseOut={() => hoverExit()} src={Biden} onClick={(e) => onClickBiden(e)} />
@@ -218,7 +220,19 @@ const Battle: React.FC = () => {
                   }
                 </ModalBlock>
               </Modal>
-            </div>
+            </div> */}
+            <>
+              <ElectionDisplay />
+              {yam && (
+                <ElectionStatus
+                  battle={battles}
+                  candidateInfo={candidate}
+                  electionContract={electionContract}
+                />
+              )}
+            </>
+
+
             <InfoBlock>
               <img src={everipediaLogo} width="20px" height="20px" />
               <img src={chainlinkLogo} width="20px" height="20px" />

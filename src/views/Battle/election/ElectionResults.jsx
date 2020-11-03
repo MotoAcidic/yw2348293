@@ -51,7 +51,7 @@ import wa from "../../../assets/img/stateflags/wa.jpg";
 import wi from "../../../assets/img/stateflags/wi.jpg";
 import wv from "../../../assets/img/stateflags/wv.jpg";
 import wy from "../../../assets/img/stateflags/wy.jpg";
-// import us from "../../../assets/img/american-flag.jpg";
+import us from "../../../assets/img/american-flag.jpg";
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -62,18 +62,340 @@ function isMobile() {
 	}
 }
 
+const getFlag = (state) => {
+	let url;
+	state = state.toLowerCase();
+	switch (state) {
+		case 'co':
+			url = co;
+			break
+		case 'wy':
+			url = wy;
+			break
+		case 'nm':
+			url = nm;
+			break
+		default:
+			url = us;
+	}
+
+	return <IMG src={url} alt="flag" />
+}
+
 const ElectionStatusDisplay = () => {
-	const [votes, setVotes] = useState([]);
+	const [votes, setVotes] = useState([
+		{
+			name: 'WY',
+			electoralVotes: 50,
+			winner: "Biden",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'NM',
+			electoralVotes: 23,
+			winner: "flavortown",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, {
+			name: 'CO',
+			electoralVotes: 12,
+			winner: "Trump",
+			resultNow: "1604003431", // string unix time that winner was called
+			resultBlock: "11153856", // string etherum block where call was mined in
+		}, 
+	]);
 	const [bidenVotes, setBidenVotes] = useState([]);
 	const [trumpVotes, setTrumpVotes] = useState([]);
 	const [undecidedVotes, setUndecidedVotes] = useState([]);
-
 	useEffect(() => {
 		if (votes) {
 			let biden = [];
 			let trump = [];
 			let undecided = [];
-			
+
+			for (let i = 0; i < votes.length; i++) {
+				console.log("loop")
+				if (votes[i].winner === "Biden") {
+					biden.push(
+						<StateVote>
+							<Left>
+								{getFlag(votes[i].name)}
+								<Name>
+									{votes[i].name}
+								</Name>
+							</Left>
+							<Votes>
+								{votes[i].electoralVotes}
+							</Votes>
+						</StateVote>
+					)
+				} else if (votes[i].winner === "Trump") {
+					trump.push(
+						<StateVote>
+							<Left>
+								{getFlag(votes[i].name)}
+								<Name>
+									{votes[i].name}
+								</Name>
+							</Left>
+							<Votes>
+								{votes[i].electoralVotes}
+							</Votes>
+						</StateVote>
+					)
+				} else {
+					undecided.push(
+						<StateVote>
+							<Left>
+								{getFlag(votes[i].name)}
+								<Name>
+									{votes[i].name}
+								</Name>
+							</Left>
+							<Votes>
+								{votes[i].electoralVotes}
+							</Votes>
+						</StateVote>
+					)
+				}
+			}
+			setBidenVotes(biden);
+			setTrumpVotes(trump);
+			setUndecidedVotes(undecided);
 		}
 	}, [votes])
 
@@ -81,18 +403,95 @@ const ElectionStatusDisplay = () => {
 		<VersusContainer>
 			<Column>
 				<BigTitle>Trump</BigTitle>
+				<VotesColumn>
+
+				{trumpVotes}
+				</VotesColumn>
 			</Column>
 			<Divider />
 			<Column>
 				<BigTitle>Undecided</BigTitle>
+				<VotesColumn>
+
+				{undecidedVotes}
+				</VotesColumn>
 			</Column>
 			<Divider />
 			<Column>
 				<BigTitle>Biden</BigTitle>
+				<VotesColumn>
+					
+				{bidenVotes}
+				</VotesColumn>
 			</Column>
 		</VersusContainer>
 	)
 }
+
+const VotesColumn = styled.div`
+width: 80%;
+margin: 0 auto;
+overflow-y: auto;
+::-webkit-scrollbar {
+  width: 8px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(256,256,256,0.1); 
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(256,256,256,0.2); 
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(256,256,256,0.5); 
+}
+`
+const Name = styled.div`
+margin-top: 3px;`
+
+const IMG = styled.img`
+width: 25px;
+height: auto;
+margin-right: 10px;`
+
+const Votes = styled.div`
+font-family: "Gilroy";
+font-size: 16px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+  color: rgb(255, 204, 74);
+`
+
+const Left = styled.div`
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	font-family: "Gilroy";
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+	letter-spacing: normal;
+	align-items: center;
+	color: white;
+`
+
+const StateVote = styled.div`
+display: flex;
+flex-direction: row;
+flex-wrap: nowrap;
+	width: 90%;
+	margin: 0 auto 5px auto;
+	justify-content: space-between;
+	align-items: center;
+`
 
 const BigTitle = styled.div`
 font-family: "Gilroy";

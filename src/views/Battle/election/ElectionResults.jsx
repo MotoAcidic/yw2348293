@@ -63,6 +63,20 @@ function isMobile() {
 }
 
 const ElectionStatusDisplay = () => {
+	const [votes, setVotes] = useState([]);
+	const [bidenVotes, setBidenVotes] = useState([]);
+	const [trumpVotes, setTrumpVotes] = useState([]);
+	const [undecidedVotes, setUndecidedVotes] = useState([]);
+
+	useEffect(() => {
+		if (votes) {
+			let biden = [];
+			let trump = [];
+			let undecided = [];
+			
+		}
+	}, [votes])
+
 	return (
 		<VersusContainer>
 			<Column>
@@ -125,7 +139,7 @@ border: solid 2px rgba(255, 183, 0, 0.3);
 background-color: rgba(4,2,43,1);
 padding: 20px 0 20px;
 height: 470px;
-min-width: 300px;
+min-width: 602px;
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;

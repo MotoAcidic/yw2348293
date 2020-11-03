@@ -52,6 +52,14 @@ const ElectionStatusDisplay = () => {
 			let undecided = [];
 			let totalUndecided = 0;
 
+			results.sort(function (a, b) {
+				if (a.electoralVotes < b.electoralVotes) {
+					return 1;
+				} else {
+					return -1;
+				}
+			});
+
 			for (let i = 0; i < results.length; i++) {
 				if (results[i].name === "US") continue;
 				if (results[i].winner === "Biden") {
@@ -124,7 +132,6 @@ const ElectionStatusDisplay = () => {
 			<SmallColumn>
 				<BigTitle>Undecided</BigTitle>
 				<SubTitle>{undecidedTotal}</SubTitle>
-
 				<VotesColumn>
 					{!results  && <div>Loading...</div>}
 

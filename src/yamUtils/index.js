@@ -730,15 +730,6 @@ export const getElectionContracts = (yam) => {
   return election
 }
 
-export const getFwarContract = (yam) => {
-
-  if (!yam || !yam.contracts) {
-    return null
-  }
-  const election = yam.contracts.fwar
-  return election
-}
-
 export const getElectionFinished = async (yam) => {
   const electionFinished = await yam.contracts.election_betting.methods.winner().call();
   return (electionFinished);
@@ -751,4 +742,18 @@ export const getElectionRewards = async (yam, account) => {
       return tx.transactionHash
     })
   return (p);
+}
+
+export const electionTVL = async (yam, account) => {
+  const ethPrice = await getETHPrice(yam)
+  const curPrice = await getCurrentPrice(yam)
+  const currentBets = await getCurrentBets(yam)
+  const trumpEth = ethPrice * currentBets.trumpETHPot
+  const bidenEth = ethPrice * currentBets.bidenETHPot
+  const trumpWar = curPrice * currentBets.trumpWARPot
+  const bidenWar = curPrice * currentBets.bidenWARPot
+  const trumpTotal = trumpEth + trumpWar
+  const bidenTotal = bidenEth + bidenWar
+  
+  return { trumpTotal, bidenTotal }
 }

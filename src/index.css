@@ -39,3 +39,7 @@ code {
   min-height:30px;
   min-width:30px;
 }
+
+.swal2-container {
+  z-index: 10000000 !important;
+}

@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { useWallet } from 'use-wallet'
 import Button from '../../Button'
+import ReactGA from 'react-ga';
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -16,6 +17,17 @@ interface AccountButtonProps { }
 const AccountButton: React.FC<AccountButtonProps> = (props) => {
 
   const { account, connect } = useWallet()
+
+  const trackingId = "G-2QRDRMRJF7";
+  if (account) {
+    ReactGA.initialize(trackingId);
+    ReactGA.set({
+      userId: account,
+      // any data that is relevant to the user session
+      // that you would like to track with google analytics
+    })
+  }
+
 
   return (
     <StyledAccountButton>

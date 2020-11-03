@@ -9,7 +9,7 @@ import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 import Pool3 from "./Pool3";
 import useFarms from "../../../hooks/useFarms";
-import { getWarStaked, getElectionContracts } from "../../../yamUtils";
+import { getWarStaked, getElectionContracts, getCurrentBets, electionTVL } from "../../../yamUtils";
 import { getStats } from "./utils";
 
 import Uniswap from "../../../assets/img/uniswap@2x.png";
@@ -18,6 +18,9 @@ import BetModalElection from "./BetCardElection.jsx";
 import Biden from "../../../assets/img/biden.png";
 import Trump from "../../../assets/img/trump.png";
 import AmericanFlag from "../../../assets/img/american-flag.jpg";
+import chainlinkLogo from "../../../assets/img/chainlinklogo.png";
+import everipediaLogo from "../../../assets/img/everipedialogo.png";
+
 import useModal from '../../../hooks/useModal'
 import Rules from './BetRulesModal'
 import useFarm from '../../../hooks/useFarm'
@@ -26,7 +29,8 @@ import './swal.css'
 import AccountModal from "../../../components/TopBar/components/AdvertisementFormModal";
 import { getContract } from '../../../utils/erc20'
 import { provider } from 'web3-core'
-
+import PriceHistoryCard from "../../Results/PercentChangeCard";
+import VotingBalance from "./VotingBalance";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -99,6 +103,7 @@ const Battle: React.FC = () => {
   let [candidate, setCandidate] = useState(battles.farm1);
   let [hoverCandidate, setHoverCandidate] = useState("");
   const [transitioning, setTransitioning] = useState(false);
+  const [roughBets, setRoughBets] = useState({ trump: 0, biden: 0 });
 
   let currentPrice = curPrice || 0;
 
@@ -126,6 +131,13 @@ const Battle: React.FC = () => {
     setShowModal(true)
   }
 
+  const getRoughBets = async () => {
+    let tvl = await electionTVL(yam, account)
+    const trump = tvl.trumpTotal
+    const biden = tvl.bidenTotal
+    setRoughBets({ trump, biden });
+  }
+
   useEffect(() => {
     console.log("using effect");
     if (yam && account && farms && farms[0]) {
@@ -134,8 +146,12 @@ const Battle: React.FC = () => {
     if (yam && farms) {
       console.log(farms);
       fetchWarStaked(farms);
+
     }
-  }, [yam, account, farms, farms[0]]);
+    if (yam && account && !roughBets.trump) {
+      getRoughBets();
+    }
+  }, [yam, farms, farms[0]]);
 
   const closeModal = (event) => {
     setShowModal(false)
@@ -172,6 +188,7 @@ const Battle: React.FC = () => {
   const bidenStyle = hoverCandidate === "Biden" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)` } : null;
   const trumpStyle = hoverCandidate === "Trump" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)` } : null;
 
+
   return (
     <Switch>
       <StyledCanvas>
@@ -180,9 +197,13 @@ const Battle: React.FC = () => {
           <Page>
 
             <Title>Who Will Win?</Title>
+            {roughBets.trump > 0 &&
+              <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
+            }
+
             <VersusContainer>
               <VersusBackground>
-                <Candidate1 style={trumpStyle} onMouseOver={() => hoverOver("Trump")} onMouseOut={() => hoverExit()}  src={Trump} onClick={(e) => onClickTrump(e)} />
+                <Candidate1 style={trumpStyle} onMouseOver={() => hoverOver("Trump")} onMouseOut={() => hoverExit()} src={Trump} onClick={(e) => onClickTrump(e)} />
                 <Candidate2 style={bidenStyle} onMouseOver={() => hoverOver("Biden")} onMouseOut={() => hoverExit()} src={Biden} onClick={(e) => onClickBiden(e)} />
               </VersusBackground>
             </VersusContainer>
@@ -198,6 +219,16 @@ const Battle: React.FC = () => {
                 </ModalBlock>
               </Modal>
             </div>
+            <InfoBlock>
+              <img src={everipediaLogo} width="20px" height="20px" />
+              <img src={chainlinkLogo} width="20px" height="20px" />
+              <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
+              Election Results brought to you by AP + Everipedia. Powered by Chainlink.
+              <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
+              <img src={chainlinkLogo} width="20px" height="20px" />
+              <img src={everipediaLogo} width="20px" height="20px" />
+            </InfoBlock>
+
             <Rules />
             <Pool3 />
           </Page>
@@ -207,10 +238,28 @@ const Battle: React.FC = () => {
   );
 };
 
+const InfoBlock = styled.div`
+font-family: "Gilroy";
+color: rgb(255, 190, 26);
+font-size: 22px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+margin-bottom: 2vh;
+align-items: center;
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+align-items: center;
+width: 900px;
+`
+
 const ModalBlock = styled.div`
 width: 534px;
 height: 0px;
-margin-top: 20vh;
+margin-top: 23vh;
 `
 
 const Modal = styled.div`
@@ -293,7 +342,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 ` : styled.div`
 font-family: "Gilroy";
   font-size: 30px;
@@ -304,7 +353,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-top: 40px;
 `;
 
@@ -402,7 +451,7 @@ width: 90vw;
 display: flex;
 align-items: center;
 font-size: 30px;
-margin: 0 auto 10vh auto;
+margin: 0 auto 5vh auto;
 font-family: "Gilroy";
 font-weight: bold;
 font-stretch: normal;

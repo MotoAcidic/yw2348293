@@ -224,7 +224,12 @@ const Battle: React.FC = () => {
             </div> */}
               <Section>
                 {/* <ElectionDisplay /> */}
-                <ElectionResults />
+                
+                {yam ? <ElectionResults /> : (
+                  <div onClick={() => connect('injected')}>
+                    Please connect your Wallet
+                  </div>
+                )}
                 {yam && (
                   <ElectionStatus
                     battle={battles}

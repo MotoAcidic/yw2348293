@@ -18,6 +18,9 @@ import BetModalElection from "./BetCardElection.jsx";
 import Biden from "../../../assets/img/biden.png";
 import Trump from "../../../assets/img/trump.png";
 import AmericanFlag from "../../../assets/img/american-flag.jpg";
+import chainlinkLogo from "../../../assets/img/chainlinklogo.png";
+import everipediaLogo from "../../../assets/img/everipedialogo.png";
+
 import useModal from '../../../hooks/useModal'
 import Rules from './BetRulesModal'
 import useFarm from '../../../hooks/useFarm'
@@ -217,11 +220,13 @@ const Battle: React.FC = () => {
               </Modal>
             </div>
             <InfoBlock>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Everipedia_logo.svg/600px-Everipedia_logo.svg.png" width="20px" height="20px" />
+              <img src={everipediaLogo} width="20px" height="20px" />
+              <img src={chainlinkLogo} width="20px" height="20px" />
               <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
-              Election Results brought to you by Everipedia + AP
+              Election Results brought to you by AP + Everipedia. Powered by Chainlink.
               <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Everipedia_logo.svg/600px-Everipedia_logo.svg.png" width="20px" height="20px" />
+              <img src={chainlinkLogo} width="20px" height="20px" />
+              <img src={everipediaLogo} width="20px" height="20px" />
             </InfoBlock>
 
             <Rules />
@@ -248,7 +253,7 @@ display: flex;
 flex-direction: row;
 justify-content: space-evenly;
 align-items: center;
-width: 650px;
+width: 900px;
 `
 
 const ModalBlock = styled.div`

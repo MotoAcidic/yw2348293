@@ -87,14 +87,14 @@ const Status = ({ battle, candidateInfo, electionContract }) => {
 							{farmBalances.trumpWARBal > 0 &&
 								<Bets>
 									<AmountBet>
-										{'$WAR: ' + farmBalances.trumpWARBal.toLocaleString()}
+										{'$WAR: ' + farmBalances.trumpWARBal.toLocaleString(undefined, { maximumFractionDigits: 2 })}
 									</AmountBet>
 								</Bets>
 							}
 							{farmBalances.trumpETHBal > 0 &&
 								<Bets>
 									<AmountBet>
-										{'$ETH: ' + farmBalances.trumpETHBal.toLocaleString()}
+										{'$ETH: ' + farmBalances.trumpETHBal.toLocaleString(undefined, { maximumFractionDigits: 2 })}
 									</AmountBet>
 								</Bets>}
 						</Column>
@@ -107,14 +107,14 @@ const Status = ({ battle, candidateInfo, electionContract }) => {
 							{farmBalances.bidenWARBal > 0 &&
 								<Bets>
 									<AmountBet>
-										{'$WAR: ' + farmBalances.bidenWARBal.toLocaleString()}
+										{'$WAR: ' + farmBalances.bidenWARBal.toLocaleString(undefined, { maximumFractionDigits: 2 })}
 									</AmountBet>
 								</Bets>
 							}
 							{farmBalances.bidenETHBal > 0 &&
 								<Bets>
 									<AmountBet>
-										{'$ETH: ' + farmBalances.bidenETHBal.toLocaleString()}
+										{'$ETH: ' + farmBalances.bidenETHBal.toLocaleString(undefined, { maximumFractionDigits: 2 })}
 									</AmountBet>
 								</Bets>
 							}
@@ -133,19 +133,19 @@ const Status = ({ battle, candidateInfo, electionContract }) => {
 					<BetDisplay>
 						<CardIcon src={MiniTrump} />
 						<AmountBet>
-							{farmBets.trumpWARPot.toLocaleString() + " $WAR"}
+							{farmBets.trumpWARPot.toLocaleString(undefined, { maximumFractionDigits: 2 }) + " $WAR"}
 						</AmountBet>
 						<AmountBet>
-							{farmBets.trumpETHPot.toLocaleString() + " $ETH"}
+							{farmBets.trumpETHPot.toLocaleString(undefined, { maximumFractionDigits: 2 }) + " $ETH"}
 						</AmountBet>
 					</BetDisplay>
 					<BetDisplay>
 						<CardIcon src={MiniBiden} />
 						<AmountBet>
-							{farmBets.bidenWARPot.toLocaleString() + " $WAR"}
+							{farmBets.bidenWARPot.toLocaleString(undefined, { maximumFractionDigits: 2 }) + " $WAR"}
 						</AmountBet>
 						<AmountBet>
-							{farmBets.bidenETHPot.toLocaleString() + " $ETH"}
+							{farmBets.bidenETHPot.toLocaleString(undefined, { maximumFractionDigits: 2 }) + " $ETH"}
 						</AmountBet>
 					</BetDisplay>
 				</AllBets>

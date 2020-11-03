@@ -136,7 +136,7 @@ const Farms: React.FC = () => {
                   />
                 </TopDisplayContainer>
             <BigTitle>THE FUTURE OF BETTING, TOURNAMENTS, AND PREDICTION MARKETS IS HERE!</BigTitle>
-            <Title>YieldWars is a competition platform, where you can battle (and earn yield) on almost anything. </Title>
+            <Title>YieldWars is a competition platform, where you can battle (and earn yield) on almost anything</Title>
 
                 {/*<HelloBar>YieldWars Battle page will launch at 5pm PT today!!
               Official statement on our telegram here: <a style={{color: 'white'}} href="https://t.me/YieldWarsOfficial/4548">https://t.me/YieldWarsOfficial/4548</a>

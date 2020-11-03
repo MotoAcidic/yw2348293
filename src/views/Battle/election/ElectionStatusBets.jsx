@@ -188,16 +188,6 @@ display: flex;
 flex-direction: column;
 align-items: center;`
 
-const BetPlaced = styled.div`
-color: rgb(255, 190, 26);
-font-family: Gilroy;
-font-size: 18px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-`
 
 const Space = styled.div`
 height: 20px;`
@@ -227,25 +217,6 @@ display: flex;
 align-items: center;
 margin-bottom: 10px;`
 
-const Bottom = styled.div`
-width: 100%;
-display: flex;
-justify-content: space-between;
-`
-
-const Row = styled.div`
-width: 100%;
-display: flex;
-justify-content: space-evenly;`
-
-const Top = styled.div`
-width: 100%;
-display: flex;
-flex-direction: row;
-flex-wrap: nowrap;
-align-items: center;
-margin-bottom: 20px;
-justify-content: space-between;`
 
 const TitleText = styled.div`
 font-family: "Gilroy";
@@ -284,82 +255,11 @@ color: #ffffff;
 margin-top: 10px;
 `
 
-const Input = styled.input`
-font-family: "SF Mono Semibold";
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-letter-spacing: normal;
-color: #ffb700;
-text-align: right;
-height: 35px;
-width: 90%;
-background: none;
-border: none;
-margin-right: 10px;
-:focus{
-	outline: none;
-}`
-
-const InputContainer = styled.div`
-width: 170px;
-border-radius: 8px;
-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-border: solid 1px rgba(255, 183, 0, 0.5);
-background-color: rgba(255, 255, 255, 0.2);
-font-family: "SF Mono Semibold";
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-letter-spacing: normal;
-color: #ffb700;
-text-align: right;
-display: flex;
-justify-content: flex-end;
-align-items: center;
-padding-right: 10px;
-`
-
-const Select = styled.select`
-	width: 280px;
-  height: 44px;
-  font-family: "Gilroy";
-  font-size: 30px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-  padding-left: 8px;
-	font-size: 18px;
-	border-radius: 8px;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-  border: solid 1px rgba(255, 183, 0, 0.5);
-	background-color: rgba(255, 255, 255, 0.2);
-	padding-right: 20px;
-  option {
-		color: black;
-		display: flex;
-		position: absolute;
-		top: 100%;
-		font-size: 18px;
-    white-space: pre;
-		min-height: 20px;
-		border: solid 1px rgba(255, 183, 0, 0.5);
-		background-color: rgba(255, 255, 255, 0.2) !important;
-		padding: 2px;
-  }
-`;
-
-
-
 const VersusContainer = !isMobile() ? styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
+justify-content: space-around;
 font-size: 30px;
 font-family: "Gilroy";
 font-weight: bold;
@@ -372,6 +272,8 @@ border-radius: 8px;
 border: solid 2px rgba(255, 183, 0, 0.3);
 background-color: rgba(4,2,43,1);
 padding: 20px;
+height: 470px;
+min-width: 300px;
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;

@@ -67,6 +67,12 @@ function isMobile() {
 
 const ElectionStatusDisplay = () => {
 	const yam = useYam()
+
+	const [votes, setVotes] = useState([]);
+	const [bidenVotes, setBidenVotes] = useState([]);
+	const [trumpVotes, setTrumpVotes] = useState([]);
+	const [undecidedVotes, setUndecidedVotes] = useState([]);
+
 	let [results, setResults] = useState([])
 
 
@@ -81,6 +87,15 @@ const ElectionStatusDisplay = () => {
 		setResults(results)
 		console.log(results);
 	}
+
+	useEffect(() => {
+		if (votes) {
+			let biden = [];
+			let trump = [];
+			let undecided = [];
+			
+		}
+	}, [votes])
 
 	return (
 		<VersusContainer>
@@ -109,26 +124,28 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: rgb(255, 204, 74);
   max-width: 80vw;
-  margin: -30px auto 40px;
+  margin: 0 auto 40px;
 `
 
 const Column = styled.div`
 display: flex;
 width: 200px;
 flex-direction: column;
-align-items: center;`
+align-items: center;
+`
 
 const Divider = styled.div`
 height: 80%;
+background-color: white;
 width: 1px;
 margin: auto 0 auto 0;
 `
 
 const VersusContainer = !isMobile() ? styled.div`
 display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: space-around;
+flex-direction: row;
+flex-wrap: nowrap;
+justify-content: space-between;
 font-size: 30px;
 font-family: "Gilroy";
 font-weight: bold;
@@ -140,9 +157,9 @@ color: #ffffff;
 border-radius: 8px;
 border: solid 2px rgba(255, 183, 0, 0.3);
 background-color: rgba(4,2,43,1);
-padding: 20px;
+padding: 20px 0 20px;
 height: 470px;
-min-width: 300px;
+min-width: 602px;
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;

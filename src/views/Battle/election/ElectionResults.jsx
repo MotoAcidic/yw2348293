@@ -14,14 +14,12 @@ function isMobile() {
 	}
 }
 
+
 const ElectionStatusDisplay = () => {
 	const yam = useYam()
-
-	const [votes, setVotes] = useState([]);
 	const [bidenVotes, setBidenVotes] = useState([]);
 	const [trumpVotes, setTrumpVotes] = useState([]);
 	const [undecidedVotes, setUndecidedVotes] = useState([]);
-
 	let [results, setResults] = useState([])
 
 
@@ -38,30 +36,156 @@ const ElectionStatusDisplay = () => {
 	}
 
 	useEffect(() => {
-		if (votes) {
+		if (results) {
 			let biden = [];
 			let trump = [];
 			let undecided = [];
-			
+
+			for (let i = 0; i < results.length; i++) {
+				if (results[i].name === "US") continue;
+				if (results[i].winner === "Biden") {
+					biden.push(
+						<StateVote>
+							<Left>
+								<IMG src={results[i].image} />
+								<Name>
+									{results[i].name}
+								</Name>
+							</Left>
+							<Votes>
+								{results[i].electoralVotes}
+							</Votes>
+						</StateVote>
+					)
+				} else if (results[i].winner === "Trump") {
+					trump.push(
+						<StateVote>
+							<Left>
+								<IMG src={results[i].image} />
+								<Name>
+									{results[i].name}
+								</Name>
+							</Left>
+							<Votes>
+								{results[i].electoralVotes}
+							</Votes>
+						</StateVote>
+					)
+				} else {
+					undecided.push(
+						<StateVote>
+							<Left>
+								<IMG src={results[i].image} />
+								<Name>
+									{results[i].name}
+								</Name>
+							</Left>
+							<Votes>
+								{results[i].electoralVotes}
+							</Votes>
+						</StateVote>
+					)
+				}
+			}
+			setBidenVotes(biden);
+			setTrumpVotes(trump);
+			setUndecidedVotes(undecided);
 		}
-	}, [votes])
+	}, [results])
 
 	return (
 		<VersusContainer>
 			<Column>
 				<BigTitle>Trump</BigTitle>
+				<VotesColumn>
+
+					{trumpVotes}
+				</VotesColumn>
 			</Column>
 			<Divider />
 			<Column>
 				<BigTitle>Undecided</BigTitle>
+				<VotesColumn>
+
+					{undecidedVotes}
+				</VotesColumn>
 			</Column>
 			<Divider />
 			<Column>
 				<BigTitle>Biden</BigTitle>
+				<VotesColumn>
+
+					{bidenVotes}
+				</VotesColumn>
 			</Column>
 		</VersusContainer>
 	)
 }
+
+const VotesColumn = styled.div`
+width: 80%;
+margin: 0 auto;
+overflow-y: auto;
+::-webkit-scrollbar {
+  width: 8px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(256,256,256,0.1); 
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(256,256,256,0.2); 
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(256,256,256,0.5); 
+}
+`
+const Name = styled.div`
+margin-top: 3px;`
+
+const IMG = styled.img`
+width: 25px;
+height: auto;
+margin-right: 10px;`
+
+const Votes = styled.div`
+font-family: "Gilroy";
+font-size: 16px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+  color: rgb(255, 204, 74);
+`
+
+const Left = styled.div`
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	font-family: "Gilroy";
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+	letter-spacing: normal;
+	align-items: center;
+	color: white;
+`
+
+const StateVote = styled.div`
+display: flex;
+flex-direction: row;
+flex-wrap: nowrap;
+	width: 90%;
+	margin: 0 auto 5px auto;
+	justify-content: space-between;
+	align-items: center;
+`
 
 const BigTitle = styled.div`
 font-family: "Gilroy";

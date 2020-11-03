@@ -259,7 +259,7 @@ width: 900px;
 const ModalBlock = styled.div`
 width: 534px;
 height: 0px;
-margin-top: 20vh;
+margin-top: 23vh;
 `
 
 const Modal = styled.div`

@@ -9,6 +9,8 @@ import MiniBiden from "../../../assets/img/biden@2x.png";
 import MiniTrump from "../../../assets/img/trump@2x.png";
 import Biden from "../../../assets/img/biden.png";
 import Trump from "../../../assets/img/trump.png";
+import loading from "../../../assets/img/loading.gif";
+
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -19,7 +21,6 @@ function isMobile() {
 	}
 }
 
-
 const ElectionStatusDisplay = () => {
 	const yam = useYam()
 	const [bidenVotes, setBidenVotes] = useState([]);
@@ -29,7 +30,6 @@ const ElectionStatusDisplay = () => {
 	const [undecidedVotes, setUndecidedVotes] = useState([]);
 	const [undecidedTotal, setUndecidedTotal] = useState(0);
 	let [results, setResults] = useState([])
-
 
 	useEffect(() => {
 		if (yam) {
@@ -118,12 +118,20 @@ const ElectionStatusDisplay = () => {
 		}
 	}, [results])
 
+	if (!results.length) {
+		return (
+			<Container>
+
+				<Loading src={loading} />
+			</Container>
+		)
+	}
+
 	return (
 		<VersusContainer>
 			<Column>
 				<Candidate src={Trump} />
-
-				<SubTitle>{trumpTotal}</SubTitle>
+				<SubTitle>Votes: {trumpTotal}</SubTitle>
 				<VotesColumn>
 					{!results && <div>Loading...</div>}
 					{trumpVotes}
@@ -131,27 +139,36 @@ const ElectionStatusDisplay = () => {
 			</Column>
 			<SmallColumn>
 				<BigTitle>Undecided</BigTitle>
-				<SubTitle>{undecidedTotal}</SubTitle>
+				<SubTitle>Votes: {undecidedTotal}</SubTitle>
 				<VotesColumn>
-					{!results  && <div>Loading...</div>}
-
+					{!results && <div>Loading...</div>}
 					{undecidedVotes}
 				</VotesColumn>
 			</SmallColumn>
 			<Column>
 				<Candidate src={Biden} />
-
-				<SubTitle>{bidenTotal}</SubTitle>
-
+				<SubTitle>Votes: {bidenTotal}</SubTitle>
 				<VotesColumn>
 					{!results && <div>Loading...</div>}
-
 					{bidenVotes}
 				</VotesColumn>
 			</Column>
 		</VersusContainer>
 	)
 }
+
+const Loading = styled.img`
+	width: 500px;
+	height: 500px;
+`
+
+const Container = styled.div`
+height: 580px;
+min-width: 1000px;
+display: flex;
+align-items: center;
+justify-content: center;
+`
 
 const Candidate = styled.img`
 width: 95%;
@@ -296,6 +313,7 @@ color: #ffffff;
 border-radius: 8px;
 height: 580px;
 min-width: 1000px;
+margin-left: 20px;
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;

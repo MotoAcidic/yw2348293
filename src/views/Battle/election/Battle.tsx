@@ -315,7 +315,7 @@ const Section = styled.div`
 
 const StatusBlock = styled.div`
   width: 30%;
-  margin-right: 30px;
+  margin-right: 20px;
 `
 
 const InfoBlock = styled.div`

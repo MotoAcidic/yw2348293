@@ -208,3 +208,5 @@ const states = [
 		electoralVotes: null,
 	}
 ]
+
+export default states

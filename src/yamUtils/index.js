@@ -760,12 +760,12 @@ export const electionTVL = async (yam, account) => {
 
 export const getLiveElectionResults = async (yam, states) => {
   for (let i = 0; i < states.length; i++) {
-    let data = await yam.everipedia.methods.presidentialWinners(states[i].name).call()
-    console.log(data);
+    let data = await yam.contracts.everipedia.methods.presidentialWinners(states[i].name).call()
+    // console.log(data);
     states[i].winner = data.winner
     states[i].resultNow = data.resultNow
     states[i].resultBlock = data.resultBlock
-    console.log(states[i]);
+    // console.log(states[i]);
   }
   return states
 }

@@ -52,6 +52,9 @@ import wi from "../../../assets/img/stateflags/wi.jpg";
 import wv from "../../../assets/img/stateflags/wv.jpg";
 import wy from "../../../assets/img/stateflags/wy.jpg";
 // import us from "../../../assets/img/american-flag.jpg";
+import states from './states'
+import { getLiveElectionResults } from '../../../yamUtils/index'
+import useYam from "../../../hooks/useYam";
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -63,6 +66,22 @@ function isMobile() {
 }
 
 const ElectionStatusDisplay = () => {
+	const yam = useYam()
+	let [results, setResults] = useState([])
+
+
+	useEffect(() => {
+		if (yam) {
+			getResults()
+		}
+	}, [yam]);
+
+	const getResults = async () => {
+		let results = await getLiveElectionResults(yam, states)
+		setResults(results)
+		console.log(results);
+	}
+
 	return (
 		<VersusContainer>
 			<Column>

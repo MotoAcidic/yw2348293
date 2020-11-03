@@ -223,8 +223,8 @@ const Battle: React.FC = () => {
               </Modal>
             </div> */}
               <Section>
-                <ElectionDisplay />
-                {/* <ElectionResults /> */}
+                {/* <ElectionDisplay /> */}
+                <ElectionResults />
                 {yam && (
                   <ElectionStatus
                     battle={battles}

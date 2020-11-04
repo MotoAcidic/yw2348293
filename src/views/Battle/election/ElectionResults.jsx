@@ -219,7 +219,7 @@ overflow-y: auto;
 }
 `
 const Name = styled.div`
-margin-top: 3px;`
+margin-top: 4px;`
 
 const IMG = styled.img`
 width: 25px;
@@ -234,6 +234,7 @@ font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
+margin-top: 4px;
   color: rgb(255, 204, 74);
 `
 
@@ -260,6 +261,10 @@ flex-wrap: nowrap;
 	width: 90%;
 	margin: 0 auto 5px auto;
 	justify-content: space-between;
+	background-color: rgba(256,256,256,0.1);
+	display: flex;
+	border-radius: 2px;
+	padding: 2px;
 	align-items: center;
 `
 

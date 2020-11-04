@@ -229,14 +229,17 @@ const Battle: React.FC = () => {
 
                 {yam ? <ElectionResults /> : (
                   <VersusContainer onClick={() => connect('injected')}>
-                    
-                    <BigTitle>
 
-                    Connect Your Wallet
+                    <BigTitle>
+                      {isMobile() ? "Please View on Desktop" :
+                        "Connect Your Wallet"
+                      }
                     </BigTitle>
-                    <SubTitle>
-                      to view election status
+                    {!isMobile() &&
+                      <SubTitle>
+                        to view election status
                     </SubTitle>
+                    }
                   </VersusContainer>
                 )}
                 {yam && (
@@ -350,7 +353,7 @@ flex-direction: row;
 justify-content: space-evenly;
 align-items: center;
 width: 90vw;
-` 
+`
 
 const ModalBlock = styled.div`
 width: 534px;
@@ -554,6 +557,7 @@ margin: 0 0 40px 0;
 width: 90vw;
 display: flex;
 flex-direction: column;
+padding-top: 20px;
 font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;

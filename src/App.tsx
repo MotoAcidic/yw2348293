@@ -22,7 +22,6 @@ import InfluencerBattle from './views/Battle/influencerbattles/Battle'
 import Election from './views/Battle/election/Battle'
 import Results from './views/Results/Results'
 
-import About from './views/About/About'
 import theme from './theme'
 import { createGlobalStyle } from 'styled-components';
 import GilroyBold from "./assets/fonts/Gilroy-Bold.otf";
@@ -89,9 +88,6 @@ const App: React.FC = () => {
             </Route>
             <Route path="/results" exact>
               <Results />
-            </Route>
-            <Route path="/about" exact>
-              <About />
             </Route>
           </Switch>
         </Router>

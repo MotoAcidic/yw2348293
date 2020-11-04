@@ -14,6 +14,7 @@ import StakeModal from "./StakeModal";
 import UnstakeModal from "./UnstakeModal";
 import WarPool from "./WarPool";
 
+import Roadmap from "./Roadmap";
 
 import FarmCards from "./components/FarmCards";
 import CountDown from "./components/CountDown";
@@ -135,35 +136,20 @@ const Farms: React.FC = () => {
                     target="_blank"
                   />
                 </TopDisplayContainer>
-            <BigTitle>The future of prediction markets, tournaments, and betting is here!</BigTitle>
-            <Title>YieldWars is a competition platform, where you can battle (and earn yield) on almost anything</Title>
+                <BigTitle>The future of prediction markets, tournaments, and betting is here!</BigTitle>
+                <Title>YieldWars is a competition platform, where you can battle (and earn yield) on almost anything</Title>
 
-                {/*<HelloBar>YieldWars Battle page will launch at 5pm PT today!!
-              Official statement on our telegram here: <a style={{color: 'white'}} href="https://t.me/YieldWarsOfficial/4548">https://t.me/YieldWarsOfficial/4548</a>
-            </HelloBar>*/}
                 {!isMobile() ?
                   <iframe title="promo" style={{ width: "650px", height: "365.4px", margin: "10px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
                   :
                   <iframe title="promo" style={{ width: "90vw", height: "50.6vw", margin: "40px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
                 }
-                {/* <TextContainer>
-                <LargeText>Select a farm</LargeText>
-                <SmallText>
-                Earn WAR tokens by Farming the fields of Byzantium
-                </SmallText>
-              </TextContainer> */}
-                {/* {diffTime > 0 && (
-                <div>
-                <Title>Pool 2 Begins:</Title>
-                {isMobile() ? (
-                  <MobileCountDown launchDate={launch} />
-                  ) : (
-                    <CountDown launchDate={launch} />
-                    )}
-                    </div>
-                  )} */}
+
               </Landing>
-            <Seperator />
+              <Seperator />
+              <Roadmap />
+             
+              <Seperator />
 
               <WarPool />
               <FarmCards />
@@ -202,9 +188,9 @@ font-family: "Gilroy";
     max-width: 70vw;
     margin: auto;
     `
-  
-  
-  const Seperator = !isMobile() ? styled.div`
+
+
+const Seperator = !isMobile() ? styled.div`
   width: 1000px;
   height: 1px;
   background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
@@ -213,8 +199,8 @@ font-family: "Gilroy";
   height: 1px;
   background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
   `
-  
-  const BigTitle = !isMobile() ? styled.div`
+
+const BigTitle = !isMobile() ? styled.div`
   font-family: "Gilroy";
   font-size: 80px;
   text-transform: uppercase;

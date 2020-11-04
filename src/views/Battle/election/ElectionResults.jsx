@@ -11,7 +11,6 @@ import Biden from "../../../assets/img/biden.png";
 import Trump from "../../../assets/img/trump.png";
 import loading from "../../../assets/img/loading.gif";
 
-
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
 		return true
@@ -129,32 +128,32 @@ const ElectionStatusDisplay = () => {
 	}
 
 	return (
-		<VersusContainer>
-			<Column>
-				<Candidate src={Trump} />
-				<SubTitle>Votes: {trumpTotal}</SubTitle>
-				<VotesColumn>
-					{!results && <div>Loading...</div>}
-					{trumpVotes}
-				</VotesColumn>
-			</Column>
-			<SmallColumn>
-				<BigTitle>Undecided</BigTitle>
-				<SubTitle>Votes: {undecidedTotal}</SubTitle>
-				<VotesColumn>
-					{!results && <div>Loading...</div>}
-					{undecidedVotes}
-				</VotesColumn>
-			</SmallColumn>
-			<Column>
-				<Candidate src={Biden} />
-				<SubTitle>Votes: {bidenTotal}</SubTitle>
-				<VotesColumn>
-					{!results && <div>Loading...</div>}
-					{bidenVotes}
-				</VotesColumn>
-			</Column>
-		</VersusContainer>
+			<VersusContainer>
+				<Column>
+					<Candidate src={Trump} />
+					<SubTitle>Votes: {trumpTotal}</SubTitle>
+					<VotesColumn>
+						{!results && <div>Loading...</div>}
+						{trumpVotes}
+					</VotesColumn>
+				</Column>
+				{/* <SmallColumn>
+					<BigTitle>Undecided</BigTitle>
+					<SubTitle>Votes: {undecidedTotal}</SubTitle>
+					<VotesColumn>
+						{!results && <div>Loading...</div>}
+						{undecidedVotes}
+					</VotesColumn>
+				</SmallColumn> */}
+				<Column>
+					<Candidate src={Biden} />
+					<SubTitle>Votes: {bidenTotal}</SubTitle>
+					<VotesColumn>
+						{!results && <div>Loading...</div>}
+						{bidenVotes}
+					</VotesColumn>
+				</Column>
+			</VersusContainer>
 	)
 }
 
@@ -165,7 +164,8 @@ const Loading = styled.img`
 
 const Container = styled.div`
 height: 580px;
-min-width: 1000px;
+min-width: 450px;
+width: 45vw;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -225,7 +225,7 @@ margin-top: 4px;`
 const IMG = styled.img`
 width: 25px;
 height: auto;
-margin-right: 10px;`
+margin: 0 10px 0 5px;`
 
 const Votes = styled.div`
 font-family: "Gilroy";
@@ -318,7 +318,8 @@ letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
 height: 580px;
-min-width: 1000px;
+min-width: 450px;
+width: 45vw;
 margin-left: 20px;
 ` : styled.div`
 margin: 0 0 40px 0;

@@ -33,7 +33,7 @@ import PriceHistoryCard from "../../Results/PercentChangeCard";
 import VotingBalance from "./VotingBalance";
 import ElectionStatus from './ElectionStatusBets'
 import ElectionResults from "./ElectionResults";
-import ElectionDisplay from './ElectionStatusDisplay'
+import Results from "./Results";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -237,19 +237,20 @@ const Battle: React.FC = () => {
                     </BigTitle>
                     {!isMobile() &&
                       <SubTitle>
-                        to view election status
+                        to view election results
                     </SubTitle>
                     }
                   </VersusContainer>
                 )}
                 {yam && (
-                  <StatusBlock>
-                    <ElectionStatus
-                      battle={battles}
-                      candidateInfo={candidate}
-                      electionContract={electionContract}
-                    />
-                  </StatusBlock>
+                  // <StatusBlock>
+                  //   <ElectionStatus
+                  //     battle={battles}
+                  //     candidateInfo={candidate}
+                  //     electionContract={electionContract}
+                  //   />
+                  // </StatusBlock>
+                  <Results />
                 )}
               </Section>
 
@@ -258,8 +259,8 @@ const Battle: React.FC = () => {
                   <img src={everipediaLogo} width="20px" height="20px" />
                   <img src={chainlinkLogo} width="20px" height="20px" />
                   <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
-              Election Results brought to you by AP + Everipedia. Powered by Chainlink.
-              <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
+                    Election Results brought to you by AP + Everipedia. Powered by Chainlink.
+                  <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
                   <img src={chainlinkLogo} width="20px" height="20px" />
                   <img src={everipediaLogo} width="20px" height="20px" />
                 </InfoBlock>
@@ -332,10 +333,6 @@ line-height: 1;
 letter-spacing: normal;
 margin-bottom: 120px;
 align-items: center;
-letter-spacing: normal;
-background-color: rgba(256,256,256,0.2);
-border-radius: 2px;
-padding: 2px;
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;

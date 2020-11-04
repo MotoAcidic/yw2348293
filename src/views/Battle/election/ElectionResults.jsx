@@ -35,6 +35,7 @@ const ElectionStatusDisplay = () => {
 		if (yam) {
 			getResults()
 		}
+		var intervalID = window.setInterval(getResults, 30000);
 	}, [yam]);
 
 	const getResults = async () => {

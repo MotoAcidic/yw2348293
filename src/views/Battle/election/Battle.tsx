@@ -20,6 +20,7 @@ import Trump from "../../../assets/img/trump.png";
 import AmericanFlag from "../../../assets/img/american-flag.jpg";
 import chainlinkLogo from "../../../assets/img/chainlinklogo.png";
 import everipediaLogo from "../../../assets/img/everipedialogo.png";
+import betBackground from "../../../assets/img/stars_background.png";
 
 import useModal from '../../../hooks/useModal'
 import Rules from './BetRulesModal'
@@ -31,9 +32,11 @@ import { getContract } from '../../../utils/erc20'
 import { provider } from 'web3-core'
 import PriceHistoryCard from "../../Results/PercentChangeCard";
 import VotingBalance from "./VotingBalance";
+import VotingBalanceAPCall from "./VotingBalanceAPCall";
 import ElectionStatus from './ElectionStatusBets'
 import ElectionResults from "./ElectionResults";
 import ElectionDisplay from './ElectionStatusDisplay'
+import BetModalAPCall from "./BetModalAPCall";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -70,13 +73,8 @@ const Battle: React.FC = () => {
 
   let [battles, setBattles] = useState(
     {
-      finished: false,
-      farm1: {
-        name: "Trump",
-      },
-      farm2: {
-        name: "Biden",
-      }
+      choice1: "yes",
+      choice2: "no",
     }
   )
 
@@ -103,10 +101,11 @@ const Battle: React.FC = () => {
     setStats(statsData);
   }, [yam, setStats]);
   let [modal, setShowModal] = useState(false);
-  let [candidate, setCandidate] = useState(battles.farm1);
+  let [candidate, setCandidate] = useState("");
   let [hoverCandidate, setHoverCandidate] = useState("");
   const [transitioning, setTransitioning] = useState(false);
   const [roughBets, setRoughBets] = useState({ trump: 0, biden: 0 });
+  const [betsAPCall, setBetsAPCall] = useState({ choice1: 0, choice2: 0 });
 
   let currentPrice = curPrice || 0;
 
@@ -118,19 +117,19 @@ const Battle: React.FC = () => {
     [yam, setWarStaked]
   );
 
-  const onClickTrump = (e) => {
+  const onClickLeft = (e) => {
     if (!account) {
       connect('injected')
     }
-    setCandidate(battles.farm1)
+    setCandidate(battles.choice1)
     setShowModal(true)
   }
 
-  const onClickBiden = (e) => {
+  const onClickRight = (e) => {
     if (!account) {
       connect('injected')
     }
-    setCandidate(battles.farm2)
+    setCandidate(battles.choice2)
     setShowModal(true)
   }
 
@@ -139,6 +138,13 @@ const Battle: React.FC = () => {
     const trump = tvl.trumpTotal
     const biden = tvl.bidenTotal
     setRoughBets({ trump, biden });
+  }
+
+  const getBetsAPCall = async () => {
+    let tvl = await electionTVL(yam, account)
+    const trump = tvl.trumpTotal
+    const biden = tvl.bidenTotal
+    setBetsAPCall({ choice1: trump, choice2: biden });
   }
 
   useEffect(() => {
@@ -153,6 +159,7 @@ const Battle: React.FC = () => {
     }
     if (yam && account && !roughBets.trump) {
       getRoughBets();
+      getBetsAPCall();
     }
   }, [yam, farms, farms[0]]);
 
@@ -188,8 +195,8 @@ const Battle: React.FC = () => {
     }, 10);
   }
 
-  const bidenStyle = hoverCandidate === "Biden" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)` } : null;
-  const trumpStyle = hoverCandidate === "Trump" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)` } : null;
+  const choice1Style = hoverCandidate === "choice1" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)`, zIndex: "10000" } : null;
+  const choice2Style = hoverCandidate === "choice2" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)`, zIndex: "10000" } : null;
 
 
   return (
@@ -198,7 +205,38 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
-            <TopSection>
+          {/* <TopSection> */}
+
+          <TopTitle>Will AP call the election before 20:00:00 UTC on Nov 6th, 2020?</TopTitle>
+          <TopSubTitle>Betting ends 8:00:00 UTC on Nov 6th</TopSubTitle>
+          {betsAPCall.choice1 > 0 &&
+                <VotingBalanceAPCall votes1={betsAPCall.choice1} votes2={betsAPCall.choice2} />
+              }
+              <VersusContainer>
+                <Candidate1 style={choice1Style} onMouseOver={() => hoverOver("choice1")} onMouseOut={() => hoverExit()} onClick={(e) => onClickLeft(e)}>
+                  <ChoiceFont>YES</ChoiceFont>
+                  <BetBackground/>
+                  </Candidate1>
+                <Candidate2 style={choice2Style} onMouseOver={() => hoverOver("choice2")} onMouseOut={() => hoverExit()} onClick={(e) => onClickRight(e)}>
+                <ChoiceFont>NO</ChoiceFont>
+                  <BetBackground/>
+                  </Candidate2>
+
+            </VersusContainer>
+            <div style={modal ? { display: 'block' } : { display: 'none' }}>
+              <Modal onClick={(e) => closeModal(e)}>
+                <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
+                  {yam && <BetModalAPCall
+                    candidateInfo={candidate}
+                    electionContract={electionContract}
+                    />
+                  }
+                </ModalBlock>
+              </Modal>
+            </div>
+                  {/* </TopSection> */}
+                  <Seperator/>
+            {/* <TopSection> */}
               {yam &&
                 <Title>Who Will Win?</Title>
               }
@@ -206,29 +244,11 @@ const Battle: React.FC = () => {
                 <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
               }
 
-              {/* <VersusContainer>
-              <VersusBackground>
-                <Candidate1 style={trumpStyle} onMouseOver={() => hoverOver("Trump")} onMouseOut={() => hoverExit()} src={Trump} onClick={(e) => onClickTrump(e)} />
-                <Candidate2 style={bidenStyle} onMouseOver={() => hoverOver("Biden")} onMouseOut={() => hoverExit()} src={Biden} onClick={(e) => onClickBiden(e)} />
-              </VersusBackground>
-            </VersusContainer>
-            <div style={modal ? { display: 'block' } : { display: 'none' }}>
-              <Modal onClick={(e) => closeModal(e)}>
-                <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
-                  {yam && <BetModalElection
-                    battle={battles}
-                    candidateInfo={candidate}
-                    electionContract={electionContract}
-                  />
-                  }
-                </ModalBlock>
-              </Modal>
-            </div> */}
               <Section>
                 {/* <ElectionDisplay /> */}
 
                 {yam ? <ElectionResults /> : (
-                  <VersusContainer onClick={() => connect('injected')}>
+                  <ConnectContainer onClick={() => connect('injected')}>
 
                     <BigTitle>
                       {isMobile() ? "Please View on Desktop" :
@@ -240,7 +260,7 @@ const Battle: React.FC = () => {
                         to view election status
                     </SubTitle>
                     }
-                  </VersusContainer>
+                  </ConnectContainer>
                 )}
                 {yam && (
                   <StatusBlock>
@@ -264,7 +284,7 @@ const Battle: React.FC = () => {
                   <img src={everipediaLogo} width="20px" height="20px" />
                 </InfoBlock>
               }
-            </TopSection>
+            {/* </TopSection> */}
 
             <Rules />
             <Pool3 />
@@ -274,6 +294,41 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const BetBackground = styled.div`
+top:0;
+left:0;
+width: 100%;
+height: 100%;
+opacity: 0.07;
+position:absolute;
+background-size: cover;
+background-image: url(${betBackground})
+`
+
+const ChoiceFont = styled.div`
+height: 100%;
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-family: "Edo";
+font-size: 160px;
+  color: white;
+  font-weight: normal;
+`
+
+const TopSubTitle = styled.div`
+font-family: "Gilroy";
+font-size: 20px;
+margin-bottom: 40px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+	color: white;
+`
 
 const SubTitle = styled.div`
 font-family: "Gilroy";
@@ -381,27 +436,24 @@ border-radius: 8px;
 let Candidate1
 let Candidate2
 
-Candidate1 = styled.img`
+Candidate1 = styled.div`
 width: 50%;
 height: 100%;
 border-radius: 8px 0 0 8px;
 cursor: pointer;
 transition: all 0.2s ease-in-out;
+position:relative;
+background-color: #AB1003;
 `
 
-Candidate2 = styled.img`
+Candidate2 = styled.div`
 width: 50%;
 height: 100%;
+position:relative;
 border-radius: 0 8px 8px 0;
 cursor: pointer;
 transition: all 0.2s ease-in-out;
-`
-
-const VersusBackground = styled.div`
-width: 100%;
-height: 100%;
-display: flex;
-
+background-color: #15437F;
 `
 
 const Seperator = !isMobile() ? styled.div`
@@ -421,6 +473,32 @@ const NextBattle = styled.div`
   font-family: "Gilroy";
   color: white;
 `
+
+const TopTitle = !isMobile() ? styled.div`
+font-family: "Gilroy";
+  font-size: 30px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  max-width: 80vw;
+  margin-top: 80px;
+` : styled.div`
+font-family: "Gilroy";
+  font-size: 30px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  max-width: 80vw;
+  margin-bottom: 40px;
+  margin-top: 80px;
+`;
+
 
 const Title = !isMobile() ? styled.div`
 font-family: "Gilroy";
@@ -468,7 +546,6 @@ const ContentContainer = styled.div`
   width: 100%;
   text-align: center;
 `;
-
 
 const TopDisplayContainer = !isMobile()
   ? styled.div`
@@ -534,9 +611,45 @@ const StyledA = styled.a`
           opacity: 1;
   }
 `
-
-
 const VersusContainer = !isMobile() ? styled.div`
+width: 70vw;
+max-width: 800px;
+height: 250px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 30px;
+margin: 0 auto 80px auto;
+font-family: "Gilroy";
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+border-radius: 8px;
+border: solid 2px rgba(255, 183, 0, 0.3);
+ background-color: rgba(4,2,43,0.4);
+ cursor: pointer;
+` : styled.div`
+margin: 0 0 80px 0;
+width: 90vw;
+display: flex;
+padding-top: 20px;
+font-family: "Gilroy";
+  font-size: 25px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+	color: #ffffff;
+	border-radius: 8px;
+  border: solid 2px rgba(255, 183, 0, 0.3);
+ background-color: rgba(4,2,43,0.4); 
+`
+
+const ConnectContainer = !isMobile() ? styled.div`
 width: 600px;
 height: 140px;
 display: flex;

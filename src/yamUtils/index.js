@@ -769,3 +769,101 @@ export const getLiveElectionResults = async (yam, states) => {
   }
   return states
 }
+
+// AP methods
+export const getCurrentBets = async (yam) => {
+  const precision = new BigNumber(10).pow(18);
+
+  const trumpETHPot = new BigNumber(await yam.contracts.election_betting.methods.trumpETHPot().call()) / precision;
+  const bidenETHPot = new BigNumber(await yam.contracts.election_betting.methods.bidenETHPot().call()) / precision;
+  const trumpWARPot = new BigNumber(await yam.contracts.election_betting.methods.trumpWARPot().call()) / precision;
+  const bidenWARPot = new BigNumber(await yam.contracts.election_betting.methods.bidenWARPot().call()) / precision;
+
+  return ({ trumpETHPot, bidenETHPot, trumpWARPot, bidenWARPot });
+}
+
+export const getCurrentBalances = async (yam, account) => {
+  const precision = new BigNumber(10).pow(18);
+
+  const trumpETHBal = new BigNumber(await yam.contracts.election_betting.methods.trumpETHBet(account).call()) / precision;
+  const bidenETHBal = new BigNumber(await yam.contracts.election_betting.methods.bidenETHBet(account).call()) / precision;
+  const trumpWARBal = new BigNumber(await yam.contracts.election_betting.methods.trumpWARBet(account).call()) / precision;
+  const bidenWARBal = new BigNumber(await yam.contracts.election_betting.methods.bidenWARBet(account).call()) / precision;
+
+
+  return ({ trumpETHBal, bidenETHBal, trumpWARBal, bidenWARBal });
+}
+
+// const precision = poolContract.options.address.toLowerCase() === "0x7845664310e205c979aa067bcfe02704d1001bcf" ?
+// new BigNumber(10).pow(6) :
+// new BigNumber(10).pow(18);
+
+// return poolContract.methods
+// .stake((new BigNumber(amount).times(precision)).toString())
+
+export const placeElectionWARBet = async (yam, candidate, amount, account) => {
+  console.log("war bet: ", candidate, amount, account);
+  const precision = new BigNumber(10).pow(18);
+  let p = await yam.contracts.election_betting.methods.WARBet(
+    candidate, new BigNumber(amount).times(precision).toString()
+  )
+    .send({ from: account, gas: 200000 })
+  return (p);
+}
+
+export const placeElectionETHBet = async (yam, candidate, amount, account) => {
+  console.log("eth bet: ", candidate, amount, account);
+  const precision = new BigNumber(10).pow(18);
+
+  let p = await yam.contracts.election_betting.methods.ETHBet(candidate)
+    .send({ from: account, value: new BigNumber(amount).times(precision).toString(), gas: 200000 });
+  return (p);
+}
+
+export const getElectionContracts = (yam) => {
+  if (!yam || !yam.contracts) {
+    return null
+  }
+  const election = yam.contracts.election_betting
+  return election
+}
+
+export const getElectionFinished = async (yam) => {
+  const electionFinished = await yam.contracts.election_betting.methods.winner().call();
+  return (electionFinished);
+}
+
+export const getElectionRewards = async (yam, account) => {
+  let p = await yam.contracts.election_betting.methods.getRewards().send({ from: account, gas: 200000 })
+    .on('transactionHash', tx => {
+      console.log("get election rewards", tx)
+      return tx.transactionHash
+    })
+  return (p);
+}
+
+export const electionTVL = async (yam, account) => {
+  const ethPrice = await getETHPrice(yam)
+  const curPrice = await getCurrentPrice(yam)
+  const currentBets = await getCurrentBets(yam)
+  const trumpEth = ethPrice * currentBets.trumpETHPot
+  const bidenEth = ethPrice * currentBets.bidenETHPot
+  const trumpWar = curPrice * currentBets.trumpWARPot
+  const bidenWar = curPrice * currentBets.bidenWARPot
+  const trumpTotal = trumpEth + trumpWar
+  const bidenTotal = bidenEth + bidenWar
+  
+  return { trumpTotal, bidenTotal }
+}
+
+export const getLiveElectionResults = async (yam, states) => {
+  for (let i = 0; i < states.length; i++) {
+    let data = await yam.contracts.everipedia.methods.presidentialWinners(states[i].name).call()
+    // console.log(data);
+    states[i].winner = data.winner
+    states[i].resultNow = data.resultNow
+    states[i].resultBlock = data.resultBlock
+    // console.log(states[i]);
+  }
+  return states
+}

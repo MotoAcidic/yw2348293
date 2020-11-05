@@ -6,5 +6,5 @@ declare module '*.mp4' {
 }
 
 declare module '*.otf';
-
+declare module '*.ttf';
 declare module '*.woff';

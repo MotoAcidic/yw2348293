@@ -27,6 +27,7 @@ import { createGlobalStyle } from 'styled-components';
 import GilroyBold from "./assets/fonts/Gilroy-Bold.otf";
 import GilroyMed from "./assets/fonts/Gilroy-Medium.otf";
 import SFMono from "./assets/fonts/SFMonoSemibold.woff";
+import Edo from "./assets/fonts/edo.ttf"
 
 const GlobalStyle = createGlobalStyle`
 
@@ -50,8 +51,14 @@ const GlobalStyle = createGlobalStyle`
   font-weight: normal;
   font-style: normal;
 }
-`;
 
+@font-face {
+  font-family: "Edo";
+  src: local(Edo), url(${Edo}) format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+`;
 
 if (
   window.location.hostname !== 'localhost'

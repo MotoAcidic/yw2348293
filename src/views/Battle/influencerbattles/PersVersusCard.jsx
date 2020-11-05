@@ -5,6 +5,7 @@ import Button from '../../../components/Button'
 import CardIcon from '../../../components/CardIcon'
 import checkedIcon from '../../../assets/img/checked.png'
 import uncheckedIcon from '../../../assets/img/unchecked.png'
+import VS from '../../../assets/img/VS.png'
 
 import useYam from '../../../hooks/useYam'
 import { useWallet } from 'use-wallet'
@@ -156,77 +157,86 @@ const Versus = ({ battles }) => {
 	return (
 		<>
 			<Title>Who Will Win?</Title>
-			<VersusContainer>
-				<Options>
-					<VersusItem style={{backgroundColor: 'blue'}}>
-						<StyledContent>
-							<StyledTitle>Bio</StyledTitle>
-							<Text>{battle1.pers1.handle}</Text>
-							<SubTitle>Followers</SubTitle>
-							<Text>{battle1.pers1.followerCount}</Text>
-						</StyledContent>
-						<ButtonContainer onClick={() => pick1(1)}>
-							{checked1 === 1 ? (
-								<img alt="check" src={checkedIcon} width="30px" />
-							) : (
-									<img alt="check" src={uncheckedIcon} width="30px" />
-								)}
-						</ButtonContainer>
-					</VersusItem>
-					<Divider />
-					<VersusItem>
-						<StyledContent>
-							<StyledTitle>Bio</StyledTitle>
-							<Text>{battle1.pers2.handle}</Text>
-							<SubTitle>Followers</SubTitle>
-							<Text>{battle1.pers2.followerCount}</Text>
-						</StyledContent>
-						<ButtonContainer onClick={() => pick1(2)}>
-							{checked1 === 2 ? (
-								<img alt="check" src={checkedIcon} width="30px" />
-							) : (
-									<img alt="check" src={uncheckedIcon} width="30px" />
-								)}
-						</ButtonContainer>
-					</VersusItem>
-				</Options>
-			</VersusContainer>
-			<VersusContainer>
-				<Options>
-					<VersusItem>
-						<StyledContent>
-							<StyledTitle>Bio</StyledTitle>
-							<Text>{battle2.pers1.bio}</Text>
-							<SubTitle>Followers</SubTitle>
-							<Text>{battle2.pers1.followerCount}</Text>
-						</StyledContent>
-						<ButtonContainer onClick={() => pick2(1)}>
-							{checked2 === 1 ? (
-								<img alt="check" src={checkedIcon} width="30px" />
-							) : (
-									<img alt="check" src={uncheckedIcon} width="30px" />
-								)}
-						</ButtonContainer>
-					</VersusItem>
-					<Divider />
-					<VersusItem>
-						<StyledContent>
-							<StyledTitle>Bio</StyledTitle>
-							<Text>{battle2.pers2.bio}</Text>
-							<SubTitle>Followers</SubTitle>
-							<Text>{battle2.pers2.followerCount}</Text>
-						</StyledContent>
-						<ButtonContainer onClick={() => pick2(2)}>
-							{checked2 === 2 ? (
-								<img alt="check" src={checkedIcon} width="30px" />
-							) : (
-									<img alt="check" src={uncheckedIcon} width="30px" />
-								)}
-						</ButtonContainer>
-					</VersusItem>
-				</Options>
-			</VersusContainer>
+			<BattleContainer>
+				<VersusContainer>
+					<Options>
+						<VersusItem>
+							<StyledContent>
+								<InfluencerContainer>
+									<Picture src={battle1.pers1.picture} />
+								</InfluencerContainer>
+								<StatBlock>
+									<SubTitle>{battle1.pers1.name}</SubTitle>
+									<Text>{battle1.pers1.handle}</Text>
+								</StatBlock>
+								<StatBlock>
+									<SubTitle>Followers</SubTitle>
+									<Text>{battle1.pers1.followerCount}</Text>
+								</StatBlock>
+							</StyledContent>
 
+						</VersusItem>
+						<Divider>
+							<img src={VS} width="100px" style={{position: 'absolute'}} />
+						</Divider>
+						<VersusItem>
+							<StyledContent>
+								<InfluencerContainer>
+									<Picture src={battle1.pers2.picture} />
+								</InfluencerContainer>
+								<StatBlock>
+									<SubTitle>{battle1.pers2.name}</SubTitle>
+									<Text>{battle1.pers2.handle}</Text>
+								</StatBlock>
+								<StatBlock>
+									<SubTitle>Followers</SubTitle>
+									<Text>{battle1.pers2.followerCount}</Text>
+								</StatBlock>
+							</StyledContent>
+
+						</VersusItem>
+					</Options>
+				</VersusContainer>
+				<VersusContainer>
+					<Options>
+						<VersusItem>
+							<StyledContent>
+								<InfluencerContainer>
+									<Picture src={battle2.pers1.picture} />
+								</InfluencerContainer>
+								<StatBlock>
+									<SubTitle>{battle2.pers1.name}</SubTitle>
+									<Text>{battle2.pers1.handle}</Text>
+								</StatBlock>
+								<StatBlock>
+									<SubTitle>Followers</SubTitle>
+									<Text>{battle2.pers1.followerCount}</Text>
+								</StatBlock>
+							</StyledContent>
+
+						</VersusItem>
+						<Divider>
+							<img src={VS} width="100px" style={{position: 'absolute'}} />
+						</Divider>
+						<VersusItem>
+							<StyledContent>
+								<InfluencerContainer>
+									<Picture src={battle2.pers2.picture} />
+								</InfluencerContainer>
+								<StatBlock>
+									<SubTitle>{battle2.pers2.name}</SubTitle>
+									<Text>{battle2.pers2.handle}</Text>
+								</StatBlock>
+								<StatBlock>
+									<SubTitle>Followers</SubTitle>
+									<Text>{battle2.pers2.followerCount}</Text>
+								</StatBlock>
+							</StyledContent>
+
+						</VersusItem>
+					</Options>
+				</VersusContainer>
+			</BattleContainer>
 			{account ?
 				<Button size="lg" onClick={castVote} disabled={voted ? true : false}>
 					{voted ? "Votes Received" : "Cast Your Votes"}
@@ -240,6 +250,37 @@ const Versus = ({ battles }) => {
 		</>
 	)
 }
+
+const BattleContainer = styled.div`
+display: flex;
+flex-direction: row;
+width: 85%;
+`
+
+const StatBlock = styled.div`
+margin-bottom: 30px;
+`
+
+const Picture = styled.img`
+width: 60px;
+height: 60px;
+  border-radius: 50%;
+
+`
+
+const InfluencerContainer = styled.div`
+display: flex;
+flex-direction: row;
+height: 60px;
+margin-bottom: 30px;
+`
+
+const InfoBlock = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+margin-left: 10px;
+`
 
 const Title = !isMobile() ? styled.div`
 font-family: "Gilroy";
@@ -272,13 +313,14 @@ display: flex;
 flex-direction: column;
 height: 100%;
 width: 100%;
+padding: 3%;
 `
 
 const Options = !isMobile() ? styled.div`
 width: 100%;
 height: 100%;
 display: flex;
-flex-direction: row;
+flex-direction: column;
 justify-content: space-around;
 ` : styled.div`
 width: 100%;
@@ -287,8 +329,13 @@ flex-direction: column;
 align-items: center;`
 
 const Divider = !isMobile() ? styled.div`
-background-color: rgba(256,256,256,0.3);
-width: 2px;
+  width: 95%;
+  height: 1px;
+  margin: 15px;
+  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
+display: flex;
+justify-content: center;
+align-items: center;
 ` : styled.div`
 height: 2px;
 width: 80%;
@@ -315,8 +362,8 @@ align-items: flex-start;
 height: 31px;`
 
 const VersusContainer = !isMobile() ? styled.div`
-width: 90vw;
-height: 35vh;
+width: 40vw;
+height: 75vh;
 display: flex;
 align-items: center;
 font-size: 30px;
@@ -328,8 +375,6 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
-border-radius: 8px;
-border: solid 2px rgba(255, 183, 0, 0.3);
 background-color: rgba(256,256,256,0.08);
 ` : styled.div`
 margin: 0 0 40px 0;

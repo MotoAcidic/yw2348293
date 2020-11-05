@@ -9,7 +9,8 @@ import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 import Pool3 from "./Pool3";
 import useFarms from "../../../hooks/useFarms";
-import { getWarStaked, getElectionContracts, getCurrentBets, electionTVL } from "../../../yamUtils";
+import { getWarStaked, getElectionContracts, getCurrentBets, electionTVL,
+  getContractsAP, TVL_AP } from "../../../yamUtils";
 import { getStats } from "./utils";
 
 import Uniswap from "../../../assets/img/uniswap@2x.png";
@@ -21,21 +22,12 @@ import AmericanFlag from "../../../assets/img/american-flag.jpg";
 import chainlinkLogo from "../../../assets/img/chainlinklogo.png";
 import everipediaLogo from "../../../assets/img/everipedialogo.png";
 import betBackground from "../../../assets/img/stars_background.png";
-
-import useModal from '../../../hooks/useModal'
 import Rules from './BetRulesModal'
-import useFarm from '../../../hooks/useFarm'
-import Swal from 'sweetalert2';
 import './swal.css'
-import AccountModal from "../../../components/TopBar/components/AdvertisementFormModal";
-import { getContract } from '../../../utils/erc20'
-import { provider } from 'web3-core'
-import PriceHistoryCard from "../../Results/PercentChangeCard";
 import VotingBalance from "./VotingBalance";
 import VotingBalanceAPCall from "./VotingBalanceAPCall";
 import ElectionStatus from './ElectionStatusBets'
 import ElectionResults from "./ElectionResults";
-import ElectionDisplay from './ElectionStatusDisplay'
 import BetModalAPCall from "./BetModalAPCall";
 
 function isMobile() {
@@ -121,7 +113,7 @@ const Battle: React.FC = () => {
     if (!account) {
       connect('injected')
     }
-    setCandidate(battles.choice1)
+    setCandidate("choice1")
     setShowModal(true)
   }
 
@@ -129,22 +121,19 @@ const Battle: React.FC = () => {
     if (!account) {
       connect('injected')
     }
-    setCandidate(battles.choice2)
+    setCandidate("choice2")
     setShowModal(true)
   }
 
   const getRoughBets = async () => {
     let tvl = await electionTVL(yam, account)
+    let ap_tvl = await TVL_AP(yam, account)
     const trump = tvl.trumpTotal
     const biden = tvl.bidenTotal
+    const choice1 = ap_tvl.choice1Total;
+    const choice2 = ap_tvl.choice2Total;
     setRoughBets({ trump, biden });
-  }
-
-  const getBetsAPCall = async () => {
-    let tvl = await electionTVL(yam, account)
-    const trump = tvl.trumpTotal
-    const biden = tvl.bidenTotal
-    setBetsAPCall({ choice1: trump, choice2: biden });
+    setBetsAPCall({choice1, choice2});
   }
 
   useEffect(() => {
@@ -159,7 +148,6 @@ const Battle: React.FC = () => {
     }
     if (yam && account && !roughBets.trump) {
       getRoughBets();
-      getBetsAPCall();
     }
   }, [yam, farms, farms[0]]);
 
@@ -172,6 +160,7 @@ const Battle: React.FC = () => {
   }
 
   const electionContract = getElectionContracts(yam)
+  const aPContract = getContractsAP(yam);
 
   const hoverOver = (candidate) => {
     console.log("called", candidate, hoverCandidate)
@@ -208,7 +197,7 @@ const Battle: React.FC = () => {
           {/* <TopSection> */}
 
           <TopTitle>Will AP call the election before 20:00:00 UTC on Nov 6th, 2020?</TopTitle>
-          <TopSubTitle>Betting ends 8:00:00 UTC on Nov 6th</TopSubTitle>
+          <TopSubTitle>Betting ends 12:00:00 UTC on Nov 6th</TopSubTitle>
           {betsAPCall.choice1 > 0 &&
                 <VotingBalanceAPCall votes1={betsAPCall.choice1} votes2={betsAPCall.choice2} />
               }
@@ -228,7 +217,7 @@ const Battle: React.FC = () => {
                 <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
                   {yam && <BetModalAPCall
                     candidateInfo={candidate}
-                    electionContract={electionContract}
+                    electionContract={aPContract}
                     />
                   }
                 </ModalBlock>
@@ -510,7 +499,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
 ` : styled.div`
 font-family: "Gilroy";
   font-size: 30px;
@@ -521,7 +510,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   margin-top: 40px;
 `;
 

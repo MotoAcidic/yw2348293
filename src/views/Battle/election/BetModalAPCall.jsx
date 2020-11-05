@@ -17,7 +17,7 @@ import UnstakeModal from './UnstakeModal'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
 import useAllowance from '../../../hooks/useAllowance'
-import { placeElectionWARBet, placeElectionETHBet, getCurrentBets, getCurrentBalances, getElectionRewards, getElectionFinished, redeem } from '../../../yamUtils'
+import { placeWARBetAP, placeETHBetAP, getCurrentBetsAP, getCurrentBalancesAP, getRewardsAP, getFinishedAP, redeem } from '../../../yamUtils'
 import Swal from 'sweetalert2';
 import { getElectionContracts, harvest } from '../../../yamUtils'
 import { getContract } from '../../../utils/erc20'
@@ -105,15 +105,11 @@ const Bet = ({ candidateInfo, electionContract }) => {
 
 	useEffect(() => {
 		const getBets = async () => {
-			const bets = await getCurrentBets(yam);
-			const balances = await getCurrentBalances(yam, account);
+			const bets = await getCurrentBetsAP(yam);
+			const balances = await getCurrentBalancesAP(yam, account);
 			setFarmBalances(balances);
 			// console.log("gotbets", bets);
-			setFarmBets(
-
-				{ choice1ETHPot: 0, choice2ETHPot: 0, choice1WARPot: 0, choice2WARPot: 0 }
-
-			);
+			setFarmBets(bets);
 		}
 		// console.log("got da yams???", yam)
 		if (yam) {
@@ -128,34 +124,34 @@ const Bet = ({ candidateInfo, electionContract }) => {
 			// 	claimAndUnstake()
 			// 	return
 			// }
+			console.log("Betting", candidateInfo, warInput, ethInput)
 			if (warInput < 0 || ethInput < 0) {
 				Swal.fire('Please enter a valid value to bet!')
 				return
 			}
-			if (warInput) {
-				const candidate = candidateInfo === "choice1" ? 1 : 2;
-				// console.log("War Bet", candidate, warInput)
-				setPending(true)
-				placeElectionWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => setPending(false))
-			}
-			if (ethInput) {
-				const candidate = candidateInfo === "choice2" ? 1 : 2;
-				// console.log("Eth Bet", candidate, ethInput)
-				setPending(true)
-				placeElectionETHBet(yam, candidate, parseFloat(ethInput), account).then((ret) => {
-					setPending(false)
-				})
-			}
 			if (!ethInput && !warInput) {
 				Swal.fire("Place a bet!");
+				return;
+			}
+			const candidate = candidateInfo === "choice1" ? 1 : 2;
+			if (warInput) {
+				setPending(true)
+				placeWARBetAP(yam, candidate, parseFloat(warInput), account).then((ret) => setPending(false))
+			}
+			if (ethInput) {
+				// console.log("Eth Bet", candidate, ethInput)
+				setPending(true)
+				placeETHBetAP(yam, candidate, parseFloat(ethInput), account).then((ret) => {
+					setPending(false)
+				})
 			}
 		}
 	}
 
 	const redeemRewards = async () => {
-		const done = await getElectionFinished(yam);
+		const done = await getFinishedAP(yam);
 		console.log("election finished?", done);
-		getElectionRewards(yam, account);
+		getRewardsAP(yam, account);
 	}
 
 	const handleApprove = useCallback(async () => {
@@ -170,7 +166,7 @@ const Bet = ({ candidateInfo, electionContract }) => {
 		}
 	}, [onApprove])
 
-	const message = candidateInfo === "yes" ? <Message><u>YES</u>, the AP&nbsp;<u>will</u>&nbsp;call the election before 20:00:00 UTC on Nov 6th.</Message> : <Message><u>NO</u>, the AP&nbsp;<u>will not</u>&nbsp;call the election before 20:00:00 UTC on Nov 6th.</Message>
+	const message = candidateInfo === "choice1" ? <Message><u>YES</u>, the AP&nbsp;<u>will</u>&nbsp;call the election before 20:00:00 UTC on Nov 6th.</Message> : <Message><u>NO</u>, the AP&nbsp;<u>will not</u>&nbsp;call the election before 20:00:00 UTC on Nov 6th.</Message>
 
 	return (
 		<Container size="sm">
@@ -209,7 +205,7 @@ const Bet = ({ candidateInfo, electionContract }) => {
 					}
 					{farmBalances.choice2WARBal > 0 || farmBalances.choice2ETHBal > 0 ?
 						<Column>
-												<StyledText2>
+							<StyledText2>
 								NO
 							</StyledText2>
 							<Space />
@@ -240,8 +236,8 @@ const Bet = ({ candidateInfo, electionContract }) => {
 					</Text>
 				<AllBets>
 					<BetDisplay>
-					<StyledText1>
-								YES
+						<StyledText1>
+							YES
 							</StyledText1>
 						<AmountBet>
 							{'$WAR: ' + farmBets.choice1WARPot.toLocaleString()}
@@ -251,8 +247,8 @@ const Bet = ({ candidateInfo, electionContract }) => {
 						</AmountBet>
 					</BetDisplay>
 					<BetDisplay>
-					<StyledText2>
-								NO
+						<StyledText2>
+							NO
 							</StyledText2>
 						<AmountBet>
 							{'$WAR: ' + farmBets.choice2WARPot.toLocaleString()}
@@ -263,22 +259,24 @@ const Bet = ({ candidateInfo, electionContract }) => {
 					</BetDisplay>
 				</AllBets>
 				<Separator />
-					{message}
+				{message}
 				{allowance.toNumber() > 0 ?
-						<Top>
-							<Text>
+					<Top>
+						<Text>
 							Bet $WAR:
 							</Text>
-							<InputContainer>
-								<Input disabled={pending ? true : false} type="number" min="0" value={warInput} onChange={e => setWARInput(e.target.value)} />
+						<InputContainer>
+							<Input disabled={pending ? true : false} type="number" min="0" value={warInput} onChange={e => setWARInput(e.target.value)} />
 								WAR
 						</InputContainer>
-						</Top>
-					: <Button size="xlg" onClick={() => handleApprove()}>Approve WAR</Button>
+					</Top>
+					: <><Button size="xlg" onClick={() => handleApprove()}>Approve WAR</Button>
+						<Space />
+					</>
 				}
 				<Top>
 					<Text>
-					Bet $ETH:
+						Bet $ETH:
 					</Text>
 					<InputContainer>
 						<Input disabled={pending ? true : false} type="number" min="0" value={ethInput} onChange={e => setETHInput(e.target.value)} />

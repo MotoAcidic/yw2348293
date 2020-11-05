@@ -50,10 +50,12 @@ const StyledText1 = styled.div`
 background-color: #AB1003;
 font-size: 40px;
 border-radius: 50%;
+color: white;
 `
 const StyledText2 = styled.div`
 	height: 40px;
   width: 40px;
+color: white;
 font-size: 40px;
 border-radius: 50%;
   display: flex;

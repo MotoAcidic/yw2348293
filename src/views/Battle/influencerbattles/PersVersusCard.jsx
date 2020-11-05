@@ -155,9 +155,10 @@ const Versus = ({ battles }) => {
 
 	return (
 		<>
+			<Title>Who Will Win?</Title>
 			<VersusContainer>
 				<Options>
-					<VersusItem>
+					<VersusItem style={{backgroundColor: 'blue'}}>
 						<StyledContent>
 							<StyledTitle>Bio</StyledTitle>
 							<Text>{battle1.pers1.handle}</Text>
@@ -240,15 +241,42 @@ const Versus = ({ battles }) => {
 	)
 }
 
+const Title = !isMobile() ? styled.div`
+font-family: "Gilroy";
+  font-size: 30px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  max-width: 80vw;
+  margin-bottom: 5px;
+` : styled.div`
+font-family: "Gilroy";
+  font-size: 30px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  max-width: 80vw;
+  margin-bottom: 10px;
+  margin-top: 40px;
+`;
+
 
 const VersusItem = styled.div`
 display: flex;
 flex-direction: column;
-width: 40%;
+height: 100%;
+width: 100%;
 `
 
 const Options = !isMobile() ? styled.div`
 width: 100%;
+height: 100%;
 display: flex;
 flex-direction: row;
 justify-content: space-around;
@@ -287,13 +315,12 @@ align-items: flex-start;
 height: 31px;`
 
 const VersusContainer = !isMobile() ? styled.div`
-width: 460px;
+width: 90vw;
+height: 35vh;
 display: flex;
-flex-direction: column;
-justify-content: space-between;
 align-items: center;
 font-size: 30px;
-margin: 20px auto 40px auto;
+margin: 0 auto 3vh auto;
 font-family: "Gilroy";
 font-weight: bold;
 font-stretch: normal;
@@ -304,9 +331,8 @@ color: #ffffff;
 border-radius: 8px;
 border: solid 2px rgba(255, 183, 0, 0.3);
 background-color: rgba(256,256,256,0.08);
-padding: 30px;
 ` : styled.div`
-margin: 40px 0 40px 0;
+margin: 0 0 40px 0;
 width: 90vw;
 display: flex;
 flex-direction: column;
@@ -318,8 +344,6 @@ font-family: "Gilroy";
   line-height: 1;
   letter-spacing: normal;
 	color: #ffffff;
-	padding-top: 20px;
-	padding-bottom: 20px;
 	border-radius: 8px;
 	border: solid 2px rgba(255, 183, 0, 0.3);
 	background-color: rgba(256,256,256,0.08);`

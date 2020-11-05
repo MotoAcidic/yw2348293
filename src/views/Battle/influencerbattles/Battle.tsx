@@ -123,9 +123,6 @@ const Battle: React.FC = () => {
     } else if (battles.length) {
       return (
         <>
-          {battles.length > 0 &&
-            <Title>Step 2: Vote for which twitter personality will perform better over 24 hours</Title>
-          }
           {battles.length === 2 && <PersVersusCard battles={battles} />}
           {battles.length === 1 && <SinglePersVersusCard battles={battles} />}
         </>
@@ -141,13 +138,6 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
-            {!isMobile() ?
-              <iframe title="promo" style={{ width: "500px", height: "281.25px", margin: "10px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
-              :
-              <iframe title="promo" style={{ width: "90vw", height: "50.6vw", margin: "40px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
-            }
-            <Title>Step 1: Stake $WAR to enter the arena</Title>
-            <Pool3 />
             {battleFields()}
             {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
             {prevDayBattles.length > 0 &&
@@ -157,6 +147,7 @@ const Battle: React.FC = () => {
             <Instructions />
             <Title>Schedule</Title>
             <Schedule schedule={schedule} />
+            {/* <Title>Step 1: Stake $WAR to enter the arena</Title> */}
 
           </Page>
         </ContentContainer>

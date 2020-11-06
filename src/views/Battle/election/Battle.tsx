@@ -32,6 +32,8 @@ import VotingBalanceAPCall from "./VotingBalanceAPCall";
 import ElectionStatus from './ElectionStatusBets'
 import ElectionResults from "./ElectionResults";
 import BetModalAPCall from "./BetModalAPCall";
+import APRedeemModal from "./RedeemCardAP";
+
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -90,6 +92,8 @@ const Battle: React.FC = () => {
     warStaked: new BigNumber(0),
     circSupply: new BigNumber(0)
   });
+  let [apRedeemModal, setAPRedeemModal] = useState(false);
+
 
   const fetchStats = useCallback(async () => {
     const statsData = await getStats(yam);
@@ -193,8 +197,43 @@ const Battle: React.FC = () => {
 
   const end = moment.utc("2020-11-07T00:00", "YYYY-MM-DDTHH:mm");
   const now = moment.utc().unix();
-  const trackingAP = now > end.unix();
-  console.log("time", end, now, trackingAP);
+  const APOver = now > end.unix();
+  console.log("time", end, now, APOver);
+
+  const APBetSection = !APOver ? (
+    <>
+      <Seperator />
+      <TopTitle>Will AP call the election before 00:00 UTC on Nov 7th, 2020?</TopTitle>
+
+      <VotingBalanceAPCall votes1={betsAPCall.choice1} votes2={betsAPCall.choice2} />
+
+      <TopSubTitle>
+        Waiting on the Associated Press. Come back in <Countdown endTime={end} />&nbsp;to claim rewards.
+        </TopSubTitle>
+    </>
+  ) : (
+    <>
+    <TopTitle>The Associated Press did not call the election before 00:00 UTC on Nov 7th&nbsp;
+<Claim onClick={() => setAPRedeemModal(true)} >
+        Claim Rewards
+</Claim>
+    </TopTitle>
+
+    <Spacer />
+    <div style={apRedeemModal ? { display: 'block' } : { display: 'none' }}>
+      <Modal onClick={() => setAPRedeemModal(false)}>
+        <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
+          {yam && <APRedeemModal
+            battle={battles}
+            candidateInfo={candidate}
+            electionContract={electionContract}
+          />
+          }
+        </ModalBlock>
+      </Modal>
+    </div>
+  </>
+  )
 
   return (
     <Switch>
@@ -241,18 +280,7 @@ const Battle: React.FC = () => {
                 </StatusBlock>
               )}
             </Section>
-            {yam && (
-              <>
-                <Seperator />
-                <TopTitle>Will AP call the election before 00:00 UTC on Nov 7th, 2020?</TopTitle>
-
-                <VotingBalanceAPCall votes1={betsAPCall.choice1} votes2={betsAPCall.choice2} />
-
-                <TopSubTitle>
-                  Waiting on the Associated Press. Come back in <Countdown endTime={end} />&nbsp;to claim rewards.
-                  </TopSubTitle>
-              </>
-            )}
+            {yam && APBetSection}
 
             {yam &&
               <InfoBlock>
@@ -275,6 +303,28 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const Claim = styled.div`
+font-family: "Gilroy";
+font-size: 16px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+	color: white;
+	margin-bottom: 10px;
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 7px;
+  border-radius: 4px;
+  border: 2px solid rgb(255, 204, 74);
+  width: 200px;
+  margin: auto;
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.4);
+`
+
 
 const Spacer = styled.div`
 height: 40px;`

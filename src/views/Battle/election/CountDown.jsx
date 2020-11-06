@@ -45,8 +45,7 @@ class CountDown extends React.Component {
 
 	render() {
 		return (
-			<Desc>
-				betting ends @ 22:00 UTC
+
 				<Countdown>
 					<Item>
 						{this.state.hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
@@ -63,7 +62,6 @@ class CountDown extends React.Component {
 						{/* <TimerText>Seconds</TimerText> */}
 					</Item>
 				</Countdown>
-			</Desc>
 		)
 	}
 }
@@ -71,20 +69,6 @@ class CountDown extends React.Component {
 const Item = styled.div`
 text-align: center;
 `
-
-const Desc = styled.div`
-display: flex;
-align-items: center;
-font-family: "Gilroy";
-  font-size: 20px;
-	font-stretch: normal;
-  font-style: normal;
-  letter-spacing: normal;
-  text-align: center;
-  color: #ffffff;
-	color: #ffffff;
-	margin-bottom: 20px;
-`;
 
 const TimerText = styled.div`
 text-align: center;
@@ -103,12 +87,13 @@ const Countdown = styled.div`
 display: flex;
 margin-left: 5px;
 font-family: "Gilroy";
-  font-size: 20px;
+	font-size: 20px;
+  color: rgb(255, 204, 74);
+	
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   letter-spacing: 2px;
-  color: #ffffff;
 `
 
 

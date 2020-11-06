@@ -19,10 +19,68 @@ const Nav: React.FC = () => {
       {/* <StyledLink exact activeClassName="active" to="/battle">Battle</StyledLink> */}
       <StyledLink exact activeClassName="active" to="/election">Battle</StyledLink>
       <StyledLink exact activeClassName="active" to="/results">Results</StyledLink>
-      <StyledLink exact activeClassName="active" to="/about">About</StyledLink>
+      {/* <StyledLink exact activeClassName="active" to="/about">About</StyledLink> */}
+      <DisabledLink>
+        <Top>
+          Gov
+        </Top>
+        <Bottom>
+          coming soon
+        </Bottom>
+      </DisabledLink>
     </StyledNav >
   )
 }
+
+const Bottom = styled.div`
+font-size: 12px;
+color: white;
+position:absolute;
+margin-top: 18px;
+`
+
+const Top = styled.div`
+font-family: "Gilroy";
+font-size: 18px;`
+
+const DisabledLink = !isMobile() ? styled.div`
+display: flex;
+flex-direction: column;
+cursor: pointer;
+opacity: 0.5;
+align-items: center;
+font-family: "Gilroy";
+font-size: 18px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffb700;
+  padding-left: ${props => props.theme.spacing[3]}px;
+  padding-right: ${props => props.theme.spacing[3]}px;
+  text-decoration: none;
+` : styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+font-family: "Gilroy";
+cursor: pointer;
+opacity: 0.5;
+font-size: 18px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffb700;
+  text-decoration: none;
+  &.active {
+    opacity: 1;
+    text-decoration: underline;
+    color: white;
+  }
+`
 
 const StyledNav = !isMobile() ? styled.nav`
   align-items: center;

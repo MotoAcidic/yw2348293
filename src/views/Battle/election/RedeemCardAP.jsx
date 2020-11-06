@@ -7,8 +7,6 @@ import useModal from '../../../hooks/useModal'
 import RulesModal from "./BetRulesModal";
 import Cookie from 'universal-cookie'
 import Container from '../../../components/Container'
-import MiniBiden from "../../../assets/img/biden@2x.png";
-import MiniTrump from "../../../assets/img/trump@2x.png";
 import useFarm from '../../../hooks/useFarm'
 import useYam from '../../../hooks/useYam'
 import { getDisplayBalance } from '../../../utils/formatBalance'
@@ -19,7 +17,7 @@ import UnstakeModal from './UnstakeModal'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
 import useAllowance from '../../../hooks/useAllowance'
-import { placeElectionWARBet, placeElectionETHBet, getCurrentBets, getCurrentBalances, getElectionRewards, getElectionFinished, redeem } from '../../../yamUtils'
+import { placeWARBetAP, placeETHBetAP, getCurrentBetsAP, getCurrentBalancesAP, getRewardsAP, getFinishedAP, redeem } from '../../../yamUtils'
 import Swal from 'sweetalert2';
 import { getElectionContracts, harvest } from '../../../yamUtils'
 import Pool3 from "./Pool3";
@@ -68,8 +66,8 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	const [ethInput, setETHInput] = useState(0);
 	const [warInput, setWARInput] = useState(0);
 	const [disabled, setDisabled] = useState(false)
-	const [farmBets, setFarmBets] = useState({ trumpETHPot: 0, bidenETHPot: 0, trumpWARPot: 0, bidenWARPot: 0 });
-	const [farmBalances, setFarmBalances] = useState({ trumpETHBal: 0, bidenETHBal: 0, trumpWARBal: 0, bidenWARBal: 0 });
+	const [farmBets, setFarmBets] = useState({ choice1ETHPot: 0, choice2ETHPot: 0, choice1WARPot: 0, choice2WARPot: 0 });
+	const [farmBalances, setFarmBalances] = useState({ choice1ETHBal: 0, choice2ETHBal: 0, choice1WARBal: 0, choice2WARBal: 0 });
 	const stakedBalance = useStakedBalance(contract)
 	const { onUnstake } = useUnstake(contract)
 	const [pending, setPending] = useState(false);
@@ -108,8 +106,8 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 
 	useEffect(() => {
 		const getBets = async () => {
-			const bets = await getCurrentBets(yam);
-			const balances = await getCurrentBalances(yam, account);
+			const bets = await getCurrentBetsAP(yam);
+			const balances = await getCurrentBalancesAP(yam, account);
 			setFarmBalances(balances);
 			// console.log("gotbets", bets);
 			setFarmBets(bets);
@@ -123,58 +121,66 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 
 
 	const redeemRewards = async () => {
-		const done = await getElectionFinished(yam);
+		const done = await getFinishedAP(yam);
 		console.log("election finished?", done);
-		getElectionRewards(yam, account);
+		getRewardsAP(yam, account);
 	}
 
 	return (
 		<Container size="sm">
 			<VersusContainer>
+				<Title>
+				Will AP call the election before 00:00 UTC on Nov 7th, 2020?
+				</Title>
 				<TitleText>
 					Your Bets
 					</TitleText>
 				<YourBets>
-					{!farmBalances.trumpWARBal > 0 && !farmBalances.trumpETHBal > 0 &&
-						!farmBalances.bidenWARBal > 0 && !farmBalances.bidenETHBal > 0 ?
+					{!farmBalances.choice1WARBal > 0 && !farmBalances.choice1ETHBal > 0 &&
+						!farmBalances.choice2WARBal > 0 && !farmBalances.choice2ETHBal > 0 ?
 						<SmallText>none</SmallText>
 						: null
 					}
-					{farmBalances.trumpWARBal > 0 || farmBalances.trumpETHBal > 0 ?
+					{farmBalances.choice1WARBal > 0 || farmBalances.choice1ETHBal > 0 ?
 						<Column>
-							<CardIcon src={MiniTrump} />
+      <StyledText1>
+								YES
+							</StyledText1>
+
 							<Space />
-							{farmBalances.trumpWARBal > 0 &&
+							{farmBalances.choice1WARBal > 0 &&
 								<Bets>
 									<AmountBet>
-										{'$WAR: ' + farmBalances.trumpWARBal.toLocaleString()}
+										{'$WAR: ' + farmBalances.choice1WARBal.toLocaleString()}
 									</AmountBet>
 								</Bets>
 							}
-							{farmBalances.trumpETHBal > 0 &&
+							{farmBalances.choice1ETHBal > 0 &&
 								<Bets>
 									<AmountBet>
-										{'$ETH: ' + farmBalances.trumpETHBal.toLocaleString()}
+										{'$ETH: ' + farmBalances.choice1ETHBal.toLocaleString()}
 									</AmountBet>
 								</Bets>}
 						</Column>
 						: null
 					}
-					{farmBalances.bidenWARBal > 0 || farmBalances.bidenETHBal > 0 ?
+					{farmBalances.choice2WARBal > 0 || farmBalances.choice2ETHBal > 0 ?
 						<Column>
-							<CardIcon src={MiniBiden} />
+        <StyledText2>
+								NO
+							</StyledText2>
 							<Space />
-							{farmBalances.bidenWARBal > 0 &&
+							{farmBalances.choice2WARBal > 0 &&
 								<Bets>
 									<AmountBet>
-										{'$WAR: ' + farmBalances.bidenWARBal.toLocaleString()}
+										{'$WAR: ' + farmBalances.choice2WARBal.toLocaleString()}
 									</AmountBet>
 								</Bets>
 							}
-							{farmBalances.bidenETHBal > 0 &&
+							{farmBalances.choice2ETHBal > 0 &&
 								<Bets>
 									<AmountBet>
-										{'$ETH: ' + farmBalances.bidenETHBal.toLocaleString()}
+										{'$ETH: ' + farmBalances.choice2ETHBal.toLocaleString()}
 									</AmountBet>
 								</Bets>
 							}
@@ -189,29 +195,34 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					</Text>
 				<AllBets>
 					<BetDisplay>
-						<CardIcon src={MiniTrump} />
+					<StyledText1>
+								YES
+							</StyledText1>
+
 						<AmountBet>
-							{farmBets.trumpWARPot.toLocaleString() + " $WAR"}
+							{farmBets.choice1WARPot.toLocaleString() + " $WAR"}
 						</AmountBet>
 						<AmountBet>
-							{farmBets.trumpETHPot.toLocaleString() + " $ETH"}
+							{farmBets.choice1ETHPot.toLocaleString() + " $ETH"}
 						</AmountBet>
 					</BetDisplay>
 					<BetDisplay>
-						<CardIcon src={MiniBiden} />
+					<StyledText2>
+								NO
+							</StyledText2>
 						<AmountBet>
-							{farmBets.bidenWARPot.toLocaleString() + " $WAR"}
+							{farmBets.choice2WARPot.toLocaleString() + " $WAR"}
 						</AmountBet>
 						<AmountBet>
-							{farmBets.bidenETHPot.toLocaleString() + " $ETH"}
+							{farmBets.choice2ETHPot.toLocaleString() + " $ETH"}
 						</AmountBet>
 					</BetDisplay>
 				</AllBets>
 
 				<Separator />
 				<Space />
-				{!farmBalances.trumpWARBal > 0 && !farmBalances.trumpETHBal > 0 &&
-						!farmBalances.bidenWARBal > 0 && !farmBalances.bidenETHBal > 0 ?
+				{!farmBalances.choice1WARBal > 0 && !farmBalances.choice1ETHBal > 0 &&
+						!farmBalances.choice2WARBal > 0 && !farmBalances.choice2ETHBal > 0 ?
 						<SmallText>nothing to redeem</SmallText>
 						: 
 						<Button size="xlg" onClick={() => redeemRewards()}>Redeem Rewards</Button>
@@ -221,7 +232,47 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		</Container>
 	)
 }
+const StyledText1 = styled.div`
+	height: 40px;
+  width: 40px;
+	border-radius: 50%;
+  display: flex;
+  align-items: center;
+	justify-content: center;
+	font-family: "Edo";
+	font-weight: normal;
+background-color: #AB1003;
+font-size: 40px;
+border-radius: 50%;
+color: white;
+`
+const StyledText2 = styled.div`
+	height: 40px;
+  width: 40px;
+color: white;
+font-size: 40px;
+border-radius: 50%;
+  display: flex;
+  align-items: center;
+	justify-content: center;
+	font-family: "Edo";
+	font-weight: normal;
+	background-color: #15437F;
+  border-radius: 50%;
+`
 
+const Title = styled.div`
+color: white;
+margin-bottom: 40px;
+font-family: Gilroy;
+font-size: 30px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+width: 95%;
+`
 
 const Separator = styled.div`
   width: 80%;

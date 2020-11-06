@@ -769,3 +769,89 @@ export const getLiveElectionResults = async (yam, states) => {
   }
   return states
 }
+
+// AP methods
+export const getCurrentBetsAP = async (yam) => {
+  const precision = new BigNumber(10).pow(18);
+
+  const choice1ETHPot = new BigNumber(await yam.contracts.ap_betting.methods.choice1ETHPot().call()) / precision;
+  const choice2ETHPot = new BigNumber(await yam.contracts.ap_betting.methods.choice2ETHPot().call()) / precision;
+  const choice1WARPot = new BigNumber(await yam.contracts.ap_betting.methods.choice1WARPot().call()) / precision;
+  const choice2WARPot = new BigNumber(await yam.contracts.ap_betting.methods.choice2WARPot().call()) / precision;
+
+  return ({ choice1ETHPot, choice2ETHPot, choice1WARPot, choice2WARPot });
+}
+
+export const getCurrentBalancesAP = async (yam, account) => {
+  const precision = new BigNumber(10).pow(18);
+
+  const choice1ETHBal = new BigNumber(await yam.contracts.ap_betting.methods.choice1ETHBet(account).call()) / precision;
+  const choice2ETHBal = new BigNumber(await yam.contracts.ap_betting.methods.choice2ETHBet(account).call()) / precision;
+  const choice1WARBal = new BigNumber(await yam.contracts.ap_betting.methods.choice1WARBet(account).call()) / precision;
+  const choice2WARBal = new BigNumber(await yam.contracts.ap_betting.methods.choice2WARBet(account).call()) / precision;
+
+
+  return ({ choice1ETHBal, choice2ETHBal, choice1WARBal, choice2WARBal });
+}
+
+// const precision = poolContract.options.address.toLowerCase() === "0x7845664310e205c979aa067bcfe02704d1001bcf" ?
+// new BigNumber(10).pow(6) :
+// new BigNumber(10).pow(18);
+
+// return poolContract.methods
+// .stake((new BigNumber(amount).times(precision)).toString())
+
+export const placeWARBetAP = async (yam, candidate, amount, account) => {
+  console.log("war bet: ", candidate, amount, account);
+  const precision = new BigNumber(10).pow(18);
+  let p = await yam.contracts.ap_betting.methods.WARBet(
+    candidate, new BigNumber(amount).times(precision).toString()
+  )
+    .send({ from: account, gas: 200000 })
+  return (p);
+}
+
+export const placeETHBetAP = async (yam, candidate, amount, account) => {
+  console.log("eth bet: ", candidate, amount, account);
+  const precision = new BigNumber(10).pow(18);
+
+  let p = await yam.contracts.ap_betting.methods.ETHBet(candidate)
+    .send({ from: account, value: new BigNumber(amount).times(precision).toString(), gas: 200000 });
+  return (p);
+}
+
+export const getContractsAP = (yam) => {
+  if (!yam || !yam.contracts) {
+    return null
+  }
+  const election = yam.contracts.ap_betting
+  return election
+}
+
+export const getFinishedAP = async (yam) => {
+  const electionFinished = await yam.contracts.ap_betting.methods.winner().call();
+  return (electionFinished);
+}
+
+export const getRewardsAP = async (yam, account) => {
+  let p = await yam.contracts.ap_betting.methods.getRewards().send({ from: account, gas: 200000 })
+    .on('transactionHash', tx => {
+      console.log("get election rewards", tx)
+      return tx.transactionHash
+    })
+  return (p);
+}
+
+export const TVL_AP = async (yam, account) => {
+  const ethPrice = await getETHPrice(yam)
+  const curPrice = await getCurrentPrice(yam)
+  const currentBets = await getCurrentBetsAP(yam)
+  const choice1Eth = ethPrice * currentBets.choice1ETHPot
+  const choice2Eth = ethPrice * currentBets.choice2ETHPot
+  const choice1War = curPrice * currentBets.choice1WARPot
+  const choice2War = curPrice * currentBets.choice2WARPot
+  const choice1Total = choice1Eth + choice1War
+  const choice2Total = choice2Eth + choice2War
+  
+  return { choice1Total, choice2Total }
+}

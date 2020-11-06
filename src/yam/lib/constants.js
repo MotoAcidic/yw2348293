@@ -88,6 +88,7 @@ if (chainId === 1) {
     Pricing: "0xA056b5a1fC97ea86D949cdB67Be4950e29942421",
 
     ElectionBetting: "0xF0037015bd137284f65B3842dd538ae204E32f2C",
+    APBetting: "0x163e5F71C807fd90F9dde9EA513B2c915d53CCB8",
     Everipedia: "0x0792724900B551d200D954a5Ed709d9514d73A9F",
     fwar: "0x5896e1c50e4d2d315052aad8383d7104c3891cd6"
   }
@@ -132,5 +133,3 @@ if (chainId === 1) {
     Pricing: "0xD61BF18a0A2747642B8E015EbA1545810f4B9cA1", // kovan
   }
 }
-
-

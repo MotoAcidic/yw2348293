@@ -22,12 +22,12 @@ import InfluencerBattle from './views/Battle/influencerbattles/Battle'
 import Election from './views/Battle/election/Battle'
 import Results from './views/Results/Results'
 
-import About from './views/About/About'
 import theme from './theme'
 import { createGlobalStyle } from 'styled-components';
 import GilroyBold from "./assets/fonts/Gilroy-Bold.otf";
 import GilroyMed from "./assets/fonts/Gilroy-Medium.otf";
 import SFMono from "./assets/fonts/SFMonoSemibold.woff";
+import Edo from "./assets/fonts/edo.ttf"
 
 const GlobalStyle = createGlobalStyle`
 
@@ -51,8 +51,14 @@ const GlobalStyle = createGlobalStyle`
   font-weight: normal;
   font-style: normal;
 }
-`;
 
+@font-face {
+  font-family: "Edo";
+  src: local(Edo), url(${Edo}) format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+`;
 
 if (
   window.location.hostname !== 'localhost'
@@ -89,9 +95,6 @@ const App: React.FC = () => {
             </Route>
             <Route path="/results" exact>
               <Results />
-            </Route>
-            <Route path="/about" exact>
-              <About />
             </Route>
           </Switch>
         </Router>

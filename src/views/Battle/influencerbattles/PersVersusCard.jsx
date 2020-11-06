@@ -141,6 +141,19 @@ const Versus = ({ battles }) => {
 		})
 	}
 
+	const useScript = url => {
+		useEffect(() => {
+			const script = document.createElement('script');
+
+			script.src = url;
+			script.async = true;
+			document.body.appendChild(script);
+			return () => {
+				document.body.removeChild(script);
+			}
+		}, [url]);
+	};
+
 	useEffect(() => {
 		if (account) {
 			axios.post(`${getServerURI()}/api/pers-status`, {
@@ -152,7 +165,10 @@ const Versus = ({ battles }) => {
 				console.log(err);
 			})
 		}
-	}, [account])
+
+	}, [account]);
+
+
 
 	return (
 		<>
@@ -162,9 +178,7 @@ const Versus = ({ battles }) => {
 					<Options>
 						<VersusItem>
 							<StyledContent>
-								<InfluencerContainer>
-									<Picture src={battle1.pers1.picture} />
-								</InfluencerContainer>
+								<Picture src={battle1.pers1.picture} />
 								<StatBlock>
 									<SubTitle>{battle1.pers1.name}</SubTitle>
 									<Text>{battle1.pers1.handle}</Text>
@@ -174,16 +188,15 @@ const Versus = ({ battles }) => {
 									<Text>{battle1.pers1.followerCount}</Text>
 								</StatBlock>
 							</StyledContent>
-
+							<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							{useScript("https://platform.twitter.com/widgets.js")}
 						</VersusItem>
 						<Divider>
-							<img src={VS} width="100px" style={{position: 'absolute'}} />
+							<img src={VS} width="100px" style={{ position: 'absolute' }} />
 						</Divider>
 						<VersusItem>
 							<StyledContent>
-								<InfluencerContainer>
-									<Picture src={battle1.pers2.picture} />
-								</InfluencerContainer>
+								<Picture src={battle1.pers2.picture} />
 								<StatBlock>
 									<SubTitle>{battle1.pers2.name}</SubTitle>
 									<Text>{battle1.pers2.handle}</Text>
@@ -193,7 +206,8 @@ const Versus = ({ battles }) => {
 									<Text>{battle1.pers2.followerCount}</Text>
 								</StatBlock>
 							</StyledContent>
-
+							<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							{useScript("https://platform.twitter.com/widgets.js")}
 						</VersusItem>
 					</Options>
 				</VersusContainer>
@@ -201,9 +215,7 @@ const Versus = ({ battles }) => {
 					<Options>
 						<VersusItem>
 							<StyledContent>
-								<InfluencerContainer>
-									<Picture src={battle2.pers1.picture} />
-								</InfluencerContainer>
+								<Picture src={battle2.pers1.picture} />
 								<StatBlock>
 									<SubTitle>{battle2.pers1.name}</SubTitle>
 									<Text>{battle2.pers1.handle}</Text>
@@ -213,16 +225,15 @@ const Versus = ({ battles }) => {
 									<Text>{battle2.pers1.followerCount}</Text>
 								</StatBlock>
 							</StyledContent>
-
+							<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							{useScript("https://platform.twitter.com/widgets.js")}
 						</VersusItem>
 						<Divider>
-							<img src={VS} width="100px" style={{position: 'absolute'}} />
+							<img src={VS} width="100px" style={{ position: 'absolute' }} />
 						</Divider>
 						<VersusItem>
 							<StyledContent>
-								<InfluencerContainer>
-									<Picture src={battle2.pers2.picture} />
-								</InfluencerContainer>
+								<Picture src={battle2.pers2.picture} />
 								<StatBlock>
 									<SubTitle>{battle2.pers2.name}</SubTitle>
 									<Text>{battle2.pers2.handle}</Text>
@@ -232,7 +243,8 @@ const Versus = ({ battles }) => {
 									<Text>{battle2.pers2.followerCount}</Text>
 								</StatBlock>
 							</StyledContent>
-
+							<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							{useScript("https://platform.twitter.com/widgets.js")}
 						</VersusItem>
 					</Options>
 				</VersusContainer>
@@ -258,22 +270,17 @@ width: 85%;
 `
 
 const StatBlock = styled.div`
-margin-bottom: 30px;
+margin-bottom: 10px;
 `
 
 const Picture = styled.img`
-width: 60px;
-height: 60px;
+width: 100px;
+height: 100px;
   border-radius: 50%;
+	margin-bottom: 30px;
 
 `
 
-const InfluencerContainer = styled.div`
-display: flex;
-flex-direction: row;
-height: 60px;
-margin-bottom: 30px;
-`
 
 const InfoBlock = styled.div`
 display: flex;
@@ -310,10 +317,11 @@ font-family: "Gilroy";
 
 const VersusItem = styled.div`
 display: flex;
-flex-direction: column;
+flex-direction: row;
+justify-content: space-between;
 height: 100%;
-width: 100%;
-padding: 3%;
+width: 90%;
+padding: 5%;
 `
 
 const Options = !isMobile() ? styled.div`
@@ -376,6 +384,8 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 background-color: rgba(256,256,256,0.08);
+border-radius: 8px;
+border: 2px solid rgba(255, 183, 0, 0.3);
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;
@@ -389,9 +399,9 @@ font-family: "Gilroy";
   line-height: 1;
   letter-spacing: normal;
 	color: #ffffff;
+	background-color: rgba(256,256,256,0.08);
 	border-radius: 8px;
-	border: solid 2px rgba(255, 183, 0, 0.3);
-	background-color: rgba(256,256,256,0.08);`
+border: 2px solid rgba(255, 183, 0, 0.3);`
 
 const ChartContainer = styled.div`
 height: 40px;
@@ -403,6 +413,7 @@ const StyledContent = styled.div`
   display: flex;
 	flex-direction: column;
 	height: 100%;
+	width: 30%;
 `
 
 const StyledTitle = styled.div`
@@ -420,10 +431,9 @@ margin-bottom: 5px;
 `
 
 const SubTitle = styled.div`
-font-family: "Gilroy";
+font-family: "GilroyMedium";
 margin-bottom: 5px;
 font-size: 20px;
-font-weight: bold;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
@@ -433,7 +443,7 @@ color: #ffffff;
 	text-align: left;
 `
 const Text = styled.div`
-font-family: "Gilroy";
+font-family: "GilroyMedium";
 font-size: 16px;
 font-weight: normal;
 font-stretch: normal;

@@ -208,7 +208,7 @@ const Battle: React.FC = () => {
     <>
       <Seperator />
       <TopTitle>Will AP call the election before 00:00 UTC on Nov 7th, 2020?</TopTitle>
-
+  <Spacer/>
       <VotingBalanceAPCall votes1={betsAPCall.choice1} votes2={betsAPCall.choice2} />
 
       <TopSubTitle>

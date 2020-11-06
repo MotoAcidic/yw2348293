@@ -204,48 +204,6 @@ const Battle: React.FC = () => {
           <Page>
             {/* <TopSection> */}
 
-            <TopTitle>Will AP call the election before 00:00 UTC on Nov 7th, 2020?</TopTitle>
-            {!trackingAP &&
-              <TopSubTitle>betting ends at 5:30 UTC in&nbsp;<Countdown endTime={moment.utc("2020-11-06T5:30", "YYYY-MM-DDTHH:mm")} /></TopSubTitle>
-            }
-            {trackingAP &&
-              <Spacer />
-            }
-            {betsAPCall.choice1 > 0 &&
-              <VotingBalanceAPCall votes1={betsAPCall.choice1} votes2={betsAPCall.choice2} />
-            }
-            {!trackingAP &&
-              <VersusContainer>
-                <Candidate1 style={choice1Style} onMouseOver={() => hoverOver("choice1")} onMouseOut={() => hoverExit()} onClick={(e) => onClickLeft(e)}>
-                  <ChoiceFont>YES</ChoiceFont>
-                  <BetBackground />
-                </Candidate1>
-                <Candidate2 style={choice2Style} onMouseOver={() => hoverOver("choice2")} onMouseOut={() => hoverExit()} onClick={(e) => onClickRight(e)}>
-                  <ChoiceFont>NO</ChoiceFont>
-                  <BetBackground />
-                </Candidate2>
-              </VersusContainer>
-            }
-            {trackingAP &&
-              <TopSubTitle>
-                Waiting on the Associated Press. Come back after 00:00 UTC to claim rewards.
-                       </TopSubTitle>
-            }
-
-            <div style={modal ? { display: 'block' } : { display: 'none' }}>
-              <Modal onClick={(e) => closeModal(e)}>
-                <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
-                  {yam && <BetModalAPCall
-                    candidateInfo={candidate}
-                    electionContract={aPContract}
-                  />
-                  }
-                </ModalBlock>
-              </Modal>
-            </div>
-            {/* </TopSection> */}
-            <Seperator />
-            {/* <TopSection> */}
             {yam &&
               <Title>Who Will Win?</Title>
             }
@@ -257,19 +215,21 @@ const Battle: React.FC = () => {
               {/* <ElectionDisplay /> */}
 
               {yam ? <ElectionResults /> : (
-                <ConnectContainer onClick={() => connect('injected')}>
+                <TopSection>
+                  <ConnectContainer onClick={() => connect('injected')}>
 
-                  <BigTitle>
-                    {isMobile() ? "Please View on Desktop" :
-                      "Connect Your Wallet"
-                    }
-                  </BigTitle>
-                  {!isMobile() &&
-                    <SubTitle>
-                      to view election status
+                    <BigTitle>
+                      {isMobile() ? "Please View on Desktop" :
+                        "Connect Your Wallet"
+                      }
+                    </BigTitle>
+                    {!isMobile() &&
+                      <SubTitle>
+                        to view election status
                     </SubTitle>
-                  }
-                </ConnectContainer>
+                    }
+                  </ConnectContainer>
+                </TopSection>
               )}
               {yam && (
                 <StatusBlock>
@@ -281,6 +241,18 @@ const Battle: React.FC = () => {
                 </StatusBlock>
               )}
             </Section>
+            {yam && (
+              <>
+                <Seperator />
+                <TopTitle>Will AP call the election before 00:00 UTC on Nov 7th, 2020?</TopTitle>
+
+                <VotingBalanceAPCall votes1={betsAPCall.choice1} votes2={betsAPCall.choice2} />
+
+                <TopSubTitle>
+                  Waiting on the Associated Press. Come back after 00:00 UTC on Nov 7th, 2020 to claim rewards.
+                       </TopSubTitle>
+              </>
+            )}
 
             {yam &&
               <InfoBlock>
@@ -473,7 +445,7 @@ background-color: #15437F;
 const Seperator = !isMobile() ? styled.div`
   width: 1000px;
   height: 1px;
-  margin-bottom: 80px;
+  margin-bottom: 40px;
   background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
 ` : styled.div`
   width: 90vw;
@@ -498,7 +470,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-  margin-top: 80px;
+  margin-bottom: 20px;
 ` : styled.div`
 font-family: "Gilroy";
   font-size: 30px;

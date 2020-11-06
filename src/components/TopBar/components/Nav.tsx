@@ -25,14 +25,20 @@ const Nav: React.FC = () => {
           Gov
         </Top>
         <Bottom>
-          coming soon
+          (coming soon)
         </Bottom>
       </DisabledLink>
     </StyledNav >
   )
 }
 
-const Bottom = styled.div`
+const Bottom = !isMobile() ? styled.div`
+font-size: 12px;
+color: white;
+position:absolute;
+margin-top: 3px;
+margin-left: 120px;
+` :styled.div`
 font-size: 12px;
 color: white;
 position:absolute;

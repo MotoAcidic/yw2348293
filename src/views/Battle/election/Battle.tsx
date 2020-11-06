@@ -191,6 +191,11 @@ const Battle: React.FC = () => {
   const choice2Style = hoverCandidate === "choice2" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)`, zIndex: "10000" } : null;
 
 
+  const end = moment.utc("2020-11-06T5:30", "YYYY-MM-DDTHH:mm").unix();
+  const now = moment.utc().unix();
+  const trackingAP = now > end;
+  console.log("time", end, now, trackingAP);
+
   return (
     <Switch>
       <StyledCanvas>
@@ -200,21 +205,33 @@ const Battle: React.FC = () => {
             {/* <TopSection> */}
 
             <TopTitle>Will AP call the election before 00:00 UTC on Nov 7th, 2020?</TopTitle>
-            <TopSubTitle>betting ends at 5:30 UTC in&nbsp;<Countdown endTime={moment.utc("2020-11-06T5:30", "YYYY-MM-DDTHH:mm")} /></TopSubTitle>
+            {!trackingAP &&
+              <TopSubTitle>betting ends at 5:30 UTC in&nbsp;<Countdown endTime={moment.utc("2020-11-06T5:30", "YYYY-MM-DDTHH:mm")} /></TopSubTitle>
+            }
+            {trackingAP &&
+              <Spacer />
+            }
             {betsAPCall.choice1 > 0 &&
               <VotingBalanceAPCall votes1={betsAPCall.choice1} votes2={betsAPCall.choice2} />
             }
-            <VersusContainer>
-              <Candidate1 style={choice1Style} onMouseOver={() => hoverOver("choice1")} onMouseOut={() => hoverExit()} onClick={(e) => onClickLeft(e)}>
-                <ChoiceFont>YES</ChoiceFont>
-                <BetBackground />
-              </Candidate1>
-              <Candidate2 style={choice2Style} onMouseOver={() => hoverOver("choice2")} onMouseOut={() => hoverExit()} onClick={(e) => onClickRight(e)}>
-                <ChoiceFont>NO</ChoiceFont>
-                <BetBackground />
-              </Candidate2>
+            {!trackingAP &&
+              <VersusContainer>
+                <Candidate1 style={choice1Style} onMouseOver={() => hoverOver("choice1")} onMouseOut={() => hoverExit()} onClick={(e) => onClickLeft(e)}>
+                  <ChoiceFont>YES</ChoiceFont>
+                  <BetBackground />
+                </Candidate1>
+                <Candidate2 style={choice2Style} onMouseOver={() => hoverOver("choice2")} onMouseOut={() => hoverExit()} onClick={(e) => onClickRight(e)}>
+                  <ChoiceFont>NO</ChoiceFont>
+                  <BetBackground />
+                </Candidate2>
+              </VersusContainer>
+            }
+            {trackingAP &&
+              <TopSubTitle>
+                Waiting on the Associated Press. Come back after 00:00 UTC to claim rewards.
+                       </TopSubTitle>
+            }
 
-            </VersusContainer>
             <div style={modal ? { display: 'block' } : { display: 'none' }}>
               <Modal onClick={(e) => closeModal(e)}>
                 <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
@@ -286,6 +303,9 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const Spacer = styled.div`
+height: 40px;`
 
 const BetBackground = styled.div`
 top:0;

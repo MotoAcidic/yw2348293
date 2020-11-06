@@ -9,10 +9,13 @@ import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 import Pool3 from "./Pool3";
 import useFarms from "../../../hooks/useFarms";
-import { getWarStaked, getElectionContracts, getCurrentBets, electionTVL,
-  getContractsAP, TVL_AP } from "../../../yamUtils";
+import {
+  getWarStaked, getElectionContracts, getCurrentBets, electionTVL,
+  getContractsAP, TVL_AP
+} from "../../../yamUtils";
 import { getStats } from "./utils";
-
+import Countdown from "./CountDown";
+import moment from "moment";
 import Uniswap from "../../../assets/img/uniswap@2x.png";
 
 import BetModalElection from "./BetCardElection.jsx";
@@ -133,7 +136,7 @@ const Battle: React.FC = () => {
     const choice1 = ap_tvl.choice1Total;
     const choice2 = ap_tvl.choice2Total;
     setRoughBets({ trump, biden });
-    setBetsAPCall({choice1, choice2});
+    setBetsAPCall({ choice1, choice2 });
   }
 
   useEffect(() => {
@@ -194,22 +197,22 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
-          {/* <TopSection> */}
+            {/* <TopSection> */}
 
-          <TopTitle>Will AP call the election before 00:00:00 UTC on Nov 7th, 2020?</TopTitle>
-          <TopSubTitle>Betting ends 12:00:00 UTC on Nov 6th</TopSubTitle>
-          {betsAPCall.choice1 > 0 &&
-                <VotingBalanceAPCall votes1={betsAPCall.choice1} votes2={betsAPCall.choice2} />
-              }
-              <VersusContainer>
-                <Candidate1 style={choice1Style} onMouseOver={() => hoverOver("choice1")} onMouseOut={() => hoverExit()} onClick={(e) => onClickLeft(e)}>
-                  <ChoiceFont>YES</ChoiceFont>
-                  <BetBackground/>
-                  </Candidate1>
-                <Candidate2 style={choice2Style} onMouseOver={() => hoverOver("choice2")} onMouseOut={() => hoverExit()} onClick={(e) => onClickRight(e)}>
+            <TopTitle>Will AP call the election before 00:00 UTC on Nov 7th, 2020?</TopTitle>
+            <TopSubTitle>betting ends at 12:00 UTC in&nbsp;<Countdown endTime={moment.utc("2020-11-06T12:00", "YYYY-MM-DDTHH:mm")} /></TopSubTitle>
+            {betsAPCall.choice1 > 0 &&
+              <VotingBalanceAPCall votes1={betsAPCall.choice1} votes2={betsAPCall.choice2} />
+            }
+            <VersusContainer>
+              <Candidate1 style={choice1Style} onMouseOver={() => hoverOver("choice1")} onMouseOut={() => hoverExit()} onClick={(e) => onClickLeft(e)}>
+                <ChoiceFont>YES</ChoiceFont>
+                <BetBackground />
+              </Candidate1>
+              <Candidate2 style={choice2Style} onMouseOver={() => hoverOver("choice2")} onMouseOut={() => hoverExit()} onClick={(e) => onClickRight(e)}>
                 <ChoiceFont>NO</ChoiceFont>
-                  <BetBackground/>
-                  </Candidate2>
+                <BetBackground />
+              </Candidate2>
 
             </VersusContainer>
             <div style={modal ? { display: 'block' } : { display: 'none' }}>
@@ -218,61 +221,61 @@ const Battle: React.FC = () => {
                   {yam && <BetModalAPCall
                     candidateInfo={candidate}
                     electionContract={aPContract}
-                    />
+                  />
                   }
                 </ModalBlock>
               </Modal>
             </div>
-                  {/* </TopSection> */}
-                  <Seperator/>
+            {/* </TopSection> */}
+            <Seperator />
             {/* <TopSection> */}
-              {yam &&
-                <Title>Who Will Win?</Title>
-              }
-              {roughBets.trump > 0 &&
-                <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
-              }
+            {yam &&
+              <Title>Who Will Win?</Title>
+            }
+            {roughBets.trump > 0 &&
+              <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
+            }
 
-              <Section>
-                {/* <ElectionDisplay /> */}
+            <Section>
+              {/* <ElectionDisplay /> */}
 
-                {yam ? <ElectionResults /> : (
-                  <ConnectContainer onClick={() => connect('injected')}>
+              {yam ? <ElectionResults /> : (
+                <ConnectContainer onClick={() => connect('injected')}>
 
-                    <BigTitle>
-                      {isMobile() ? "Please View on Desktop" :
-                        "Connect Your Wallet"
-                      }
-                    </BigTitle>
-                    {!isMobile() &&
-                      <SubTitle>
-                        to view election status
-                    </SubTitle>
+                  <BigTitle>
+                    {isMobile() ? "Please View on Desktop" :
+                      "Connect Your Wallet"
                     }
-                  </ConnectContainer>
-                )}
-                {yam && (
-                  <StatusBlock>
-                    <ElectionStatus
-                      battle={battles}
-                      candidateInfo={candidate}
-                      electionContract={electionContract}
-                    />
-                  </StatusBlock>
-                )}
-              </Section>
+                  </BigTitle>
+                  {!isMobile() &&
+                    <SubTitle>
+                      to view election status
+                    </SubTitle>
+                  }
+                </ConnectContainer>
+              )}
+              {yam && (
+                <StatusBlock>
+                  <ElectionStatus
+                    battle={battles}
+                    candidateInfo={candidate}
+                    electionContract={electionContract}
+                  />
+                </StatusBlock>
+              )}
+            </Section>
 
-              {yam &&
-                <InfoBlock>
-                  <img src={everipediaLogo} width="20px" height="20px" />
-                  <img src={chainlinkLogo} width="20px" height="20px" />
-                  <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
+            {yam &&
+              <InfoBlock>
+                <img src={everipediaLogo} width="20px" height="20px" />
+                <img src={chainlinkLogo} width="20px" height="20px" />
+                <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
               Election Results brought to you by AP + Everipedia. Powered by Chainlink.
               <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
-                  <img src={chainlinkLogo} width="20px" height="20px" />
-                  <img src={everipediaLogo} width="20px" height="20px" />
-                </InfoBlock>
-              }
+                <img src={chainlinkLogo} width="20px" height="20px" />
+                <img src={everipediaLogo} width="20px" height="20px" />
+              </InfoBlock>
+            }
             {/* </TopSection> */}
 
             <Rules />
@@ -310,13 +313,15 @@ font-size: 160px;
 const TopSubTitle = styled.div`
 font-family: "Gilroy";
 font-size: 20px;
+margin-top: 5px;
 margin-bottom: 40px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-	color: white;
+  color: white;
+  display: flex;
 `
 
 const SubTitle = styled.div`

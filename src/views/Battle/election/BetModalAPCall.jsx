@@ -166,7 +166,7 @@ const Bet = ({ candidateInfo, electionContract }) => {
 		}
 	}, [onApprove])
 
-	const message = candidateInfo === "choice1" ? <Message><u>YES</u>, the AP&nbsp;<u>will</u>&nbsp;call the election before 00:00:00 UTC on Nov 7th.</Message> : <Message><u>NO</u>, the AP&nbsp;<u>will not</u>&nbsp;call the election before 00:00:00 UTC on Nov 7th.</Message>
+	const message = candidateInfo === "choice1" ? <Message><u>YES</u>, the AP&nbsp;<u>will</u>&nbsp;call the election before 00:00 UTC on Nov 7th.</Message> : <Message><u>NO</u>, the AP&nbsp;<u>will not</u>&nbsp;call the election before 00:00 UTC on Nov 7th.</Message>
 
 	return (
 		<Container size="sm">

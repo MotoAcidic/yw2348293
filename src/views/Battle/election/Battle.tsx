@@ -200,7 +200,7 @@ const Battle: React.FC = () => {
             {/* <TopSection> */}
 
             <TopTitle>Will AP call the election before 00:00 UTC on Nov 7th, 2020?</TopTitle>
-            <TopSubTitle>betting ends at 12:00 UTC in&nbsp;<Countdown endTime={moment.utc("2020-11-06T12:00", "YYYY-MM-DDTHH:mm")} /></TopSubTitle>
+            <TopSubTitle>betting ends at 5:30 UTC in&nbsp;<Countdown endTime={moment.utc("2020-11-06T5:30", "YYYY-MM-DDTHH:mm")} /></TopSubTitle>
             {betsAPCall.choice1 > 0 &&
               <VotingBalanceAPCall votes1={betsAPCall.choice1} votes2={betsAPCall.choice2} />
             }

@@ -191,9 +191,9 @@ const Battle: React.FC = () => {
   const choice2Style = hoverCandidate === "choice2" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)`, zIndex: "10000" } : null;
 
 
-  const end = moment.utc("2020-11-06T5:30", "YYYY-MM-DDTHH:mm").unix();
+  const end = moment.utc("2020-11-07T00:00", "YYYY-MM-DDTHH:mm");
   const now = moment.utc().unix();
-  const trackingAP = now > end;
+  const trackingAP = now > end.unix();
   console.log("time", end, now, trackingAP);
 
   return (
@@ -249,8 +249,8 @@ const Battle: React.FC = () => {
                 <VotingBalanceAPCall votes1={betsAPCall.choice1} votes2={betsAPCall.choice2} />
 
                 <TopSubTitle>
-                  Waiting on the Associated Press. Come back after 00:00 UTC on Nov 7th, 2020 to claim rewards.
-                       </TopSubTitle>
+                  Waiting on the Associated Press. Come back in <Countdown endTime={end} />&nbsp;to claim rewards.
+                  </TopSubTitle>
               </>
             )}
 

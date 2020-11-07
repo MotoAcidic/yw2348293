@@ -92,13 +92,14 @@ const Battle: React.FC = () => {
     warStaked: new BigNumber(0),
     circSupply: new BigNumber(0)
   });
+  let [apRedeemModal, setAPRedeemModal] = useState(false);
+
 
   const fetchStats = useCallback(async () => {
     const statsData = await getStats(yam);
     setStats(statsData);
   }, [yam, setStats]);
   let [modal, setShowModal] = useState(false);
-  let [apRedeemModal, setAPRedeemModal] = useState(false);
   let [candidate, setCandidate] = useState("");
   let [hoverCandidate, setHoverCandidate] = useState("");
   const [transitioning, setTransitioning] = useState(false);
@@ -198,10 +199,45 @@ const Battle: React.FC = () => {
   const choice2Style = hoverCandidate === "choice2" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)`, zIndex: "10000" } : null;
 
 
-  const end = moment.utc("2020-11-06T5:30", "YYYY-MM-DDTHH:mm").unix();
+  const end = moment.utc("2020-11-07T00:00", "YYYY-MM-DDTHH:mm");
   const now = moment.utc().unix();
-  const trackingAP = now > end;
-  console.log("time", end, now, trackingAP);
+  const APOver = now > end.unix();
+  console.log("time", end, now, APOver);
+
+  const APBetSection = !APOver ? (
+    <>
+      <Seperator />
+      <TopTitle>Will AP call the election before 00:00 UTC on Nov 7th, 2020?</TopTitle>
+  <Spacer/>
+      <VotingBalanceAPCall votes1={betsAPCall.choice1} votes2={betsAPCall.choice2} />
+
+      <TopSubTitle>
+        Waiting on the Associated Press. Come back in <Countdown endTime={end} />&nbsp;to claim rewards.
+        </TopSubTitle>
+    </>
+  ) : (
+    <>
+    <TopTitle>The Associated Press did not call the election before 00:00 UTC on Nov 7th&nbsp;
+<Claim onClick={() => setAPRedeemModal(true)} >
+        Claim Rewards
+</Claim>
+    </TopTitle>
+
+    <Spacer />
+    <div style={apRedeemModal ? { display: 'block' } : { display: 'none' }}>
+      <Modal onClick={() => setAPRedeemModal(false)}>
+        <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
+          {yam && <APRedeemModal
+            battle={battles}
+            candidateInfo={candidate}
+            electionContract={electionContract}
+          />
+          }
+        </ModalBlock>
+      </Modal>
+    </div>
+  </>
+  )
 
   return (
     <Switch>
@@ -210,32 +246,12 @@ const Battle: React.FC = () => {
         <ContentContainer>
           <Page>
 
-
-            {/* {!trackingAP &&
-              <VersusContainer>
-                <Candidate1 style={choice1Style} onMouseOver={() => hoverOver("choice1")} onMouseOut={() => hoverExit()} onClick={(e) => onClickLeft(e)}>
-                  <ChoiceFont>YES</ChoiceFont>
-                  <BetBackground />
-                </Candidate1>
-                <Candidate2 style={choice2Style} onMouseOver={() => hoverOver("choice2")} onMouseOut={() => hoverExit()} onClick={(e) => onClickRight(e)}>
-                  <ChoiceFont>NO</ChoiceFont>
-                  <BetBackground />
-                </Candidate2>
-              </VersusContainer>
-            } */}
-
-            <div style={modal ? { display: 'block' } : { display: 'none' }}>
-              <Modal onClick={(e) => closeModal(e)}>
-                <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
-                  {yam && <BetModalAPCall
-                    candidateInfo={candidate}
-                    electionContract={aPContract}
-                  />
-                  }
-                </ModalBlock>
-              </Modal>
-            </div>
-            {yam && <Spacer />}
+            {yam &&
+              <Title>Who Will Win?</Title>
+            }
+            {roughBets.trump > 0 &&
+              <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
+            }
 
             <Section>
               {/* <ElectionDisplay /> */}
@@ -268,31 +284,7 @@ const Battle: React.FC = () => {
                 <Results />
               )}
             </Section>
-
-            {yam &&
-              <>
-                <TopTitle>The Associated Press called the election at ######:&nbsp;
-            <Claim onClick={() => setAPRedeemModal(true)} >
-                    Claim Rewards
-            </Claim>
-                </TopTitle>
-
-                <Spacer />
-                <div style={apRedeemModal ? { display: 'block' } : { display: 'none' }}>
-                  <Modal onClick={() => setAPRedeemModal(false)}>
-                    <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
-                      {yam && <APRedeemModal
-                        battle={battles}
-                        candidateInfo={candidate}
-                        electionContract={electionContract}
-                      />
-                      }
-                    </ModalBlock>
-                  </Modal>
-                </div>
-              </>
-
-            }
+            {yam && APBetSection}
 
             {yam &&
               <InfoBlock>
@@ -501,7 +493,7 @@ background-color: #15437F;
 const Seperator = !isMobile() ? styled.div`
   width: 1000px;
   height: 1px;
-  margin-bottom: 80px;
+  margin-bottom: 40px;
   background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
 ` : styled.div`
   width: 90vw;
@@ -526,8 +518,12 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
+<<<<<<< HEAD
   display: flex;
   align-items: center;
+=======
+  margin-bottom: 20px;
+>>>>>>> master
 ` : styled.div`
 font-family: "Gilroy";
   font-size: 30px;

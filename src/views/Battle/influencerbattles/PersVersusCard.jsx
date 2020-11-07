@@ -262,8 +262,8 @@ margin-bottom: 30px;
 `
 
 const Picture = styled.img`
-width: 60px;
-height: 60px;
+width: 200px;
+height: 200px;
   border-radius: 50%;
 
 `

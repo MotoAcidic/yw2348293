@@ -134,14 +134,17 @@ const Battle: React.FC = () => {
               {tab === "season1" ? <ActiveTab>season 1</ActiveTab> :
                 <Tab onClick={() => setTab("season1")}>season 1</Tab>}
             </Tabs>
-            <ResultPage>
+            <ResultTop>
               <TopBorder>
                 <BorderLineLeft />
                 <BorderLineRight />
               </TopBorder>
+              </ResultTop>
+              <ResultPage>
+                
+              </ResultPage>
 
-{/* 
-              <Title>Season 2 Leaderboard</Title>
+              {/* <Title>Season 2 Leaderboard</Title>
               <LeaderBoard>{leaderboard}</LeaderBoard>
               <S2Battles history={s2Battles} />
               <Seperator />
@@ -151,13 +154,13 @@ const Battle: React.FC = () => {
               {tab === "season1" && <S1Battles/>}
               {tab === "season2" && <S2Battles/>}
 
-            </ResultPage>
           </Page>
         </ContentContainer>
       </StyledCanvas>
     </Switch>
   );
 };
+
 
 const BorderLineRight = styled.div`
 width: calc(45vw - 302px);
@@ -179,14 +182,23 @@ justify-content: space-between;
 ` : styled.div``
 
 const ResultPage = !isMobile() ? styled.div`
+border-image: -webkit-linear-gradient(top, rgba(256,256,256,1), rgba(256,256,256,0)) 1 100%;
 width: 90vw;
-border: 1px solid white;
-border-top-color: transparent;
-border-radius: 12px;
+border-color: transparent white transparent white;
+border-radius: 12px 12px 0 0;
 display: flex;
 flex-direction: column;
 align-items: center;
+` : styled.div``
 
+const ResultTop = !isMobile() ? styled.div`
+width: 90vw;
+border: 1px solid white;
+border-color: transparent white transparent white;
+border-radius: 12px 12px 0 0;
+display: flex;
+flex-direction: column;
+align-items: center;
 ` : styled.div``
 
 const ActiveTab = !isMobile() ? styled.div`

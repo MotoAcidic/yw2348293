@@ -208,7 +208,7 @@ const Battle: React.FC = () => {
     <>
       <Seperator />
       <TopTitle>Will AP call the election before 00:00 UTC on Nov 7th, 2020?</TopTitle>
-  <Spacer/>
+      <Spacer />
       <VotingBalanceAPCall votes1={betsAPCall.choice1} votes2={betsAPCall.choice2} />
 
       <TopSubTitle>
@@ -216,28 +216,28 @@ const Battle: React.FC = () => {
         </TopSubTitle>
     </>
   ) : (
-    <>
-    <TopTitle>The Associated Press did not call the election before 00:00 UTC on Nov 7th&nbsp;
+      <>
+        <TopTitle>The Associated Press did not call the election before 00:00 UTC on Nov 7th&nbsp;
 <Claim onClick={() => setAPRedeemModal(true)} >
-        Claim Rewards
+            Claim Rewards
 </Claim>
-    </TopTitle>
+        </TopTitle>
 
-    <Spacer />
-    <div style={apRedeemModal ? { display: 'block' } : { display: 'none' }}>
-      <Modal onClick={() => setAPRedeemModal(false)}>
-        <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
-          {yam && <APRedeemModal
-            battle={battles}
-            candidateInfo={candidate}
-            electionContract={electionContract}
-          />
-          }
-        </ModalBlock>
-      </Modal>
-    </div>
-  </>
-  )
+        <Spacer />
+        <div style={apRedeemModal ? { display: 'block' } : { display: 'none' }}>
+          <Modal onClick={() => setAPRedeemModal(false)}>
+            <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
+              {yam && <APRedeemModal
+                battle={battles}
+                candidateInfo={candidate}
+                electionContract={electionContract}
+              />
+              }
+            </ModalBlock>
+          </Modal>
+        </div>
+      </>
+    )
 
   return (
     <Switch>

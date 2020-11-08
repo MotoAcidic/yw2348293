@@ -188,10 +188,14 @@ const Versus = ({ battles }) => {
 									<Text>{battle1.pers1.followerCount}</Text>
 								</StatBlock>
 							</StyledContent>
-							<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							{!isMobile() ?
+								<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								: <a class="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							}
 							{useScript("https://platform.twitter.com/widgets.js")}
 						</VersusItem>
 						<Divider>
+							<Seperator />
 							<img src={VS} width="100px" style={{ position: 'absolute' }} />
 						</Divider>
 						<VersusItem>
@@ -206,7 +210,10 @@ const Versus = ({ battles }) => {
 									<Text>{battle1.pers2.followerCount}</Text>
 								</StatBlock>
 							</StyledContent>
-							<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							{!isMobile() ?
+								<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								: <a class="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							}
 							{useScript("https://platform.twitter.com/widgets.js")}
 						</VersusItem>
 					</Options>
@@ -225,10 +232,15 @@ const Versus = ({ battles }) => {
 									<Text>{battle2.pers1.followerCount}</Text>
 								</StatBlock>
 							</StyledContent>
-							<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							{!isMobile() ?
+								<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								: <a class="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							}
 							{useScript("https://platform.twitter.com/widgets.js")}
 						</VersusItem>
 						<Divider>
+							<Seperator />
+
 							<img src={VS} width="100px" style={{ position: 'absolute' }} />
 						</Divider>
 						<VersusItem>
@@ -243,7 +255,10 @@ const Versus = ({ battles }) => {
 									<Text>{battle2.pers2.followerCount}</Text>
 								</StatBlock>
 							</StyledContent>
-							<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							{!isMobile() ?
+								<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								: <a class="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							}
 							{useScript("https://platform.twitter.com/widgets.js")}
 						</VersusItem>
 					</Options>
@@ -263,10 +278,25 @@ const Versus = ({ battles }) => {
 	)
 }
 
-const BattleContainer = styled.div`
+const Seperator = !isMobile() ? styled.div`
+  width: 150px;
+	height: 1px;
+	position: absolute;
+  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
+` : styled.div`
+  width: 150px;
+	height: 1px;
+	position: absolute;
+  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
+`
+const BattleContainer = !isMobile() ? styled.div`
 display: flex;
 flex-direction: row;
 width: 85%;
+` : styled.div`
+display: flex;
+flex-direction: column;
+width: 90vw;
 `
 
 const StatBlock = styled.div`
@@ -277,18 +307,9 @@ const Picture = styled.img`
 width: 100px;
 height: 100px;
   border-radius: 50%;
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 
 `
-
-
-const InfoBlock = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-margin-left: 10px;
-`
-
 const Title = !isMobile() ? styled.div`
 font-family: "Gilroy";
   font-size: 30px;
@@ -338,17 +359,17 @@ align-items: center;`
 
 const Divider = !isMobile() ? styled.div`
   width: 95%;
-  height: 1px;
-  margin: 15px;
-  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
+ 
 display: flex;
 justify-content: center;
 align-items: center;
 ` : styled.div`
-height: 2px;
-width: 80%;
-margin: 20px auto 30px auto;
-background-color: rgba(256,256,256,0.3);`
+width: 95%;
+height: 70px;
+
+display: flex;
+justify-content: center;
+align-items: center;`
 
 const RecDesc = styled.div`
 font-family: "Gilroy";
@@ -363,11 +384,6 @@ font-family: "Gilroy";
 
 const Space = styled.div`
 height: 80px;`
-
-const ButtonContainer = styled.div`
-display: flex;
-align-items: flex-start;
-height: 31px;`
 
 const VersusContainer = !isMobile() ? styled.div`
 width: 40vw;
@@ -403,12 +419,6 @@ font-family: "Gilroy";
 	border-radius: 8px;
 border: 2px solid rgba(255, 183, 0, 0.3);`
 
-const ChartContainer = styled.div`
-height: 40px;
-width: 170px;
-margin-bottom: 10px;
-`
-
 const StyledContent = styled.div`
   display: flex;
 	flex-direction: column;
@@ -416,21 +426,7 @@ const StyledContent = styled.div`
 	width: 30%;
 `
 
-const StyledTitle = styled.div`
-font-family: "Gilroy";
-font-size: 28px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-text-align: center;
-color: #ffffff;
-	text-align: left;
-margin-bottom: 5px;
-`
-
-const SubTitle = styled.div`
+const SubTitle = !isMobile() ? styled.div`
 font-family: "GilroyMedium";
 margin-bottom: 5px;
 font-size: 20px;
@@ -441,8 +437,20 @@ letter-spacing: normal;
 text-align: center;
 color: #ffffff;
 	text-align: left;
+` : styled.div`
+font-family: "GilroyMedium";
+margin-bottom: 5px;
+font-size: 14px;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+color: #ffffff;
+	text-align: left;
 `
-const Text = styled.div`
+
+const Text = !isMobile() ? styled.div`
 font-family: "GilroyMedium";
 font-size: 16px;
 font-weight: normal;
@@ -455,35 +463,20 @@ color: #ffffff;
 	text-align: left;
 	margin-bottom: 10px;
 	letter-spacing: 1px;
-`
-const GreenText = styled.div`
-font-family: "Gilroy";
-font-size: 16px;
+` : styled.div`
+font-family: "GilroyMedium";
+font-size: 12px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 text-align: center;
+color: #ffffff;
 	text-align: left;
 	margin-bottom: 10px;
 	letter-spacing: 1px;
-	color: #38ff00;
 `
-const RedText = styled.div`
-font-family: "Gilroy";
-font-size: 16px;
-font-weight: normal;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-text-align: center;
-	text-align: left;
-	margin-bottom: 10px;
-	letter-spacing: 1px;
-	color: #ff4343;
 
-`
 
 export default Versus

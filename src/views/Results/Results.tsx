@@ -50,6 +50,8 @@ const Battle: React.FC = () => {
   let [s1Leaderboard, setS1Leaderboard] = useState([]);
   let [s1Battles, setS1Battles] = useState([]);
 
+  const [tab, setTab] = useState("bet");
+
   const [
     {
       circSupply,
@@ -145,6 +147,7 @@ const Battle: React.FC = () => {
 
   let currentPrice = curPrice || 0;
 
+
   return (
     <Switch>
       <StyledCanvas>
@@ -185,20 +188,107 @@ const Battle: React.FC = () => {
                 target="_blank"
               />
             </TopDisplayContainer>
-            <BigTitle>Off Season</BigTitle>
-            <Title>Season 2 Leaderboard</Title>
-            <LeaderBoard>{leaderboard}</LeaderBoard>
-            <S2Battles history={s2Battles} />
-            <Seperator />
-            <Title>Season 1 Leaderboard</Title>
-            <S1LeaderBoard>{s1Leaderboard}</S1LeaderBoard>
-            <S1Battles history={s1Battles} />
+
+            <Tabs>
+              {tab === "influencer" ? <ActiveTab>influencer</ActiveTab> :
+                <Tab onClick={() => setTab("influencer")}>influencer</Tab>}
+              {tab === "bet" ? <ActiveTab>bet</ActiveTab> :
+                <Tab onClick={() => setTab("bet")}>bet</Tab>}
+              {tab === "season2" ? <ActiveTab>season 2</ActiveTab> :
+                <Tab onClick={() => setTab("season2")}>season 2</Tab>}
+              {tab === "season1" ? <ActiveTab>season 1</ActiveTab> :
+                <Tab onClick={() => setTab("season1")}>season 1</Tab>}
+            </Tabs>
+            <ResultPage>
+              <TopBorder>
+                <BorderLineLeft />
+                <BorderLineRight />
+              </TopBorder>
+
+
+              <Title>Season 2 Leaderboard</Title>
+              <LeaderBoard>{leaderboard}</LeaderBoard>
+              <S2Battles history={s2Battles} />
+              <Seperator />
+              <Title>Season 1 Leaderboard</Title>
+              <S1LeaderBoard>{s1Leaderboard}</S1LeaderBoard>
+              <S1Battles history={s1Battles} />
+
+
+            </ResultPage>
           </Page>
         </ContentContainer>
       </StyledCanvas>
     </Switch>
   );
 };
+
+const BorderLineRight = styled.div`
+width: calc(45vw - 304px);
+border-top: 1px solid white;
+border-radius: 0 12px 0 0;
+`
+
+const BorderLineLeft = styled.div`
+width: calc(45vw - 304px);
+border-top: 1px solid white;
+border-radius: 12px 0 0 0;
+`
+
+const TopBorder = !isMobile() ? styled.div`
+height: 60px;
+width: calc(100% + 2px);
+display: flex;
+justify-content: space-between;
+` : styled.div``
+
+const ResultPage = !isMobile() ? styled.div`
+width: 90vw;
+border: 1px solid white;
+border-top-color: transparent;
+border-radius: 12px;
+display: flex;
+flex-direction: column;
+align-items: center;
+
+` : styled.div``
+
+const ActiveTab = !isMobile() ? styled.div`
+  width: 150px;
+  height: 35px;
+  border-radius: 8px 8px 0 0;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid white;
+  border-bottom-color: transparent;
+  font-size: 20px;
+font-family: "Gilroy";
+padding-top: 5px;
+` : styled.div``
+
+const Tab = !isMobile() ? styled.div`
+background-color: rgba(256,256,256, 0.1);
+width: 150px;
+  height: 35px;
+  border-radius: 8px 8px 0 0;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid white;
+  font-size: 20px;
+font-family: "Gilroy";
+padding-top: 5px;
+` : styled.div``
+
+const Tabs = !isMobile() ? styled.div`
+display: flex;
+margin-bottom: -2px;
+` : styled.div``
 
 const Seperator = !isMobile() ? styled.div`
   width: 1000px;

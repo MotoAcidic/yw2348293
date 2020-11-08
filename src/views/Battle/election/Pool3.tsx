@@ -56,8 +56,7 @@ const WarPool: React.FC = () => {
 	const tokenContract = useMemo(() => {
 		return getContract(ethereum as provider, depositTokenAddress)
 	}, [ethereum, depositTokenAddress])
-	// console.log(contract, tokenContract, depositTokenAddress);
-	
+
 
 	const { onReward } = useReward(contract)
 	const earnings = useEarnings(contract)
@@ -130,19 +129,19 @@ const WarPool: React.FC = () => {
 	if (isMobile()) {
 		return (
 			<MobileInfoContainer>
-				{/* <WarTopContainer>
+				<WarTopContainer>
 					<Title>$WARchest</Title>
 					<StyledDetails>
 						<StyledDetail>APR</StyledDetail>
 						<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
 					</StyledDetails>
-				</WarTopContainer> */}
+				</WarTopContainer>
 				<MobileInfoLines>
 					<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
 					<Line><>Currently Staked: </><ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
-					{/* <Line>Battle Rewards: <ShadedLine>{getDisplayBalance(earnings)}</ShadedLine> </Line> */}
+					<Line>Battle Rewards: <ShadedLine>{getDisplayBalance(earnings)}</ShadedLine> </Line>
 					<MobileDisclaimer>(Updated @ 19:00 UTC Each Day)</MobileDisclaimer>
-					{/* <Line>Daily Rewards Available: <ShadedLine>14000 WAR</ShadedLine></Line> */}
+					<Line>Daily Rewards Available: <ShadedLine>14000 WAR</ShadedLine></Line>
 				</MobileInfoLines>
 				<BottomButtonContainer>
 					{!allowance.toNumber() ? (
@@ -174,17 +173,17 @@ const WarPool: React.FC = () => {
 		<InfoContainer>
 			<WarTopContainer>
 				<Title>$WARchest</Title>
-				{/* <StyledDetails>
+				<StyledDetails>
 					<StyledDetail>APR</StyledDetail>
 					<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
-				</StyledDetails> */}
+				</StyledDetails>
 			</WarTopContainer>
 			<InfoLines>
 				<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
 				<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
-				{/* <Line>Battle Rewards: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></Line>
-				<Disclaimer>(Updated @ 19:00 UTC Each Day)</Disclaimer> */}
-				{/* <Line>Daily Rewards Available: <ShadedLine>14000 WAR</ShadedLine></Line> */}
+				<Line>Battle Rewards: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></Line>
+				<Disclaimer>(Updated @ 19:00 UTC Each Day)</Disclaimer>
+				<Line>Daily Rewards Available: <ShadedLine>14000 WAR</ShadedLine></Line>
 			</InfoLines>
 			<BottomButtonContainer>
 				{!allowance.toNumber() ? (

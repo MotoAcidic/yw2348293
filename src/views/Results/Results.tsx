@@ -13,6 +13,7 @@ import { getWarStaked } from "../../yamUtils";
 import { getStats } from "./utils";
 import S2Battles from './S2Battles'
 import S1Battles from './S1Battles'
+import Bet from "./Bet";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -45,7 +46,6 @@ const Battle: React.FC = () => {
     circSupply: new BigNumber(0)
   });
   const { account, connect } = useWallet()
-
   const [tab, setTab] = useState("bet");
 
   const [
@@ -135,24 +135,21 @@ const Battle: React.FC = () => {
                 <Tab onClick={() => setTab("season1")}>season 1</Tab>}
             </Tabs>
             <ResultTop>
-              <TopBorder>
-                <BorderLineLeft />
-                <BorderLineRight />
-              </TopBorder>
-              </ResultTop>
-              <ResultPage>
-                
-              </ResultPage>
+              <BorderTopLeft />
+              <BorderTopRight />
+            </ResultTop>
+            <ResultPage>
+              <BorderLeft />
+              <ResultsContents>
 
-              {/* <Title>Season 2 Leaderboard</Title>
-              <LeaderBoard>{leaderboard}</LeaderBoard>
-              <S2Battles history={s2Battles} />
-              <Seperator />
-              <Title>Season 1 Leaderboard</Title>
-              <S1LeaderBoard>{s1Leaderboard}</S1LeaderBoard>
-              <S1Battles history={s1Battles} /> */}
-              {tab === "season1" && <S1Battles/>}
-              {tab === "season2" && <S2Battles/>}
+                {tab === "season1" && <S1Battles />}
+                {tab === "season2" && <S2Battles />}
+                {tab === "bet" && <Bet />}
+
+              </ResultsContents>
+              <BorderRight />
+            </ResultPage>
+
 
           </Page>
         </ContentContainer>
@@ -161,44 +158,53 @@ const Battle: React.FC = () => {
   );
 };
 
+const ResultsContents = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;`
 
-const BorderLineRight = styled.div`
-width: calc(45vw - 302px);
+const BorderTopRight = styled.div`
+width: calc(43vw - 302px);
 border-top: 1px solid white;
 border-radius: 0 12px 0 0;
 `
 
-const BorderLineLeft = styled.div`
-width: calc(45vw - 302px);
+const BorderTopLeft = styled.div`
+width: calc(43vw - 302px);
 border-top: 1px solid white;
 border-radius: 12px 0 0 0;
 `
 
-const TopBorder = !isMobile() ? styled.div`
-height: 30px;
-width: calc(100% + 2px);
+const BorderLeft = styled.div`
+height: 60vh;
+margin-left: -1px;
+border-left: 1px solid white;
+border-image: -webkit-linear-gradient(top, rgba(256,256,256,1), rgba(256,256,256,0)) 1 100%;
+`;
+
+const BorderRight = styled.div`
+height: 60vh;
+margin-right: -1px;
+border-right: 1px solid white;
+border-image: -webkit-linear-gradient(top, rgba(256,256,256,1), rgba(256,256,256,0)) 1 100%;
+`;
+
+const ResultPage = !isMobile() ? styled.div`
+width: 86vw;
+margin-top: -2px;
 display: flex;
+flex-direction: row;
 justify-content: space-between;
 ` : styled.div``
 
-const ResultPage = !isMobile() ? styled.div`
-border-image: -webkit-linear-gradient(top, rgba(256,256,256,1), rgba(256,256,256,0)) 1 100%;
-width: 90vw;
-border-color: transparent white transparent white;
-border-radius: 12px 12px 0 0;
-display: flex;
-flex-direction: column;
-align-items: center;
-` : styled.div``
-
 const ResultTop = !isMobile() ? styled.div`
-width: 90vw;
+width: 86vw;
 border: 1px solid white;
 border-color: transparent white transparent white;
 border-radius: 12px 12px 0 0;
+height: 30px;
 display: flex;
-flex-direction: column;
-align-items: center;
+justify-content: space-between;
 ` : styled.div``
 
 const ActiveTab = !isMobile() ? styled.div`

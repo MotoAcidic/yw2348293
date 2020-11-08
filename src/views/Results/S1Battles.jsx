@@ -5,100 +5,109 @@ import moment from 'moment';
 import './swal.css'
 import PopularityCard from "./PopularityCard";
 import axios from "axios";
+import loading from "../../assets/img/loading.gif";
 
 function isMobile() {
-	if (window.innerWidth < window.innerHeight) {
-		return true
-	}
-	else {
-		return false
-	}
+  if (window.innerWidth < window.innerHeight) {
+    return true
+  }
+  else {
+    return false
+  }
 }
 
 function getServerURI() {
-	if (window.location.hostname === "localhost") {
-		return "http://localhost:5000";
-	}
-	return "https://yieldwars-api.herokuapp.com";
+  if (window.location.hostname === "localhost") {
+    return "http://localhost:5000";
+  }
+  return "https://yieldwars-api.herokuapp.com";
 }
 
 const S1Battles = () => {
-	let [leaderboard, setLeaderboard] = useState([])
-	let [battles, setBattles] = useState([]);
+  let [leaderboard, setLeaderboard] = useState([])
+  let [battles, setBattles] = useState([]);
+  let [farms] = useFarms()
+  const [seasonHistory, setSeasonHistory] = useState([]);
 
+  useEffect(() => {
+    axios.post(`${getServerURI()}/api/season-info`, ({ season: 1 })).then(res => {
+      let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
+        return b.votes - a.votes;
+      }).slice(0, 5);
+      const leaderboardContent = lb.map((item, index) => {
+        const votes = Number(item.votes.toFixed(0));
+        let pool = farms.find(farm => farm.id === item.pool);
+        let rank = "th";
+        if (index === 0) rank = "st";
+        if (index === 1) rank = "nd";
+        if (index === 2) rank = "rd";
+        return (
+          <LeaderBoardItem key={index}>
+            <StyledContent>
+              {index + 1}
+              {rank}
+              <StyledCardIcon>{pool.icon}</StyledCardIcon>
+              <StyledTitle>{pool.name}</StyledTitle>
+              <StyledVotes>{votes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} votes</StyledVotes>
+            </StyledContent>
+          </LeaderBoardItem>
+        )
+      })
 
-	let [farms] = useFarms()
-	const [seasonHistory, setSeasonHistory] = useState([]);
+      const history = res.data.history;
+      let currSeasonHistory = []
+      const sortedHistory = history.sort((a, b) => {
+        return a.day - b.day
+      })
+      for (let i = 0; i < sortedHistory.length; i++) {
+        if (i + 1 < sortedHistory.length && sortedHistory[i].day === sortedHistory[i + 1].day) {
+          currSeasonHistory.push([sortedHistory[i], sortedHistory[i + 1]]);
+          i++;
+        } else {
+          currSeasonHistory.push([sortedHistory[i]]);
+        }
+      }
+      currSeasonHistory.reverse()
+      currSeasonHistory = currSeasonHistory.map(item => {
+        if (item.length === 0) return null;
+        const startDate = moment("09-28", 'MM-DD').add(item[0].day, 'day').format('MMM Do');
+        return (<PopularityCard key={startDate} farms={farms} startDate={startDate} item={item} />);
+      })
+      if (currSeasonHistory.length % 3 === 2) {
+        currSeasonHistory.push(<FillCard />)
+      }
 
-	useEffect(() => {
-		axios.post(`${getServerURI()}/api/season-info`, ({ season: 1 })).then(res => {
-			let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
-				return b.votes - a.votes;
-			}).slice(0, 5);
-			const leaderboardContent = lb.map((item, index) => {
-				const votes = Number(item.votes.toFixed(0));
-				let pool = farms.find(farm => farm.id === item.pool);
-				let rank = "th";
-				if (index === 0) rank = "st";
-				if (index === 1) rank = "nd";
-				if (index === 2) rank = "rd";
-				return (
-					<LeaderBoardItem key={index}>
-						<StyledContent>
-							{index + 1}
-							{rank}
-							<StyledCardIcon>{pool.icon}</StyledCardIcon>
-							<StyledTitle>{pool.name}</StyledTitle>
-							<StyledVotes>{votes.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} votes</StyledVotes>
-						</StyledContent>
-					</LeaderBoardItem>
-				)
-			})
+      setSeasonHistory(currSeasonHistory);
+      setLeaderboard(leaderboardContent);
+      setBattles(currSeasonHistory);
+    }).catch(err => {
+      console.log(err);
+    })
+  }, []);
 
-			const history = res.data.history;
-			let currSeasonHistory = []
-			const sortedHistory = history.sort((a, b) => {
-				return a.day - b.day
-			})
-			for (let i = 0; i < sortedHistory.length; i++) {
-				if (i + 1 < sortedHistory.length && sortedHistory[i].day === sortedHistory[i + 1].day) {
-					currSeasonHistory.push([sortedHistory[i], sortedHistory[i + 1]]);
-					i++;
-				} else {
-					currSeasonHistory.push([sortedHistory[i]]);
-				}
-			}
-			currSeasonHistory.reverse()
-			currSeasonHistory = currSeasonHistory.map(item => {
-				if (item.length === 0) return null;
-				const startDate = moment("09-28", 'MM-DD').add(item[0].day, 'day').format('MMM Do');
-				return (<PopularityCard key={startDate} farms={farms} startDate={startDate} item={item} />);
-			})
-			if (currSeasonHistory.length % 3 === 2) {
-				currSeasonHistory.push(<FillCard />)
-			}
-
-			setSeasonHistory(currSeasonHistory);
-			setLeaderboard(leaderboardContent);
-			setBattles(currSeasonHistory);
-		}).catch(err => {
-			console.log(err);
-		})
-	}, []);
-
-	return (
-		<>
-			<Title>Season 1 Leaderboard</Title>
-			<LeaderBoard>{leaderboard}</LeaderBoard>
-			{seasonHistory.length > 0 &&
-				<Title>Season 1 Battle History</Title>
-			}
-			<SeasonContainer>
-				{battles}
-			</SeasonContainer>
-		</>
-	)
+  return (
+    <>
+      {seasonHistory.length > 0 ?
+        <>
+          <Title>Season 1 Leaderboard</Title>
+          <LeaderBoard>{leaderboard}</LeaderBoard>
+          <Title>Season 1 Battle History</Title>
+          <SeasonContainer>
+            {battles}
+          </SeasonContainer>
+        </>
+        : 
+        <Loading src={loading} />
+      }
+    </>
+  )
 }
+
+const Loading = styled.img`
+  margin-top: 100px;
+	width: 100px;
+	height: 100px;
+`
 
 const FillCard = styled.div`
 width: 30%;
@@ -136,7 +145,7 @@ font-family: "Gilroy";
 
 
 const LeaderBoardItem = !isMobile()
-	? styled.div`
+  ? styled.div`
   text-align: center;
   min-width: 120px;
   width: 17%;
@@ -156,7 +165,7 @@ const LeaderBoardItem = !isMobile()
   flex-direction: column;
   justify-content: space-evenly;
   margin-bottom: 20px;`
-	: styled.div`
+  : styled.div`
   text-align: center;
   width: 40%;
   min-width: 200px;

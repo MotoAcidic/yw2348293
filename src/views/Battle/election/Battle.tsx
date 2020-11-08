@@ -185,16 +185,6 @@ const Battle: React.FC = () => {
     }
   }
 
-  const hoverExit = () => {
-    setTimeout(() => {
-      setHoverCandidate(null);
-    }, 10);
-  }
-
-  const claimAPReward = () => {
-
-  }
-
   const choice1Style = hoverCandidate === "choice1" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)`, zIndex: "10000" } : null;
   const choice2Style = hoverCandidate === "choice2" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)`, zIndex: "10000" } : null;
 
@@ -274,13 +264,7 @@ const Battle: React.FC = () => {
                 </TopSection>
               )}
               {yam && (
-                // <StatusBlock>
-                //   <ElectionStatus
-                //     battle={battles}
-                //     candidateInfo={candidate}
-                //     electionContract={electionContract}
-                //   />
-                // </StatusBlock>
+
                 <Results />
               )}
             </Section>
@@ -518,12 +502,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-<<<<<<< HEAD
-  display: flex;
-  align-items: center;
-=======
   margin-bottom: 20px;
->>>>>>> master
 ` : styled.div`
 font-family: "Gilroy";
   font-size: 30px;

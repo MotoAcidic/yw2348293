@@ -16,7 +16,9 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import personalities from './personalities'
 import BettingCard from "./VersusCard";
+import Battle from '../../../assets/img/battle.jpg'
 import './swal.css';
+import './twitter.css'
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -169,14 +171,13 @@ const Versus = ({ battles }) => {
 	}, [account]);
 
 
-
 	return (
 		<>
 			<Title>Who Will Win?</Title>
 			<BattleContainer>
 				<VersusContainer>
 					<Options>
-						<VersusItem>
+						<VersusItem image={Battle}>
 							<StyledContent>
 								<Picture src={battle1.pers1.picture} />
 								<StatBlock>
@@ -184,11 +185,10 @@ const Versus = ({ battles }) => {
 									<Text>{battle1.pers1.handle}</Text>
 								</StatBlock>
 								<StatBlock>
-									<SubTitle>Followers</SubTitle>
-									<Text>{battle1.pers1.followerCount}</Text>
+									<Text>Followers: {battle1.pers1.followerCount}</Text>
 								</StatBlock>
 							</StyledContent>
-							<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							<a className="twitter-timeline" data-width="50%" data-height="90%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 							{useScript("https://platform.twitter.com/widgets.js")}
 						</VersusItem>
 						<Divider>
@@ -202,11 +202,10 @@ const Versus = ({ battles }) => {
 									<Text>{battle1.pers2.handle}</Text>
 								</StatBlock>
 								<StatBlock>
-									<SubTitle>Followers</SubTitle>
-									<Text>{battle1.pers2.followerCount}</Text>
+									<Text>Followers: {battle1.pers2.followerCount}</Text>
 								</StatBlock>
 							</StyledContent>
-							<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							<a className="twitter-timeline" data-width="50%" data-height="90%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 							{useScript("https://platform.twitter.com/widgets.js")}
 						</VersusItem>
 					</Options>
@@ -221,11 +220,10 @@ const Versus = ({ battles }) => {
 									<Text>{battle2.pers1.handle}</Text>
 								</StatBlock>
 								<StatBlock>
-									<SubTitle>Followers</SubTitle>
-									<Text>{battle2.pers1.followerCount}</Text>
+									<Text>Followers: {battle2.pers1.followerCount}</Text>
 								</StatBlock>
 							</StyledContent>
-							<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							<a className="twitter-timeline" data-width="50%" data-height="90%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 							{useScript("https://platform.twitter.com/widgets.js")}
 						</VersusItem>
 						<Divider>
@@ -239,11 +237,10 @@ const Versus = ({ battles }) => {
 									<Text>{battle2.pers2.handle}</Text>
 								</StatBlock>
 								<StatBlock>
-									<SubTitle>Followers</SubTitle>
-									<Text>{battle2.pers2.followerCount}</Text>
+									<Text>Followers: {battle2.pers2.followerCount}</Text>
 								</StatBlock>
 							</StyledContent>
-							<a class="twitter-timeline" data-width="70%" data-height="100%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+							<a class="twitter-timeline" data-width="50%" data-height="90%" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 							{useScript("https://platform.twitter.com/widgets.js")}
 						</VersusItem>
 					</Options>
@@ -267,15 +264,20 @@ const BattleContainer = styled.div`
 display: flex;
 flex-direction: row;
 width: 85%;
+margin-top: 10px;
 `
 
 const StatBlock = styled.div`
-margin-bottom: 10px;
+margin-bottom: 5px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: center;
 `
 
 const Picture = styled.img`
-width: 200px;
-height: 200px;
+width: 160px;
+height: 160px;
   border-radius: 50%;
 	margin-bottom: 30px;
 
@@ -319,9 +321,11 @@ const VersusItem = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-between;
+background-image: ${props => props.image};
 height: 100%;
 width: 90%;
 padding: 5%;
+margin-top: 10px;
 `
 
 const Options = !isMobile() ? styled.div`
@@ -384,8 +388,7 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 background-color: rgba(256,256,256,0.08);
-border-radius: 8px;
-border: 2px solid rgba(255, 183, 0, 0.3);
+border-radius: 2px;
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;
@@ -413,7 +416,8 @@ const StyledContent = styled.div`
   display: flex;
 	flex-direction: column;
 	height: 100%;
-	width: 30%;
+	width: 40%;
+	align-items: center;
 `
 
 const StyledTitle = styled.div`
@@ -432,7 +436,7 @@ margin-bottom: 5px;
 
 const SubTitle = styled.div`
 font-family: "GilroyMedium";
-margin-bottom: 5px;
+margin-bottom: 2px;
 font-size: 20px;
 font-stretch: normal;
 font-style: normal;
@@ -444,7 +448,7 @@ color: #ffffff;
 `
 const Text = styled.div`
 font-family: "GilroyMedium";
-font-size: 16px;
+font-size: 12px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
@@ -453,7 +457,7 @@ letter-spacing: normal;
 text-align: center;
 color: #ffffff;
 	text-align: left;
-	margin-bottom: 10px;
+	margin-bottom: 2px;
 	letter-spacing: 1px;
 `
 const GreenText = styled.div`

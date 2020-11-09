@@ -126,7 +126,7 @@ const TopDisplayContainer = !isMobile()
         flex-direction: row;
         align-items: center;
         justify-content: space-evenly;
-        margin: 16px auto 80px auto;
+        margin: 16px auto 40px auto;
       `
   : styled.div`
         width: 60vw;

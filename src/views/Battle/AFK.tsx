@@ -1,16 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Switch } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
 import Page from "../../components/Page";
-import useYam from "../../hooks/useYam";
-import BigNumber from "bignumber.js";
-import { useWallet } from "use-wallet";
 import Background from '../../assets/img/bg3.svg'
 import Pool3 from "./cryptobattles/Pool3";
-import useFarms from "../../hooks/useFarms";
-import { getWarStaked } from "../../yamUtils";
-import { getStats } from "./cryptobattles/utils";
 import moment from "moment";
 import TopDisplayContainer from "../../components/TopDisplayContainer";
 import BigCountDown from "./BigCountDown";
@@ -23,12 +16,6 @@ function isMobile() {
     return false;
   }
 }
-function getServerURI() {
-  if (window.location.hostname === "localhost") {
-    return "http://localhost:5000";
-  }
-  return "https://yieldwars-api.herokuapp.com";
-}
 
 export interface OverviewData {
   circSupply?: string;
@@ -39,63 +26,6 @@ export interface OverviewData {
 }
 
 const Battle: React.FC = () => {
-  let [farms] = useFarms()
-  const yam = useYam()
-  let [warStaked, setWarStaked] = useState({
-    warStaked: new BigNumber(0)
-  });
-  const { account, connect } = useWallet()
-  let [prevDayBattles, setPrevDayBattles] = useState([]);
-  let [battles, setBattles] = useState([])
-  let [schedule, setSchedule] = useState([])
-  let [dailyQuestion, setDailyQuestion] = useState();
-
-  const [
-    {
-      circSupply,
-      curPrice,
-      // nextRebase,
-      targetPrice,
-      totalSupply,
-    },
-    setStats
-  ] = useState<OverviewData>({});
-
-  const fetchStats = useCallback(async () => {
-    const statsData = await getStats(yam);
-    setStats(statsData);
-  }, [yam, setStats]);
-
-  const fetchWarStaked = useCallback(
-    async pools => {
-      const st = await getWarStaked(pools, yam);
-      setWarStaked(st);
-    },
-    [yam, setWarStaked]
-  );
-
-  useEffect(() => {
-    console.log("using effect");
-    if (yam && account && farms && farms[0]) {
-      fetchStats();
-    }
-    if (yam && farms) {
-      console.log(farms);
-      fetchWarStaked(farms);
-    }
-    if (battles.length === 0) {
-      axios.get(`${getServerURI()}/api/battles`).then(res => {
-        console.log("battles", res.data);
-        setPrevDayBattles(res.data.prevDayBattles);
-        setBattles(res.data.battles)
-        setSchedule(res.data.schedule)
-        setDailyQuestion(res.data.dailyQuestion);
-      }).catch(err => {
-        console.log(err);
-      })
-    }
-  }, [yam, account, farms, farms[0]]);
-
   const end = moment.utc("2020-11-16T20:00", "YYYY-MM-DDTHH:mm");
 
   return (
@@ -125,7 +55,7 @@ const Battle: React.FC = () => {
 const Spacer = styled.div`
 height: 20px;`
 
-const StyledLink = styled(NavLink)`
+const StyledLink = !isMobile() ? styled(NavLink)`
 font-family: "Gilroy";
 font-size: 14px;
 font-stretch: normal;
@@ -139,18 +69,43 @@ margin-top: 60px;
   &:hover {
   color: #ffcb46;
   }
+`: styled(NavLink)`
+font-family: "Gilroy";
+font-size: 14px;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+text-decoration: underline !important;
+letter-spacing: normal;
+color: white;
+margin-top: 20px;
+margin-bottom: 50px;
+  text-decoration: none;
+  &:hover {
+  color: #ffcb46;
+  }
 `
 
-const AFKContent = styled.div`
+const AFKContent = !isMobile() ? styled.div`
 margin-bottom: 30vh;
-`
+` : styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;`
 
-const BigContainer = styled.div`
+const BigContainer = !isMobile() ? styled.div`
 display: flex;
 flex-direction: column;
 height: 90vh;
 align-items: center;
-justify-content: center;`
+justify-content: center;` : styled.div`
+display: flex;
+flex-direction: column;
+height: 65vh;
+align-items: center;
+`
+
 
 const Seperator = !isMobile() ? styled.div`
   width: 1000px;

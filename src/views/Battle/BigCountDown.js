@@ -2,6 +2,14 @@ import React from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
 
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 class CountDown extends React.Component {
 	constructor(props) {
 		super(props)
@@ -76,7 +84,7 @@ font-family: "Gilroy";
   color: #ffffff;
 `
 
-const Countdown = styled.div`
+const Countdown = !isMobile() ? styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
@@ -88,10 +96,27 @@ font-family: "Gilroy";
   line-height: 80px;
   letter-spacing: 2px;
   color: #ffffff;
+` : styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+font-family: "Gilroy";
+  font-size: 60px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 80px;
+  letter-spacing: 2px;
+  color: #ffffff;
 `
 
-const Timer = styled.div`
+const Timer = !isMobile() ? styled.div`
 width: 480px;
+height: 50%;
+margin: auto;
+margin-top: 3vh;
+` : styled.div`
+width: 90vw;
 height: 50%;
 margin: auto;
 margin-top: 3vh;

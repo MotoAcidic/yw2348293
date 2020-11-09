@@ -44,12 +44,12 @@ const Battle: React.FC = () => {
             <Tabs>
               {/* {tab === "influencer" ? <ActiveTab>influencer</ActiveTab> :
                 <Tab onClick={() => setTab("influencer")}>influencer</Tab>} */}
-              {tab === "bet" ? <ActiveTab>bet</ActiveTab> :
-                <Tab onClick={() => setTab("bet")}>bet</Tab>}
-              {tab === "season2" ? <ActiveTab>season 2</ActiveTab> :
-                <Tab onClick={() => setTab("season2")}>season 2</Tab>}
-              {tab === "season1" ? <ActiveTab>season 1</ActiveTab> :
-                <Tab onClick={() => setTab("season1")}>season 1</Tab>}
+              {tab === "bet" ? <ActiveTab>Bet</ActiveTab> :
+                <Tab onClick={() => setTab("bet")}>Bet</Tab>}
+              {tab === "season2" ? <ActiveTab>Season 2</ActiveTab> :
+                <Tab onClick={() => setTab("season2")}>Season 2</Tab>}
+              {tab === "season1" ? <ActiveTab>Season 1</ActiveTab> :
+                <Tab onClick={() => setTab("season1")}>Season 1</Tab>}
             </Tabs>
             <ResultTop>
               <BorderTopLeft />
@@ -78,16 +78,25 @@ display: flex;
 flex-direction: column;
 align-items: center;`
 
-const BorderTopRight = styled.div`
+const BorderTopRight = !isMobile() ? styled.div`
 // width: calc(43vw - 303px);
 width: calc(43vw - 227px);
 border-top: 1px solid white;
 border-radius: 0 12px 0 0;
-`
+`: styled.div`
+// width: calc(43vw - 303px);
+width: calc(47.5vw - 115px);
+border-top: 1px solid white;
+border-radius: 0 12px 0 0;`
 
-const BorderTopLeft = styled.div`
+const BorderTopLeft = !isMobile() ? styled.div`
 // width: calc(43vw - 303px);
 width: calc(43vw - 227px);
+border-top: 1px solid white;
+border-radius: 12px 0 0 0;
+` : styled.div`
+// width: calc(43vw - 303px);
+width: calc(47.5vw - 115px);
 border-top: 1px solid white;
 border-radius: 12px 0 0 0;
 `
@@ -112,7 +121,14 @@ margin-top: -2px;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
-` : styled.div``
+` : styled.div`
+width: 95vw;
+max-width: 95vw
+margin-top: -2px;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+` 
 
 const ResultTop = !isMobile() ? styled.div`
 width: 86vw;
@@ -122,8 +138,15 @@ border-radius: 12px 12px 0 0;
 height: 30px;
 display: flex;
 justify-content: space-between;
-` : styled.div``
-
+` : styled.div`
+width: 95vw;
+border: 1px solid white;
+border-color: transparent white transparent white;
+border-radius: 12px 12px 0 0;
+height: 30px;
+display: flex;
+justify-content: space-between;
+`
 const ActiveTab = !isMobile() ? styled.div`
   width: 150px;
   height: 35px;
@@ -138,7 +161,21 @@ const ActiveTab = !isMobile() ? styled.div`
   font-size: 20px;
 font-family: "Gilroy";
 padding-top: 5px;
-` : styled.div``
+` : styled.div`
+width: 75px;
+height: 35px;
+border-radius: 8px 8px 0 0;
+color: white;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+border: 1px solid white;
+border-bottom-color: transparent;
+font-size: 14px;
+font-family: "Gilroy";
+padding-top: 5px;
+`
 
 const Tab = !isMobile() ? styled.div`
 background-color: rgba(256,256,256, 0.1);
@@ -154,12 +191,29 @@ width: 150px;
   font-size: 20px;
 font-family: "Gilroy";
 padding-top: 5px;
-` : styled.div``
+` : styled.div`
+background-color: rgba(256,256,256, 0.1);
+width: 75px;
+  height: 35px;
+  border-radius: 8px 8px 0 0;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid white;
+  font-size: 14px;
+font-family: "Gilroy";
+padding-top: 5px;
+`
 
 const Tabs = !isMobile() ? styled.div`
 display: flex;
 margin-bottom: -2px;
-` : styled.div``
+` : styled.div`
+display: flex;
+margin-bottom: -2px;
+` 
 
 const Seperator = !isMobile() ? styled.div`
   width: 1000px;

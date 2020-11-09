@@ -19,7 +19,7 @@ import Farm from './views/Farm'
 import Splash from './views/Splash/Splash'
 import CryptoBattle from './views/Battle/cryptobattles/Battle'
 import InfluencerBattle from './views/Battle/influencerbattles/Battle'
-import Election from './views/Battle/election/Battle'
+import Election from './views/Battle/AFK'
 import Results from './views/Results/Results'
 
 import theme from './theme'

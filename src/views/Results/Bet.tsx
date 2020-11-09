@@ -197,42 +197,6 @@ letter-spacing: normal;
 const Spacer = styled.div`
 height: 40px;`
 
-const BetBackground = styled.div`
-top:0;
-left:0;
-width: 100%;
-height: 100%;
-opacity: 0.07;
-position:absolute;
-background-size: cover;
-background-image: url(${betBackground})
-`
-
-const ChoiceFont = styled.div`
-height: 100%;
-width: 100%;
-display: flex;
-align-items: center;
-justify-content: center;
-font-family: "Edo";
-font-size: 160px;
-  color: white;
-  font-weight: normal;
-`
-
-const TopSubTitle = styled.div`
-font-family: "Gilroy";
-font-size: 20px;
-margin-top: 5px;
-margin-bottom: 40px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-  color: white;
-  display: flex;
-`
 
 const SubTitle = styled.div`
 font-family: "Gilroy";

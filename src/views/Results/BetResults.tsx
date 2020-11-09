@@ -267,7 +267,8 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
-height: 400px;
+min-height: 400px;
+height: 50vh;
 width: 45%;
 `
 

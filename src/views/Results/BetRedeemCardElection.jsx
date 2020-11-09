@@ -316,43 +316,6 @@ color: #ffffff;
 margin-top: 10px;
 `
 
-const Input = styled.input`
-font-family: "SF Mono Semibold";
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-letter-spacing: normal;
-color: #ffb700;
-text-align: right;
-height: 35px;
-width: 90%;
-background: none;
-border: none;
-margin-right: 10px;
-:focus{
-	outline: none;
-}`
-
-const InputContainer = styled.div`
-width: 170px;
-border-radius: 8px;
-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-border: solid 1px rgba(255, 183, 0, 0.5);
-background-color: rgba(255, 255, 255, 0.2);
-font-family: "SF Mono Semibold";
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-letter-spacing: normal;
-color: #ffb700;
-text-align: right;
-display: flex;
-justify-content: flex-end;
-align-items: center;
-padding-right: 10px;`
-
 const VersusContainer = !isMobile() ? styled.div`
 display: flex;
 flex-direction: column;

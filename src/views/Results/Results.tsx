@@ -42,8 +42,8 @@ const Battle: React.FC = () => {
           <Page>
             <TopDisplayContainer />
             <Tabs>
-              {tab === "influencer" ? <ActiveTab>influencer</ActiveTab> :
-                <Tab onClick={() => setTab("influencer")}>influencer</Tab>}
+              {/* {tab === "influencer" ? <ActiveTab>influencer</ActiveTab> :
+                <Tab onClick={() => setTab("influencer")}>influencer</Tab>} */}
               {tab === "bet" ? <ActiveTab>bet</ActiveTab> :
                 <Tab onClick={() => setTab("bet")}>bet</Tab>}
               {tab === "season2" ? <ActiveTab>season 2</ActiveTab> :
@@ -79,13 +79,15 @@ flex-direction: column;
 align-items: center;`
 
 const BorderTopRight = styled.div`
-width: calc(43vw - 303px);
+// width: calc(43vw - 303px);
+width: calc(43vw - 227px);
 border-top: 1px solid white;
 border-radius: 0 12px 0 0;
 `
 
 const BorderTopLeft = styled.div`
-width: calc(43vw - 303px);
+// width: calc(43vw - 303px);
+width: calc(43vw - 227px);
 border-top: 1px solid white;
 border-radius: 12px 0 0 0;
 `

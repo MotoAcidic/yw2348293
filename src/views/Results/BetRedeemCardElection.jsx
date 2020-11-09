@@ -1,29 +1,22 @@
 
 import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import styled from 'styled-components'
-import Button from '../../../components/Button'
+import Button from '../../components/Button'
 import { useWallet } from "use-wallet";
-import useModal from '../../../hooks/useModal'
-import RulesModal from "./BetRulesModal";
+import useModal from '../../hooks/useModal'
 import Cookie from 'universal-cookie'
-import Container from '../../../components/Container'
-import MiniBiden from "../../../assets/img/biden@2x.png";
-import MiniTrump from "../../../assets/img/trump@2x.png";
-import useFarm from '../../../hooks/useFarm'
-import useYam from '../../../hooks/useYam'
-import { getDisplayBalance } from '../../../utils/formatBalance'
-import { provider } from 'web3-core'
-import useApprove from '../../../hooks/useApprove'
+import Container from '../../components/Container'
+import MiniBiden from "../../assets/img/biden@2x.png";
+import MiniTrump from "../../assets/img/trump@2x.png";
+import useFarm from '../../hooks/useFarm'
+import useYam from '../../hooks/useYam'
 import './swal.css'
-import UnstakeModal from './UnstakeModal'
-import useStakedBalance from '../../../hooks/useStakedBalance'
-import useUnstake from '../../../hooks/useUnstake'
-import useAllowance from '../../../hooks/useAllowance'
-import { placeElectionWARBet, placeElectionETHBet, getCurrentBets, getCurrentBalances, getElectionRewards, getElectionFinished, redeem } from '../../../yamUtils'
+import useStakedBalance from '../../hooks/useStakedBalance'
+import useUnstake from '../../hooks/useUnstake'
+import { placeElectionWARBet, placeElectionETHBet, getCurrentBets, getCurrentBalances, getElectionRewards, getElectionFinished, redeem } from '../../yamUtils'
 import Swal from 'sweetalert2';
-import { getElectionContracts, harvest } from '../../../yamUtils'
-import Pool3 from "./Pool3";
-import { getContract } from '../../../utils/erc20'
+import { getElectionContracts, harvest } from '../../yamUtils'
+import { getContract } from '../../utils/erc20'
 
 
 function isMobile() {
@@ -61,41 +54,13 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		icon: ''
 	}
 
-	// const tokenContract = useMemo(() => {
-	// 	return getContract(ethereum, depositTokenAddress)
-	// }, [ethereum, depositTokenAddress])
-
-	const [ethInput, setETHInput] = useState(0);
-	const [warInput, setWARInput] = useState(0);
-	const [disabled, setDisabled] = useState(false)
 	const [farmBets, setFarmBets] = useState({ trumpETHPot: 0, bidenETHPot: 0, trumpWARPot: 0, bidenWARPot: 0 });
 	const [farmBalances, setFarmBalances] = useState({ trumpETHBal: 0, bidenETHBal: 0, trumpWARBal: 0, bidenWARBal: 0 });
-	const stakedBalance = useStakedBalance(contract)
-	const { onUnstake } = useUnstake(contract)
-	const [pending, setPending] = useState(false);
+
 
 	const tokenContract = useMemo(() => {
 		return getContract(ethereum, "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde")
 	}, [ethereum, "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"])
-
-	const { onApprove } = useApprove(tokenContract, electionContract)
-	const allowance = useAllowance(tokenContract, electionContract)
-	// console.log(allowance);
-
-	const [onPresentUnstake] = useModal(
-		<UnstakeModal
-			max={stakedBalance}
-			onConfirm={onUnstake}
-			tokenName={"WAR"}
-		/>
-	)
-
-	const claimAndUnstake = () => {
-		console.log(contract);
-		console.log(account);
-		harvest(contract, account);
-		onPresentUnstake()
-	}
 
 	const fireUnstakeSWAL = () => {
 		let cookie = new Cookie()
@@ -121,35 +86,6 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		fireUnstakeSWAL();
 	}, [yam, account])
 
-	const placeBet = () => {
-		if (yam && account) {
-			// if (stakedBalance) {
-			// 	claimAndUnstake()
-			// 	return
-			// }
-			if (warInput < 0 || ethInput < 0) {
-				Swal.fire('Please enter a valid value to bet!')
-				return
-			}
-			if (warInput) {
-				const candidate = candidateInfo.name === "Biden" ? 1 : 2;
-				// console.log("War Bet", candidate, warInput)
-				setPending(true)
-				placeElectionWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => setPending(false))
-			}
-			if (ethInput) {
-				const candidate = candidateInfo.name === "Biden" ? 1 : 2;
-				// console.log("Eth Bet", candidate, ethInput)
-				setPending(true)
-				placeElectionETHBet(yam, candidate, parseFloat(ethInput), account).then((ret) => {
-					setPending(false)
-				})
-			}
-			if (!ethInput && !warInput) {
-				Swal.fire("Place a bet for a candidate!");
-			}
-		}
-	}
 
 	const redeemRewards = async () => {
 		const done = await getElectionFinished(yam);
@@ -157,29 +93,16 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		getElectionRewards(yam, account);
 	}
 
-	const handleApprove = useCallback(async () => {
-		try {
-			const txHash = await onApprove()
-			console.log(txHash);
-			// user rejected tx or didn't go thru
-			if (!txHash) {
-			}
-		} catch (e) {
-			console.log(e)
-		}
-	}, [onApprove])
-
 	return (
 		<Container size="sm">
 			<VersusContainer>
-
 				<TitleText>
 					Your Bets
 					</TitleText>
 				<YourBets>
 					{!farmBalances.trumpWARBal > 0 && !farmBalances.trumpETHBal > 0 &&
 						!farmBalances.bidenWARBal > 0 && !farmBalances.bidenETHBal > 0 ?
-						<SmallText>none, place a bet!</SmallText>
+						<SmallText>none</SmallText>
 						: null
 					}
 					{farmBalances.trumpWARBal > 0 || farmBalances.trumpETHBal > 0 ?
@@ -225,11 +148,9 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 						: null
 					}
 				</YourBets>
-
 				<Separator />
-
 				<Text>
-					All Bets
+					Total Bets
 					</Text>
 				<AllBets>
 					<BetDisplay>
@@ -253,45 +174,15 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 				</AllBets>
 
 				<Separator />
-
-				{allowance.toNumber() > 0 ?
-					<>
-						<Text>
-							Bet $WAR
-					</Text>
-						<Top>
-							<Text>
-								{candidateInfo.name + " to Win"}
-							</Text>
-							<InputContainer>
-								<Input disabled={pending ? true : false} type="number" min="0" value={warInput} onChange={e => setWARInput(e.target.value)} />
-								WAR
-						</InputContainer>
-						</Top>
-					</>
-					: <Button size="xlg" onClick={() => handleApprove()}>Approve WAR</Button>
-				}
-
 				<Space />
-				<Text>
-					Bet $ETH
-					</Text>
-				<Top>
-					<Text>
-						{candidateInfo.name + " to Win"}
-					</Text>
-					<InputContainer>
-						<Input disabled={pending ? true : false} type="number" min="0" value={ethInput} onChange={e => setETHInput(e.target.value)} />
-								ETH
-						</InputContainer>
-				</Top>
-				{pending ?
-					<BetPlaced>Your bet is pending. Check MetaMask for updates.</BetPlaced>
-					:
-					<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
-				}
+				{!farmBalances.trumpWARBal > 0 && !farmBalances.trumpETHBal > 0 &&
+						!farmBalances.bidenWARBal > 0 && !farmBalances.bidenETHBal > 0 ?
+						<SmallText>nothing to redeem</SmallText>
+						: 
+						<Button size="xlg" onClick={() => redeemRewards()}>Redeem Rewards</Button>
+					}
 			</VersusContainer>
-			{/* <Button size="xlg" onClick={() => redeemRewards()}>Redeem Rewards</Button> */}
+		
 		</Container>
 	)
 }
@@ -424,43 +315,6 @@ letter-spacing: normal;
 color: #ffffff;
 margin-top: 10px;
 `
-
-const Input = styled.input`
-font-family: "SF Mono Semibold";
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-letter-spacing: normal;
-color: #ffb700;
-text-align: right;
-height: 35px;
-width: 90%;
-background: none;
-border: none;
-margin-right: 10px;
-:focus{
-	outline: none;
-}`
-
-const InputContainer = styled.div`
-width: 170px;
-border-radius: 8px;
-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-border: solid 1px rgba(255, 183, 0, 0.5);
-background-color: rgba(255, 255, 255, 0.2);
-font-family: "SF Mono Semibold";
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-letter-spacing: normal;
-color: #ffb700;
-text-align: right;
-display: flex;
-justify-content: flex-end;
-align-items: center;
-padding-right: 10px;`
 
 const VersusContainer = !isMobile() ? styled.div`
 display: flex;

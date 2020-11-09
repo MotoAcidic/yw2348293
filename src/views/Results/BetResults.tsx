@@ -1,22 +1,14 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react";
-import { Switch } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
-import Page from "../../../components/Page";
-import useYam from "../../../hooks/useYam";
-// import useBet from "../../../hooks/useBet";
+import useYam from "../../hooks/useYam";
+// import useBet from "../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
-import Pool3 from "./Pool3";
-import useFarms from "../../../hooks/useFarms";
-import { getWarStaked, getElectionContracts, getCurrentBets, electionTVL } from "../../../yamUtils";
+import useFarms from "../../hooks/useFarms";
+import { getWarStaked, getElectionContracts, getCurrentBets, electionTVL } from "../../yamUtils";
 import { getStats } from "./utils";
-
-import Uniswap from "../../../assets/img/uniswap@2x.png";
-import BetModalElection from "./RedeemCardElection"
-
-import BidenWin from "../../../assets/img/bidenwin.jpg"
-import TrumpWin from "../../../assets/img/trumpwin.jpg"
+import BetModalElection from "./BetRedeemCardElection"
+import BidenWin from "../../assets/img/bidenwin.jpg"
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -77,8 +69,6 @@ const Results: React.FC = () => {
   let [hoverCandidate, setHoverCandidate] = useState("");
   const [transitioning, setTransitioning] = useState(false);
   const [roughBets, setRoughBets] = useState({ trump: 0, biden: 0 });
-
-  let currentPrice = curPrice || 0;
 
   const fetchWarStaked = useCallback(
     async pools => {
@@ -159,8 +149,7 @@ const Results: React.FC = () => {
   }
 
   return (
-
-    <Container>
+    <>
       <VersusContainer>
         <VersusBackground>
           <Candidate2 onMouseOver={() => hoverOver("Biden")} onMouseOut={() => hoverExit()} src={BidenWin} />
@@ -186,7 +175,7 @@ const Results: React.FC = () => {
           </ModalBlock>
         </Modal>
       </div>
-    </Container>
+    </>
 
   );
 };
@@ -231,8 +220,6 @@ margin-left: 2%;
 margin-top: 2%;
 `
 
-const Container = styled.div``
-
 const ModalBlock = styled.div`
 width: 534px;
 height: 0px;
@@ -251,6 +238,7 @@ border-radius: 8px;
   display: flex;
   justify-content: center;
 `
+
 const Candidate2 = styled.img`
 width: 100%;
 height: 100%;
@@ -265,7 +253,7 @@ height: 100%;
 display: flex;
 `
 
-const VersusContainer = !isMobile() ? styled.div`
+const VersusContainer = styled.div`
 display: flex;
 flex-direction: row;
 flex-wrap: nowrap;
@@ -279,26 +267,9 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
-height: 600px;
-min-width: 450px;
-width: 45vw;
-margin-left: 20px;
-` : styled.div`
-margin: 0 0 40px 0;
-width: 90vw;
-display: flex;
-flex-direction: column;
-font-family: "Gilroy";
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-	color: #ffffff;
-	padding: 20px;
-	border-radius: 8px;
-	border: solid 2px rgba(255, 183, 0, 0.3);
-	background-color: rgba(256,256,256,0.08);`
+min-height: 400px;
+height: 50vh;
+width: 45%;
+`
 
 export default Results;

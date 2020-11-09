@@ -1,15 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import './swal.css'
-import states from './states'
-import { getLiveElectionResults } from '../../../yamUtils/index'
-import useYam from "../../../hooks/useYam";
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
-import MiniBiden from "../../../assets/img/biden@2x.png";
-import MiniTrump from "../../../assets/img/trump@2x.png";
-import Biden from "../../../assets/img/biden.png";
-import Trump from "../../../assets/img/trump.png";
-import loading from "../../../assets/img/loading.gif";
+import states from './BetStates'
+import { getLiveElectionResults } from '../../yamUtils/index'
+import useYam from "../../hooks/useYam";
+import Biden from "../../assets/img/biden.png";
+import Trump from "../../assets/img/trump.png";
+import loading from "../../assets/img/loading.gif";
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -128,16 +125,16 @@ const ElectionStatusDisplay = () => {
 	}
 
 	return (
-			<VersusContainer>
-				<Column>
-					<Candidate src={Trump} />
-					<SubTitle>Votes: {trumpTotal}</SubTitle>
-					<VotesColumn>
-						{!results && <div>Loading...</div>}
-						{trumpVotes}
-					</VotesColumn>
-				</Column>
-				{/* <SmallColumn>
+		<VersusContainer>
+			<Column>
+				<Candidate src={Trump} />
+				<SubTitle>Votes: {trumpTotal}</SubTitle>
+				<VotesColumn>
+					{!results && <div>Loading...</div>}
+					{trumpVotes}
+				</VotesColumn>
+			</Column>
+			{/* <SmallColumn>
 					<BigTitle>Undecided</BigTitle>
 					<SubTitle>Votes: {undecidedTotal}</SubTitle>
 					<VotesColumn>
@@ -145,15 +142,15 @@ const ElectionStatusDisplay = () => {
 						{undecidedVotes}
 					</VotesColumn>
 				</SmallColumn> */}
-				<Column>
-					<Candidate src={Biden} />
-					<SubTitle>Votes: {bidenTotal}</SubTitle>
-					<VotesColumn>
-						{!results && <div>Loading...</div>}
-						{bidenVotes}
-					</VotesColumn>
-				</Column>
-			</VersusContainer>
+			<Column>
+				<Candidate src={Biden} />
+				<SubTitle>Votes: {bidenTotal}</SubTitle>
+				<VotesColumn>
+					{!results && <div>Loading...</div>}
+					{bidenVotes}
+				</VotesColumn>
+			</Column>
+		</VersusContainer>
 	)
 }
 
@@ -163,9 +160,7 @@ const Loading = styled.img`
 `
 
 const Container = styled.div`
-height: 580px;
-min-width: 450px;
-width: 45vw;
+width: 45%;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -174,16 +169,6 @@ justify-content: center;
 const Candidate = styled.img`
 width: 95%;
 border-radius: 8px;
-`
-
-const CardIcon = styled.img`
-	height: 200px;
-  width: 200px;
-  border-radius: 50%;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin: 0 0 10px 0;
 `
 
 const SubTitle = styled.div`
@@ -289,21 +274,7 @@ flex-direction: column;
 align-items: center;
 `
 
-const SmallColumn = styled.div`
-display: flex;
-width: 50%;
-flex-direction: column;
-align-items: center;
-`
-
-const Divider = styled.div`
-height: 80%;
-background-color: white;
-width: 1px;
-margin: auto 0 auto 0;
-`
-
-const VersusContainer = !isMobile() ? styled.div`
+const VersusContainer = styled.div`
 display: flex;
 flex-direction: row;
 flex-wrap: nowrap;
@@ -317,27 +288,10 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
-height: 580px;
-min-width: 450px;
-width: 45vw;
-margin-left: 20px;
-` : styled.div`
-margin: 0 0 40px 0;
-width: 90vw;
-display: flex;
-flex-direction: column;
-font-family: "Gilroy";
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-	color: #ffffff;
-	padding: 20px;
-	border-radius: 8px;
-	border: solid 2px rgba(255, 183, 0, 0.3);
-	background-color: rgba(256,256,256,0.08);`
+min-height: 400px;
+height: 50vh;
+width: 45%;
+`
 
 
 export default ElectionStatusDisplay;

@@ -16,10 +16,8 @@ const Nav: React.FC = () => {
     <StyledNav>
       <StyledLink exact activeClassName="active" to="/home">Home</StyledLink>
       {/* <StyledLink exact activeClassName="active" to="/earn">Earn</StyledLink> */}
-      {/* <StyledLink exact activeClassName="active" to="/battle">Battle</StyledLink> */}
-      <StyledLink exact activeClassName="active" to="/election">Battle</StyledLink>
+      <StyledLink exact activeClassName="active" to="/battle">Battle</StyledLink>
       <StyledLink exact activeClassName="active" to="/results">Results</StyledLink>
-      {/* <StyledLink exact activeClassName="active" to="/about">About</StyledLink> */}
       <DisabledLink>
         <Top>
           Gov
@@ -38,7 +36,7 @@ color: white;
 position:absolute;
 margin-top: 3px;
 margin-left: 120px;
-` :styled.div`
+` : styled.div`
 font-size: 12px;
 color: white;
 position:absolute;

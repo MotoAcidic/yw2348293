@@ -19,7 +19,7 @@ import Farm from './views/Farm'
 import Splash from './views/Splash/Splash'
 import CryptoBattle from './views/Battle/cryptobattles/Battle'
 import InfluencerBattle from './views/Battle/influencerbattles/Battle'
-import Election from './views/Battle/election/Battle'
+import Battle from './views/Battle/AFK'
 import Results from './views/Results/Results'
 
 import theme from './theme'
@@ -77,7 +77,7 @@ const App: React.FC = () => {
             <Route path="/splash" exact>
               <Splash />
             </Route>
-            <Redirect exact from="/" to="/election" />
+            <Redirect exact from="/" to="/battle" />
             <Route path="/home" exact>
               <Farms />
             </Route>
@@ -90,8 +90,8 @@ const App: React.FC = () => {
             <Route path="/influencer-battle" exact>
               <InfluencerBattle />
             </Route>
-            <Route path="/election" exact>
-              <Election />
+            <Route path="/battle" exact>
+              <Battle />
             </Route>
             <Route path="/results" exact>
               <Results />

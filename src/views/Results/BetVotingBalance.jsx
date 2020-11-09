@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import './swal.css'
-import MiniBiden from "../../../assets/img/biden@2x.png";
-import MiniTrump from "../../../assets/img/trump@2x.png";
+import MiniBiden from "../../assets/img/biden@2x.png";
+import MiniTrump from "../../assets/img/trump@2x.png";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {

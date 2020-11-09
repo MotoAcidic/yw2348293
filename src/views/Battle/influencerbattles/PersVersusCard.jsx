@@ -276,7 +276,7 @@ const Versus = ({ battles }) => {
 }
 
 const Seperator = !isMobile() ? styled.div`
-  width: 150px;
+  width: 500px;
 	height: 1px;
 	position: absolute;
   background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
@@ -286,7 +286,7 @@ const Seperator = !isMobile() ? styled.div`
 	position: absolute;
   background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
 `
-const BattleContainer = !isMobile() ? styled.div`
+const BattleContainer = styled.div`
 display: flex;
 flex-direction: row;
 width: 85%;

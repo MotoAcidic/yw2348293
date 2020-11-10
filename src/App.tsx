@@ -21,6 +21,7 @@ import CryptoBattle from './views/Battle/cryptobattles/Battle'
 import InfluencerBattle from './views/Battle/influencerbattles/Battle'
 import Battle from './views/Battle/AFK'
 import Results from './views/Results/Results'
+import Gov from './views/Gov'
 
 import theme from './theme'
 import { createGlobalStyle } from 'styled-components';
@@ -95,6 +96,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/results" exact>
               <Results />
+            </Route>
+            <Route path="/gov" exact>
+              <Gov />
             </Route>
           </Switch>
         </Router>

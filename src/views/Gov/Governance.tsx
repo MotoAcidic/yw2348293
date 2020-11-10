@@ -1,25 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { Switch } from "react-router-dom";
 
 import { useWallet } from 'use-wallet'
-
 import Page from '../../components/Page'
-import PageHeader from '../../components/PageHeader'
-
+import Background from '../../assets/img/bg3.svg'
+import axios from "axios";
 import useYam from '../../hooks/useYam'
-import Button from '../../components/Button'
-
-// import Rebase from './components/Rebase'
-import Stats from '../Home/components/Stats'
-import Vote_Piece from '../Home/components/Vote_Piece'
-import Vote_Piece2 from '../Home/components/Vote_Piece2'
-import Vote_Piece3 from '../Home/components/Vote_Piece3'
-import Voter from '../Home/components/Vote'
-
-import VoteButton from '../../components/TopBar/components/VoteButton'
-
 import { OverviewData } from '../Home/types'
 import { getStats } from '../Home/utils'
+import TopDisplayContainer from "../../components/TopDisplayContainer";
+
+function getServerURI() {
+  if (window.location.hostname === "localhost") {
+    return "http://localhost:5000";
+  }
+  return "https://yieldwars-api.herokuapp.com";
+}
 
 const Vote: React.FC = () => {
 
@@ -38,74 +35,57 @@ const Vote: React.FC = () => {
     setStats(statsData)
   }, [yam, setStats])
 
+  const fetchAccount = () => {
+    axios.post(`${getServerURI()}/gov/get-account`,
+      { address: account, }).then(res => {
+        console.log("user", res.data);
+      }).catch(err => {
+        console.log(err);
+      })
+    console.log("my acct", account);
+  }
+
   useEffect(() => {
     if (yam) {
       fetchStats()
+      fetchAccount()
     }
   }, [yam])
 
   return (
-    <Page>
-      <PageHeader icon="🍝" subtitle="Vote for changes here" />
-      <div style={{
-        alignItems: 'center',
-        display: 'flex',
-        flex: 1,
-        justifyContent: 'center',
-        marginBottom: "20px"
-      }}>
-        <VoteButton />
-      </div>
+    <Switch>
+      <StyledCanvas>
+        <BackgroundSection />
+        <ContentContainer>
+          <Page>
+            <TopDisplayContainer />
 
-      <div>
-
-
-
-        {!!account && (
-          <>
-            {/* <StyledVote>
-              <Vote_Piece3 />
-            </StyledVote>
-            <br/>
-            <StyledVote>
-              <Vote_Piece2 />
-            </StyledVote>
-            <br/>
-            <StyledVote>
-              <Vote_Piece />
-            </StyledVote> */}
-            <br />
-            {/* <StyledVote>
-            <Voter />
-          </StyledVote> */}
-          </>
-        )}
-        <StyledSpacer />
-        <StyledOverview>
-          {/* <Stats
-            circSupply={circSupply}
-            curPrice={curPrice}
-            targetPrice={targetPrice}
-            totalSupply={totalSupply}
-          /> */}
-        </StyledOverview>
-      </div>
-    </Page>
+          </Page>
+        </ContentContainer>
+      </StyledCanvas>
+    </Switch>
   )
 }
 
-const StyledOverview = styled.div`
-  align-items: center;
-  display: flex;
-`
+const BackgroundSection = styled.div`
+  background-image: url(${Background});
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  background-repeat: no-repeat;
+  background-size: cover;`
 
-const StyledSpacer = styled.div`
-  height: ${props => props.theme.spacing[4]}px;
-  width: ${props => props.theme.spacing[4]}px;
-`
-
-const StyledVote = styled.div`
+const StyledCanvas = styled.div`
+  position: absolute;
   width: 100%;
-`
+  background-color: #154f9b;
+`;
+
+const ContentContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  text-align: center;
+`;
 
 export default Vote

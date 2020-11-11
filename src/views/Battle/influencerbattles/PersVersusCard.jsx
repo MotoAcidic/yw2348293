@@ -194,8 +194,8 @@ const Versus = ({ battles }) => {
 						</TLVersusItem>
 						<TopVS>
 							{!isMobile() ?
-								<a class="twitter-timeline" data-width="58%" data-height="230px" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-								: <a class="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								<a class="twitter-timeline" data-width="58%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								: <a class="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 							}
 							{useScript("https://platform.twitter.com/widgets.js")}
 							<StyledContent>
@@ -222,8 +222,8 @@ const Versus = ({ battles }) => {
 						</BLVersusItem>
 						<BottomVS>
 							{!isMobile() ?
-								<a className="twitter-timeline" data-width="58%" data-height="230px" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-								: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								<a className="twitter-timeline" data-width="58%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 							}
 							{useScript("https://platform.twitter.com/widgets.js")}
 							<StyledContent>
@@ -239,6 +239,7 @@ const Versus = ({ battles }) => {
 						</BottomVS>
 					</Options>
 				</VersusContainer>
+				<VerticalSeperator />
 				<VersusContainer>
 					<Options>
 						<TRVersusItem onClick={() => pick2(1)}>
@@ -260,8 +261,8 @@ const Versus = ({ battles }) => {
 								</StatBlock>
 							</StyledContent>
 							{!isMobile() ?
-								<a className="twitter-timeline" data-width="58%" data-height="230px" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-								: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								<a className="twitter-timeline" data-width="58%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle2.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle2.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 							}
 							{useScript("https://platform.twitter.com/widgets.js")}
 						</TopVS>
@@ -289,8 +290,8 @@ const Versus = ({ battles }) => {
 								</StatBlock>
 							</StyledContent>
 							{!isMobile() ?
-								<a className="twitter-timeline" data-width="58%" data-height="230px" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-								: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" href={`https://twitter.com/${battle2.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								<a className="twitter-timeline" data-width="58%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle2.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle2.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 							}
 							{useScript("https://platform.twitter.com/widgets.js")}
 						</BottomVS>
@@ -299,12 +300,12 @@ const Versus = ({ battles }) => {
 			</BattleContainer>
 			<BattleButton>
 				{voted ?
-					<Button size="lg" onClick={castVote} disabled={(checked1 && checked2) ? false : true}>
+					<Button size="lg" onClick={castVote} >
 						Bet
 					</Button>
 					:
 					<Button size="lg" onClick={castVote} disabled={(checked1 && checked2) ? false : true}>
-						Battle
+						{(checked1 && checked2) ? "Battle" : "Choose"}
 					</Button>
 				}
 			</BattleButton>
@@ -379,6 +380,20 @@ position: absolute;
 bottom: -5%;
 left: 0%;
 background-color: black;
+`
+
+const VerticalSeperator = !isMobile() ? styled.div`
+height: 1px;
+background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
+  margin-left: 2%;
+	position: absolute;
+	background-color: black;
+	z-index: 100;
+` : styled.div`
+  width: 150px;
+	height: 1px;
+	position: absolute;
+  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
 `
 
 const Seperator = !isMobile() ? styled.div`
@@ -553,7 +568,7 @@ position: absolute;
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
-transform: translate(40px, -170px);
+transform: translate(40px, -185px);
 pointer-events: none;
 z-index: 102;
 `
@@ -565,7 +580,7 @@ position: absolute;
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
-transform: translate(40px, 180px);
+transform: translate(40px, 170px);
 pointer-events: none;
 z-index: 102;
 `

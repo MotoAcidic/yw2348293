@@ -24,6 +24,7 @@ import { Account } from "../../yam/lib/accounts";
 import { getStartTime, getWarStaked } from "../../yamUtils";
 import useFarms from "../../hooks/useFarms";
 import BigNumber from "bignumber.js";
+import TopDisplayContainer from '../../components/TopDisplayContainer'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -102,40 +103,8 @@ const Farms: React.FC = () => {
             <CardContainer>
               <Landing>
 
-                <TopDisplayContainer>
-                  <DisplayItem>
-                    $War Price:&nbsp;
-                  {currentPrice
-                      ? `$${Number(currentPrice).toLocaleString(undefined, {
-                        minimumFractionDigits: 4,
-                        maximumFractionDigits: 4
-                      })}`
-                      : "-"}
-                  </DisplayItem>
-                  <DisplayItem>
-                    Supply Staked:&nbsp;
-                  {warStaked && !warStaked.warStaked.eq(0)
-                      ? `${Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                      })}%`
-                      : "-"}
-                  </DisplayItem>
-                  <DisplayItem>
-                    Marketcap:&nbsp;
-                  {currentPrice && warStaked && !warStaked.circSupply.eq(0)
-                      ? `$${Number(warStaked.circSupply.multipliedBy(currentPrice).dividedBy(10 ** 18).toFixed(2)).toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                      })}`
-                      : "-"}
-                  </DisplayItem>
-                  <StyledA
-                    style={{ marginTop: "-5px" }}
-                    href="https://uniswap.info/token/0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"
-                    target="_blank"
-                  />
-                </TopDisplayContainer>
+                <TopDisplayContainer />
+                  
                 <BigTitle>The future of prediction markets, tournaments, and betting is here!</BigTitle>
                 <Title>YieldWars is a competition platform, where you can battle (and earn yield) on almost anything</Title>
 
@@ -245,26 +214,26 @@ const StyledA = styled.a`
   }
 `
 
-const TopDisplayContainer = !isMobile()
-  ? styled.div`
-      width:80vw;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-evenly;
-      margin: 16px auto 80px auto;
-    `
-  : styled.div`
-      width: 60vw;
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-evenly;
-      margin: 60px auto 40px auto;
-      display: flex;
-      flex-wrap: wrap;
-    `;
+// const TopDisplayContainer = !isMobile()
+//   ? styled.div`
+//       width:80vw;
+//       display: flex;
+//       flex-direction: row;
+//       align-items: center;
+//       justify-content: space-evenly;
+//       margin: 16px auto 80px auto;
+//     `
+//   : styled.div`
+//       width: 60vw;
+//       display: flex;
+//       flex-wrap: wrap;
+//       flex-direction: row;
+//       align-items: center;
+//       justify-content: space-evenly;
+//       margin: 60px auto 40px auto;
+//       display: flex;
+//       flex-wrap: wrap;
+//     `;
 
 const DisplayItem = !isMobile()
   ? styled.div`

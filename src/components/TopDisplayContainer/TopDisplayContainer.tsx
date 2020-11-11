@@ -55,7 +55,7 @@ const Value: React.FC= () => {
   }, [yam, setStats]);
 
   useEffect(() => {
-    if (yam && account && farms.length) {
+    if (yam && farms.length) {
       fetchStats();
     }
     if (yam && farms) {

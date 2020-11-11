@@ -685,6 +685,9 @@ export const getCurrentBets = async (yam) => {
 }
 
 export const getCurrentBalances = async (yam, account) => {
+  if (yam.defaultProvider) {
+    return ({ trumpETHBal: 0, bidenETHBal: 0, trumpWARBal: 0, bidenWARBal: 0 });
+  }
   const precision = new BigNumber(10).pow(18);
 
   const trumpETHBal = new BigNumber(await yam.contracts.election_betting.methods.trumpETHBet(account).call()) / precision;
@@ -783,6 +786,9 @@ export const getCurrentBetsAP = async (yam) => {
 }
 
 export const getCurrentBalancesAP = async (yam, account) => {
+  if (yam.defaultProvider) {
+    return ({ choice1ETHBal: 0, choice2ETHBal: 0, choice1WARBal: 0, choice2WARBal: 0 });
+  }
   const precision = new BigNumber(10).pow(18);
 
   const choice1ETHBal = new BigNumber(await yam.contracts.ap_betting.methods.choice1ETHBet(account).call()) / precision;

@@ -41,6 +41,7 @@ export class Yam {
     if (options.defaultAccount) {
       this.web3.eth.defaultAccount = options.defaultAccount;
     }
+    this.defaultProvider = options.defaultProvider;
     this.contracts = new Contracts(realProvider, networkId, this.web3, options);
     this.accounts = [];
     this.markets = [];

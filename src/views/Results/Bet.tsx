@@ -125,7 +125,7 @@ const Battle: React.FC = () => {
           {!isMobile() &&
             <SubTitle>
               to view election results
-                </SubTitle>
+            </SubTitle>
           }
         </ConnectContainer>
         <div />
@@ -145,7 +145,10 @@ const Battle: React.FC = () => {
       <Seperator />
       <TopTitle>The Associated Press did not call the election before 00:00 UTC on Nov 7th&nbsp;
       </TopTitle>
-      <Claim onClick={() => setAPRedeemModal(true)} >
+      <Claim onClick={() => {
+        connect('injected')
+        setAPRedeemModal(true)
+      }}>
         Claim Rewards
       </Claim>
       <Spacer />

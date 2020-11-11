@@ -298,9 +298,15 @@ const Versus = ({ battles }) => {
 				</VersusContainer>
 			</BattleContainer>
 			<BattleButton>
-				<Button size="lg" onClick={castVote} disabled={(checked1 && checked2) ? false : true}>
-					{voted ? "Bet" : "Battle"}
-				</Button>
+				{voted ?
+					<Button size="lg" onClick={castVote} disabled={(checked1 && checked2) ? false : true}>
+						Bet
+					</Button>
+					:
+					<Button size="lg" onClick={castVote} disabled={(checked1 && checked2) ? false : true}>
+						Battle
+					</Button>
+				}
 			</BattleButton>
 			<Space />
 		</>

@@ -4,6 +4,7 @@ import { useWallet } from 'use-wallet'
 import axios from "axios";
 import useYam from '../../hooks/useYam'
 import editIcon from "../../assets/img/edit@2x.png"
+import EditableProfile from "./EditableProfile";
 
 function getServerURI() {
   if (window.location.hostname === "localhost") {
@@ -35,31 +36,11 @@ const Profile = () => {
     }
   }, [yam])
 
-  const submitEdits = () => {
-
-  }
 
   if (!user) return (<div />);
   return (
     <Container>
-      {!editing ?
-        <EditButton src={editIcon} onClick={() => setEditing(true)} />
-        :
-        <EditingButtons>
-          <XButton onClick={() => setEditing(false)}>
-            ✘
-          </XButton>
-          <CheckButton onClick={() => submitEdits()}>
-            ✔
-          </CheckButton>
-        </EditingButtons>
-      }
-      <ProfilePicContainer>
-        <ProfilePic src={editIcon} />
-      </ProfilePicContainer>
-      <Nickname>
-        {user.nickname ? user.nickname : account.substring(0, 20) + "..."}
-      </Nickname>
+      <EditableProfile nickname={user.nickname} picture={user.picture} color={user.pictureColor}/>
     </Container>
 
   )

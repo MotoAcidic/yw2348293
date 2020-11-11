@@ -47,3 +47,15 @@ code {
 .timeline-Widget {
   background-color: rgba(0,0,0,0.2) !important;
 }
+
+.emoji-picker-react .emoji-group {
+  text-align: left;
+}
+
+aside.emoji-picker-react {
+  box-shadow: none;
+}
+
+.emoji-picker-react ul.skin-tones-list {
+  top: 5px;
+}

@@ -1,27 +1,34 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { Switch } from "react-router-dom";
 
 import { useWallet } from 'use-wallet'
-
 import Page from '../../components/Page'
-import PageHeader from '../../components/PageHeader'
-
+import Background from '../../assets/img/bg3.svg'
+import axios from "axios";
 import useYam from '../../hooks/useYam'
-import Button from '../../components/Button'
-
-// import Rebase from './components/Rebase'
-import Stats from '../Home/components/Stats'
-import Vote_Piece from '../Home/components/Vote_Piece'
-import Vote_Piece2 from '../Home/components/Vote_Piece2'
-import Vote_Piece3 from '../Home/components/Vote_Piece3'
-import Voter from '../Home/components/Vote'
-
-import VoteButton from '../../components/TopBar/components/VoteButton'
-
 import { OverviewData } from '../Home/types'
 import { getStats } from '../Home/utils'
+import TopDisplayContainer from "../../components/TopDisplayContainer";
+import Profile from "./Profile";
 
-const Vote: React.FC = () => {
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) {
+    return true
+  }
+  else {
+    return false
+  }
+}
+
+function getServerURI() {
+  if (window.location.hostname === "localhost") {
+    return "http://localhost:5000";
+  }
+  return "https://yieldwars-api.herokuapp.com";
+}
+
+const Governance: React.FC = () => {
 
   const { account, connect } = useWallet()
   const yam = useYam()
@@ -45,67 +52,153 @@ const Vote: React.FC = () => {
   }, [yam])
 
   return (
-    <Page>
-      <PageHeader icon="🍝" subtitle="Vote for changes here" />
-      <div style={{
-        alignItems: 'center',
-        display: 'flex',
-        flex: 1,
-        justifyContent: 'center',
-        marginBottom: "20px"
-      }}>
-        <VoteButton />
-      </div>
+    <Switch>
+      <StyledCanvas>
+        <BackgroundSection />
+        <ContentContainer>
+          <Page>
+            <TopDisplayContainer />
+            <Leaderboard>
+              Leaderboard
+              </Leaderboard>
+            {yam ?
 
-      <div>
-
-
-
-        {!!account && (
-          <>
-            {/* <StyledVote>
-              <Vote_Piece3 />
-            </StyledVote>
-            <br/>
-            <StyledVote>
-              <Vote_Piece2 />
-            </StyledVote>
-            <br/>
-            <StyledVote>
-              <Vote_Piece />
-            </StyledVote> */}
-            <br />
-            {/* <StyledVote>
-            <Voter />
-          </StyledVote> */}
-          </>
-        )}
-        <StyledSpacer />
-        <StyledOverview>
-          {/* <Stats
-            circSupply={circSupply}
-            curPrice={curPrice}
-            targetPrice={targetPrice}
-            totalSupply={totalSupply}
-          /> */}
-        </StyledOverview>
-      </div>
-    </Page>
+              <GovContent>
+                <Suggestions>
+                  Suggestions
+              </Suggestions>
+                <Profile />
+              </GovContent>
+              :
+              <ConnectContainer onClick={() => connect('injected')}>
+                <BigTitle>
+                  Connect Your Wallet
+          </BigTitle>
+                <SubTitle>
+                  to participate in governance
+                </SubTitle>
+              </ConnectContainer>
+            }
+          </Page>
+        </ContentContainer>
+      </StyledCanvas>
+    </Switch>
   )
 }
 
-const StyledOverview = styled.div`
-  align-items: center;
-  display: flex;
+const SubTitle = styled.div`
+font-family: "Gilroy";
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+	color: white;
+	margin-bottom: 10px;
 `
 
-const StyledSpacer = styled.div`
-  height: ${props => props.theme.spacing[4]}px;
-  width: ${props => props.theme.spacing[4]}px;
+const BigTitle = styled.div`
+font-family: "Gilroy";
+  font-size: 50px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: rgb(255, 204, 74);
+  max-width: 80vw;
+	margin: 0 auto 20px auto;
+	display: flex;
+	align-items: center;
 `
 
-const StyledVote = styled.div`
+const ConnectContainer = !isMobile() ? styled.div`
+width: 600px;
+height: 140px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 30px;
+margin: 0 auto 5vh auto;
+font-family: "Gilroy";
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+flex-direction: column;
+color: #ffffff;
+border-radius: 8px;
+border: solid 2px rgba(255, 183, 0, 0.3);
+ background-color: rgba(4,2,43,0.4);
+ cursor: pointer;
+` : styled.div`
+margin: 0 0 40px 0;
+width: 90vw;
+display: flex;
+flex-direction: column;
+padding-top: 20px;
+font-family: "Gilroy";
+  font-size: 25px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+	color: #ffffff;
+	border-radius: 8px;
+  border: solid 2px rgba(255, 183, 0, 0.3);
+ background-color: rgba(4,2,43,0.4); 
+`
+
+
+const Suggestions = styled.div`
+width: 59%;
+height: 500px;
+background-color: rgba(256,256,256,0.1);
+border-radius: 16px;
+display: flex;
+align-items: center;
+justify-content: center;
+`
+
+const Leaderboard = styled.div`
+width: 80vw;
+height: 175px;
+background-color: rgba(256,256,256,0.1);
+border-radius: 16px;
+display: flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 80px;
+`
+
+const GovContent = styled.div`
+width: 80vw;
+display: flex;
+flex-direction: row;
+justify-content: space-between;`
+
+const BackgroundSection = styled.div`
+  background-image: url(${Background});
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  background-repeat: no-repeat;
+  background-size: cover;`
+
+const StyledCanvas = styled.div`
+  position: absolute;
   width: 100%;
-`
+  background-color: #154f9b;
+`;
 
-export default Vote
+const ContentContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  text-align: center;
+`;
+
+export default Governance

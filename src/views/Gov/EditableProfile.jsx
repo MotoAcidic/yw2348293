@@ -215,6 +215,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 font-size: 50px;
+user-select: none;
 border: solid 2px rgba(256,256,256,0.3);
 &:hover {
   cursor: pointer;
@@ -231,6 +232,7 @@ align-items: center;
 justify-content: center;
 margin-bottom: 20px;
 font-size: 50px;
+user-select: none;
 border: solid 2px rgba(256,256,256,0.3);
 `
 

@@ -16,7 +16,6 @@ function getServerURI() {
 const Profile = () => {
   const { account, connect } = useWallet()
   const yam = useYam()
-  const [editing, setEditing] = useState(false);
   const [user, setUser] = useState(null);
 
   const fetchAccount = () => {
@@ -27,11 +26,10 @@ const Profile = () => {
       }).catch(err => {
         console.log(err);
       })
-    console.log("my acct", account);
   }
 
   useEffect(() => {
-    if (yam) {
+    if (yam.defaultProvider) {
       fetchAccount()
     }
   }, [yam])
@@ -40,7 +38,7 @@ const Profile = () => {
   if (!user) return (<div />);
   return (
     <Container>
-      <EditableProfile nickname={user.nickname} picture={user.picture} color={user.pictureColor}/>
+      <EditableProfile nickname={user.nickname} picture={user.picture} color={user.pictureColor} />
     </Container>
 
   )

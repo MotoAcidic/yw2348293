@@ -61,7 +61,7 @@ const Governance: React.FC = () => {
             <Leaderboard>
               Leaderboard
               </Leaderboard>
-            {yam ?
+            {account ?
 
               <GovContent>
                 <Suggestions>

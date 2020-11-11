@@ -48,8 +48,8 @@ const Versus = ({ battles }) => {
 	const { account, connect } = useWallet()
 	// console.log(battles);
 	const [voted, setVoted] = useState(false)
-	const [checked1, setChecked1] = useState(cookie.get(battles[0]._id))
-	const [checked2, setChecked2] = useState(cookie.get(battles[1]._id))
+	const [checked1, setChecked1] = useState(0)
+	const [checked2, setChecked2] = useState(0)
 
 	const battle1 = {
 		pers1: personalities.find(person => person.handle === battles[0].pool1.name),
@@ -61,11 +61,17 @@ const Versus = ({ battles }) => {
 	}
 
 	const pick1 = (g) => {
+		if (!account) {
+			connect('injected')
+		}
 		cookie.set(battles[0]._id, g)
 		setChecked1(g)
 	}
 
 	const pick2 = (g) => {
+		if (!account) {
+			connect('injected')
+		}
 		cookie.set(battles[1]._id, g)
 		setChecked2(g)
 	}
@@ -291,19 +297,21 @@ const Versus = ({ battles }) => {
 					</Options>
 				</VersusContainer>
 			</BattleContainer>
-			{account ?
-				<Button size="lg" onClick={castVote} disabled={voted ? true : false}>
+			<BattleButton>
+				<Button size="lg" onClick={castVote} disabled={(checked1 && checked2) ? false : true}>
 					{voted ? "Bet" : "Battle"}
 				</Button>
-				:
-				<Button size="lg" disabled={true}>
-					Battle
-				</Button>
-			}
+			</BattleButton>
 			<Space />
 		</>
 	)
 }
+
+const BattleButton = styled.div`
+position: absolute;
+top: 480px;
+z-index: 1001;
+`
 
 const RainbowShadow = styled.div`
 background: linear-gradient(
@@ -369,6 +377,7 @@ background-color: black;
 
 const Seperator = !isMobile() ? styled.div`
   width: 40%;
+  min-width: 600px;
   margin-left: 2%;
 	height: 35px;
 	position: absolute;

@@ -298,23 +298,29 @@ const Versus = ({ battles }) => {
 					</Options>
 				</VersusContainer>
 			</BattleContainer>
-			<BattleButton>
-				{voted ?
-					<Button size="lg" onClick={castVote} >
-						Bet
-					</Button>
-					:
-					<Button size="lg" onClick={castVote} disabled={(checked1 && checked2) ? false : true}>
-						{(checked1 && checked2) ? "Battle" : "Choose"}
-					</Button>
-				}
-			</BattleButton>
+			<BattleButtonContainer>
+				<BattleButton onClick={castVote} >
+					Battle
+				</BattleButton>
+				<BattleButton onClick={castVote} >
+					Bet
+				</BattleButton>
+			</BattleButtonContainer>
 			<Space />
 		</>
 	)
 }
 
 const BattleButton = styled.div`
+font-family: "Edo";
+	font-weight: normal;
+	font-size: 50px;
+	background: linear-gradient(yellow, red, black);
+	-webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`
+
+const BattleButtonContainer = styled.div`
 position: absolute;
 top: 480px;
 z-index: 1001;
@@ -383,17 +389,15 @@ background-color: black;
 `
 
 const VerticalSeperator = !isMobile() ? styled.div`
-height: 1px;
-background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
-  margin-left: 2%;
-	position: absolute;
-	background-color: black;
+height: 700px;
+width: 1px;
+background-image: linear-gradient(180deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
 	z-index: 100;
 ` : styled.div`
   width: 150px;
 	height: 1px;
 	position: absolute;
-  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
+  background-image: linear-gradient(180deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
 `
 
 const Seperator = !isMobile() ? styled.div`

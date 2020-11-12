@@ -17,6 +17,7 @@ const Profile = () => {
   const { account, connect } = useWallet()
   const yam = useYam()
   const [user, setUser] = useState(null);
+  const [leaderboard, setLeaderboard] = useState([]);
 
   const fetchAccount = () => {
     axios.post(`${getServerURI()}/gov/get-account`,
@@ -28,25 +29,31 @@ const Profile = () => {
       })
   }
 
+
   useEffect(() => {
-    if (yam.defaultProvider) {
+    console.log("here", yam)
+    if (!yam.defaultProvider) {
       fetchAccount()
     }
-  }, [yam])
+  }, [yam, account])
 
 
   if (!user) return (<div />);
   return (
     <Container>
-      <EditableProfile nickname={user.nickname} picture={user.picture} color={user.pictureColor} />
+      <EditableProfile user={user} fetchAccount={() => fetchAccount()} />
+      <PercentWin>
+        {user.battleWinPercent + user.betWinPercent / 2}% win
+      </PercentWin>
     </Container>
 
   )
 }
 
-const Nickname = styled.div`
-font-family: Alegreya;
-font-size: 30px;
+const PercentWin = styled.div`
+margin-top: 10px;
+font-family: Gilroy;
+font-size: 18px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
@@ -54,78 +61,6 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 `
-
-const ProfilePicContainer = styled.div`
-width: 82px;
-height: 82px;
-background-color: #002450;
-border-radius: 50%;
-display: flex;
-align-items: center;
-justify-content: center;
-margin-bottom: 20px;
-`
-
-const ProfilePic = styled.img`
-width: 50px;
-height: 50px;
-
-`
-
-const CheckButton = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-width: 20px;
-font-size: 22px;
-display: flex;
-align-items: center;
-justify-content: center;
-color: white;
-cursor: pointer;
-transition: all .1s linear;
-&:hover {
-  font-size: 24px;
-}`
-
-const XButton = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-width: 20px;
-font-size: 18px;
-display: flex;
-align-items: center;
-justify-content: center;
-color: white;
-cursor: pointer;
-transition: all .1s linear;
-&:hover {
-  font-size: 20px;
-}`
-
-const EditingButtons = styled.div`
-width: 46px;
-height: 16px;
-display: flex;
-justify-content: space-between;
-position: absolute;
-right: 20px;
-top: 20px;
-`
-
-const EditButton = styled.img`
-position: absolute;
-right: 20px;
-top: 20px;
-width: 16px;
-height: 16px;
-cursor: pointer;
-transition: all .1s linear;
-&:hover {
-  width: 18px;
-  height: 18px;
-}`
 
 const Container = styled.div`
 position: relative;

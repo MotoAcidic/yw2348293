@@ -8,7 +8,6 @@ import editIcon from "../../assets/img/edit@2x.png"
 import { GithubPicker } from "react-color";
 import Picker from 'emoji-picker-react';
 
-
 function getServerURI() {
   if (window.location.hostname === "localhost") {
     return "http://localhost:5000";
@@ -36,38 +35,60 @@ function useOnClickOutside(ref, handler) {
   );
 }
 
-const Profile = ({ nickname, picture, color }) => {
+const Profile = ({ user, fetchAccount }) => {
   const { account, connect } = useWallet()
   const [editing, setEditing] = useState(false);
-  const [newNickname, setNewNickname] = useState(nickname);
-  const [newPicture, setNewPicture] = useState(picture);
   const [editingPicture, setEditingPicture] = useState(false);
   const [editingColor, setEditingColor] = useState(false);
-  const [newColor, setNewColor] = useState(color);
-  const yam = useYam()
+  const [newNickname, setNewNickname] = useState("");
+  const [newPicture, setNewPicture] = useState("");
+  const [newColor, setNewColor] = useState("");
   const colorRef = useRef()
   const pictureRef = useRef()
+  const yam = useYam()
   useOnClickOutside(colorRef, () => setEditingColor(false));
   useOnClickOutside(pictureRef, () => setEditingPicture(false));
 
-  const submitEdits = () => {
+  useEffect(() => {
+    setNewColor(user.pictureColor);
+    setNewNickname(user.nickname);
+    setNewPicture(user.picture);
+  }, [user])
+
+  const submitEdits = async () => {
+    if (newPicture === user.picture && newNickname === user.nickname && newColor === user.color) {
+      cancelEdits();
+      return;
+    }
+
+    const signature = await yam.web3.eth.personal.sign(JSON.stringify({
+      address: account
+    }), account).catch(err => console.log(err))
+
     axios.post(`${getServerURI()}/gov/update-account`, {
       address: account,
       picture: newPicture,
       pictureColor: newColor,
       nickname: newNickname,
+      sig: signature,
     }).then(res => {
-      swal.fire("successfully updated account");
+      fetchAccount();
       setEditing(false);
+      swal.fire("successfully updated account");
     }).catch(err => {
-      console.log(err);
+      console.log(err.response);
+      swal.fire({
+        icon: 'error',
+        title: `Error: ${err.response.status}`,
+        text: 'Something went wrong!'
+      })
     })
   }
 
   const cancelEdits = () => {
-    setNewNickname(nickname);
-    setNewPicture(picture);
-    setNewColor(color);
+    setNewNickname(user.nickname);
+    setNewPicture(user.picture);
+    setNewColor(user.color);
     setEditingPicture(false);
     setEditingColor(false);
     setEditing(false);
@@ -124,7 +145,7 @@ const Profile = ({ nickname, picture, color }) => {
           <ColorContainer />
 
         </EditTop>
-        <EditNickName placeholder={nickname ? nickname : account} onChange={(e) => handleChange(e)} value={newNickname} />
+        <EditNickName placeholder={user.nickname ? user.nickname : account} onChange={(e) => handleChange(e)} value={newNickname} maxlength="12" />
       </>
     )
   }
@@ -204,6 +225,7 @@ letter-spacing: normal;
 color: #ffffff;
 height: 30px;
 width: 70%;
+padding: 1px 0 2px 0;
 `
 
 const EditProfilePicContainer = styled.div`

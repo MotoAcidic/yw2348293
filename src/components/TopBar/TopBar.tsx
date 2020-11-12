@@ -38,6 +38,7 @@ const TopBar: React.FC = () => {
               display: 'flex',
               justifyContent: 'flex-end'
             }}>
+                <AccountButton />
             </div>
           </StyledTopBarInner >
           <Nav />

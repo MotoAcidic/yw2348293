@@ -24,12 +24,14 @@ function isMobile() {
   }
 }
 
+
 const Profile = () => {
-  const [leaderboard, setLeaderboard] = useState([]);
+  const emptyLeaderboard = [<LeaderBoardItem />, <LeaderBoardItem />, <LeaderBoardItem />, <LeaderBoardItem />, <LeaderBoardItem />];
+  const [leaderboard, setLeaderboard] = useState(emptyLeaderboard);
   const [selectVal, setSelectVal] = useState("battles");
 
   useEffect(() => {
-    setLeaderboard([]);
+    setLeaderboard(emptyLeaderboard);
     axios.get(`${getServerURI()}/gov/${selectVal}-leaderboard`).then(res => {
       const leaderboardContent = res.data.map((item, index) => {
         return (
@@ -74,11 +76,21 @@ const Profile = () => {
       {leaderboard.length > 0 ?
         <LeaderBoard>{leaderboard}</LeaderBoard>
         :
-        <Loading src={loading} />
+        <LoadingContainer>
+
+          <Loading src={loading} />
+        </LoadingContainer>
       }
     </LeaderboardContainer>
   )
 }
+
+const LoadingContainer = styled.div`
+height: 204px;
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;`
 
 const Option = styled.div`
 font-family: "Gilroy";

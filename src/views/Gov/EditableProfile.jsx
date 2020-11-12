@@ -5,7 +5,7 @@ import axios from "axios";
 import swal from "sweetalert2";
 import useYam from '../../hooks/useYam'
 import editIcon from "../../assets/img/edit@2x.png"
-import { GithubPicker } from "react-color";
+import { TwitterPicker } from "react-color";
 import Picker from 'emoji-picker-react';
 
 function getServerURI() {
@@ -117,7 +117,7 @@ const Profile = ({ user, fetchAccount }) => {
     }
     return (
       <ColorEditModal ref={colorRef}>
-        <GithubPicker color={newColor} onChangeComplete={setPickerColor} />
+        <TwitterPicker color={newColor} onChangeComplete={setPickerColor} />
       </ColorEditModal>
     )
   }

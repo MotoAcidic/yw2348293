@@ -11,6 +11,7 @@ import { OverviewData } from '../Home/types'
 import { getStats } from '../Home/utils'
 import TopDisplayContainer from "../../components/TopDisplayContainer";
 import Profile from "./Profile";
+import Leaderboard from "./Leaderboard"
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -58,9 +59,7 @@ const Governance: React.FC = () => {
         <ContentContainer>
           <Page>
             <TopDisplayContainer />
-            <Leaderboard>
-              Leaderboard
-              </Leaderboard>
+            <Leaderboard />
             {account ?
 
               <GovContent>
@@ -85,6 +84,7 @@ const Governance: React.FC = () => {
     </Switch>
   )
 }
+
 
 const SubTitle = styled.div`
 font-family: "Gilroy";
@@ -163,19 +163,10 @@ align-items: center;
 justify-content: center;
 `
 
-const Leaderboard = styled.div`
-width: 80vw;
-height: 175px;
-background-color: rgba(256,256,256,0.1);
-border-radius: 16px;
-display: flex;
-align-items: center;
-justify-content: center;
-margin-bottom: 80px;
-`
 
 const GovContent = styled.div`
 width: 80vw;
+max-width: 1200px;
 display: flex;
 flex-direction: row;
 justify-content: space-between;`

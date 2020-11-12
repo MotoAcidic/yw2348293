@@ -50,13 +50,13 @@ const Profile = ({ user, fetchAccount }) => {
   useOnClickOutside(pictureRef, () => setEditingPicture(false));
 
   useEffect(() => {
-    setNewColor(user.pictureColor);
+    setNewColor(user.pictureColor || "#002450");
     setNewNickname(user.nickname);
     setNewPicture(user.picture);
   }, [user])
 
   const submitEdits = async () => {
-    if (newPicture === user.picture && newNickname === user.nickname && newColor === user.color) {
+    if (newPicture === user.picture && newNickname === user.nickname && newColor === user.pictureColor) {
       cancelEdits();
       return;
     }
@@ -88,13 +88,14 @@ const Profile = ({ user, fetchAccount }) => {
   const cancelEdits = () => {
     setNewNickname(user.nickname);
     setNewPicture(user.picture);
-    setNewColor(user.color);
+    setNewColor(user.pictureColor || "#002450");
     setEditingPicture(false);
     setEditingColor(false);
     setEditing(false);
   }
 
   const handleChange = (e) => {
+    if (e.target.value.length > 12) return;
     setNewNickname(e.target.value);
   }
 
@@ -193,8 +194,8 @@ const ColorEditModal = styled.div`
 display: flex;
 flex-direction: column;
 position: absolute;
-bottom: 340px;
-left: 82px;`
+left: 68px;
+    top: 92px;`
 
 const EditNickName = styled.input`
 height: 30px;
@@ -224,7 +225,7 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 height: 30px;
-width: 70%;
+width: 90%;
 padding: 1px 0 2px 0;
 `
 

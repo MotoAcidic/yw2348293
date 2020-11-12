@@ -40,15 +40,34 @@ const Profile = () => {
 
   if (!user) return (<div />);
   return (
-    <Container>
-      <EditableProfile user={user} fetchAccount={() => fetchAccount()} />
-      <PercentWin>
-        {user.battleWinPercent + user.betWinPercent / 2}% win
-      </PercentWin>
-    </Container>
 
+    <Side>
+      <Title>Profile</Title>
+      <Container>
+        <EditableProfile user={user} fetchAccount={() => fetchAccount()} />
+        <PercentWin>
+          {user.battleWinPercent + user.betWinPercent / 2}% win
+      </PercentWin>
+      </Container>
+    </Side>
   )
 }
+
+const Title = styled.div`
+display: flex;
+justify-content: space-between;
+font-family: Alegreya;
+  font-size: 25px;
+  height: 30px;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+`
 
 const PercentWin = styled.div`
 margin-top: 10px;
@@ -62,9 +81,16 @@ letter-spacing: normal;
 color: #ffffff;
 `
 
+const Side = styled.div`
+position: relative;
+width: 39%;
+display: flex;
+flex-direction: column;
+`
+
 const Container = styled.div`
 position: relative;
-width: calc(39% - 40px);
+width: calc(100% - 40px);
 padding: 20px;
 border-radius: 8px;
 border: solid 2px rgba(255,183,0,0.3);

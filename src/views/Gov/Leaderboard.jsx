@@ -26,16 +26,28 @@ function isMobile() {
 
 const Profile = () => {
   const [leaderboard, setLeaderboard] = useState([]);
+  const [selectVal, setSelectVal] = useState("battles");
 
   useEffect(() => {
-    axios.get(`${getServerURI()}/gov/battle-leaderboard`).then(res => {
+    setLeaderboard([]);
+    axios.get(`${getServerURI()}/gov/${selectVal}-leaderboard`).then(res => {
       const leaderboardContent = res.data.map((item, index) => {
         return (
           <LeaderBoardItem key={index}>
             <StyledContent>
               <StyledCardIcon style={{ backgroundColor: item.pictureColor }}>{item.picture}</StyledCardIcon>
-              <StyledTitle>{item.nickname ? item.nickname : item.address.substring(0, 10) + "..."}</StyledTitle>
-              <StyledVotes>{item.battleWinPercent}%</StyledVotes>
+              <LeaderboardText>
+
+                <StyledTitle>{item.nickname ? item.nickname : item.address.substring(0, 10) + "..."}</StyledTitle>
+                {selectVal === "battles" ?
+                  <StyledVotes>{item.battleWinPercent}%</StyledVotes>
+                  :
+                  <StyledVotes style={{ color: "#38ff00" }}>+${item.betAmountWon.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}</StyledVotes>
+                }
+              </LeaderboardText>
             </StyledContent>
           </LeaderBoardItem>
         )
@@ -44,15 +56,20 @@ const Profile = () => {
     }).catch(err => {
       console.log(err);
     })
-  }, []);
+  }, [selectVal]);
+
 
   return (
     <LeaderboardContainer>
       <Title>Leaderboard
-        <LeaderboardType>
-          <option value="battles">battles</option>
-          <option value="bets">bets</option>
-        </LeaderboardType>
+        <Leaderboards>
+          <Option style={{ color: selectVal === "battles" ? "#ffbe1a" : "white" }} onClick={() => setSelectVal("battles")}>
+            battles
+          </Option>
+          <Option style={{ color: selectVal === "bets" ? "#ffbe1a" : "white" }} onClick={() => setSelectVal("bets")}>
+            bets
+          </Option>
+        </Leaderboards>
       </Title>
       {leaderboard.length > 0 ?
         <LeaderBoard>{leaderboard}</LeaderBoard>
@@ -62,6 +79,29 @@ const Profile = () => {
     </LeaderboardContainer>
   )
 }
+
+const Option = styled.div`
+font-family: "Gilroy";
+font-size: 16px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+opacity: 0.9;
+cursor: pointer;
+&:hover {
+  opacity: 1;
+}
+`
+
+const Leaderboards = styled.div`
+display: flex;
+width: 100px;
+justify-content: space-between;`
+
+const LeaderboardText = styled.div``
 
 const StyledVotes = styled.h4`
   margin: 0;
@@ -89,6 +129,7 @@ const StyledTitle = styled.h4`
   text-align: center;
   color: #ffffff;
   padding: 0;
+  margin-bottom: 10px;
 `;
 
 const StyledContent = styled.div`
@@ -100,13 +141,14 @@ const StyledContent = styled.div`
 `;
 
 const StyledCardIcon = styled.div`
-  font-size: 60px;
-  height: 80px;
-  width: 80px;
+  font-size: 65px;
+  height: 100px;
+  width: 100px;
   border-radius: 50%;
   align-items: center;
   display: flex;
   justify-content: center;
+  border: solid 2px rgba(256,256,256,0.3);
 `;
 
 
@@ -114,7 +156,7 @@ const LeaderBoardItem = !isMobile()
   ? styled.div`
   text-align: center;
   min-width: 120px;
-  width: 17%;
+  width: 18%;
   height: 200px;
   border-radius: 8px;
   border: solid 2px rgba(255, 183, 0, 0.3);
@@ -130,7 +172,7 @@ const LeaderBoardItem = !isMobile()
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  margin-bottom: 20px;`
+  `
   : styled.div`
   text-align: center;
   width: 40%;
@@ -153,16 +195,13 @@ const LeaderBoardItem = !isMobile()
   justify-content: space-between;
   margin-bottom: 20px;`;
 
-const LeaderboardType = styled.select``
-
-
 const LeaderboardContainer = styled.div`
 width: 80vw;
-height: 175px;
+max-width: 1200px;
 border-radius: 16px;
 display: flex;
 flex-direction: column;
-margin-bottom: 80px;
+margin-bottom: 40px;
 `
 
 const Title = styled.div`
@@ -192,16 +231,13 @@ const LeaderBoard = !isMobile() ? styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 80%;
-  max-width: 1200px;
-  margin-bottom: 60px;
+  width: 100%;
 ` : styled.div`
   display: flex;
   width: 90vw;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  margin-bottom: 60px;
 `;
 
 export default Profile

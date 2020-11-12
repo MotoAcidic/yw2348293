@@ -85,6 +85,7 @@ const Governance: React.FC = () => {
   )
 }
 
+
 const SubTitle = styled.div`
 font-family: "Gilroy";
 font-size: 20px;
@@ -165,6 +166,7 @@ justify-content: center;
 
 const GovContent = styled.div`
 width: 80vw;
+max-width: 1200px;
 display: flex;
 flex-direction: row;
 justify-content: space-between;`

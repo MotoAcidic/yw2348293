@@ -143,12 +143,12 @@ const Battle: React.FC = () => {
             {prevDayBattles.length > 0 &&
               <InbetweenCard battles={prevDayBattles} />
             }
+            <Pool3 />
             <Title>How battles work </Title>
             <Instructions />
             <Title>Schedule</Title>
             <Schedule schedule={schedule} />
             {/* <Title>Step 1: Stake $WAR to enter the arena</Title> */}
-
           </Page>
         </ContentContainer>
       </StyledCanvas>

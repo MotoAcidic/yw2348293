@@ -20,6 +20,12 @@ import BattleWhite from '../../../assets/img/battlewhite.png'
 import BattleRed from '../../../assets/img/battlered.png'
 import BattleGreen from '../../../assets/img/battlegreen.png'
 import BattleBlue from '../../../assets/img/battleblue.png'
+import SheetMetal from '../../../assets/img/battlebutton.png'
+import useFarm from '../../../hooks/useFarm'
+import useStakedBalance from '../../../hooks/useStakedBalance'
+import { getDisplayBalance } from '../../../utils/formatBalance'
+import PersVersusBet from './PersVersusBet'
+
 import './swal.css';
 import './twitter.css'
 
@@ -43,13 +49,29 @@ let cookie = new Cookie()
 
 
 const Versus = ({ battles }) => {
-	// console.log(question);
+	const {
+		contract,
+		depositToken,
+		depositTokenAddress,
+		earnToken,
+		name,
+		icon,
+	} = useFarm('BATTLEPOOL') || {
+		contract: null,
+		depositToken: '',
+		depositTokenAddress: '',
+		earnToken: '',
+		name: '',
+		icon: ''
+	}
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	// console.log(battles);
 	const [voted, setVoted] = useState(false)
 	const [checked1, setChecked1] = useState(0)
 	const [checked2, setChecked2] = useState(0)
+	const [betModal, setBetModal] = useState(false)
+	let stakedBalance = useStakedBalance(contract)
 
 	const battle1 = {
 		pers1: personalities.find(person => person.handle === battles[0].pool1.name),
@@ -58,6 +80,10 @@ const Versus = ({ battles }) => {
 	const battle2 = {
 		pers1: personalities.find(person => person.handle === battles[1].pool1.name),
 		pers2: personalities.find(person => person.handle === battles[1].pool2.name)
+	}
+
+	const stopProp = (e) => {
+		e.stopPropagation()
 	}
 
 	const pick1 = (g) => {
@@ -79,9 +105,35 @@ const Versus = ({ battles }) => {
 	const castVote = async () => {
 		let vote1
 		let vote2
-		console.log(checked1, checked2);
-		if (!checked1 || !checked2)
+		if (!account) {
+			connect('injected')
+		}
+		if (!stakedBalance.toNumber() && account) {
+			Swal.fire({
+				title: 'You must have war staked in the WarChest to battle. If you only have Eth you may Bet.',
+				customClass: {
+					container: 'container-class',
+					title: 'title-class',
+					content: 'text-class',
+					confirmButton: 'confirm-button-class',
+				}
+			}).then(res => {
+				window.scroll(0, 800)
+			})
 			return
+		}
+		if (!checked1 || !checked2) {
+			Swal.fire({
+				title: 'Pick your Champions!',
+				customClass: {
+					container: 'container-class',
+					title: 'title-class',
+					content: 'text-class',
+					confirmButton: 'confirm-button-class',
+				}
+			})
+			return
+		}
 		if (checked1 === 1)
 			vote1 = battle1.pers1.handle
 		if (checked1 === 2)
@@ -138,7 +190,6 @@ const Versus = ({ battles }) => {
 			console.log(err);
 			Swal.fire({
 				title: `Error submitting your votes: ${err.response.status}`,
-				text: `Response: ${err}\n Please let us know and we'll take care of it.`,
 				width: '600',
 				height: '465',
 				padding: '10',
@@ -298,32 +349,115 @@ const Versus = ({ battles }) => {
 					</Options>
 				</VersusContainer>
 			</BattleContainer>
-			<BattleButtonContainer>
-				<BattleButton onClick={castVote} >
-					Battle
+			<BattleButtonWrapper>
+				<BattleButtonContainer>
+					{!voted ?
+						<BattleButton onClick={castVote} >
+							Battle
+						</BattleButton>
+						:
+						<BattleText>Voted</BattleText>
+					}
+					<HDivider />
+					<BattleButton onClick={() => {
+						if (!account) {
+							connect('injected')
+						}
+						setBetModal(true)
+					}} >
+						Bet
 				</BattleButton>
-				<BattleButton onClick={castVote} >
-					Bet
-				</BattleButton>
-			</BattleButtonContainer>
+				</BattleButtonContainer>
+			</BattleButtonWrapper>
+			<TotalVotesSection>
+				{account ? `You currently have ${getDisplayBalance(stakedBalance)} votes available for BATTLE and you may BET with ETH.` : 'Connect wallet to see available votes'}
+			</TotalVotesSection>
 			<Space />
+			<div style={betModal ? { display: 'block' } : { display: 'none' }}>
+				<Modal onClick={() => setBetModal(false)}>
+					<ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
+						{yam && <PersVersusBet
+							battle={battles}
+							betContract={null}
+						/>}
+					</ModalBlock>
+				</Modal>
+			</div>
 		</>
 	)
 }
 
+const TotalVotesSection = styled.div`
+font-family: "Gilroy";
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+`
+
+const BattleButtonWrapper = styled.span`
+position: absolute;
+top: 440px;
+z-index: 1001;
+filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.9));
+`
+
+const HDivider = styled.div`
+margin-left: 10%;
+width: 80%;
+	height: 1px;
+	background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
+	box-shadow: 0 3px 7px 4px rgba(14, 14, 14, .6);
+`
+
 const BattleButton = styled.div`
 font-family: "Edo";
 	font-weight: normal;
-	font-size: 50px;
+	font-size: 60px;
 	background: linear-gradient(yellow, red, black);
 	-webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-color: lightgrey;
+  -webkit-text-stroke-width: 1px;
+  text-shadow: 4px 4px 8px #000000;
+  &:hover {
+	transform: scale(1.05) translateY(-1px);
+	cursor: pointer;
+	}
+`
+
+const BattleText = styled.div`
+font-family: "Edo";
+	font-weight: normal;
+	font-size: 60px;
+	background: linear-gradient(blue, purple, black);
+	-webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-color: lightgrey;
+  -webkit-text-stroke-width: 1px;
+  text-shadow: 4px 4px 8px #000000;
 `
 
 const BattleButtonContainer = styled.div`
-position: absolute;
-top: 480px;
-z-index: 1001;
+width: 250px;
+height: 140px;
+background-image: url(${SheetMetal});
+background-size: cover;
+// clip-path: polygon(
+//     10% 0%,
+//     90% 0%,
+//     100% 20%,
+//     100% 60%,
+//     80% 100%,
+//     20% 100%,
+//     0% 60%,
+//     0% 20%
+//   );
+//   border-style: ridge;
+//   box-shadow: 0 8px 12px rgba(14, 14, 14, 1);
 `
 
 const RainbowShadow = styled.div`
@@ -722,5 +856,23 @@ color: #ffffff;
 	letter-spacing: 1px;
 `
 
+const Modal = styled.div`
+border-radius: 8px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100000;
+  background-color: rgba(0, 0, 0, 0.2);
+  top: 0px;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+`
+
+const ModalBlock = styled.div`
+width: 534px;
+height: 0px;
+margin-top: 23vh;
+`
 
 export default Versus

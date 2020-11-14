@@ -78,11 +78,11 @@ const Battle = ({ battles }) => {
       <Item>Current Bets:</Item>
       <Item>{battles[0].pool1.name} 💰${totalBets.bets1.toLocaleString()}</Item>
         |
-      <Item>{battles[0].pool1.name} 💰${totalBets.bets2.toLocaleString()}</Item>
+      <Item>{battles[0].pool2.name} 💰${totalBets.bets2.toLocaleString()}</Item>
         |
       <Item>{battles[1].pool1.name} 💰${totalBets.bets3.toLocaleString()}</Item>
         |
-      <Item>{battles[1].pool1.name} 💰${totalBets.bets4.toLocaleString()}</Item>
+      <Item>{battles[1].pool2.name} 💰${totalBets.bets4.toLocaleString()}</Item>
     </BetsDisplayContainer>
   );
 };

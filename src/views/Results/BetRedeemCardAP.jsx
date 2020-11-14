@@ -111,7 +111,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		<Container size="sm">
 			<VersusContainer>
 				<Title>
-				Will AP call the election before 00:00 UTC on Nov 7th, 2020?
+					Will AP call the election before 00:00 UTC on Nov 7th, 2020?
 				</Title>
 				<TitleText>
 					Your Bets
@@ -124,7 +124,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					}
 					{farmBalances.choice1WARBal > 0 || farmBalances.choice1ETHBal > 0 ?
 						<Column>
-      <StyledText1>
+							<StyledText1>
 								YES
 							</StyledText1>
 
@@ -147,7 +147,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					}
 					{farmBalances.choice2WARBal > 0 || farmBalances.choice2ETHBal > 0 ?
 						<Column>
-        <StyledText2>
+							<StyledText2>
 								NO
 							</StyledText2>
 							<Space />
@@ -173,12 +173,12 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 				<Separator />
 				<Text>
 					Total Bets
-					</Text>
+				</Text>
 				<AllBets>
 					<BetDisplay>
-					<StyledText1>
-								YES
-							</StyledText1>
+						<StyledText1>
+							YES
+						</StyledText1>
 
 						<AmountBet>
 							{farmBets.choice1WARPot.toLocaleString() + " $WAR"}
@@ -188,8 +188,8 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 						</AmountBet>
 					</BetDisplay>
 					<BetDisplay>
-					<StyledText2>
-								NO
+						<StyledText2>
+							NO
 							</StyledText2>
 						<AmountBet>
 							{farmBets.choice2WARPot.toLocaleString() + " $WAR"}
@@ -203,13 +203,13 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 				<Separator />
 				<Space />
 				{!farmBalances.choice1WARBal > 0 && !farmBalances.choice1ETHBal > 0 &&
-						!farmBalances.choice2WARBal > 0 && !farmBalances.choice2ETHBal > 0 ?
-						<SmallText>nothing to redeem</SmallText>
-						: 
-						<Button size="xlg" onClick={() => redeemRewards()}>Redeem Rewards</Button>
-					}
+					!farmBalances.choice2WARBal > 0 && !farmBalances.choice2ETHBal > 0 ?
+					<SmallText>nothing to redeem</SmallText>
+					:
+					<Button size="xlg" onClick={() => redeemRewards()}>Redeem Rewards</Button>
+				}
 			</VersusContainer>
-		
+
 		</Container>
 	)
 }

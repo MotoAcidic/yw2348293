@@ -20,7 +20,8 @@ import BattleWhite from '../../../assets/img/battlewhite.png'
 import BattleRed from '../../../assets/img/battlered.png'
 import BattleGreen from '../../../assets/img/battlegreen.png'
 import BattleBlue from '../../../assets/img/battleblue.png'
-import SheetMetal from '../../../assets/img/battlebutton.png'
+import Hammer from '../../../assets/img/hammer.png'
+import Lightning from '../../../assets/img/lightning.png'
 import useFarm from '../../../hooks/useFarm'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import { getDisplayBalance } from '../../../utils/formatBalance'
@@ -232,7 +233,6 @@ const Versus = ({ battles }) => {
 
 	return (
 		<>
-			<Title>Who Will Win?</Title>
 			<BattleContainer>
 				<VersusContainer>
 					<Options>
@@ -242,24 +242,24 @@ const Versus = ({ battles }) => {
 							<LeftBar />
 							<RightBar />
 							<BottomBar />
+							<TLVS>
+								{!isMobile() ?
+									<a className="twitter-timeline" data-width="65%" data-height="95%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								}
+								{useScript("https://platform.twitter.com/widgets.js")}
+								<StyledContent>
+									<Picture src={battle1.pers1.picture} />
+									<StatBlock>
+										<SubTitle>{battle1.pers1.name}</SubTitle>
+										<Text>{battle1.pers1.handle}</Text>
+									</StatBlock>
+									<StatBlock>
+										<Text>Followers: {battle1.pers1.followerCount}</Text>
+									</StatBlock>
+								</StyledContent>
+							</TLVS>
 						</TLVersusItem>
-						<TopVS>
-							{!isMobile() ?
-								<a class="twitter-timeline" data-width="58%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-								: <a class="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-							}
-							{useScript("https://platform.twitter.com/widgets.js")}
-							<StyledContent>
-								<Picture src={battle1.pers1.picture} />
-								<StatBlock>
-									<SubTitle>{battle1.pers1.name}</SubTitle>
-									<Text>{battle1.pers1.handle}</Text>
-								</StatBlock>
-								<StatBlock>
-									<Text>Followers: {battle1.pers1.followerCount}</Text>
-								</StatBlock>
-							</StyledContent>
-						</TopVS>
 						<Divider>
 							<Seperator />
 							<img src={VSPNG} width="85px" style={{ position: 'absolute', zIndex: 100 }} />
@@ -270,27 +270,48 @@ const Versus = ({ battles }) => {
 							<LeftBar />
 							<RightBar />
 							<BottomBar />
+							<BLVS>
+								{!isMobile() ?
+									<a className="twitter-timeline" data-width="65%" data-height="95%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								}
+								{useScript("https://platform.twitter.com/widgets.js")}
+								<StyledContent>
+									<Picture src={battle1.pers2.picture} />
+									<StatBlock>
+										<SubTitle>{battle1.pers2.name}</SubTitle>
+										<Text>{battle1.pers2.handle}</Text>
+									</StatBlock>
+									<StatBlock>
+										<Text>Followers: {battle1.pers2.followerCount}</Text>
+									</StatBlock>
+								</StyledContent>
+							</BLVS>
 						</BLVersusItem>
-						<BottomVS>
-							{!isMobile() ?
-								<a className="twitter-timeline" data-width="58%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-								: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-							}
-							{useScript("https://platform.twitter.com/widgets.js")}
-							<StyledContent>
-								<Picture src={battle1.pers2.picture} />
-								<StatBlock>
-									<SubTitle>{battle1.pers2.name}</SubTitle>
-									<Text>{battle1.pers2.handle}</Text>
-								</StatBlock>
-								<StatBlock>
-									<Text>Followers: {battle1.pers2.followerCount}</Text>
-								</StatBlock>
-							</StyledContent>
-						</BottomVS>
 					</Options>
 				</VersusContainer>
 				<VerticalSeperator />
+				<BattleButtonWrapper>
+					<GraphicContainer src={Hammer} />
+					<BattleButtonContainer>
+						{!voted ?
+							<BattleButton onClick={castVote} >
+								Battle
+						</BattleButton>
+							:
+							<BattleText>Voted</BattleText>
+						}
+						<HDivider />
+						<BattleButton onClick={() => {
+							if (!account) {
+								connect('injected')
+							}
+							setBetModal(true)
+						}} >
+							Bet
+						</BattleButton>
+					</BattleButtonContainer>
+				</BattleButtonWrapper>
 				<VersusContainer>
 					<Options>
 						<TRVersusItem onClick={() => pick2(1)}>
@@ -299,24 +320,24 @@ const Versus = ({ battles }) => {
 							<LeftBar />
 							<RightBar />
 							<BottomBar />
+							<TRVS>
+								<StyledContent>
+									<Picture src={battle2.pers1.picture} />
+									<StatBlock>
+										<SubTitle>{battle2.pers1.name}</SubTitle>
+										<Text>{battle2.pers1.handle}</Text>
+									</StatBlock>
+									<StatBlock>
+										<Text>Followers: {battle2.pers1.followerCount}</Text>
+									</StatBlock>
+								</StyledContent>
+								{!isMobile() ?
+									<a className="twitter-timeline" data-width="65%" data-height="95%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle2.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle2.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								}
+								{useScript("https://platform.twitter.com/widgets.js")}
+							</TRVS>
 						</TRVersusItem>
-						<TopVS>
-							<StyledContent>
-								<Picture src={battle2.pers1.picture} />
-								<StatBlock>
-									<SubTitle>{battle2.pers1.name}</SubTitle>
-									<Text>{battle2.pers1.handle}</Text>
-								</StatBlock>
-								<StatBlock>
-									<Text>Followers: {battle2.pers1.followerCount}</Text>
-								</StatBlock>
-							</StyledContent>
-							{!isMobile() ?
-								<a className="twitter-timeline" data-width="58%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle2.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-								: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle2.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-							}
-							{useScript("https://platform.twitter.com/widgets.js")}
-						</TopVS>
 						<Divider>
 							<Seperator />
 
@@ -328,56 +349,39 @@ const Versus = ({ battles }) => {
 							<LeftBar />
 							<RightBar />
 							<BottomBar />
+							<BRVS>
+								<StyledContent>
+									<Picture src={battle2.pers2.picture} />
+									<StatBlock>
+										<SubTitle>{battle2.pers2.name}</SubTitle>
+										<Text>{battle2.pers2.handle}</Text>
+									</StatBlock>
+									<StatBlock>
+										<Text>Followers: {battle2.pers2.followerCount}</Text>
+									</StatBlock>
+								</StyledContent>
+								{!isMobile() ?
+									<a className="twitter-timeline" data-width="65%" data-height="95%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle2.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle2.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								}
+								{useScript("https://platform.twitter.com/widgets.js")}
+							</BRVS>
 						</BRVersusItem>
-						<BottomVS>
-							<StyledContent>
-								<Picture src={battle2.pers2.picture} />
-								<StatBlock>
-									<SubTitle>{battle2.pers2.name}</SubTitle>
-									<Text>{battle2.pers2.handle}</Text>
-								</StatBlock>
-								<StatBlock>
-									<Text>Followers: {battle2.pers2.followerCount}</Text>
-								</StatBlock>
-							</StyledContent>
-							{!isMobile() ?
-								<a className="twitter-timeline" data-width="58%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle2.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-								: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle2.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-							}
-							{useScript("https://platform.twitter.com/widgets.js")}
-						</BottomVS>
 					</Options>
 				</VersusContainer>
 			</BattleContainer>
-			<BattleButtonWrapper>
-				<BattleButtonContainer>
-					{!voted ?
-						<BattleButton onClick={castVote} >
-							Battle
-						</BattleButton>
-						:
-						<BattleText>Voted</BattleText>
-					}
-					<HDivider />
-					<BattleButton onClick={() => {
-						if (!account) {
-							connect('injected')
-						}
-						setBetModal(true)
-					}} >
-						Bet
-				</BattleButton>
-				</BattleButtonContainer>
-			</BattleButtonWrapper>
+
 			<TotalVotesSection>
-				{account ? `You currently have ${getDisplayBalance(stakedBalance)} votes available for BATTLE and you may BET with ETH.` : 'Connect wallet to see available votes'}
+				{voted && 'Come back tomorrow and claim your victory!'}
+				{!voted && (account ? `You currently have ${getDisplayBalance(stakedBalance)} votes available for BATTLE and you may BET with ETH.` : 'Connect wallet to see available votes')}
 			</TotalVotesSection>
 			<Space />
 			<div style={betModal ? { display: 'block' } : { display: 'none' }}>
 				<Modal onClick={() => setBetModal(false)}>
 					<ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
 						{yam && <PersVersusBet
-							battle={battles}
+							battle1={battle1}
+							battle2={battle2}
 							betContract={null}
 						/>}
 					</ModalBlock>
@@ -386,6 +390,7 @@ const Versus = ({ battles }) => {
 		</>
 	)
 }
+
 
 const TotalVotesSection = styled.div`
 font-family: "Gilroy";
@@ -396,13 +401,16 @@ font-family: "Gilroy";
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
+  z-index: 14000;
 `
 
 const BattleButtonWrapper = styled.span`
 position: absolute;
-top: 440px;
+left: 50%;
+transform: translateX(-50%);
 z-index: 1001;
 filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.9));
+pointer-events: none;
 `
 
 const HDivider = styled.div`
@@ -417,16 +425,38 @@ const BattleButton = styled.div`
 font-family: "Edo";
 	font-weight: normal;
 	font-size: 60px;
-	background: linear-gradient(yellow, red, black);
+	background: linear-gradient(
+		45deg,
+		rgba(255, 0, 0, 1) 0%,
+		rgba(255, 60, 0, 1) 10%,
+		rgba(255, 100, 33, 1) 20%,
+		rgba(210, 180, 74, 1) 30%,
+		rgba(180, 218, 150, 1) 40%,
+		rgba(47, 201, 180, 1) 50%,
+		rgba(28, 127, 200, 1) 60%,
+		rgba(95, 21, 180, 1) 70%,
+		rgba(186, 12, 150, 1) 80%,
+		rgba(251, 7, 50, 1) 90%,
+		rgba(255, 0, 0, 1) 100%
+	  );	background-size: 200% 200%;
+	animation: dOtNsp2 3s linear infinite;
 	-webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke-color: lightgrey;
   -webkit-text-stroke-width: 1px;
   text-shadow: 4px 4px 8px #000000;
   &:hover {
-	transform: scale(1.05) translateY(-1px);
+	transform: scale(1.1) translateY(-1px) !important;
 	cursor: pointer;
 	}
+`
+
+const BattleButtonContainer = styled.div`
+position: absolute;
+top: 39%;
+left: 50%;
+transform: translateX(-50%) translateY(-7%) scale(.9);
+pointer-events: all;
 `
 
 const BattleText = styled.div`
@@ -441,23 +471,13 @@ font-family: "Edo";
   text-shadow: 4px 4px 8px #000000;
 `
 
-const BattleButtonContainer = styled.div`
-width: 250px;
-height: 140px;
-background-image: url(${SheetMetal});
-background-size: cover;
-// clip-path: polygon(
-//     10% 0%,
-//     90% 0%,
-//     100% 20%,
-//     100% 60%,
-//     80% 100%,
-//     20% 100%,
-//     0% 60%,
-//     0% 20%
-//   );
-//   border-style: ridge;
-//   box-shadow: 0 8px 12px rgba(14, 14, 14, 1);
+const GraphicContainer = styled.img`
+width: 16vw;
+min-width: 230px;
+height: 71vh;
+min-height: 550px;
+pointer-events: none;
+filter: grayscale(.8);
 `
 
 const RainbowShadow = styled.div`
@@ -488,7 +508,7 @@ z-index: -1;
 
 const LeftBar = styled.div`
 height: 104.5%;
-width: 10px;
+width: 8px;
 position: absolute;
 left: 0%;
 bottom: 0%;
@@ -496,8 +516,8 @@ background-color: black;
 `
 
 const RightBar = styled.div`
-height: 98%;
-width: 10px;
+height: 100%;
+width: 8px;
 position: absolute;
 right: 0%;
 top: 0%;
@@ -506,7 +526,7 @@ background-color: black;
 
 const TopBar = styled.div`
 width: 100%;
-height: 30px;
+height: 20px;
 position: absolute;
 top: -5%;
 left: 0%;
@@ -515,7 +535,7 @@ background-color: black;
 
 const BottomBar = styled.div`
 width: 100%;
-height: 30px;
+height: 20px;
 position: absolute;
 bottom: -5%;
 left: 0%;
@@ -525,8 +545,10 @@ background-color: black;
 const VerticalSeperator = !isMobile() ? styled.div`
 height: 700px;
 width: 1px;
+height: 70vh;
+min-height: 600px;
 background-image: linear-gradient(180deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
-	z-index: 100;
+z-index: 100;
 ` : styled.div`
   width: 150px;
 	height: 1px;
@@ -535,10 +557,10 @@ background-image: linear-gradient(180deg, rgba(256, 256, 256, 0), rgba(256, 256,
 `
 
 const Seperator = !isMobile() ? styled.div`
-  width: 40%;
-  min-width: 600px;
+  width: 40.5%;
+  min-width: 610px;
   margin-left: 2%;
-	height: 35px;
+	height: 30px;
 	position: absolute;
 	background-color: black;
 	z-index: 100;
@@ -561,9 +583,10 @@ const Seperator = !isMobile() ? styled.div`
 const BattleContainer = styled.div`
 display: flex;
 flex-direction: row;
-width: 90%;
+// align-items: center;
+width: 100%;
 margin-top: 20px;
-min-width: 1000px;
+min-width: 1300px;
 `
 
 const StatBlock = styled.div`
@@ -575,15 +598,17 @@ align-items: center;
 `
 
 const Picture = styled.img`
-width: 160px;
-height: 160px;
+height: 40%;
+width: 40%;
+min-width: 130px;
+min-height: 130px;
   border-radius: 50%;
 	margin-bottom: 20px;
 
 `
 const Title = !isMobile() ? styled.div`
 font-family: "Gilroy";
-  font-size: 30px;
+  font-size: 26px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -612,7 +637,7 @@ display: flex;
 flex-direction: row;
 justify-content: space-evenly;
 height: 100%;
-padding: 9% 6% 6% 6%;
+padding: 4% 6% 6% 6%;
 transform: skew(3deg);
 transition: all .1s ease-in-out;
 &:hover {
@@ -635,7 +660,7 @@ display: flex;
 flex-direction: row;
 justify-content: space-evenly;
 height: 100%;
-padding: 9% 6% 6% 6%;
+padding: 6% 6% 6% 6%;
 transform: skew(3deg);
 transition: all .1s ease-in-out;
 &:hover {
@@ -658,7 +683,7 @@ display: flex;
 flex-direction: row;
 justify-content: space-evenly;
 height: 100%;
-padding: 9% 6% 6% 6%;
+padding: 4% 6% 6% 6%;
 transform: skew(-3deg);
 transition: all .1s ease-in-out;
 &:hover {
@@ -681,7 +706,7 @@ display: flex;
 flex-direction: row;
 justify-content: space-evenly;
 height: 100%;
-padding: 9% 6% 6% 6%;
+padding: 6% 6% 6% 6%;
 transform: skew(-3deg);
 transition: all .1s ease-in-out;
 &:hover {
@@ -699,28 +724,62 @@ transition: all .1s ease-in-out;
 }
 `
 
-const TopVS = styled.div`
-width: 35%;
+const TLVS = styled.div`
+width: 45%;
 min-width: 500px;
+height: 25vh;
+min-height: 220px;
 position: absolute;
 display: flex;
 flex-direction: row;
-justify-content: space-evenly;
-transform: translate(40px, -185px);
+justify-content: space-between;
+transform: skew(-3deg);
 pointer-events: none;
 z-index: 102;
 `
 
-const BottomVS = styled.div`
-width: 35%;
+const TRVS = styled.div`
+width: 45%;
 min-width: 500px;
+height: 25vh;
+min-height: 220px;
 position: absolute;
 display: flex;
 flex-direction: row;
-justify-content: space-evenly;
-transform: translate(40px, 170px);
+justify-content: space-between;
+transform: skew(3deg);
 pointer-events: none;
 z-index: 102;
+`
+
+const BLVS = styled.div`
+width: 45%;
+min-width: 500px;
+height: 25vh;
+min-height: 220px;
+position: absolute;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+transform: skew(-3deg);
+pointer-events: none;
+z-index: 102;
+margin-top: 5px;
+`
+
+const BRVS = styled.div`
+width: 45%;
+min-width: 500px;
+height: 25vh;
+min-height: 220px;
+position: absolute;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+transform: skew(3deg);
+pointer-events: none;
+z-index: 102;
+margin-top: 5px;
 `
 
 const Options = !isMobile() ? styled.div`
@@ -766,7 +825,8 @@ height: 80px;`
 const VersusContainer = !isMobile() ? styled.div`
 width: 40vw;
 min-width: 600px;
-height: 700px;
+height: 70vh;
+min-height: 550px;
 display: flex;
 align-items: center;
 font-size: 30px;
@@ -802,6 +862,7 @@ const StyledContent = styled.div`
 	height: 100%;
 	width: 30%;
 	align-items: center;
+	margin-top: 20px;
 `
 
 const SubTitle = !isMobile() ? styled.div`

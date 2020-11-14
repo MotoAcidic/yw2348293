@@ -25,6 +25,22 @@ code {
     background-position: 0% 50%;
   }
 }
+
+@keyframes dOtNsp2 {
+  0% {
+    background-position: 0% 50%;
+    transform: scale(1.05);
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: scale(1);
+  }
+  100% {
+    background-position: 0% 50%;
+    transform: scale(1.05);
+  }
+}
+
 .Series  > g > path {
   stroke: white !important;
 }

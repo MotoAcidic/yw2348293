@@ -1,23 +1,23 @@
-
-import React, { useEffect, useState, useMemo, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Button from '../../../components/Button'
 import { useWallet } from "use-wallet";
 import useModal from '../../../hooks/useModal'
+import RulesModal from "./BetRulesModal";
 import Cookie from 'universal-cookie'
+import Modal, { ModalProps } from '../../../components/Modal'
 import Container from '../../../components/Container'
 import MiniBiden from "../../../assets/img/biden@2x.png";
 import MiniTrump from "../../../assets/img/trump@2x.png";
-import useFarm from '../../../hooks/useFarm'
 import useYam from '../../../hooks/useYam'
 import './swal.css'
+import { harvest, getBattleAPR } from '../../../yamUtils'
+import UnstakeModal from './UnstakeModal'
+import useFarm from '../../../hooks/useFarm'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
-import { placeElectionWARBet, placeElectionETHBet, getCurrentBets, getCurrentBalances, getElectionRewards, getElectionFinished, redeem } from '../../../yamUtils'
+import { placeElectionWARBet, getCurrentBets, getCurrentBalances } from '../../../yamUtils'
 import Swal from 'sweetalert2';
-import { getElectionContracts, harvest } from '../../../yamUtils'
-import { getContract } from '../../../utils/erc20'
-
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -35,9 +35,9 @@ function getServerURI() {
 	return 'https://yieldwars-api.herokuapp.com'
 }
 
-const Bet = ({ battles }) => {
+const Bet = ({ battle1, battle2 }) => {
 	const yam = useYam()
-	const { account, connect, ethereum } = useWallet()
+	const { account, connect } = useWallet()
 	const {
 		contract,
 		depositToken,
@@ -54,139 +54,250 @@ const Bet = ({ battles }) => {
 		icon: ''
 	}
 
-	const [farmBets, setFarmBets] = useState({ trumpETHPot: 0, bidenETHPot: 0, trumpWARPot: 0, bidenWARPot: 0 });
-	const [farmBalances, setFarmBalances] = useState({ trumpETHBal: 0, bidenETHBal: 0, trumpWARBal: 0, bidenWARBal: 0 });
+	const [contender1, setContender1] = useState(null);
+	const [contender2, setContender2] = useState(null);
+	const [battle1Input, setBattle1Input] = useState(0);
+	const [battle2Input, setBattle2Input] = useState(0);
+	const [disabled, setDisabled] = useState(false)
+	const [farmBets, setFarmBets] = useState({ pot1: 0, pot2: 0, pot3: 0, pot4: 0 });
+	const [farmBalances, setFarmBalances] = useState({ bal1: 0, bal2: 0, bal3: 0, bal4: 0 });
+	const stakedBalance = useStakedBalance(contract)
+	const { onUnstake } = useUnstake(contract)
 
+	const handleBattle1Change = e => {
+		setContender1(e.target.value);
+	}
 
-	const tokenContract = useMemo(() => {
-		return getContract(ethereum, "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde")
-	}, [ethereum, "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"])
+	const handleBattle2Change = e => {
+		setContender2(e.target.value);
+	}
 
-	const fireUnstakeSWAL = () => {
-		let cookie = new Cookie()
-		if (cookie.get("seenUnstakeSWAL")) {
-			return;
-		}
-		Swal.fire("Please make sure you have $WAR or $ETH in your MetaMask Wallet to place a bet.\n\n$WAR in your WARchest (below) needs to be unstaked to use it in a bet.\n\nView the full betting rules below.")
-		cookie.set("seenUnstakeSWAL", true)
+	const [onPresentUnstake] = useModal(
+		<UnstakeModal
+			max={stakedBalance}
+			onConfirm={onUnstake}
+			tokenName={"WAR"}
+		/>
+	)
+
+	const claimAndUnstake = () => {
+		console.log(contract);
+		console.log(account);
+		harvest(contract, account);
+		onPresentUnstake()
 	}
 
 	useEffect(() => {
 		const getBets = async () => {
-			const bets = await getCurrentBets(yam);
-			const balances = await getCurrentBalances(yam, account);
-			setFarmBalances(balances);
+			// const bets = await getCurrentBets(yam);
+			// const balances = await getCurrentBalances(yam, account);
+			// setFarmBalances(balances);
 			// console.log("gotbets", bets);
-			setFarmBets(bets);
+			// setFarmBets(bets);
 		}
-		// console.log("got da yams???", yam)
-		if (yam && account) {
+		console.log("got da yams???", yam)
+		if (yam) {
+			console.log("got da yams");
 			getBets();
 		}
-		fireUnstakeSWAL();
+
 	}, [yam, account])
 
-
-	const redeemRewards = async () => {
-		const done = await getElectionFinished(yam);
-		console.log("election finished?", done);
-		getElectionRewards(yam, account);
+	const placeBet = () => {
+		if (yam && account) {
+			// if (stakedBalance) {
+			// 	claimAndUnstake()
+			// 	return
+			// }
+			if (battle1Input) {
+				const candidate = contender1;
+				// placeElectionWARBet(yam, candidate, warInput, account);
+			} else if (battle2Input) {
+				const candidate = contender2;
+				// placeElectionWARBet(yam, candidate, ethInput, account);
+			} else {
+				Swal.fire("Place a bet for a candidate!");
+			}
+		}
 	}
 
 	return (
 		<Container size="sm">
-			<VersusContainer>
-				<TitleText>
-					Your Bets
-					</TitleText>
-				<YourBets>
-					{!farmBalances.trumpWARBal > 0 && !farmBalances.trumpETHBal > 0 &&
-						!farmBalances.bidenWARBal > 0 && !farmBalances.bidenETHBal > 0 ?
-						<SmallText>none</SmallText>
-						: null
-					}
-					{farmBalances.trumpWARBal > 0 || farmBalances.trumpETHBal > 0 ?
-						<Column>
-							<CardIcon src={MiniTrump} />
-							<Space />
-							{farmBalances.trumpWARBal > 0 &&
-								<Bets>
-									<AmountBet>
-										{'$WAR: ' + farmBalances.trumpWARBal.toLocaleString()}
-									</AmountBet>
-								</Bets>
-							}
-							{farmBalances.trumpETHBal > 0 &&
-								<Bets>
-									<AmountBet>
-										{'$ETH: ' + farmBalances.trumpETHBal.toLocaleString()}
-									</AmountBet>
-								</Bets>}
-						</Column>
-						: null
-					}
-					{farmBalances.bidenWARBal > 0 || farmBalances.bidenETHBal > 0 ?
-						<Column>
-							<CardIcon src={MiniBiden} />
-							<Space />
-							{farmBalances.bidenWARBal > 0 &&
-								<Bets>
-									<AmountBet>
-										{'$WAR: ' + farmBalances.bidenWARBal.toLocaleString()}
-									</AmountBet>
-								</Bets>
-							}
-							{farmBalances.bidenETHBal > 0 &&
-								<Bets>
-									<AmountBet>
-										{'$ETH: ' + farmBalances.bidenETHBal.toLocaleString()}
-									</AmountBet>
-								</Bets>
-							}
-
-						</Column>
-						: null
-					}
-				</YourBets>
-				<Separator />
-				<Text>
-					Total Bets
+			<StyledModal>
+				<VersusContainer>
+					<Text>
+						Your Bets
 					</Text>
-				<AllBets>
-					<BetDisplay>
-						<CardIcon src={MiniTrump} />
-						<AmountBet>
-							{farmBets.trumpWARPot.toLocaleString() + " $WAR"}
-						</AmountBet>
-						<AmountBet>
-							{farmBets.trumpETHPot.toLocaleString() + " $ETH"}
-						</AmountBet>
-					</BetDisplay>
-					<BetDisplay>
-						<CardIcon src={MiniBiden} />
-						<AmountBet>
-							{farmBets.bidenWARPot.toLocaleString() + " $WAR"}
-						</AmountBet>
-						<AmountBet>
-							{farmBets.bidenETHPot.toLocaleString() + " $ETH"}
-						</AmountBet>
-					</BetDisplay>
-				</AllBets>
-
-				<Separator />
-				<Space />
-				{!farmBalances.trumpWARBal > 0 && !farmBalances.trumpETHBal > 0 &&
-						!farmBalances.bidenWARBal > 0 && !farmBalances.bidenETHBal > 0 ?
-						<SmallText>nothing to redeem</SmallText>
-						: 
-						<Button size="xlg" onClick={() => redeemRewards()}>Redeem Rewards</Button>
-					}
-			</VersusContainer>
-		
+					<YourBets>
+						{!farmBalances.bal1 > 0 && !farmBalances.bal2 > 0 &&
+							!farmBalances.bal3 > 0 && !farmBalances.bal4 > 0 ?
+							<SmallText>none</SmallText>
+							: null
+						}
+						{farmBalances.bal1 > 0 ?
+							<Column>
+								<CardIcon src={battle1.pers1.picture} />
+								<Space />
+								<Bets>
+									<AmountBet>
+										{'$ETH: ' + farmBalances.bal1.toLocaleString()}
+									</AmountBet>
+								</Bets>
+							</Column>
+							: null
+						}
+						{farmBalances.bal2 > 0 ?
+							<Column>
+								<CardIcon src={battle1.pers2.picture} />
+								<Space />
+								<Bets>
+									<AmountBet>
+										{'$ETH: ' + farmBalances.bal2.toLocaleString()}
+									</AmountBet>
+								</Bets>
+							</Column>
+							: null
+						}
+						{farmBalances.bal3 > 0 ?
+							<Column>
+								<CardIcon src={battle2.pers1.picture} />
+								<Space />
+								<Bets>
+									<AmountBet>
+										{'$ETH: ' + farmBalances.bal3.toLocaleString()}
+									</AmountBet>
+								</Bets>
+							</Column>
+							: null
+						}{farmBalances.bal4 > 0 ?
+							<Column>
+								<CardIcon src={battle2.pers2.picture} />
+								<Space />
+								<Bets>
+									<AmountBet>
+										{'$ETH: ' + farmBalances.bal4.toLocaleString()}
+									</AmountBet>
+								</Bets>
+							</Column>
+							: null
+						}
+					</YourBets>
+					<Space />
+					<Separator />
+					<Text>
+						Total Bets
+					</Text>
+					<AllBets>
+						<BetContainer>
+							<BetDisplay>
+								<CardIcon src={battle1.pers1.picture} />
+								<AmountBet>
+									{farmBets.pot1.toLocaleString() + " $ETH"}
+								</AmountBet>
+							</BetDisplay>
+							vs
+							<BetDisplay>
+								<CardIcon src={battle1.pers2.picture} />
+								<AmountBet>
+									{farmBets.pot2.toLocaleString() + " $ETH"}
+								</AmountBet>
+							</BetDisplay>
+						</BetContainer>
+						<BetContainer>
+							<BetDisplay>
+								<CardIcon src={battle2.pers1.picture} />
+								<AmountBet>
+									{farmBets.pot3.toLocaleString() + " $ETH"}
+								</AmountBet>
+							</BetDisplay>
+							vs
+							<BetDisplay>
+								<CardIcon src={battle2.pers2.picture} />
+								<AmountBet>
+									{farmBets.pot4.toLocaleString() + " $ETH"}
+								</AmountBet>
+							</BetDisplay>
+						</BetContainer>
+					</AllBets>
+					<Space />
+					<Separator />
+					<Text>
+						Bet $ETH
+					</Text>
+					<Top>
+						<Select onChange={handleBattle1Change}>
+							<option value={battle1.pers1.handle}>
+								{battle1.pers1.handle + " to Win"}
+							</option>
+							<option value={battle1.pers2.handle}>
+								{battle1.pers2.handle + " to Win"}
+							</option>
+						</Select>
+						<InputContainer>
+							<Input type="number" value={battle1Input} onChange={e => setBattle1Input(e.target.value)} />
+							ETH
+						</InputContainer>
+					</Top>
+					<Top>
+						<Select onChange={handleBattle2Change}>
+							<option value={battle2.pers1.handle}>
+								{battle2.pers1.handle + " to Win"}
+							</option>
+							<option value={battle2.pers2.handle}>
+								{battle2.pers2.handle + " to Win"}
+							</option>
+						</Select>
+						<InputContainer>
+							<Input type="number" value={battle2Input} onChange={e => setBattle2Input(e.target.value)} />
+							ETH
+						</InputContainer>
+					</Top>
+					<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
+				</VersusContainer>
+			</StyledModal>
 		</Container>
 	)
 }
 
+const Column = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;`
+
+const BetContainer = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+`
+
+const StyledText1 = styled.div`
+	height: 40px;
+  width: 40px;
+	border-radius: 50%;
+  display: flex;
+  align-items: center;
+	justify-content: center;
+	font-family: "Edo";
+	font-weight: normal;
+background-color: #AB1003;
+font-size: 40px;
+border-radius: 50%;
+color: white;
+`
+const StyledText2 = styled.div`
+	height: 40px;
+  width: 40px;
+color: white;
+font-size: 40px;
+border-radius: 50%;
+  display: flex;
+  align-items: center;
+	justify-content: center;
+	font-family: "Edo";
+	font-weight: normal;
+	background-color: #15437F;
+  border-radius: 50%;
+`
 
 const Separator = styled.div`
   width: 80%;
@@ -215,29 +326,20 @@ display: flex;
 width: 100%;
 justify-content: space-evenly;`
 
-const Column = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;`
-
-const BetPlaced = styled.div`
-color: rgb(255, 190, 26);
-font-family: Gilroy;
-font-size: 18px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-`
-
 const Space = styled.div`
 height: 20px;`
 
+const StyledModal = styled.div`
+border-radius: 8px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 100000;
+`
 
 const AmountBet = styled.div`
 font-family: Gilroy;
-font-size: 16px;
+font-size: 18px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
@@ -262,8 +364,7 @@ margin-bottom: 10px;`
 const Bottom = styled.div`
 width: 100%;
 display: flex;
-justify-content: space-between;
-`
+justify-content: space-between;`
 
 const Row = styled.div`
 width: 100%;
@@ -275,33 +376,19 @@ width: 100%;
 display: flex;
 flex-direction: row;
 flex-wrap: nowrap;
-align-items: center;
 margin-bottom: 20px;
 justify-content: space-between;`
 
-const TitleText = styled.div`
-font-family: "Gilroy";
-font-size: 22px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: rgb(255, 190, 26);
-margin-bottom: 10px;
-`
-
 const Text = styled.div`
 font-family: "Gilroy";
-color: rgb(255, 190, 26);
 font-size: 22px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
+color: #ffffff;
 margin-bottom: 5px;
-align-items: center;
 `
 
 const SmallText = styled.div`
@@ -313,8 +400,79 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
-margin-top: 10px;
+margin-bottom: 5px;
 `
+
+const Input = styled.input`
+font-family: "SF Mono Semibold";
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+letter-spacing: normal;
+color: #ffb700;
+text-align: right;
+width: 90%;
+background: none;
+border: none;
+margin-right: 10px;
+:focus{
+	outline: none;
+}`
+
+const InputContainer = styled.div`
+width: 170px;
+border-radius: 8px;
+box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+border: solid 1px rgba(255, 183, 0, 0.5);
+background-color: rgba(255, 255, 255, 0.2);
+font-family: "SF Mono Semibold";
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+letter-spacing: normal;
+color: #ffb700;
+text-align: right;
+display: flex;
+justify-content: flex-end;
+align-items: center;
+padding-right: 10px;
+`
+
+const Select = styled.select`
+	width: 280px;
+  height: 44px;
+  font-family: "Gilroy";
+  font-size: 30px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  padding-left: 8px;
+	font-size: 18px;
+	border-radius: 8px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  border: solid 1px rgba(255, 183, 0, 0.5);
+	background-color: rgba(255, 255, 255, 0.2);
+	padding-right: 20px;
+  option {
+		color: black;
+		display: flex;
+		position: absolute;
+		top: 100%;
+		font-size: 18px;
+    white-space: pre;
+		min-height: 20px;
+		border: solid 1px rgba(255, 183, 0, 0.5);
+		background-color: rgba(255, 255, 255, 0.2) !important;
+		padding: 2px;
+  }
+`;
+
+
 
 const VersusContainer = !isMobile() ? styled.div`
 display: flex;
@@ -334,7 +492,7 @@ background-color: rgba(4,2,43,1);
 padding: 20px;
 ` : styled.div`
 margin: 0 0 40px 0;
-max-width: 95wvw;
+width: 90vw;
 display: flex;
 flex-direction: column;
 font-family: "Gilroy";
@@ -348,7 +506,6 @@ font-family: "Gilroy";
 	padding: 20px;
 	border-radius: 8px;
 	border: solid 2px rgba(255, 183, 0, 0.3);
-	background-color: rgba(4,2,43,1);
-	`
+	background-color: rgba(256,256,256,0.08);`
 
 export default Bet

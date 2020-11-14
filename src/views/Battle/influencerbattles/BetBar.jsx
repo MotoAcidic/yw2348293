@@ -19,7 +19,6 @@ import Schedule from './Schedule'
 import Instructions from "./Instructions";
 import InbetweenCard from "./InbetweenCard";
 import moment from "moment";
-import TotalBets from './BetBar'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -43,121 +42,70 @@ function getServerURI() {
   return "https://yieldwars-api.herokuapp.com";
 }
 
-export interface OverviewData {
-  circSupply?: string;
-  curPrice?: number;
-  nextRebase?: number;
-  targetPrice?: number;
-  totalSupply?: string;
-}
 
-const Battle: React.FC = () => {
+const Battle = ({ battles }) => {
   let [farms] = useFarms()
   const yam = useYam()
   let [warStaked, setWarStaked] = useState({
     warStaked: new BigNumber(0)
   });
   const { account, connect } = useWallet()
-  let [prevDayBattles, setPrevDayBattles] = useState([]);
-  let [battles, setBattles] = useState([])
-  let [schedule, setSchedule] = useState([])
-  let [dailyQuestion, setDailyQuestion] = useState();
 
-  const [
-    {
-      circSupply,
-      curPrice,
-      // nextRebase,
-      targetPrice,
-      totalSupply,
-    },
-    setStats
-  ] = useState<OverviewData>({});
-
-  const fetchStats = useCallback(async () => {
-    const statsData = await getStats(yam);
-    setStats(statsData);
-  }, [yam, setStats]);
-
-  const fetchWarStaked = useCallback(
-    async pools => {
-      const st = await getWarStaked(pools, yam);
-      setWarStaked(st);
-    },
-    [yam, setWarStaked]
-  );
+  let [totalBets, setTotalBets] = useState({ bets1: 0, bets2: 0, bets3: 0, bets4: 0 })
 
   useEffect(() => {
     console.log("using effect");
     if (yam && account && farms && farms[0]) {
-      fetchStats();
+
     }
     if (yam && farms) {
-      console.log(farms);
-      fetchWarStaked(farms);
+
     }
     if (battles.length === 0) {
-      axios.get(`${getServerURI()}/api/pers-battles`).then(res => {
-        console.log("battles", res.data);
-        // setPrevDayBattles(res.data.prevDayBattles);
-        setBattles(res.data.battles)
-        setSchedule(res.data.schedule)
-        // setDailyQuestion(res.data.dailyQuestion);
-      }).catch(err => {
-        console.log(err);
-      })
+
     }
 
   }, [yam, account, farms, farms[0]]);
 
+  console.log(battles);
 
-  const battleFields = () => {
-    console.log(battles);
-
-    if (!battles.length) {
-      return (
-        <>
-          <Title>Loading Battles...</Title>
-          <NextBattle />
-        </>
-      )
-    } else if (battles.length) {
-      return (
-        <>
-          {battles.length === 2 && <PersVersusCard battles={battles} />}
-          {battles.length === 1 && <SinglePersVersusCard battles={battles} />}
-        </>
-      )
-    }
-    return null;
-
-  };
+  if (!battles.length) {
+    return null
+  }
 
   return (
-    <Switch>
-      <StyledCanvas>
-        <BackgroundSection />
-        <ContentContainer>
-          <Page>
-            <Title>Who Will Win?</Title>
-            <TotalBets battles={battles} />
-            {battleFields()}
-            {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
-            {prevDayBattles.length > 0 &&
-              <InbetweenCard battles={prevDayBattles} />
-            }
-            <Pool3 />
-            <Title>How battles work </Title>
-            <Instructions />
-            <Title>Schedule</Title>
-            <Schedule schedule={schedule} />
-            {/* <Title>Step 1: Stake $WAR to enter the arena</Title> */}
-          </Page>
-        </ContentContainer>
-      </StyledCanvas>
-    </Switch>
+    <BetsDisplayContainer>
+      <Item>Current Bets:</Item>
+      <Item>{battles[0].pool1.name} 💰${totalBets.bets1.toLocaleString()}</Item>
+        |
+      <Item>{battles[0].pool1.name} 💰${totalBets.bets2.toLocaleString()}</Item>
+        |
+      <Item>{battles[1].pool1.name} 💰${totalBets.bets3.toLocaleString()}</Item>
+        |
+      <Item>{battles[1].pool1.name} 💰${totalBets.bets4.toLocaleString()}</Item>
+    </BetsDisplayContainer>
   );
 };
+
+const Item = styled.div`
+
+`
+
+const BetsDisplayContainer = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+width: 50%;
+font-family: "Gilroy";
+margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+`
 
 const BigTitle = styled.div`
 font-family: "Gilroy";
@@ -192,8 +140,7 @@ const NextBattle = styled.div`
 
 const Title = styled.div`
 font-family: "Gilroy";
-  font-size: 22px;
-  
+  font-size: 20px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -201,8 +148,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-  margin-bottom: 1vh;
-  margin-top: 1vh;
+  margin-bottom: 2px;
 `;
 
 const BackgroundSection = styled.div`

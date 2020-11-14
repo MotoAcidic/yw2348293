@@ -21,10 +21,11 @@ function isMobile() {
 const TopBar: React.FC = () => {
   return (
     <StyledTopBar>
-      <Notice><Text>
-        ⚔️ 🚨  WAR is an experiment in Degen Gambling. DYOR.<a style={{ color: 'white', margin: "0 4px 0 4px", }} target="_blank"
-          rel="noopener noreferrer" href="https://medium.com/@yieldwars/announcing-yieldwars-2-0-the-next-evolution-of-the-defi-battle-royale-6b1f15755209">Learn More.</a>  🚨⚔️
-          </Text>
+      <Notice>
+        <Text>
+          ⚔️ 🚨  WAR is an experiment in Degen Gambling. DYOR.<a style={{ color: 'white', margin: "0 4px 0 4px", }} target="_blank"
+            rel="noopener noreferrer" href="https://medium.com/@yieldwars/announcing-yieldwars-2-0-the-next-evolution-of-the-defi-battle-royale-6b1f15755209">Learn More.</a>  🚨⚔️
+        </Text>
       </Notice>
 
       {isMobile() ? (
@@ -67,7 +68,7 @@ const Text = !isMobile() ? styled.div`` : styled.div`max-width: 90%;`;
 
 const Notice = !isMobile() ? styled.div`
   width: 100%;
-  height: 30px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;

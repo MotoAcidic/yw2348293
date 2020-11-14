@@ -103,6 +103,7 @@ letter-spacing: normal;
 text-align: center;
 opacity: 0.9;
 cursor: pointer;
+margin-right: 16px;
 &:hover {
   opacity: 1;
 }
@@ -110,8 +111,7 @@ cursor: pointer;
 
 const Leaderboards = styled.div`
 display: flex;
-width: 100px;
-justify-content: space-between;`
+`
 
 const LeaderboardText = styled.div``
 
@@ -213,7 +213,7 @@ max-width: 1200px;
 border-radius: 16px;
 display: flex;
 flex-direction: column;
-margin-bottom: 40px;
+margin-bottom: 80px;
 `
 
 const Title = styled.div`

@@ -61,8 +61,11 @@ const Profile = ({ user, fetchAccount }) => {
       return;
     }
 
-    const signature = await yam.web3.eth.personal.sign(JSON.stringify({
-      address: account
+    const sig = await yam.web3.eth.personal.sign(JSON.stringify({
+      address: account,
+      nickname: newNickname,
+      picture: newPicture,
+      pictureColor: newColor,
     }), account).catch(err => console.log(err))
 
     axios.post(`${getServerURI()}/gov/update-account`, {
@@ -70,7 +73,7 @@ const Profile = ({ user, fetchAccount }) => {
       picture: newPicture,
       pictureColor: newColor,
       nickname: newNickname,
-      sig: signature,
+      sig,
     }).then(res => {
       fetchAccount();
       setEditing(false);

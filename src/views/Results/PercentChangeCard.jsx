@@ -29,15 +29,15 @@ const PriceHistoryCard = ({ farms, startDate, item }) => {
 		winner1 = item[0].pool1.percentChange > item[0].pool2.percentChange ? 1 : 2
 	}
 
-	const [presentVotesModal1] = useModal(<VotesModal battleId={item[0]._id} farms={farms} pool1={pool1} pool2={pool2} winner={winner1}/>);
-	const [presentVotesModal2] = useModal(<VotesModal battleId={item[1] ? item[1]._id : ""} pool1={pool3} pool2={pool4} winner={winner2}/>);
+	const [presentVotesModal1] = useModal(<VotesModal battleId={item[0]._id} farms={farms} pool1={pool1} pool2={pool2} winner={winner1} />);
+	const [presentVotesModal2] = useModal(<VotesModal battleId={item[1] ? item[1]._id : ""} pool1={pool3} pool2={pool4} winner={winner2} />);
 
 	return (
 		<VSContentContainer>
 			<div>{startDate}</div>
 			{item.length === 1 && <Space />}
 			<VersusItem
-			// onClick={presentVotesModal1}
+				onClick={presentVotesModal1}
 			>
 				<VersusCard>
 					<StyledContent>
@@ -68,8 +68,8 @@ const PriceHistoryCard = ({ farms, startDate, item }) => {
 			{item.length === 2 && (
 				<>
 					<Divider />
-					<VersusItem 
-					// onClick={presentVotesModal2}
+					<VersusItem
+						onClick={presentVotesModal2}
 					>
 						<VersusCard>
 							<StyledContent>

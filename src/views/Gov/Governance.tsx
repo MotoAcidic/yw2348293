@@ -12,6 +12,7 @@ import { getStats } from '../Home/utils'
 import TopDisplayContainer from "../../components/TopDisplayContainer";
 import Profile from "./Profile";
 import Leaderboard from "./Leaderboard"
+import Community from "./Community";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -63,9 +64,7 @@ const Governance: React.FC = () => {
             {account ?
 
               <GovContent>
-                <Suggestions>
-                  Suggestions
-              </Suggestions>
+                <Community />
                 <Profile />
               </GovContent>
               :

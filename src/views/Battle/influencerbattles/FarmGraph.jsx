@@ -139,7 +139,7 @@ const FarmGraph = ({ farm }) => {
 			{recentChange >= 0 ?
 				<GreenText>+{recentChange}%</GreenText>
 				:
-				<RedText>{recentChange}%</RedText>
+				<RedText>-{recentChange}%</RedText>
 			}
 			{graphData &&
 				<ChartContainer>

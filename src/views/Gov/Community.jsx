@@ -9,6 +9,7 @@ import useStakedBalance from '../../hooks/useStakedBalance'
 import useFarm from '../../hooks/useFarm'
 import { getDisplayBalance } from '../../utils/formatBalance'
 import ReactPaginate from 'react-paginate';
+import moment from 'moment';
 
 function getServerURI() {
   if (window.location.hostname === "localhost") {
@@ -122,12 +123,19 @@ const Community = () => {
             </DownVote>
           </VoteButtons>
           <SuggestionBody>
+            <SingleTop>
+
+
             <SuggestionVotes>
               votes:
             <ColorVotes style={{ color: votesColor }}>
                 {votesSymbol}{suggestion.totalVotes}
               </ColorVotes>
             </SuggestionVotes>
+            <SuggestionVotes>
+              {moment(suggestion.timestamp).fromNow()}
+            </SuggestionVotes>
+            </SingleTop>
             <SuggestionText>
               {suggestion.message}
             </SuggestionText>
@@ -239,6 +247,11 @@ const Community = () => {
   )
 }
 
+const SingleTop = styled.div`
+width: 100%;
+display: flex;
+justify-content: space-between;`
+
 const Pagination = styled.div`
 display:flex;
 justify-content: flex-end;`
@@ -277,7 +290,12 @@ letter-spacing: normal;
 color: white;
 `
 
-const SuggestionBody = styled.div``
+const SuggestionBody = styled.div`
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+`
 
 const Space = styled.div`
 height: 20px;`

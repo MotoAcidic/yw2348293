@@ -10,6 +10,8 @@ import useFarm from '../../hooks/useFarm'
 import { getDisplayBalance } from '../../utils/formatBalance'
 import ReactPaginate from 'react-paginate';
 import moment from 'moment';
+import useModal from '../../hooks/useModal'
+import RulesModal from "./RulesModal";
 
 function getServerURI() {
   if (window.location.hostname === "localhost") {
@@ -26,6 +28,7 @@ const Community = () => {
   const [newSuggestion, setNewSuggestion] = useState("")
   const [sort, setSort] = useState("new");
   const [userAlreadySuggested, setUserAlreadySuggested] = useState(false);
+	const [presentRulesModal] = useModal(<RulesModal />);
   const { account, connect } = useWallet()
   const yam = useYam()
   const {
@@ -188,7 +191,7 @@ const Community = () => {
     <Side>
       <Title>
         <TitleSide>
-          Community Governance <Icon viewBox="0 0 180 180">
+          Community Governance <Icon onClick={presentRulesModal} viewBox="0 0 180 180">
             <path fill="none" stroke-width="11" d="M9,89a81,81 0 1,1 0,2zm51-14c0-13 1-19 8-26c7-9 18-10 28-8c10,2 22,12 22,26c0,14-11,19-15,22c-3,3-5,6-5,9v22m0,12v16" />
           </Icon>
         </TitleSide>

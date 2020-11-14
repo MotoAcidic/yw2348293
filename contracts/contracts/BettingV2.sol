@@ -1,5 +1,6 @@
 
 pragma solidity 0.5.17;
+pragma experimental ABIEncoderV2;
 
 
 /*
@@ -82,7 +83,7 @@ contract BettingV2 is IRewardDistributionRecipient{
         uint256 endTime;
         uint256 lastClaimTime;
 
-        string[2] choices;
+        string[] choices;
     }
 
     event ETHBetChoice(address indexed user, uint256 amount, string betId, string choice);
@@ -105,9 +106,13 @@ contract BettingV2 is IRewardDistributionRecipient{
         rewardDistribution = _rewardDistribution;    
     }
 
+
     function createBet(string calldata _id, string calldata _desc, uint256 _endTime, uint256 _lastClaimTime, string calldata choice1, string calldata choice2) external onlyRewardDistribution {
 
-        string[2] memory choices = [choice1, choice2];
+        string[] memory choices = new string[](2);
+        choices[0] = choice1;
+        choices[1] = choice2;
+
         BetCreationRequest memory req = BetCreationRequest({
             id: _id,
             endTime: _endTime,
@@ -115,7 +120,7 @@ contract BettingV2 is IRewardDistributionRecipient{
             choices: choices,
             desc: _desc
         });
-        betIds.push(_id);
+
         _createBet(req);
     }
 
@@ -131,6 +136,7 @@ contract BettingV2 is IRewardDistributionRecipient{
             bet.stringChoiceToId[req.choices[i-1]] = i;
             bet.choiceIdToString[i] = req.choices[i-1];
         }
+        betIds.push(bet.id);
     }
 
 
@@ -251,20 +257,38 @@ contract BettingV2 is IRewardDistributionRecipient{
         emit EarningsPaid(betId, msg.sender, ethEarnings);
     }
 
-    /*
-    function listOutstandingRewards(address account) public view returns (string[] memory ids, uint256[] memory  values) {
+    struct OutstandingReward {
+        string betId;
+        uint256 value;
+    }
+
+    function listOutstandingRewards(address account) public view returns (OutstandingReward[] memory) {
+        uint rewardCount = 0;
         for (uint i; i < betIds.length; i++) {
             BetNChoices memory bet = bets[betIds[i]];
             if (bet.isFinal) {
                 uint256 reward = earned(bet.id, account);
                 if (reward > 0) {
-                    ids.push(bet.id);
-                    values.push(reward);
+                    rewardCount++;
                 }
             }
         }
+        OutstandingReward[] memory rewards = new OutstandingReward[](rewardCount);
+        uint r = 0;
+        for (uint i; i < betIds.length; i++) {
+            BetNChoices memory bet = bets[betIds[i]];
+            if (bet.isFinal) {
+                uint256 reward = earned(bet.id, account);
+                if (reward > 0) {
+                    rewards[r] = OutstandingReward(bet.id, reward);
+                    r++;
+                }
+            }
+        }
+
+        return rewards;
     }
-    */
+    
 
     // unused
     function notifyRewardAmount(uint256 reward, uint256 _duration) external { return; }

@@ -8,7 +8,7 @@ import uncheckedIcon from '../../assets/img/unchecked.png'
 
 import useYam from '../../hooks/useYam'
 import { useWallet } from 'use-wallet'
-import DailyQuestion from "./DailyQuestion.jsx";
+import DailyQuestion from "../DailyQuestion.jsx";
 import useFarms from '../../hooks/useFarms'
 import Cookie from 'universal-cookie'
 import axios from 'axios'

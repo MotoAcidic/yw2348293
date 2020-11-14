@@ -7,7 +7,7 @@ export default [
 		bio: `performance artist, musical chairs world champion 2014 & 2015`
 	},
 	{
-		name: 'Gainzy',
+		name: 'CryptoGainz',
 		handle: '@CryptoGainz1',
 		followerCount: '59,000',
 		picture: "https://pbs.twimg.com/profile_images/1248734594104545284/-IrCpNRz_400x400.jpg",

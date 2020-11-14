@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import useFarms from '../../../hooks/useFarms'
-import './swal.css'
+import useFarms from '../../../../hooks/useFarms'
+import '../swal.css'
 import FarmGraph from "./InbetweenFarmGraph";
-import VotingBalance from "./VotingBalance";
+import VotingBalance from "../VotingBalance";
 import CountDown from "./CountDown";
 
 function isMobile() {

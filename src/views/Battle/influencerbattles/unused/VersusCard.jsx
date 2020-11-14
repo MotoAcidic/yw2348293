@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import checkedIcon from '../../../assets/img/checked.png'
-import uncheckedIcon from '../../../assets/img/unchecked.png'
-import useYam from '../../../hooks/useYam'
+import checkedIcon from '../../../../assets/img/checked.png'
+import uncheckedIcon from '../../../../assets/img/unchecked.png'
+import useYam from '../../../../hooks/useYam'
 import { useWallet } from 'use-wallet'
-import useFarms from '../../../hooks/useFarms'
-import Button from '../../../components/Button'
+import useFarms from '../../../../hooks/useFarms'
+import Button from '../../../../components/Button'
 import Cookie from 'universal-cookie'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import './swal.css'
+import '../swal.css'
 import FarmGraph from "./FarmGraph";
-import VotingBalance from "./VotingBalance";
-import DailyQuestion from "./DailyQuestion.jsx";
+import VotingBalance from "../VotingBalance";
+import DailyQuestion from "../DailyQuestion.jsx";
 import CountDown from "./BigCountDown";
 import BetCard from "./BetCard";
 

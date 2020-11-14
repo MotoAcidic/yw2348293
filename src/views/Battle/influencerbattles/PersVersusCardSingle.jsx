@@ -13,9 +13,9 @@ import Cookie from 'universal-cookie'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import Warning from "../../../assets/img/warning@2x.png";
-import BettingCardSingle from "./VersusCardSingle";
+import BettingCardSingle from "./unused/VersusCardSingle";
 import './swal.css'
-import Countdown from "./CountDown";
+import Countdown from "./unused/CountDown";
 import moment from "moment";
 import VotingBalance from "./VotingBalance";
 import personalities from './personalities'

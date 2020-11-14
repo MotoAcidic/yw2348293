@@ -15,7 +15,7 @@ import Cookie from 'universal-cookie'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import personalities from './personalities'
-import BettingCard from "./VersusCard";
+import BettingCard from "./unused/VersusCard";
 import BattleWhite from '../../../assets/img/battlewhite.png'
 import BattleRed from '../../../assets/img/battlered.png'
 import BattleGreen from '../../../assets/img/battlegreen.png'
@@ -602,10 +602,10 @@ height: 40%;
 width: 40%;
 min-width: 130px;
 min-height: 130px;
-  border-radius: 50%;
-	margin-bottom: 20px;
-
+border-radius: 50%;
+margin-bottom: 20px;
 `
+
 const Title = !isMobile() ? styled.div`
 font-family: "Gilroy";
   font-size: 26px;

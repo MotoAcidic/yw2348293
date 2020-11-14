@@ -11,13 +11,6 @@ import Pool3 from "./Pool3";
 import useFarms from "../../../hooks/useFarms";
 import { getWarStaked } from "../../../yamUtils";
 import { getStats } from "./utils";
-import VersusCard from "./VersusCard.jsx";
-import SingleVersusCard from "./VersusCardSingle.jsx";
-import PersVersusCard from "./PersVersusCard.jsx";
-import SinglePersVersusCard from "./PersVersusCardSingle.jsx";
-import Schedule from './Schedule'
-import Instructions from "./Instructions";
-import InbetweenCard from "./InbetweenCard";
 import moment from "moment";
 
 function isMobile() {

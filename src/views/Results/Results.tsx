@@ -5,6 +5,7 @@ import Page from "../../components/Page";
 import Background from '../../assets/img/bg3.svg'
 import S2Battles from './S2Battles'
 import S1Battles from './S1Battles'
+import TwitterWar from './TwitterWar'
 import Bet from "./Bet";
 import TopDisplayContainer from "../../components/TopDisplayContainer";
 
@@ -50,6 +51,8 @@ const Battle: React.FC = () => {
                 <Tab onClick={() => setTab("season2")}>Season 2</Tab>}
               {tab === "season1" ? <ActiveTab>Season 1</ActiveTab> :
                 <Tab onClick={() => setTab("season1")}>Season 1</Tab>}
+              {tab === "twitterwar" ? <ActiveTab>Twitter War</ActiveTab> :
+                <Tab onClick={() => setTab("twitterwar")}>Twitter War</Tab>}
             </Tabs>
             <ResultTop>
               <BorderTopLeft />
@@ -61,6 +64,7 @@ const Battle: React.FC = () => {
 
                 {tab === "season1" && <S1Battles />}
                 {tab === "season2" && <S2Battles />}
+                {tab === "twitterwar" && <TwitterWar />}
                 {tab === "bet" && <Bet />}
 
               </ResultsContents>
@@ -128,7 +132,7 @@ margin-top: -2px;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
-` 
+`
 
 const ResultTop = !isMobile() ? styled.div`
 width: 86vw;
@@ -213,7 +217,7 @@ margin-bottom: -2px;
 ` : styled.div`
 display: flex;
 margin-bottom: -2px;
-` 
+`
 
 const Seperator = !isMobile() ? styled.div`
   width: 1000px;

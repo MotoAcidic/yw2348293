@@ -94,7 +94,7 @@ const Battle: React.FC = () => {
     console.log("using effect");
     if (yam && account && farms && farms[0]) {
       fetchStats();        
-      if (parseInt(cookie.get('displaywinnings')) === battles[0].day - 1) {
+      if (battles[0] && parseInt(cookie.get('displaywinnings')) === battles[0].day - 1) {
         setBetRedeemModal(true)
         cookie.set('displaywinnings', battles[0].day)
       }

@@ -35,7 +35,7 @@ function getServerURI() {
 	return 'https://yieldwars-api.herokuapp.com'
 }
 
-const Bet = ({ battle1, battle2 }) => {
+const Bet = ({ battle1 }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	// const {
@@ -55,21 +55,15 @@ const Bet = ({ battle1, battle2 }) => {
 	// }
 
 	const [contender1, setContender1] = useState(null);
-	const [contender2, setContender2] = useState(null);
 	const [battle1Input, setBattle1Input] = useState(0);
-	const [battle2Input, setBattle2Input] = useState(0);
 	const [disabled, setDisabled] = useState(false)
-	const [farmBets, setFarmBets] = useState({ pot1: 0, pot2: 0, pot3: 0, pot4: 0 });
-	const [farmBalances, setFarmBalances] = useState({ bal1: 0, bal2: 0, bal3: 0, bal4: 0 });
+	const [farmBets, setFarmBets] = useState({ pot1: 0, pot2: 0 });
+	const [farmBalances, setFarmBalances] = useState({ bal1: 0, bal2: 0 });
 	// const stakedBalance = useStakedBalance(contract)
 	// const { onUnstake } = useUnstake(contract)
 
 	const handleBattle1Change = e => {
 		setContender1(e.target.value);
-	}
-
-	const handleBattle2Change = e => {
-		setContender2(e.target.value);
 	}
 
 	// const [onPresentUnstake] = useModal(
@@ -112,10 +106,8 @@ const Bet = ({ battle1, battle2 }) => {
 			if (battle1Input) {
 				const candidate = contender1;
 				// placeElectionWARBet(yam, candidate, warInput, account);
-			} else if (battle2Input) {
-				const candidate = contender2;
-				// placeElectionWARBet(yam, candidate, ethInput, account);
-			} else {
+			}
+			else {
 				Swal.fire("Place a bet for a candidate!");
 			}
 		}
@@ -129,8 +121,7 @@ const Bet = ({ battle1, battle2 }) => {
 						Your Bets
 					</Text>
 					<YourBets>
-						{!farmBalances.bal1 > 0 && !farmBalances.bal2 > 0 &&
-							!farmBalances.bal3 > 0 && !farmBalances.bal4 > 0 ?
+						{!farmBalances.bal1 > 0 && !farmBalances.bal2 > 0 ?
 							<SmallText>none</SmallText>
 							: null
 						}
@@ -158,29 +149,6 @@ const Bet = ({ battle1, battle2 }) => {
 							</Column>
 							: null
 						}
-						{farmBalances.bal3 > 0 ?
-							<Column>
-								<CardIcon src={battle2.pers1.picture} />
-								<Space />
-								<Bets>
-									<AmountBet>
-										{'$ETH: ' + farmBalances.bal3.toLocaleString()}
-									</AmountBet>
-								</Bets>
-							</Column>
-							: null
-						}{farmBalances.bal4 > 0 ?
-							<Column>
-								<CardIcon src={battle2.pers2.picture} />
-								<Space />
-								<Bets>
-									<AmountBet>
-										{'$ETH: ' + farmBalances.bal4.toLocaleString()}
-									</AmountBet>
-								</Bets>
-							</Column>
-							: null
-						}
 					</YourBets>
 					<Space />
 					<Separator />
@@ -203,21 +171,6 @@ const Bet = ({ battle1, battle2 }) => {
 								</AmountBet>
 							</BetDisplay>
 						</BetContainer>
-						<BetContainer>
-							<BetDisplay>
-								<CardIcon src={battle2.pers1.picture} />
-								<AmountBet>
-									{farmBets.pot3.toLocaleString() + " $ETH"}
-								</AmountBet>
-							</BetDisplay>
-							vs
-							<BetDisplay>
-								<CardIcon src={battle2.pers2.picture} />
-								<AmountBet>
-									{farmBets.pot4.toLocaleString() + " $ETH"}
-								</AmountBet>
-							</BetDisplay>
-						</BetContainer>
 					</AllBets>
 					<Space />
 					<Separator />
@@ -235,20 +188,6 @@ const Bet = ({ battle1, battle2 }) => {
 						</Select>
 						<InputContainer>
 							<Input type="number" value={battle1Input} onChange={e => setBattle1Input(e.target.value)} />
-							ETH
-						</InputContainer>
-					</Top>
-					<Top>
-						<Select onChange={handleBattle2Change}>
-							<option value={battle2.pers1.handle}>
-								{battle2.pers1.handle + " to Win"}
-							</option>
-							<option value={battle2.pers2.handle}>
-								{battle2.pers2.handle + " to Win"}
-							</option>
-						</Select>
-						<InputContainer>
-							<Input type="number" value={battle2Input} onChange={e => setBattle2Input(e.target.value)} />
 							ETH
 						</InputContainer>
 					</Top>

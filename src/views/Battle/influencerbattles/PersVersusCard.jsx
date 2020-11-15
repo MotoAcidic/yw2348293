@@ -20,7 +20,7 @@ import BattleWhite from '../../../assets/img/battlewhite.png'
 import BattleRed from '../../../assets/img/battlered.png'
 import BattleGreen from '../../../assets/img/battlegreen.png'
 import BattleBlue from '../../../assets/img/battleblue.png'
-import Hammer from '../../../assets/img/hammer.png'
+import MetalButton from '../../../assets/img/battlebutton.png'
 import Lightning from '../../../assets/img/lightning.png'
 import useFarm from '../../../hooks/useFarm'
 import useStakedBalance from '../../../hooks/useStakedBalance'
@@ -292,7 +292,7 @@ const Versus = ({ battles }) => {
 				</VersusContainer>
 				<VerticalSeperator />
 				<BattleButtonWrapper>
-					<GraphicContainer src={Hammer} />
+					<GraphicContainer src={MetalButton} />
 					<BattleButtonContainer>
 						{!voted ?
 							<BattleButton onClick={castVote} >
@@ -455,7 +455,7 @@ const BattleButtonContainer = styled.div`
 position: absolute;
 top: 39%;
 left: 50%;
-transform: translateX(-50%) translateY(-7%) scale(.9);
+transform: translateX(-50%) translateY(-40%);
 pointer-events: all;
 `
 
@@ -472,12 +472,16 @@ font-family: "Edo";
 `
 
 const GraphicContainer = styled.img`
-width: 16vw;
+// width: 16vw;
+// min-width: 230px;
+// height: 71vh;
+// min-height: 550px;
+width: 12vw;
 min-width: 230px;
-height: 71vh;
-min-height: 550px;
+height: 15vh;
+// min-height: 550px;
 pointer-events: none;
-filter: grayscale(.8);
+// filter: grayscale(.8);
 `
 
 const RainbowShadow = styled.div`
@@ -583,7 +587,7 @@ const Seperator = !isMobile() ? styled.div`
 const BattleContainer = styled.div`
 display: flex;
 flex-direction: row;
-// align-items: center;
+align-items: center;
 width: 100%;
 margin-top: 20px;
 min-width: 1300px;

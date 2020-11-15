@@ -44,7 +44,7 @@ const Battle = ({ battles }) => {
   });
   const { account, connect } = useWallet()
 
-  let [totalBets, setTotalBets] = useState({ bets1: 0, bets2: 0, bets3: 0, bets4: 0 })
+  let [totalBets, setTotalBets] = useState({ bets1: 0, bets2: 0 })
 
   useEffect(() => {
     console.log("using effect");
@@ -71,11 +71,7 @@ const Battle = ({ battles }) => {
       <Item>Current Bets:</Item>
       <Item>{battles[0].pool1.name} 💰${totalBets.bets1.toLocaleString()}</Item>
         |
-      <Item>{battles[0].pool2.name} 💰${totalBets.bets2.toLocaleString()}</Item>
-        |
-      <Item>{battles[1].pool1.name} 💰${totalBets.bets3.toLocaleString()}</Item>
-        |
-      <Item>{battles[1].pool2.name} 💰${totalBets.bets4.toLocaleString()}</Item>
+      <Item>{battles[0].pool2.name} 💰${totalBets.bets2.toLocaleString()}</Item>      
     </BetsDisplayContainer>
   );
 };
@@ -88,7 +84,7 @@ const BetsDisplayContainer = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
-width: 50%;
+width: 30%;
 font-family: "Gilroy";
 margin-bottom: 5px;
   font-size: 14px;

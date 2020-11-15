@@ -94,11 +94,8 @@ const Bet = () => {
 	}
 
 	let battle1 = battle[0]
-	let battle2 = battle[1]
 	let winner1 = battle1.pool1.totalVotes > battle1.pool2.totalVotes ? battle1.pool1 : battle1.pool2
-	let winner2 = battle2.pool1.totalVotes > battle2.pool2.totalVotes ? battle2.pool1 : battle2.pool2
 	let correctVote1 = winner1.votes.find(vote => vote.address === account)
-	let correctVote2 = winner2.votes.find(vote => vote.address === account)
 
 	return (
 		<Container size="sm">
@@ -109,12 +106,6 @@ const Bet = () => {
 					</SubTitle>
 					<Text>
 						The Winner is {winner1.name}!!!
-					</Text>
-					<SubTitle>
-						{correctVote2 ? "💰 YOU WON! 💰" : "😞 YOU LOST! 😞"}
-					</SubTitle>
-					<Text>
-						The Winner is {winner2.name}!!!
 					</Text>
 					<Space />
 					<Separator />

@@ -160,7 +160,7 @@ const Battle: React.FC = () => {
               <InbetweenCard battles={prevDayBattles} />
             }
             <Pool3 />
-            <Title>How battles work </Title>
+            <Title>Information</Title>
             <Instructions />
             <Title>Schedule</Title>
             <Schedule schedule={schedule} />
@@ -246,7 +246,7 @@ height: 30px;`
 
 const Title = styled.div`
 font-family: "Gilroy";
-  font-size: 22px;
+  font-size: 26px;
   
   font-weight: bold;
   font-stretch: normal;
@@ -255,8 +255,8 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-  margin-bottom: 1vh;
-  margin-top: 1vh;
+  margin-bottom: 20px;
+  margin-top: 20px;
 `;
 
 const BackgroundSection = styled.div`

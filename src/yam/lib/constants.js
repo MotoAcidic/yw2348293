@@ -82,15 +82,15 @@ if (chainId === 1) {
     battlepool: "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde",
 
     war: "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde",
-
     UNIRouter: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-
     Pricing: "0xA056b5a1fC97ea86D949cdB67Be4950e29942421",
 
     ElectionBetting: "0xF0037015bd137284f65B3842dd538ae204E32f2C",
     APBetting: "0x163e5F71C807fd90F9dde9EA513B2c915d53CCB8",
     Everipedia: "0x0792724900B551d200D954a5Ed709d9514d73A9F",
-    fwar: "0x5896e1c50e4d2d315052aad8383d7104c3891cd6"
+    fwar: "0x5896e1c50e4d2d315052aad8383d7104c3891cd6",
+
+    BetV2: "0x63B2ef3Eb597bBaFC9DD6a6FDb16df98a8aF576d",
   }
 } else { // 42 = kovan
   addressMap = {

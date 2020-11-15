@@ -70,7 +70,7 @@ const PopularityCard = ({ farms, startDate, item }) => {
 				<>
 					<Divider />
 					<VersusItem
-					// onClick={presentVotesModal2}
+						//	onClick={presentVotesModal2}
 					>
 						<VersusCard>
 							<StyledContent>

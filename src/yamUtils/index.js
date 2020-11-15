@@ -671,7 +671,9 @@ export const getYamContract = (yam) => {
   return yam.contracts.yam;
 }
 
-// election methods
+/* ======================================
+            election methods
+====================================== */
 
 export const getCurrentBets = async (yam) => {
   const precision = new BigNumber(10).pow(18);
@@ -773,7 +775,9 @@ export const getLiveElectionResults = async (yam, states) => {
   return states
 }
 
-// AP methods
+/* ======================================
+            AP BET methods
+====================================== */
 export const getCurrentBetsAP = async (yam) => {
   const precision = new BigNumber(10).pow(18);
 
@@ -860,4 +864,79 @@ export const TVL_AP = async (yam, account) => {
   const choice2Total = choice2Eth + choice2War
   
   return { choice1Total, choice2Total }
+}
+
+/* ======================================
+            bet v2 methods
+====================================== */
+export const getBetsTotal = async (yam, betId) => {
+  // const precision = new BigNumber(10).pow(18);
+
+  // const trumpETHPot = new BigNumber(await yam.contracts.election_betting.methods.trumpETHPot().call()) / precision;
+  // const bidenETHPot = new BigNumber(await yam.contracts.election_betting.methods.bidenETHPot().call()) / precision;
+  // const trumpWARPot = new BigNumber(await yam.contracts.election_betting.methods.trumpWARPot().call()) / precision;
+  // const bidenWARPot = new BigNumber(await yam.contracts.election_betting.methods.bidenWARPot().call()) / precision;
+
+  // return ({ trumpETHPot, bidenETHPot, trumpWARPot, bidenWARPot });
+}
+
+export const getBetsUser = async (yam, account, betId) => {
+  // if (yam.defaultProvider) {
+  //   return ({ trumpETHBal: 0, bidenETHBal: 0, trumpWARBal: 0, bidenWARBal: 0 });
+  // }
+  // const precision = new BigNumber(10).pow(18);
+
+  // const trumpETHBal = new BigNumber(await yam.contracts.election_betting.methods.trumpETHBet(account).call()) / precision;
+  // const bidenETHBal = new BigNumber(await yam.contracts.election_betting.methods.bidenETHBet(account).call()) / precision;
+  // const trumpWARBal = new BigNumber(await yam.contracts.election_betting.methods.trumpWARBet(account).call()) / precision;
+  // const bidenWARBal = new BigNumber(await yam.contracts.election_betting.methods.bidenWARBet(account).call()) / precision;
+
+
+  // return ({ trumpETHBal, bidenETHBal, trumpWARBal, bidenWARBal });
+}
+
+export const placeETHBet = async (yam, candidate, amount, account) => {
+  // console.log("eth bet: ", candidate, amount, account);
+  // const precision = new BigNumber(10).pow(18);
+
+  // let p = await yam.contracts.election_betting.methods.ETHBet(candidate)
+  //   .send({ from: account, value: new BigNumber(amount).times(precision).toString(), gas: 200000 });
+  // return (p);
+}
+
+export const getBetContracts = (yam) => {
+  // if (!yam || !yam.contracts) {
+  //   return null
+  // }
+  // const election = yam.contracts.election_betting
+  // return election
+}
+
+export const getBetFinished = async (yam) => {
+//   const electionFinished = await yam.contracts.election_betting.methods.winner().call();
+//   return (electionFinished);
+}
+
+export const getBetRewards = async (yam, account) => {
+  // let p = await yam.contracts.election_betting.methods.getRewards().send({ from: account, gas: 200000 })
+  //   .on('transactionHash', tx => {
+  //     console.log("get election rewards", tx)
+  //     return tx.transactionHash
+  //   })
+  // return (p);
+}
+
+export const betTVL = async (yam, account) => {
+  const ethPrice = await getETHPrice(yam)
+  const curPrice = await getCurrentPrice(yam)
+
+  // const currentBets = await getCurrentBets(yam)
+  // const trumpEth = ethPrice * currentBets.trumpETHPot
+  // const bidenEth = ethPrice * currentBets.bidenETHPot
+  // const trumpWar = curPrice * currentBets.trumpWARPot
+  // const bidenWar = curPrice * currentBets.bidenWARPot
+  // const trumpTotal = trumpEth + trumpWar
+  // const bidenTotal = bidenEth + bidenWar
+  
+  // return { trumpTotal, bidenTotal }
 }

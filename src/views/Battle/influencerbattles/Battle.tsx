@@ -151,7 +151,7 @@ const Battle: React.FC = () => {
         <ContentContainer>
           <Page>
             <Title>Who Will Win?</Title>
-            <TotalBets battles={battles} />
+            {/* <TotalBets battles={battles} /> */}
             {battleFields()}
             <Yesterday onClick={() => setBetRedeemModal(true)}>Show Yesterdays Result</Yesterday>
             <SmallSpace />

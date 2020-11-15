@@ -89,7 +89,7 @@ const Versus = ({ battles }) => {
 				cookie.set(battles[0]._id, g)
 				setChecked1(g)
 				return
-			}, 500);
+			}, 800);
 		}
 		else {
 			cookie.set(battles[0]._id, g)
@@ -744,7 +744,7 @@ width: 60%;
 height: 60vh;
 min-height: 600px;
 margin-top: 15px;
-margin-bottom: 40px;
+margin-bottom: 20px;
 min-width: 800px;
 display: flex;
 flex-direction: row;

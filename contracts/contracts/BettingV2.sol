@@ -132,6 +132,7 @@ contract BettingV2 is IRewardDistributionRecipient{
     function _createBet(BetCreationRequest memory req) internal {
         BetNChoices storage bet = bets[req.id];
         require(keccak256(bytes(bet.id)) == keccak256(bytes("")), "Bet already exists");
+        require(req.lastClaimTime > req.endTime, "lastClaimTime must be greater than endTime");
 
         bet.id = req.id;
         bet.endTime = req.endTime;

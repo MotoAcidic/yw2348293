@@ -1,8 +1,11 @@
-import React, { useMemo } from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import { useWallet } from 'use-wallet'
 import Button from '../../Button'
 import ReactGA from 'react-ga';
+import WalletProviderModal from '../../WalletProviderModal'
+import useModal from '../../../hooks/useModal'
+
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -15,8 +18,20 @@ function isMobile() {
 interface AccountButtonProps { }
 
 const AccountButton: React.FC<AccountButtonProps> = (props) => {
+  const [onPresentWalletProviderModal] = useModal(
+    <WalletProviderModal />
+  )
 
   const { account, connect } = useWallet()
+
+  const handleUnlockClick = useCallback(() => {
+    if (isMobile()) {
+      connect("walletconnect")
+    } else {
+      onPresentWalletProviderModal()
+    }
+  }, [onPresentWalletProviderModal, connect])
+
 
   const trackingId = "G-2QRDRMRJF7";
   if (account) {
@@ -34,7 +49,7 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
       {!account ?
 
         <Button
-          onClick={() => connect('injected')}
+          onClick={handleUnlockClick}
           size="lg"
           text="Unlock Wallet"
           disabled={false}

@@ -197,6 +197,13 @@ contract BettingV2 is IRewardDistributionRecipient{
         }
     }
 
+    function updateAddresses(address payable _uniswapAddress, address payable _yieldwarsAddress) external onlyRewardDistribution {
+        require(_uniswapAddress != address(0));
+        require(_yieldwarsAddress != address(0));
+        uniswapAddress = _uniswapAddress;
+        yieldwarsAddress = _yieldwarsAddress;
+    }
+
     function _safeTransfer(address payable to, uint256 amount) internal {
         uint256 balance;
         balance = address(this).balance;

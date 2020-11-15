@@ -220,7 +220,6 @@ const Versus = ({ battles }) => {
 	}
 
 	return (
-		<>
 		<Container>
 			{/* <BattleContainer> */}
 			<VersusContainer>
@@ -317,13 +316,6 @@ const Versus = ({ battles }) => {
 				</Modal>
 			</div> */}
 		</Container>
-
-			<TotalVotesSection>
-				{voted && 'Come back tomorrow and claim your victory!'}
-				{!voted && (account ? `You currently have ${getDisplayBalance(stakedBalance)} votes available for BATTLE and you may BET with ETH.` : 'Connect wallet to see available votes')}
-			</TotalVotesSection>
-			<SmallSpace />
-			</>
 	)
 }
 
@@ -331,6 +323,7 @@ const Container = styled.div`
 display: flex;
 width: 100%;
 justify-content: space-evenly;
+align-items: center;
 `
 
 

@@ -23,7 +23,7 @@ const TopBar: React.FC = () => {
     <StyledTopBar>
       <Notice>
         <Text>
-          ⚔️ 🚨  WAR is an experiment in Degen Gambling. DYOR.<a style={{ color: 'white', margin: "0 4px 0 4px", }} target="_blank"
+          ⚔️ 🚨  WAR is an experiment in Degen Gambling. DYOR and use at your own risk.<a style={{ color: 'white', margin: "0 4px 0 4px", }} target="_blank"
             rel="noopener noreferrer" href="https://medium.com/@yieldwars/announcing-yieldwars-2-0-the-next-evolution-of-the-defi-battle-royale-6b1f15755209">Learn More.</a>  🚨⚔️
         </Text>
       </Notice>
@@ -39,6 +39,7 @@ const TopBar: React.FC = () => {
               display: 'flex',
               justifyContent: 'flex-end'
             }}>
+                <AccountButton />
             </div>
           </StyledTopBarInner >
           <Nav />

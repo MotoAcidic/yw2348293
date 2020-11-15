@@ -16,6 +16,8 @@ import ElectionBettingJson from '../clean_build/contracts/ElectionBetting.json';
 import APBettingJson from '../clean_build/contracts/Betting2Choice.json';
 import EveripediaJson from '../clean_build/contracts/Everipedia.json'
 
+import BetV2Json from "../clean_build/contracts/BettingV2.json";
+
 import PricingJson from '../clean_build/contracts/Pricing.json';
 
 export class Contracts {
@@ -46,6 +48,8 @@ export class Contracts {
     this.ap_betting = new this.web3.eth.Contract(APBettingJson.abi);
     this.everipedia = new this.web3.eth.Contract(EveripediaJson.abi);
     this.fwar = new this.web3.eth.Contract(ERC20Json.abi);
+
+    this.betting_v2 = new this.web3.eth.Contract(BetV2Json.abi);
 
     //s2
     this.send_token = new this.web3.eth.Contract(ERC20Json.abi);
@@ -119,6 +123,7 @@ export class Contracts {
     // this.ap_betting.setProvider(provider);
     this.everipedia.setProvider(provider);
     this.fwar.setProvider(provider);
+    this.betting_v2.setProvider(provider);
     const contracts = [
       { contract: this.war, json: WARJson },
       //s2
@@ -215,6 +220,9 @@ export class Contracts {
     this.pricing.options.address = addressMap["Pricing"];
     this.weth_token.options.address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
     this.election_betting.options.address = addressMap["ElectionBetting"];
+    
+    // this.betting_v2.options.address = addressMap["BetV2"];
+
     this.ap_betting.options.address = addressMap["APBetting"];
     this.everipedia.options.address = addressMap["Everipedia"];
     this.fwar.options.address = addressMap["fwar"];
@@ -284,6 +292,7 @@ export class Contracts {
     // this.ap_betting.options.from = account;
     this.everipedia.options.from = account;
     this.fwar.options.from = account;
+    this.betting_v2.options.from = account;
   }
 
   async callContractFunction(

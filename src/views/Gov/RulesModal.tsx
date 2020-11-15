@@ -11,25 +11,22 @@ const BetRulesModal: React.FC<ModalProps> = ({ onDismiss }) => {
   return (
     <Modalmd>
       <Image src={logo} alt="logo"/>    
-      <ModalTitle text="Community Governance" />
+      <Space/>
+      <ModalTitle text="Help suggest what we should battle over next!" />
       <ModalSpacer>
         <Label />
         <ModalContent>
-          1. You must have $WAR staked to participate in community governance. The more $WAR you have staked, the more voting power you weild.
+          You must have $WAR staked to participate in community governance. The more $WAR you have staked, the more voting power you weild.
           </ModalContent>
         <ModalContent>
-          2. 
-          </ModalContent>
-        <ModalContent>
-          3.
-          </ModalContent>
-        <ModalContent>
-4. 
+          You can make one suggestion every 24 hours.
           </ModalContent>
       </ModalSpacer>
     </Modalmd>
   )
 }
+
+const Space = styled.div`height: 30px;`
 
 const Image = styled.img`
 height: 80px;
@@ -41,6 +38,7 @@ font-family: Gilroy;
 font-size: 18px;
 font-weight: bold;
 font-stretch: normal;
+text-align: center;
 font-style: normal;
 line-height: 1.5;
 letter-spacing: normal;

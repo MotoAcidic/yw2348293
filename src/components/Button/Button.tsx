@@ -10,9 +10,10 @@ interface ButtonProps {
   onClick?: () => void,
   size?: 'sm' | 'md' | 'lg' | 'xlg',
   text?: string,
+  textColor?: string,
   to?: string,
   variant?: 'default' | 'secondary' | 'tertiary'
-}
+} 
 
 const Button: React.FC<ButtonProps> = ({
   children,
@@ -21,6 +22,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   size,
   text,
+  textColor,
   to,
   variant,
 }) => {
@@ -85,6 +87,7 @@ const Button: React.FC<ButtonProps> = ({
       padding={buttonPadding}
       size={buttonSize}
       height={buttonHeight}
+      textColor={textColor ? textColor : "white" }
     >
       {children}
       {ButtonChild}
@@ -99,6 +102,7 @@ interface StyledButtonProps {
   padding: number,
   size: number,
   height: number,
+  textColor: string,
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
@@ -125,7 +129,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   font-style: normal;
   line-height: 1;
   letter-spacing: normal;
-  color: ${props => !props.disabled ? "white" : "#cccccc"};
+  color: ${props => !props.disabled ? props.textColor : "#cccccc"};
   transition: all .1s linear;
   &:hover {
   background-color: rgba(256, 256, 256, 0.07);

@@ -33,7 +33,7 @@ export interface OverviewData {
 }
 
 const Battle: React.FC = () => {
-  const [tab, setTab] = useState("bet");
+  const [tab, setTab] = useState("twitterwar");
 
   return (
     <Switch>
@@ -45,14 +45,14 @@ const Battle: React.FC = () => {
             <Tabs>
               {/* {tab === "influencer" ? <ActiveTab>influencer</ActiveTab> :
                 <Tab onClick={() => setTab("influencer")}>influencer</Tab>} */}
-              {tab === "bet" ? <ActiveTab>Bet</ActiveTab> :
-                <Tab onClick={() => setTab("bet")}>Bet</Tab>}
+              {tab === "twitterwar" ? <ActiveTab>Twitter War</ActiveTab> :
+                <Tab onClick={() => setTab("twitterwar")}>Twitter War</Tab>}
+              {tab === "election" ? <ActiveTab>Election</ActiveTab> :
+                <Tab onClick={() => setTab("election")}>Election</Tab>}
               {tab === "season2" ? <ActiveTab>Season 2</ActiveTab> :
                 <Tab onClick={() => setTab("season2")}>Season 2</Tab>}
               {tab === "season1" ? <ActiveTab>Season 1</ActiveTab> :
                 <Tab onClick={() => setTab("season1")}>Season 1</Tab>}
-              {tab === "twitterwar" ? <ActiveTab>Twitter War</ActiveTab> :
-                <Tab onClick={() => setTab("twitterwar")}>Twitter War</Tab>}
             </Tabs>
             <ResultTop>
               <BorderTopLeft />
@@ -62,10 +62,10 @@ const Battle: React.FC = () => {
               <BorderLeft />
               <ResultsContents>
 
-                {tab === "season1" && <S1Battles />}
-                {tab === "season2" && <S2Battles />}
                 {tab === "twitterwar" && <TwitterWar />}
-                {tab === "bet" && <Bet />}
+                {tab === "election" && <Bet />}
+                {tab === "season2" && <S2Battles />}
+                {tab === "season1" && <S1Battles />}
 
               </ResultsContents>
               <BorderRight />
@@ -83,24 +83,24 @@ flex-direction: column;
 align-items: center;`
 
 const BorderTopRight = !isMobile() ? styled.div`
-// width: calc(43vw - 303px);
-width: calc(43vw - 227px);
+width: calc(43vw - 303px);
+// width: calc(43vw - 227px);
 border-top: 1px solid white;
 border-radius: 0 12px 0 0;
 `: styled.div`
-// width: calc(43vw - 303px);
-width: calc(47.5vw - 115px);
+width: calc(43vw - 303px);
+// width: calc(47.5vw - 115px);
 border-top: 1px solid white;
 border-radius: 0 12px 0 0;`
 
 const BorderTopLeft = !isMobile() ? styled.div`
-// width: calc(43vw - 303px);
-width: calc(43vw - 227px);
+width: calc(43vw - 303px);
+// width: calc(43vw - 227px);
 border-top: 1px solid white;
 border-radius: 12px 0 0 0;
 ` : styled.div`
-// width: calc(43vw - 303px);
-width: calc(47.5vw - 115px);
+width: calc(43vw - 303px);
+// width: calc(47.5vw - 115px);
 border-top: 1px solid white;
 border-radius: 12px 0 0 0;
 `

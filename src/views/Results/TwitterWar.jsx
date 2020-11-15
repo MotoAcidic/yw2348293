@@ -4,7 +4,7 @@ import useFarms from '../../hooks/useFarms'
 import './swal.css'
 import moment from 'moment';
 import PercentChangeCard from './PercentChangeCard';
-import PopularityCard from "./PopularityCard";
+import PopularityCard from "./PersPopularityCard";
 import axios from "axios";
 import loading from "../../assets/img/loading.gif";
 import personalities from '../Battle/influencerbattles/personalities'

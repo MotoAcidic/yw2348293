@@ -375,8 +375,8 @@ const Versus = ({ battles }) => {
 				{voted && 'Come back tomorrow and claim your victory!'}
 				{!voted && (account ? `You currently have ${getDisplayBalance(stakedBalance)} votes available for BATTLE and you may BET with ETH.` : 'Connect wallet to see available votes')}
 			</TotalVotesSection>
-			<Space />
-			<div style={betModal ? { display: 'block' } : { display: 'none' }}>
+			<SmallSpace />
+			<div style={betModal ? { display: 'block' } : { display: 'none', height: '0px' }}>
 				<Modal onClick={() => setBetModal(false)}>
 					<ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
 						{yam && <PersVersusBet
@@ -821,6 +821,9 @@ font-family: "Gilroy";
 
 const Space = styled.div`
 height: 80px;`
+
+const SmallSpace = styled.div`
+height: 30px;`
 
 const VersusContainer = !isMobile() ? styled.div`
 width: 40vw;

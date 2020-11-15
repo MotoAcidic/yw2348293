@@ -18,6 +18,10 @@ import Instructions from "./Instructions";
 import InbetweenCard from "./unused/InbetweenCard";
 import moment from "moment";
 import TotalBets from './BetBar'
+import RedeemBetsModal from './RedeemBetsModal'
+import Cookies from 'universal-cookie'
+
+const cookie = new Cookies()
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -60,6 +64,7 @@ const Battle: React.FC = () => {
   let [battles, setBattles] = useState([])
   let [schedule, setSchedule] = useState([])
   let [dailyQuestion, setDailyQuestion] = useState();
+  const [betRedeemModal, setBetRedeemModal] = useState(false)
 
   const [
     {
@@ -88,7 +93,11 @@ const Battle: React.FC = () => {
   useEffect(() => {
     console.log("using effect");
     if (yam && account && farms && farms[0]) {
-      fetchStats();
+      fetchStats();        
+      if (parseInt(cookie.get('displaywinnings')) === battles[0].day - 1) {
+        setBetRedeemModal(true)
+        cookie.set('displaywinnings', battles[0].day)
+      }
     }
     if (yam && farms) {
       console.log(farms);
@@ -100,13 +109,17 @@ const Battle: React.FC = () => {
         // setPrevDayBattles(res.data.prevDayBattles);
         setBattles(res.data.battles)
         setSchedule(res.data.schedule)
+
         // setDailyQuestion(res.data.dailyQuestion);
       }).catch(err => {
         console.log(err);
       })
     }
-
   }, [yam, account, farms, farms[0]]);
+
+  const stopProp = (e) => {
+		e.stopPropagation()
+	}
 
 
   const battleFields = () => {
@@ -140,6 +153,8 @@ const Battle: React.FC = () => {
             <Title>Who Will Win?</Title>
             <TotalBets battles={battles} />
             {battleFields()}
+            <Yesterday onClick={() => setBetRedeemModal(true)}>Show Yesterdays Result</Yesterday>
+            <SmallSpace />
             {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
             {prevDayBattles.length > 0 &&
               <InbetweenCard battles={prevDayBattles} />
@@ -149,13 +164,51 @@ const Battle: React.FC = () => {
             <Instructions />
             <Title>Schedule</Title>
             <Schedule schedule={schedule} />
-            {/* <Title>Step 1: Stake $WAR to enter the arena</Title> */}
+            <div style={betRedeemModal ? { display: 'block' } : { display: 'none' }}>
+              <Modal onClick={() => setBetRedeemModal(false)}>
+                <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
+                  {yam && <RedeemBetsModal />}
+                </ModalBlock>
+              </Modal>
+            </div>
           </Page>
         </ContentContainer>
       </StyledCanvas>
     </Switch>
   );
 };
+
+const Modal = styled.div`
+border-radius: 8px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100000;
+  background-color: rgba(0, 0, 0, 0.2);
+  top: 0px;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+`
+
+const Yesterday = styled.div`
+font-family: "Gilroy";
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: underline
+`
+
+const ModalBlock = styled.div`
+width: 534px;
+height: 0px;
+margin-top: 23vh;
+`
 
 const BigTitle = styled.div`
 font-family: "Gilroy";
@@ -187,6 +240,9 @@ const NextBattle = styled.div`
   font-family: "Gilroy";
   color: white;
 `
+
+const SmallSpace = styled.div`
+height: 30px;`
 
 const Title = styled.div`
 font-family: "Gilroy";

@@ -38,21 +38,21 @@ function getServerURI() {
 const Bet = ({ battle1, battle2 }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
-	const {
-		contract,
-		depositToken,
-		depositTokenAddress,
-		earnToken,
-		name,
-		icon,
-	} = useFarm('BATTLEPOOL') || {
-		contract: null,
-		depositToken: '',
-		depositTokenAddress: '',
-		earnToken: '',
-		name: '',
-		icon: ''
-	}
+	// const {
+	// 	contract,
+	// 	depositToken,
+	// 	depositTokenAddress,
+	// 	earnToken,
+	// 	name,
+	// 	icon,
+	// } = useFarm('BATTLEPOOL') || {
+	// 	contract: null,
+	// 	depositToken: '',
+	// 	depositTokenAddress: '',
+	// 	earnToken: '',
+	// 	name: '',
+	// 	icon: ''
+	// }
 
 	const [contender1, setContender1] = useState(null);
 	const [contender2, setContender2] = useState(null);
@@ -61,8 +61,8 @@ const Bet = ({ battle1, battle2 }) => {
 	const [disabled, setDisabled] = useState(false)
 	const [farmBets, setFarmBets] = useState({ pot1: 0, pot2: 0, pot3: 0, pot4: 0 });
 	const [farmBalances, setFarmBalances] = useState({ bal1: 0, bal2: 0, bal3: 0, bal4: 0 });
-	const stakedBalance = useStakedBalance(contract)
-	const { onUnstake } = useUnstake(contract)
+	// const stakedBalance = useStakedBalance(contract)
+	// const { onUnstake } = useUnstake(contract)
 
 	const handleBattle1Change = e => {
 		setContender1(e.target.value);
@@ -72,20 +72,20 @@ const Bet = ({ battle1, battle2 }) => {
 		setContender2(e.target.value);
 	}
 
-	const [onPresentUnstake] = useModal(
-		<UnstakeModal
-			max={stakedBalance}
-			onConfirm={onUnstake}
-			tokenName={"WAR"}
-		/>
-	)
+	// const [onPresentUnstake] = useModal(
+	// 	<UnstakeModal
+	// 		max={stakedBalance}
+	// 		onConfirm={onUnstake}
+	// 		tokenName={"WAR"}
+	// 	/>
+	// )
 
-	const claimAndUnstake = () => {
-		console.log(contract);
-		console.log(account);
-		harvest(contract, account);
-		onPresentUnstake()
-	}
+	// const claimAndUnstake = () => {
+	// 	console.log(contract);
+	// 	console.log(account);
+	// 	harvest(contract, account);
+	// 	onPresentUnstake()
+	// }
 
 	useEffect(() => {
 		const getBets = async () => {

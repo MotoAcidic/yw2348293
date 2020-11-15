@@ -129,6 +129,7 @@ if (chainId === 1) {
     war: "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde",
 
     UNIRouter: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+    InfluencerBetting: "0x12FDE0Dce9d827448b86Dc96Fb7beF4F3990e8bB",
 
     Pricing: "0xD61BF18a0A2747642B8E015EbA1545810f4B9cA1", // kovan
   }

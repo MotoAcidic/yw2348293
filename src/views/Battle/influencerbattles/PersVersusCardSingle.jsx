@@ -85,9 +85,16 @@ const Versus = ({ battles }) => {
 	const pick1 = (g) => {
 		if (!account) {
 			connect('injected')
+			setTimeout(() => {
+				cookie.set(battles[0]._id, g)
+				setChecked1(g)
+				return
+			}, 500);
 		}
-		cookie.set(battles[0]._id, g)
-		setChecked1(g)
+		else {
+			cookie.set(battles[0]._id, g)
+			setChecked1(g)
+		}
 	}
 
 	const castVote = async () => {
@@ -331,6 +338,7 @@ const Container = styled.div`
 display: flex;
 width: 100%;
 justify-content: space-evenly;
+align-items: center;
 `
 
 

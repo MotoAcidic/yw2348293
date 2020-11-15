@@ -151,7 +151,7 @@ const Bet = ({ battle1 }) => {
 					<Space />
 					<Separator />
 					<Text>
-						Total Bets
+						Current Bets
 					</Text>
 						<BetContainer>
 							<BetDisplay>
@@ -378,12 +378,11 @@ const Select = styled.select`
   }
 `;
 
-
-
 const VersusContainer = !isMobile() ? styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
+justify-content: space-evenly;
 font-size: 30px;
 font-family: "Gilroy";
 font-weight: bold;
@@ -396,8 +395,9 @@ border-radius: 8px;
 border: solid 2px rgba(255, 183, 0, 0.3);
 background-color: rgba(4,2,43,1);
 padding: 20px;
-height: fit-content;
+min-height: 45vh;
 width: 25%;
+margin-bottom: 60px;
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;

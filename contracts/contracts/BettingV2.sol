@@ -53,6 +53,9 @@ contract BettingV2 is IRewardDistributionRecipient{
     struct BetChoice {
         uint32 choiceId;
         uint256 value;
+        bool isClaimed;
+        uint256 ethEarnings;
+        uint256 timestamp;
     }
 
     struct BetNChoices {
@@ -69,12 +72,14 @@ contract BettingV2 is IRewardDistributionRecipient{
         uint32  winner;
 
         mapping(address => BetChoice)  bets;
+        address[] betters;
         mapping(uint32 => uint256)  pots;
 
         mapping(string => uint32)  stringChoiceToId;
         mapping(uint32 => string)  choiceIdToString;
 
         uint256 totalPot;
+        string[] possibleChoices;
     }
 
     struct BetCreationRequest {
@@ -136,6 +141,7 @@ contract BettingV2 is IRewardDistributionRecipient{
             bet.stringChoiceToId[req.choices[i-1]] = i;
             bet.choiceIdToString[i] = req.choices[i-1];
         }
+        bet.possibleChoices = req.choices;
         betIds.push(bet.id);
     }
 
@@ -182,7 +188,6 @@ contract BettingV2 is IRewardDistributionRecipient{
     function transferFees(string calldata betId) external onlyRewardDistribution {
         BetNChoices storage bet = bets[betId];
         require(keccak256(bytes(bet.id)) == keccak256(bytes(betId)), "Invalid bet id");
-        require(block.timestamp >= bet.lastClaimTime, "not allowed yet");
         require(bet.isFinal, "bet is not final");
         require(!bet.isFeesClaimed, "fees claimed");
 
@@ -225,29 +230,40 @@ contract BettingV2 is IRewardDistributionRecipient{
         } else {
             require(currentBet.choiceId == choiceId, "Sorry. You already bet on the other side with ETH");
         }
+        if (currentBet.value == 0) {
+            // first bet for account
+            bet.betters.push(msg.sender);
+        }
         currentBet.value += msg.value;
+        currentBet.timestamp = block.timestamp;
         bet.pots[choiceId] += msg.value;
         bet.totalPot += msg.value;
         emit ETHBetChoice(msg.sender, msg.value, bet.id, choice);
     }
 
-    function earned(string memory betId, address account) public view returns (uint256 ethEarnings) {
-        BetNChoices storage bet = bets[betId];
-        require(keccak256(bytes(bet.id)) == keccak256(bytes(betId)), "Invalid bet id");
-        require(bet.isFinal, "Bet is not finished");
-        BetChoice memory accountBet = bet.bets[account];
-        
+    function computeEarned(BetNChoices storage bet, BetChoice memory accountBet) private view returns (uint256 ethEarnings) {
         uint256 winningPot = bet.pots[bet.winner];
         uint256 totalWinnings = bet.totalPot.sub(winningPot);
         if (bet.isCanceled) {
             ethEarnings = accountBet.value;
         } else if (accountBet.choiceId != bet.winner || accountBet.value == 0) {
             ethEarnings = 0;
+        } else if (!bet.isFinal){
+            ethEarnings = 0;
         } else {
             uint256 winnings = totalWinnings.mul(accountBet.value).div(winningPot);
             uint256 fee = winnings.mul(1e19).div(1e20);
             ethEarnings = winnings.sub(fee);
+            ethEarnings = ethEarnings.add(accountBet.value);
         }
+    }
+
+    function earned(string memory betId, address account) public view returns (uint256 ) {
+        BetNChoices storage bet = bets[betId];
+        require(keccak256(bytes(bet.id)) == keccak256(bytes(betId)), "Invalid bet id");
+        require(bet.isFinal || bet.isCanceled, "Bet is not finished");
+        BetChoice memory accountBet = bet.bets[account];
+        return computeEarned(bet, accountBet);
     }
 
     function getRewards(string memory betId) public {
@@ -255,10 +271,13 @@ contract BettingV2 is IRewardDistributionRecipient{
         require(keccak256(bytes(bet.id)) == keccak256(bytes(betId)), "Invalid bet id");
         require(bet.isFinal || bet.isCanceled, "battle not decided");
 
+        BetChoice storage accountBet = bet.bets[msg.sender];
+
         uint256 ethEarnings = earned(betId, msg.sender);
         if (ethEarnings != 0) {
-            BetChoice storage accountBet = bet.bets[msg.sender];
-            accountBet.value = 0;
+            require(!accountBet.isClaimed, "Rewards already claimed");
+            accountBet.isClaimed = true;
+            accountBet.ethEarnings = ethEarnings;
             _safeTransfer(msg.sender, ethEarnings);
         }
         emit EarningsPaid(betId, msg.sender, ethEarnings);
@@ -295,7 +314,165 @@ contract BettingV2 is IRewardDistributionRecipient{
 
         return rewards;
     }
+
+    function rescueFunds() external onlyRewardDistribution {
+        require(betIds.length > 0, "sanity check with betIds.length");
+        for (uint i = 0; i < betIds.length; i ++) {
+            BetNChoices storage bet = bets[betIds[i]];
+            require(block.timestamp >= bet.lastClaimTime, "not allowed yet");
+        }
+
+        Address.sendValue(msg.sender, address(this).balance);
+    }
     
+    struct GetBetChoiceResponse {
+        address account;
+        string choiceId;
+        uint256 value;
+        bool isClaimed;
+        uint256 ethEarnings;
+        bool won;
+        uint256 timestamp;
+    }
+
+    struct GetBetPotResponse {
+        string choice;
+        uint256 value;
+    }
+
+    struct GetBetResponse {
+        string  id;
+        uint256  endTime;
+        uint256  lastClaimTime;
+        string desc;
+
+        bool  isPaused;
+        bool  isCanceled;
+        bool  isFinal;
+        bool  isFeesClaimed;
+
+        string  winner;
+        uint256 totalPot;
+
+        string[] possibleChoices;
+        GetBetChoiceResponse[] bets;
+        GetBetPotResponse[] pots;
+    }
+
+    function getBet(string memory betId) public view returns (GetBetResponse memory response) {
+        BetNChoices storage bet = bets[betId];
+        require(keccak256(bytes(bet.id)) == keccak256(bytes(betId)), "Invalid bet id");
+
+        response.id = bet.id;
+        response.endTime = bet.endTime;
+        response.lastClaimTime = bet.lastClaimTime;
+        response.isPaused = bet.isPaused;
+        response.isCanceled = bet.isCanceled;
+        response.isFinal = bet.isFinal;
+        response.isFeesClaimed = bet.isFeesClaimed;
+
+        if (bet.winner != 0) {
+            response.winner = bet.choiceIdToString[bet.winner];
+        }
+        response.totalPot = bet.totalPot;
+        response.possibleChoices = bet.possibleChoices;
+
+        GetBetChoiceResponse[] memory betsResponse = new GetBetChoiceResponse[](bet.betters.length);
+
+        for (uint i = 0; i < bet.betters.length; i++) {
+            address account = bet.betters[i];
+            BetChoice memory accountBet = bet.bets[account];
+
+            betsResponse[i] = serializeBetChoice(bet, accountBet, account);
+        }
+        response.bets = betsResponse;
+
+        GetBetPotResponse[] memory potsResponse = new GetBetPotResponse[](bet.possibleChoices.length);
+
+        for (uint32 i = 0; i < bet.possibleChoices.length; i++ ) {
+            uint32 choiceId = i + 1;
+            string memory choiceStr = bet.choiceIdToString[choiceId];
+            potsResponse[i] = GetBetPotResponse({
+                choice: choiceStr,
+                value: bet.pots[choiceId]
+            });
+        }
+
+        response.pots = potsResponse;
+    }
+    struct BetHistoryResponse {
+        string betId;
+        GetBetChoiceResponse data;
+    }
+
+    function getBetHistory(address account) public view returns (BetHistoryResponse[] memory) {
+        uint resultSize = 0;
+        for (uint betId = 0; betId < betIds.length; betId++) {
+            BetNChoices storage bet = bets[betIds[betId]];
+            BetChoice memory accountBet = bet.bets[account];
+            if ((bet.isFinal || bet.isCanceled) && accountBet.choiceId != 0 && accountBet.value != 0) {
+                resultSize ++;
+            }
+        }
+        
+        BetHistoryResponse[] memory response = new BetHistoryResponse[](resultSize);
+        uint i = 0;
+        for (uint betId = 0; betId < betIds.length; betId++) {
+            BetNChoices storage bet = bets[betIds[betId]];
+            BetChoice memory accountBet = bet.bets[account];
+            if ((bet.isFinal || bet.isCanceled) && accountBet.choiceId != 0 && accountBet.value != 0) {
+                response[i].betId = bet.id;
+                response[i].data = serializeBetChoice(bet, accountBet, account);
+                i++;
+            }
+        }
+        return response;
+    }
+
+    function serializeBetChoice(BetNChoices storage bet, BetChoice memory accountBet, address account) internal view returns (GetBetChoiceResponse memory) {
+        bool won = false;
+
+        if (bet.isFinal && !bet.isCanceled && accountBet.choiceId == bet.winner) {
+            won = true;
+        }
+
+       return GetBetChoiceResponse({
+            account: account,
+            choiceId: bet.choiceIdToString[accountBet.choiceId],
+            value: accountBet.value,
+            isClaimed: accountBet.isClaimed,
+            ethEarnings: computeEarned(bet, accountBet),
+            won: won,
+            timestamp: accountBet.timestamp
+        });
+    }
+
+    function getCurrentBet(string memory betId, address accountAddress) public view returns (GetBetChoiceResponse memory) {
+        BetNChoices storage bet = bets[betId];
+        require(keccak256(bytes(bet.id)) == keccak256(bytes(betId)), "Invalid bet id");
+        BetChoice memory accountBet = bet.bets[accountAddress];
+        require (accountBet.choiceId != 0 && accountBet.value != 0, "not found");
+
+        return serializeBetChoice(bet, accountBet, accountAddress);
+    }
+
+    function getPots(string memory betId) public view returns (GetBetPotResponse[] memory) {
+         BetNChoices storage bet = bets[betId];
+        require(keccak256(bytes(bet.id)) == keccak256(bytes(betId)), "Invalid bet id");
+
+        GetBetPotResponse[] memory potsResponse = new GetBetPotResponse[](bet.possibleChoices.length);
+
+        for (uint32 i = 0; i < bet.possibleChoices.length; i++ ) {
+            uint32 choiceId = i + 1;
+            string memory choiceStr = bet.choiceIdToString[choiceId];
+            potsResponse[i] = GetBetPotResponse({
+                choice: choiceStr,
+                value: bet.pots[choiceId]
+            });
+        }
+
+        return potsResponse;
+    }
 
     // unused
     function notifyRewardAmount(uint256 reward, uint256 _duration) external { return; }

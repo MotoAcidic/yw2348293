@@ -114,8 +114,6 @@ const Bet = ({ battle1 }) => {
 	}
 
 	return (
-		<Container size="sm">
-			<StyledModal>
 				<VersusContainer>
 					<Text>
 						Your Bets
@@ -155,7 +153,6 @@ const Bet = ({ battle1 }) => {
 					<Text>
 						Total Bets
 					</Text>
-					<AllBets>
 						<BetContainer>
 							<BetDisplay>
 								<CardIcon src={battle1.pers1.picture} />
@@ -171,7 +168,6 @@ const Bet = ({ battle1 }) => {
 								</AmountBet>
 							</BetDisplay>
 						</BetContainer>
-					</AllBets>
 					<Space />
 					<Separator />
 					<Text>
@@ -193,8 +189,6 @@ const Bet = ({ battle1 }) => {
 					</Top>
 					<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
 				</VersusContainer>
-			</StyledModal>
-		</Container>
 	)
 }
 
@@ -207,35 +201,8 @@ const BetContainer = styled.div`
 display: flex;
 flex-direction: row;
 align-items: center;
-`
-
-const StyledText1 = styled.div`
-	height: 40px;
-  width: 40px;
-	border-radius: 50%;
-  display: flex;
-  align-items: center;
-	justify-content: center;
-	font-family: "Edo";
-	font-weight: normal;
-background-color: #AB1003;
-font-size: 40px;
-border-radius: 50%;
-color: white;
-`
-const StyledText2 = styled.div`
-	height: 40px;
-  width: 40px;
-color: white;
-font-size: 40px;
-border-radius: 50%;
-  display: flex;
-  align-items: center;
-	justify-content: center;
-	font-family: "Edo";
-	font-weight: normal;
-	background-color: #15437F;
-  border-radius: 50%;
+width: 80%;
+justify-content: space-evenly;
 `
 
 const Separator = styled.div`
@@ -293,7 +260,7 @@ const CardIcon = styled.img`
   align-items: center;
   display: flex;
   justify-content: center;
-  margin: 0 15px;
+  margin-bottom: 10px;
 `
 const Bets = styled.div`
 display: flex;
@@ -327,7 +294,7 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
-margin-bottom: 5px;
+margin-bottom: 10px;
 `
 
 const SmallText = styled.div`
@@ -344,7 +311,7 @@ margin-bottom: 5px;
 
 const Input = styled.input`
 font-family: "SF Mono Semibold";
-font-size: 20px;
+font-size: 16px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
@@ -360,13 +327,13 @@ margin-right: 10px;
 }`
 
 const InputContainer = styled.div`
-width: 170px;
+width: 30%;
 border-radius: 8px;
 box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
 border: solid 1px rgba(255, 183, 0, 0.5);
 background-color: rgba(255, 255, 255, 0.2);
 font-family: "SF Mono Semibold";
-font-size: 20px;
+font-size: 16px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
@@ -376,14 +343,15 @@ text-align: right;
 display: flex;
 justify-content: flex-end;
 align-items: center;
+height: 30px;
 padding-right: 10px;
 `
 
 const Select = styled.select`
-	width: 280px;
-  height: 44px;
+	width: 60%;
+  height: 30px;
   font-family: "Gilroy";
-  font-size: 30px;
+  font-size: 18px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -391,12 +359,11 @@ const Select = styled.select`
   letter-spacing: normal;
   color: #ffffff;
   padding-left: 8px;
-	font-size: 18px;
+	font-size: 16px;
 	border-radius: 8px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
   border: solid 1px rgba(255, 183, 0, 0.5);
 	background-color: rgba(255, 255, 255, 0.2);
-	padding-right: 20px;
   option {
 		color: black;
 		display: flex;
@@ -429,6 +396,8 @@ border-radius: 8px;
 border: solid 2px rgba(255, 183, 0, 0.3);
 background-color: rgba(4,2,43,1);
 padding: 20px;
+height: fit-content;
+width: 25%;
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;

@@ -221,6 +221,7 @@ const Versus = ({ battles }) => {
 
 	return (
 		<>
+		<Container>
 			{/* <BattleContainer> */}
 			<VersusContainer>
 				<Options>
@@ -273,6 +274,8 @@ const Versus = ({ battles }) => {
 					</BLVersusItem>
 				</Options>
 			</VersusContainer>
+			
+
 			{/* <VerticalSeperator />
 				<BattleButtonWrapper>
 					<GraphicContainer src={MetalButton} />
@@ -295,26 +298,40 @@ const Versus = ({ battles }) => {
 						</BattleButton>
 					</BattleButtonContainer>
 				</BattleButtonWrapper> */}
+
+<PersVersusBet
+							battle1={battle1}
+							betContract={null}
+						/>
+
+
 			{/* </BattleContainer> */}
+
+
+
+			{/* <div style={betModal ? { display: 'block' } : { display: 'none', height: '0px' }}>
+				<Modal onClick={() => setBetModal(false)}>
+					<ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
+						{yam && }
+					</ModalBlock>
+				</Modal>
+			</div> */}
+		</Container>
 
 			<TotalVotesSection>
 				{voted && 'Come back tomorrow and claim your victory!'}
 				{!voted && (account ? `You currently have ${getDisplayBalance(stakedBalance)} votes available for BATTLE and you may BET with ETH.` : 'Connect wallet to see available votes')}
 			</TotalVotesSection>
 			<SmallSpace />
-			<div style={betModal ? { display: 'block' } : { display: 'none', height: '0px' }}>
-				<Modal onClick={() => setBetModal(false)}>
-					<ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
-						{yam && <PersVersusBet
-							battle1={battle1}
-							betContract={null}
-						/>}
-					</ModalBlock>
-				</Modal>
-			</div>
-		</>
+			</>
 	)
 }
+
+const Container = styled.div`
+display: flex;
+width: 100%;
+justify-content: space-evenly;
+`
 
 
 const TotalVotesSection = styled.div`
@@ -645,7 +662,7 @@ transition: all .1s ease-in-out;
 
 const TLVS = styled.div`
 width: 100%;
-min-width: 500px;
+min-width: 300px;
 height: 100%;
 min-height: 220px;
 display: flex;
@@ -660,7 +677,7 @@ z-index: 102;
 
 const BLVS = styled.div`
 width: 100%;
-min-width: 500px;
+min-width: 300px;
 height: 100%;
 min-height: 220px;
 display: flex;
@@ -715,7 +732,7 @@ height: 60vh;
 min-height: 600px;
 margin-top: 15px;
 margin-bottom: 40px;
-min-width: 1300px;
+min-width: 800px;
 display: flex;
 flex-direction: row;
 justify-content: center;

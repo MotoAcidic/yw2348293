@@ -221,62 +221,62 @@ const Versus = ({ battles }) => {
 
 	return (
 		<>
-		<Container>
-			{/* <BattleContainer> */}
-			<VersusContainer>
-				<Options>
-					<TLVersusItem onClick={() => pick1(1)} style={selectedCSS1} checked={checked1 === 1}>
-						{checked1 === 1 && <RainbowShadow />}
-						<TopBar />
-						<LeftBar />
-						<BigRightBar />
-						<BottomBar />
-						<TLVS checked={checked1 === 1}>
-							<StyledContent>
-								<Picture src={battle1.pers1.picture} />
-								<StatBlock>
-									<SubTitle>{battle1.pers1.name}</SubTitle>
-									<Text>{battle1.pers1.handle}</Text>
-									<Text>Followers: {battle1.pers1.followerCount}</Text>
-								</StatBlock>
-							</StyledContent>
-							{!isMobile() ?
-								<a className="twitter-timeline" data-width="65%" data-height="58%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-								: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-							}
-							{useScript("https://platform.twitter.com/widgets.js")}
-						</TLVS>
-					</TLVersusItem>
-					<Divider>
-						<img src={VSPNG} width="85px" style={{ position: 'absolute', zIndex: 10000 }} />
-					</Divider>
-					<BLVersusItem onClick={() => pick1(2)} style={selectedCSS2} checked={checked1 === 2}>
-						{checked1 === 2 && <RainbowShadow />}
-						<TopBar />
-						<BigLeftBar />
-						<RightBar />
-						<BottomBar />
-						<BLVS checked={checked1 === 2}>
-							<StyledContent>
-								<Picture src={battle1.pers2.picture} />
-								<StatBlock>
-									<SubTitle>{battle1.pers2.name}</SubTitle>
-									<Text>{battle1.pers2.handle}</Text>
-									<Text>Followers: {battle1.pers2.followerCount}</Text>
-								</StatBlock>
-							</StyledContent>
-							{!isMobile() ?
-								<a className="twitter-timeline" data-width="65%" data-height="58%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-								: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-							}
-							{useScript("https://platform.twitter.com/widgets.js")}
-						</BLVS>
-					</BLVersusItem>
-				</Options>
-			</VersusContainer>
-			
+			<Container>
+				{/* <BattleContainer> */}
+				<VersusContainer>
+					<Options>
+						<TLVersusItem onClick={() => pick1(1)} style={selectedCSS1} checked={checked1 === 1}>
+							{checked1 === 1 && <RainbowShadow />}
+							<TopBar />
+							<LeftBar />
+							<BigRightBar />
+							<BottomBar />
+							<TLVS>
+								<StyledContent>
+									<Picture src={battle1.pers1.picture} />
+									<StatBlock>
+										<SubTitle>{battle1.pers1.name}</SubTitle>
+										<Text>{battle1.pers1.handle}</Text>
+										<Text>Followers: {battle1.pers1.followerCount}</Text>
+									</StatBlock>
+								</StyledContent>
+								{!isMobile() ?
+									<a className="twitter-timeline" data-width="65%" data-height="58%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								}
+								{useScript("https://platform.twitter.com/widgets.js")}
+							</TLVS>
+						</TLVersusItem>
+						<Divider>
+							<img src={VSPNG} width="85px" style={{ position: 'absolute', zIndex: 10000 }} />
+						</Divider>
+						<BLVersusItem onClick={() => pick1(2)} style={selectedCSS2} checked={checked1 === 2}>
+							{checked1 === 2 && <RainbowShadow />}
+							<TopBar />
+							<BigLeftBar />
+							<RightBar />
+							<BottomBar />
+							<BLVS>
+								<StyledContent>
+									<Picture src={battle1.pers2.picture} />
+									<StatBlock>
+										<SubTitle>{battle1.pers2.name}</SubTitle>
+										<Text>{battle1.pers2.handle}</Text>
+										<Text>Followers: {battle1.pers2.followerCount}</Text>
+									</StatBlock>
+								</StyledContent>
+								{!isMobile() ?
+									<a className="twitter-timeline" data-width="65%" data-height="58%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								}
+								{useScript("https://platform.twitter.com/widgets.js")}
+							</BLVS>
+						</BLVersusItem>
+					</Options>
+				</VersusContainer>
 
-			{/* <VerticalSeperator />
+
+				{/* <VerticalSeperator />
 				<BattleButtonWrapper>
 					<GraphicContainer src={MetalButton} />
 					<BattleButtonContainer>
@@ -299,31 +299,31 @@ const Versus = ({ battles }) => {
 					</BattleButtonContainer>
 				</BattleButtonWrapper> */}
 
-<PersVersusBet
-							battle1={battle1}
-							betContract={null}
-						/>
+				<PersVersusBet
+					battle1={battle1}
+					betContract={null}
+				/>
 
 
-			{/* </BattleContainer> */}
+				{/* </BattleContainer> */}
 
 
 
-			{/* <div style={betModal ? { display: 'block' } : { display: 'none', height: '0px' }}>
+				{/* <div style={betModal ? { display: 'block' } : { display: 'none', height: '0px' }}>
 				<Modal onClick={() => setBetModal(false)}>
 					<ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
 						{yam && }
 					</ModalBlock>
 				</Modal>
 			</div> */}
-		</Container>
+			</Container>
 
 			<TotalVotesSection>
 				{voted && 'Come back tomorrow and claim your victory!'}
 				{!voted && (account ? `You currently have ${getDisplayBalance(stakedBalance)} votes available for BATTLE and you may BET with ETH.` : 'Connect wallet to see available votes')}
 			</TotalVotesSection>
 			<SmallSpace />
-			</>
+		</>
 	)
 }
 
@@ -674,8 +674,8 @@ align-items: center;
 transform: skew(-3deg);
 pointer-events: none;
 z-index: 102;
-margin-top: ${props => props.checked ? 0 : 30}px;
-margin-bottom: ${props => props.checked ? 0 : 30}px;
+margin-top: 30px;
+margin-bottom: 30px;
 `
 
 
@@ -691,8 +691,8 @@ align-items: center;
 transform: skew(-3deg);
 pointer-events: none;
 z-index: 102;
-margin-top: ${props => props.checked ? 0 : 30}px;
-margin-bottom: ${props => props.checked ? 0 : 30}px;
+margin-top: 30px;
+margin-bottom: 30px;
 `
 
 

@@ -229,7 +229,6 @@ const Versus = ({ battles }) => {
 	return (
 		<>
 			<Container>
-				{/* <BattleContainer> */}
 				<VersusContainer>
 					<Options>
 						<TLVersusItem onClick={() => pick1(1)} style={selectedCSS1} checked={checked1 === 1}>
@@ -280,40 +279,23 @@ const Versus = ({ battles }) => {
 							</BLVS>
 						</BLVersusItem>
 					</Options>
-				</VersusContainer>
-
-
-				{/* <VerticalSeperator />
-				<BattleButtonWrapper>
-					<GraphicContainer src={MetalButton} />
-					<BattleButtonContainer>
-						{!voted ?
-							<BattleButton onClick={castVote} >
-								Battle
-						</BattleButton>
-							:
-							<BattleText>Voted</BattleText>
-						}
-						<HDivider />
-						<BattleButton onClick={() => {
-							if (!account) {
-								connect('injected')
+					<BattleButtonWrapper>
+						<BattleButtonContainer>
+							{!voted ?
+								<BattleButton onClick={castVote} >
+									Battle
+								</BattleButton>
+								:
+								<BattleText>Voted</BattleText>
 							}
-							setBetModal(true)
-						}} >
-							Bet
-						</BattleButton>
-					</BattleButtonContainer>
-				</BattleButtonWrapper> */}
+						</BattleButtonContainer>
+					</BattleButtonWrapper>
+				</VersusContainer>
 
 				<PersVersusBet
 					battle1={battle1}
 					betContract={null}
 				/>
-
-
-				{/* </BattleContainer> */}
-
 
 
 				{/* <div style={betModal ? { display: 'block' } : { display: 'none', height: '0px' }}>
@@ -355,9 +337,6 @@ font-family: "Gilroy";
 `
 
 const BattleButtonWrapper = styled.span`
-position: absolute;
-left: 50%;
-transform: translateX(-50%);
 z-index: 1001;
 filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.9));
 pointer-events: none;
@@ -747,7 +726,7 @@ margin-top: 15px;
 margin-bottom: 20px;
 min-width: 800px;
 display: flex;
-flex-direction: row;
+flex-direction: column;
 justify-content: center;
 align-items: center;
 font-size: 30px;

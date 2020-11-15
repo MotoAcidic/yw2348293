@@ -230,7 +230,7 @@ const Versus = ({ battles }) => {
 						<LeftBar />
 						<BigRightBar />
 						<BottomBar />
-						<TLVS>
+						<TLVS checked={checked1 === 1}>
 							<StyledContent>
 								<Picture src={battle1.pers1.picture} />
 								<StatBlock>
@@ -240,7 +240,7 @@ const Versus = ({ battles }) => {
 								</StatBlock>
 							</StyledContent>
 							{!isMobile() ?
-								<a className="twitter-timeline" data-width="65%" data-height="85%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								<a className="twitter-timeline" data-width="65%" data-height="58%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 								: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 							}
 							{useScript("https://platform.twitter.com/widgets.js")}
@@ -255,7 +255,7 @@ const Versus = ({ battles }) => {
 						<BigLeftBar />
 						<RightBar />
 						<BottomBar />
-						<BLVS>
+						<BLVS checked={checked1 === 2}>
 							<StyledContent>
 								<Picture src={battle1.pers2.picture} />
 								<StatBlock>
@@ -265,7 +265,7 @@ const Versus = ({ battles }) => {
 								</StatBlock>
 							</StyledContent>
 							{!isMobile() ?
-								<a className="twitter-timeline" data-width="65%" data-height="85%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								<a className="twitter-timeline" data-width="65%" data-height="58%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 								: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 							}
 							{useScript("https://platform.twitter.com/widgets.js")}
@@ -603,7 +603,8 @@ justify-content: space-evenly;
 height: 88%;
 width: 50%;
 transform: skew(3deg);
-transition: all .1s ease-in-out;
+will-change: padding;
+transition: all .2s ease-out 10ms ;
 &:hover {
 	transform: skew(3deg) scale(${props => props.checked ? 1 : 1.05});
 	cursor: pointer;
@@ -626,7 +627,8 @@ justify-content: space-evenly;
 height: 88%;
 width: 50%;
 transform: skew(3deg);
-transition: all .1s ease-in-out;
+will-change: padding;
+transition: all .2s ease-out 10ms ;
 &:hover {
 	transform: skew(3deg) scale(${props => props.checked ? 1 : 1.05});
 	cursor: pointer;
@@ -650,11 +652,13 @@ height: 100%;
 min-height: 220px;
 display: flex;
 flex-direction: column;
-justify-content: space-between;
+justify-content: flex-start;
 align-items: center;
 transform: skew(-3deg);
 pointer-events: none;
 z-index: 102;
+margin-top: ${props => props.checked ? 0 : 30}px;
+margin-bottom: ${props => props.checked ? 0 : 30}px;
 `
 
 
@@ -665,12 +669,13 @@ height: 100%;
 min-height: 220px;
 display: flex;
 flex-direction: column;
-justify-content: space-evenly;
+justify-content: flex-start;
 align-items: center;
 transform: skew(-3deg);
 pointer-events: none;
 z-index: 102;
-margin-top: 5px;
+margin-top: ${props => props.checked ? 0 : 30}px;
+margin-bottom: ${props => props.checked ? 0 : 30}px;
 `
 
 

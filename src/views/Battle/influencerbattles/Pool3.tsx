@@ -109,7 +109,7 @@ const WarPool: React.FC = () => {
 	)
 
 	const unstake = () => {
-		alert()
+		// alert()
 		onPresentUnstake()
 	}
 
@@ -131,10 +131,10 @@ const WarPool: React.FC = () => {
 			<MobileInfoContainer>
 				<WarTopContainer>
 					<Title>$WARchest</Title>
-					<StyledDetails>
+					{/* <StyledDetails>
 						<StyledDetail>APR</StyledDetail>
 						<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
-					</StyledDetails>
+					</StyledDetails> */}
 				</WarTopContainer>
 				<MobileInfoLines>
 					<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
@@ -173,10 +173,10 @@ const WarPool: React.FC = () => {
 		<InfoContainer>
 			<WarTopContainer>
 				<Title>$WARchest</Title>
-				<StyledDetails>
+				{/* <StyledDetails>
 					<StyledDetail>APR</StyledDetail>
 					<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
-				</StyledDetails>
+				</StyledDetails> */}
 			</WarTopContainer>
 			<InfoLines>
 				<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
@@ -330,7 +330,7 @@ justify-content: space-evenly;
 text-align: left;
 margin: 3%;
 font-family: "SF Mono Semibold";
-  font-size: 40px;
+  font-size: 24px;
   font-weight: 600;
   font-stretch: normal;
   font-style: normal;
@@ -370,11 +370,10 @@ font-family: "Gilroy";
 `
 
 const InfoContainer = !isMobile() ? styled.div`
-width: 1000px;
+width: 780px;
   border-radius: 8px;
   border: solid 2px rgba(255, 183, 0, 0.3);
   background-color: rgba(256,256,256,0.08);
-
 	margin: 20px auto 80px auto;
 `: styled.div`
 width: 300px;

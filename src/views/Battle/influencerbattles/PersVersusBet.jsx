@@ -2,13 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Button from '../../../components/Button'
 import { useWallet } from "use-wallet";
-import useModal from '../../../hooks/useModal'
-import RulesModal from "./BetRulesModal";
-import Cookie from 'universal-cookie'
-import Modal, { ModalProps } from '../../../components/Modal'
-import Container from '../../../components/Container'
-import MiniBiden from "../../../assets/img/biden@2x.png";
-import MiniTrump from "../../../assets/img/trump@2x.png";
+
 import useYam from '../../../hooks/useYam'
 import './swal.css'
 import { harvest, getBattleAPR } from '../../../yamUtils'
@@ -35,7 +29,7 @@ function getServerURI() {
 	return 'https://yieldwars-api.herokuapp.com'
 }
 
-const Bet = ({ battle1 }) => {
+const Bet = ({ battle1, yesterday }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	// const {
@@ -114,83 +108,93 @@ const Bet = ({ battle1 }) => {
 	}
 
 	return (
-				<VersusContainer>
-					<Text>
-						Your Bets
+		<Container>
+			<VersusContainer>
+				<Text>
+					Your Bets
 					</Text>
-					<YourBets>
-						{!farmBalances.bal1 > 0 && !farmBalances.bal2 > 0 ?
-							<SmallText>none</SmallText>
-							: null
-						}
-						{farmBalances.bal1 > 0 ?
-							<Column>
-								<CardIcon src={battle1.pers1.picture} />
-								<Space />
-								<Bets>
-									<AmountBet>
-										{'$ETH: ' + farmBalances.bal1.toLocaleString()}
-									</AmountBet>
-								</Bets>
-							</Column>
-							: null
-						}
-						{farmBalances.bal2 > 0 ?
-							<Column>
-								<CardIcon src={battle1.pers2.picture} />
-								<Space />
-								<Bets>
-									<AmountBet>
-										{'$ETH: ' + farmBalances.bal2.toLocaleString()}
-									</AmountBet>
-								</Bets>
-							</Column>
-							: null
-						}
-					</YourBets>
-					<Space />
-					<Separator />
-					<Text>
-						Current Bets
-					</Text>
-						<BetContainer>
-							<BetDisplay>
-								<CardIcon src={battle1.pers1.picture} />
+				<YourBets>
+					{!farmBalances.bal1 > 0 && !farmBalances.bal2 > 0 ?
+						<SmallText>none</SmallText>
+						: null
+					}
+					{farmBalances.bal1 > 0 ?
+						<Column>
+							<CardIcon src={battle1.pers1.picture} />
+							<Space />
+							<Bets>
 								<AmountBet>
-									{farmBets.pot1.toLocaleString() + " $ETH"}
+									{'$ETH: ' + farmBalances.bal1.toLocaleString()}
 								</AmountBet>
-							</BetDisplay>
+							</Bets>
+						</Column>
+						: null
+					}
+					{farmBalances.bal2 > 0 ?
+						<Column>
+							<CardIcon src={battle1.pers2.picture} />
+							<Space />
+							<Bets>
+								<AmountBet>
+									{'$ETH: ' + farmBalances.bal2.toLocaleString()}
+								</AmountBet>
+							</Bets>
+						</Column>
+						: null
+					}
+				</YourBets>
+				<Space />
+				<Separator />
+				<Text>
+					Current Bets
+					</Text>
+				<BetContainer>
+					<BetDisplay>
+						<CardIcon src={battle1.pers1.picture} />
+						<AmountBet>
+							{farmBets.pot1.toLocaleString() + " $ETH"}
+						</AmountBet>
+					</BetDisplay>
 							vs
 							<BetDisplay>
-								<CardIcon src={battle1.pers2.picture} />
-								<AmountBet>
-									{farmBets.pot2.toLocaleString() + " $ETH"}
-								</AmountBet>
-							</BetDisplay>
-						</BetContainer>
-					<Space />
-					<Separator />
-					<Text>
-						Bet $ETH
+						<CardIcon src={battle1.pers2.picture} />
+						<AmountBet>
+							{farmBets.pot2.toLocaleString() + " $ETH"}
+						</AmountBet>
+					</BetDisplay>
+				</BetContainer>
+				<Space />
+				<Separator />
+				<Text>
+					Bet $ETH1
 					</Text>
-					<Top>
-						<Select onChange={handleBattle1Change}>
-							<option value={battle1.pers1.handle}>
-								{battle1.pers1.handle + " to Win"}
-							</option>
-							<option value={battle1.pers2.handle}>
-								{battle1.pers2.handle + " to Win"}
-							</option>
-						</Select>
-						<InputContainer>
-							<Input type="number" value={battle1Input} onChange={e => setBattle1Input(e.target.value)} />
+				<Top>
+					<Select onChange={handleBattle1Change}>
+						<option value={battle1.pers1.handle}>
+							{battle1.pers1.handle + " to Win"}
+						</option>
+						<option value={battle1.pers2.handle}>
+							{battle1.pers2.handle + " to Win"}
+						</option>
+					</Select>
+					<InputContainer>
+						<Input type="number" value={battle1Input} onChange={e => setBattle1Input(e.target.value)} />
 							ETH
 						</InputContainer>
-					</Top>
-					<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
-				</VersusContainer>
+				</Top>
+				<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
+			</VersusContainer>
+			{yesterday}
+		</Container>
 	)
 }
+
+const Container = styled.div`
+width: 100%;
+display:flex;
+flex-direction: column;
+width: 25%;
+`
 
 const Column = styled.div`
 display: flex;
@@ -395,9 +399,9 @@ border-radius: 8px;
 border: solid 2px rgba(255, 183, 0, 0.3);
 background-color: rgba(4,2,43,1);
 padding: 20px;
+width: calc(100%-40px);
 min-height: 45vh;
-width: 25%;
-margin-bottom: 60px;
+margin-bottom: 20px;
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;

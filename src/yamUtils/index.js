@@ -876,7 +876,7 @@ export const getPots = async (yam, betId) => {
 }
 
 export const getUserBet = async (yam, betId, account) => {
-  console.log("calling user bet: ", account)
+  console.log("calling user bet: ", betId)
   const currentBet = await yam.contracts.betting_v2.methods.getCurrentBet(betId, account).call()
   console.log("get current bet: ", currentBet);
   return (currentBet);

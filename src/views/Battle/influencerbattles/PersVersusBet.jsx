@@ -29,7 +29,7 @@ function getServerURI() {
 	return 'https://yieldwars-api.herokuapp.com'
 }
 
-const Bet = ({ battle1, id,  yesterday }) => {
+const Bet = ({ battle1, id, yesterday }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	// const {
@@ -77,10 +77,14 @@ const Bet = ({ battle1, id,  yesterday }) => {
 
 	useEffect(() => {
 		const getBets = async () => {
-			console.log(battle1);
-			// let balances = await getUserBet(yam, battle1._id, account);
+			let balances = await getUserBet(yam, id, account);
+			if (balances) {
+				if (balances.choiceId === battle1.pers1.handle)
+					setFarmBalances({ bal1: balances.value, bal2: 0 });
+				else
+					setFarmBalances({ bal1: 0, bal2: balances.value });
+			}
 			let bets = await getPots(yam, id);
-			// setFarmBalances(balances);
 			setFarmBets({ pot1: bets[0].value, pot2: bets[1].value });
 
 			// createNewContract(yam, account);
@@ -110,7 +114,7 @@ const Bet = ({ battle1, id,  yesterday }) => {
 				console.log(candidate);
 				console.log(battle1.pers1);
 				console.log(contender1)
-				placeETHBet(yam, "newId", candidate, battle1Input, account)
+				placeETHBet(yam, id, candidate, battle1Input, account)
 				// placeElectionWARBet(yam, candidate, warInput, account);
 			}
 			else {

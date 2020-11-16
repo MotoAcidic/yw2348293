@@ -332,8 +332,8 @@ const Versus = ({ battles, yesterday }) => {
 }
 
 const Loading = styled.img`
-	width: 200px;
-	height: 200px;
+	width: 80px;
+	height: 80px;
 `
 
 const Container = styled.div`

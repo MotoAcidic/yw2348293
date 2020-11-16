@@ -870,6 +870,7 @@ export const TVL_AP = async (yam, account) => {
             bet v2 methods
 ====================================== */
 export const getPots = async (yam, betId) => {
+  console.log("getting pots");
   const potsTotal = await yam.contracts.betting_v2.methods.getPots(betId).call()
   console.log("420ayylmao", potsTotal);
   return (potsTotal);
@@ -946,16 +947,16 @@ export const betTVL = async (yam, account) => {
 }
 
 
-export const createNewContract = async (yam, contractVariables) => {
-  const id = "newID";
-  const desc = "big discription";
+export const createNewContract = async (yam, account) => {
+  const id = "newsdf";
+  const desc = "big dissdfcription";
   const endTime = new Date(new Date() + 1 * 60 * 60 * 24 * 1000).getTime() / 1000;
   const lastClaimTime = endTime;
-  const choice1 = "cryptocobain";
-  const choice2 = "CRYPTOGAINZ";
+  const choice1 = "cryptobain";
+  const choice2 = "CRYOGAINZ";
 
   console.log("attempting")
-  yam.contracts.betting_v2.methods.createBet(id, desc, endTime, lastClaimTime, choice1, choice2).call().then((res) => {
+  yam.contracts.betting_v2.methods.createBet(id, desc, endTime, lastClaimTime, choice1, choice2).send({ from: account, gas: 300000 }).then((res) => {
     console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@2", res);
 
   })

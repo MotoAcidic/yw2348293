@@ -51,8 +51,6 @@ const Bet = ({ battle1, id, yesterday }) => {
 	const [contender1, setContender1] = useState(null);
 	const [battle1Input, setBattle1Input] = useState(0);
 	const [disabled, setDisabled] = useState(false)
-	const [farmBets, setFarmBets] = useState({ pot1: 0, pot2: 0 });
-	const [farmBalances, setFarmBalances] = useState({ bal1: 0, bal2: 0 });
 	// const stakedBalance = useStakedBalance(contract)
 	// const { onUnstake } = useUnstake(contract)
 
@@ -74,34 +72,6 @@ const Bet = ({ battle1, id, yesterday }) => {
 	// 	harvest(contract, account);
 	// 	onPresentUnstake()
 	// }
-
-	useEffect(() => {
-		const getBets = async () => {
-			let balances = await getUserBet(yam, id, account);
-			if (balances) {
-				if (balances.choiceId === battle1.pers1.handle)
-					setFarmBalances({ bal1: balances.value, bal2: 0 });
-				else
-					setFarmBalances({ bal1: 0, bal2: balances.value });
-			}
-			let bets = await getPots(yam, id);
-			setFarmBets({ pot1: bets[0].value, pot2: bets[1].value });
-
-			// createNewContract(yam, account);
-			// getPots(yam, "newId");
-			// const bets = await getPots(yam);
-			// const balances = await getCurrentBet(yam, account);
-			// setFarmBalances(balances);
-			// // console.log("gotbets", bets);
-			// setFarmBets(bets);
-		}
-		console.log("got da yams???", yam)
-		if (!yam.defaultProvider && account) {
-			console.log("got da yams");
-			getBets();
-		}
-
-	}, [yam, account])
 
 	const placeBet = () => {
 		if (yam && account) {
@@ -127,63 +97,8 @@ const Bet = ({ battle1, id, yesterday }) => {
 		<Container>
 			<VersusContainer>
 				<Text>
-					Your Bets
-					</Text>
-				<YourBets>
-					{!farmBalances.bal1 > 0 && !farmBalances.bal2 > 0 ?
-						<SmallText>none</SmallText>
-						: null
-					}
-					{farmBalances.bal1 > 0 ?
-						<Column>
-							<CardIcon src={battle1.pers1.picture} />
-							<Space />
-							<Bets>
-								<AmountBet>
-									{'$ETH: ' + farmBalances.bal1.toLocaleString()}
-								</AmountBet>
-							</Bets>
-						</Column>
-						: null
-					}
-					{farmBalances.bal2 > 0 ?
-						<Column>
-							<CardIcon src={battle1.pers2.picture} />
-							<Space />
-							<Bets>
-								<AmountBet>
-									{'$ETH: ' + farmBalances.bal2.toLocaleString()}
-								</AmountBet>
-							</Bets>
-						</Column>
-						: null
-					}
-				</YourBets>
-				<Space />
-				<Separator />
-				<Text>
-					Current Bets
-					</Text>
-				<BetContainer>
-					<BetDisplay>
-						<CardIcon src={battle1.pers1.picture} />
-						<AmountBet>
-							{farmBets.pot1.toLocaleString() + " $ETH"}
-						</AmountBet>
-					</BetDisplay>
-							vs
-							<BetDisplay>
-						<CardIcon src={battle1.pers2.picture} />
-						<AmountBet>
-							{farmBets.pot2.toLocaleString() + " $ETH"}
-						</AmountBet>
-					</BetDisplay>
-				</BetContainer>
-				{/* <Space />
-				<Separator />
-				<Text>
 					Bet $ETH
-					</Text>
+				</Text>
 				<Top>
 					<Select onChange={handleBattle1Change}>
 						<option value={null}>
@@ -201,7 +116,7 @@ const Bet = ({ battle1, id, yesterday }) => {
 							ETH
 					</InputContainer>
 				</Top>
-				<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button> */}
+				<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
 			</VersusContainer>
 			{yesterday}
 		</Container>

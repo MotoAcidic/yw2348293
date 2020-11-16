@@ -579,8 +579,16 @@ export const getTotalValue = async (pools, yam) => {
 
 export const getWarStaked = async (pools, yam) => {
   const deployer = new BigNumber(await yam.contracts.war.methods.balanceOf("0x8b6e2e23FCfaCCFd34eb8E8AC027FAA189DA36Ff").call());
-  const team = new BigNumber(await yam.contracts.war.methods.balanceOf("0x5b45DBaF51f5Fe31edAFCab674306607554acA82").call());
-  const circSupply = new BigNumber(2800000e18).minus(deployer).minus(team);
+  const founders = new BigNumber(await yam.contracts.war.methods.balanceOf("0xE4D5CEf90a1290617Ec9F4bBe56cf1065697F28D").call());
+  const rover = new BigNumber(await yam.contracts.war.methods.balanceOf("0x9D79e728cFf8DEA7f75e3367BDEb15F462Fa3D60").call());
+  const development = new BigNumber(await yam.contracts.war.methods.balanceOf("0x6618f87F540Ba8ffed5d3060A04bD4aA57ACC1b1").call());
+  const dao = new BigNumber(await yam.contracts.war.methods.balanceOf("0x6d8b545c0D6317E4aF312b2E2d9c3c7b0b0Ba006").call());
+  const circSupply = new BigNumber(2800000e18)
+    .minus(deployer)
+    .minus(founders)
+    .minus(rover)
+    .minus(development)
+    .minus(dao);
   const warLocked = new BigNumber(await yam.contracts.war.methods.balanceOf(yam.contracts.battlepool_pool.options.address).call());
   const warStaked = warLocked.dividedBy(circSupply).multipliedBy(100);
   //console.log(deployer.toString(), team.toString(), circSupply.toString(), warLocked.toString(), warStaked.toString());

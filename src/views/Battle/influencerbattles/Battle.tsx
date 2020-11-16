@@ -113,7 +113,7 @@ const Battle: React.FC = () => {
     if (!battles.length) {
       return (
         <>
-          <Title>Loading Battles...</Title>
+          <Title style={{marginTop: '30px'}}>Loading Battles...</Title>
           <NextBattle />
         </>
       )
@@ -139,7 +139,7 @@ const Battle: React.FC = () => {
         <ContentContainer>
           <Page>
             <Title>Who Will Win?</Title>
-            {battles && battles.length && <TotalBets battle1={battles[0]} id={battles[0]._id} />}
+            {battles && battles.length > 0 && <TotalBets battle1={battles[0]} id={battles[0]._id} />}
             {battleFields()}
             {account && yesterdaysBattle.length && <Yesterday onClick={() => setBetRedeemModal(true)} >Show Yesterdays Result</Yesterday>}
             <SmallSpace />

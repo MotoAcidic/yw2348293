@@ -102,7 +102,7 @@ const Instructions: React.FC = () => {
         <MilestoneRow>
           <img className="milestone-image" alt="milestone" src={img_2} />
           <MilestoneText>
-          Vote daily to earn rewards. Battles start at 19:00 UTC and last for 24hours. If you unstake during a battle, you will not earn rewards and your vote will not count.
+          Vote daily to earn rewards. Battles start at 20:00 UTC and last for 23hours. If you unstake during a battle, you will not earn rewards and your vote will not count.
               </MilestoneText>
         </MilestoneRow>
         {/* <MilestoneRow>
@@ -162,7 +162,7 @@ Once a bet is placed it is locked in, it cannot be withdrawn or changed.
         <MilestoneRow>
           <img className="milestone-image" alt="milestone" src={img_3} />
           <MilestoneText>
-          You can only bet from your wallet and not from your WARchest. If you have funds in your WARchest you will need to unstake them. There are no fees for staking/unstaking from WARchest.
+            Bets last 17 hours, starting at 20:00 UTC and ending at 13:00 UTC the next day.
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>

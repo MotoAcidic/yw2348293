@@ -375,7 +375,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   z-index: 14000;
-  margin-top: 30px;
+  margin-top: 50px;
 `
 
 const BattleButtonWrapper = styled.span`

@@ -10,7 +10,7 @@ import UnstakeModal from './UnstakeModal'
 import useFarm from '../../../hooks/useFarm'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
-import { placeElectionWARBet, getPots, getBetsUser } from '../../../yamUtils'
+import { placeElectionWARBet, getPots, getUserBet } from '../../../yamUtils'
 import Swal from 'sweetalert2';
 
 function isMobile() {
@@ -78,9 +78,9 @@ const Bet = ({ battle1, yesterday }) => {
 	useEffect(() => {
 		const getBets = async () => {
 			// const bets = await getPots(yam);
-			// const balances = await getBetsUser(yam, account);
+			// const balances = await getCurrentBet(yam, account);
 			// setFarmBalances(balances);
-			// console.log("gotbets", bets);
+			// // console.log("gotbets", bets);
 			// setFarmBets(bets);
 		}
 		console.log("got da yams???", yam)

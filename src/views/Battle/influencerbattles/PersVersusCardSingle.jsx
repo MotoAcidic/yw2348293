@@ -202,12 +202,12 @@ const Versus = ({ battles, yesterday }) => {
 	};
 
 	useEffect(() => {
-		if (account) {
+		if (account && !yam.defaultProvider) {
 			axios.post(`${getServerURI()}/api/pers-status`, {
 				address: account,
 			}).then(res => {
-				console.log(res.data);
 				if (res.data === 2 || res.data === 1) {
+					console.log(res.data);
 					setChecked1(res.data)
 					setVoted(true)
 				}
@@ -219,7 +219,7 @@ const Versus = ({ battles, yesterday }) => {
 			})
 		}
 
-	}, [account]);
+	}, [account, yam]);
 
 	let selectedCSS1
 	let selectedCSS2

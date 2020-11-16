@@ -78,23 +78,22 @@ const App: React.FC = () => {
             <Route path="/splash" exact>
               <Splash />
             </Route>
-            <Redirect exact from="/" to="/battle" />
+            <Redirect exact from="/" to="/twitter-battle" />
             <Route path="/home" exact>
               <Farms />
             </Route>
             <Route path="/farms/:farmId">
               <Farm />
             </Route>
-            {/* <Route path="/crypto-battle" exact>
+            <Route path="/crypto-battle" exact>
               <CryptoBattle />
-            </Route> */}
-            <Route path="/battle" exact>
+            </Route>
+            <Route path="/twitter-battle" exact>
               <InfluencerBattle />
             </Route>
-            {/* this is actually just timer */}
-            {/* <Route path="/battle" exact>
+            <Route path="/battle" exact>
               <Battle />
-            </Route> */}
+            </Route>
             <Route path="/results" exact>
               <Results />
             </Route>

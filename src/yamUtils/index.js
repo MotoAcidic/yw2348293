@@ -933,3 +933,12 @@ export const createNewContract = async (yam, account) => {
 
   })
 }
+
+export const finishBet = async (yam, betId, choice, account) => {
+  console.log("finish bet: ", betId, choice, account);
+  let choices = await yam.contracts.betting_v2.methods.getBet(betId).call()
+  let p = await yam.contracts.betting_v2.methods.finalizeBet(betId, choices.possibleChoices[choice])
+    .send({ from: account, gas: 300000 });
+  console.log("bet finished: ", p);
+  return (p);
+}

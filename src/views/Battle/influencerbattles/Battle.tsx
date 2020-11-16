@@ -9,7 +9,7 @@ import { useWallet } from "use-wallet";
 import Background from '../../../assets/img/bg3.svg'
 import Pool3 from "./Pool3";
 import useFarms from "../../../hooks/useFarms";
-import { getWarStaked, createNewContract, getPots, getUserBet, placeETHBet } from "../../../yamUtils";
+import { getWarStaked, createNewContract, getPots, getUserBet, placeETHBet, finishBet, getRewards } from "../../../yamUtils";
 import { getStats } from "./utils";
 import PersVersusCard from "./PersVersusCard.jsx";
 import SinglePersVersusCard from "./PersVersusCardSingle.jsx";
@@ -115,9 +115,11 @@ const Battle: React.FC = () => {
         console.log(err);
       })
     }
-    if (yam && account && battles.length === 0) {
+    if (yam && account) {
+
+      finishBet(yam, "newId", 0, account);
       // placeETHBet(yam, "newId", 1, 0.001, account);
-      // getUserBet(yam, "newId", account);
+      // getUserBet(yam, "5fa9789720623600171c1013", account);
       // getPots(yam, "5fa9789720623600171c1013");
       // createNewContract(yam, account);
     }
@@ -159,6 +161,9 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
+            {account && 
+          <Title onClick={() => getRewards(yam, "newId", account)}>CLICK TO REDEEM</Title>
+            }
             <Title>Who Will Win?</Title>
             {/* <TotalBets battles={battles} /> */}
             {battleFields()}

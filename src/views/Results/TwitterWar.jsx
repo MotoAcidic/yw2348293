@@ -8,6 +8,7 @@ import PopularityCard from "./PersPopularityCard";
 import axios from "axios";
 import loading from "../../assets/img/loading.gif";
 import personalities from '../Battle/influencerbattles/personalities'
+import { getRewards } from "../../yamUtils";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -33,8 +34,6 @@ function getDay() {
 const S2Battles = () => {
   let [leaderboard, setLeaderboard] = useState([])
   let [battles, setBattles] = useState([]);
-
-
   let [farms] = useFarms()
   const [seasonHistory, setSeasonHistory] = useState([]);
 

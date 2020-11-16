@@ -4,6 +4,7 @@ import { provider } from 'web3-core'
 
 import BigNumber from 'bignumber.js'
 import { useWallet } from 'use-wallet'
+import moment from 'moment';
 
 import ProposalJson from '../yam/clean_build/contracts/Proposal.json';
 import PASTAv1 from '../yam/clean_build/contracts/PASTAv1.json';
@@ -885,62 +886,50 @@ export const getUserBet = async (yam, betId, account) => {
 export const placeETHBet = async (yam, betId, choice, amount, account) => {
   console.log("eth bet: ", choice, amount, account);
   const precision = new BigNumber(10).pow(18);
-  let choices = await yam.contracts.betting_v2.methods.getBet(betId).call()  
+  let choices = await yam.contracts.betting_v2.methods.getBet(betId).call()
   let p = await yam.contracts.betting_v2.methods.ETHBet(betId, choices.possibleChoices[choice])
     .send({ from: account, value: new BigNumber(amount).times(precision).toString(), gas: 200000 });
-  console.log("eth bet placed: ", p)
   return (p);
 }
 
-export const getBetContracts = (yam) => {
-  // if (!yam || !yam.contracts) {
-  //   return null
-  // }
-  // const election = yam.contracts.election_betting
-  // return election
+export const getRewards = async (yam, betId, account) => {
+  let p = await yam.contracts.betting_v2.methods.getRewards(betId).send({ from: account, gas: 200000 })
+    .on('transactionHash', tx => {
+      console.log("get bet rewards: ", tx)
+      return tx.transactionHash
+    })
+  return (p);
 }
 
-export const getBetFinished = async (yam) => {
-  //   const electionFinished = await yam.contracts.election_betting.methods.winner().call();
-  //   return (electionFinished);
+export const getUserBetHistory = async (yam, account) => {
+  const betHistory = await yam.contracts.betting_v2.methods.getBetHistory(account).call()
+  console.log("bet history: ", betHistory);
+  return (betHistory);
 }
 
-export const getBetRewards = async (yam, account) => {
-  // let p = await yam.contracts.election_betting.methods.getRewards().send({ from: account, gas: 200000 })
-  //   .on('transactionHash', tx => {
-  //     console.log("get election rewards", tx)
-  //     return tx.transactionHash
-  //   })
-  // return (p);
+export const getUserCurrentBet = async (yam, betId, account) => {
+  const currentBet = await yam.contracts.betting_v2.methods.getCurrentBet(betId, account).call()
+  console.log("current bet: ", currentBet);
+  return (currentBet);
 }
 
-export const betTVL = async (yam, account) => {
-  const ethPrice = await getETHPrice(yam)
-  // const curPrice = await getCurrentPrice(yam)
-
-  // const currentBets = await getCurrentBets(yam)
-  // const trumpEth = ethPrice * currentBets.trumpETHPot
-  // const bidenEth = ethPrice * currentBets.bidenETHPot
-  // const trumpWar = curPrice * currentBets.trumpWARPot
-  // const bidenWar = curPrice * currentBets.bidenWARPot
-  // const trumpTotal = trumpEth + trumpWar
-  // const bidenTotal = bidenEth + bidenWar
-
-  // return { trumpTotal, bidenTotal }
-}
-
+/*==========================
+            ADMIN
+==========================*/
 
 export const createNewContract = async (yam, account) => {
-  const id = "newsdf";
-  const desc = "big dissdfcription";
-  const endTime = new Date(new Date() + 1 * 60 * 60 * 24 * 1000).getTime() / 1000;
-  const lastClaimTime = endTime;
-  const choice1 = "cryptobain";
-  const choice2 = "CRYOGAINZ";
+  const id = "5fa9789720623600171c1013";
+  const desc = "test";
+  // const endTime = parseInt(new Date(new Date().getTime() + 1 * 60 * 60 * 24 * 1000).getTime() / 1000);
+
+  const endTime = moment.utc('2020-11-16T05:00', "YYYY-MM-DDTHH:mm").unix();
+  const lastClaimTime = parseInt(new Date(new Date().getTime() + 30 * 60 * 60 * 24 * 1000).getTime() / 1000);
+  const choice1 = "@loomdart";
+  const choice2 = "@CryptoCobain";
 
   console.log("attempting")
   yam.contracts.betting_v2.methods.createBet(id, desc, endTime, lastClaimTime, choice1, choice2).send({ from: account, gas: 300000 }).then((res) => {
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@2", res);
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@", res);
 
   })
 }

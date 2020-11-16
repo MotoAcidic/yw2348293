@@ -226,7 +226,7 @@ contract BettingV2 is IRewardDistributionRecipient{
         require(choiceId != 0, "invalid choice string");
 
         BetChoice storage currentBet = bet.bets[msg.sender];
-        if (currentBet.choiceId == 0) {
+        if (currentBet.chstroiceId == 0) {
             currentBet.choiceId = choiceId;
         } else {
             require(currentBet.choiceId == choiceId, "Sorry. You already bet on the other side with ETH");

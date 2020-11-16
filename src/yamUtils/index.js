@@ -918,11 +918,11 @@ export const getUserCurrentBet = async (yam, betId, account) => {
 ==========================*/
 
 export const createNewContract = async (yam, account) => {
-  const id = "5fa9789720623600171c1013";
+  const id = "5fb0333be7d4582c2102a627";
   const desc = "test";
   // const endTime = parseInt(new Date(new Date().getTime() + 1 * 60 * 60 * 24 * 1000).getTime() / 1000);
 
-  const endTime = moment.utc('2020-11-16T05:00', "YYYY-MM-DDTHH:mm").unix();
+  const endTime = moment.utc('2020-11-16T06:30', "YYYY-MM-DDTHH:mm").unix();
   const lastClaimTime = parseInt(new Date(new Date().getTime() + 30 * 60 * 60 * 24 * 1000).getTime() / 1000);
   const choice1 = "@loomdart";
   const choice2 = "@CryptoCobain";

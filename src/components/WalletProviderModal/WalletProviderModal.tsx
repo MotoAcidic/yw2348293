@@ -25,6 +25,7 @@ const WalletProviderModal: React.FC<ModalProps> = ({ onDismiss }) => {
 
   return (
     <Modal>
+      <Space/>
       <ModalTitle text="Select a wallet provider." />
 
       <ModalContent>
@@ -50,9 +51,14 @@ const WalletProviderModal: React.FC<ModalProps> = ({ onDismiss }) => {
       <ModalActions>
         <Button text="Cancel" variant="secondary" onClick={onDismiss} textColor="black" />
       </ModalActions>
+      <Space/>
+
     </Modal>
   )
 }
+
+const Space = styled.div`
+height: 20px;`
 
 const StyledWalletsWrapper = styled.div`
   display: flex;

@@ -384,6 +384,7 @@ bottom: 10%;
 width: 80%;
 pointer-events: none;
 display: flex;
+user-select: none;
 justify-content: center;
 `
 

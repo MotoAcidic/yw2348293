@@ -26,9 +26,9 @@ const Community = () => {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [newSuggestion, setNewSuggestion] = useState("")
-  const [sort, setSort] = useState("new");
+  const [sort, setSort] = useState("top");
   const [userAlreadySuggested, setUserAlreadySuggested] = useState(false);
-	const [presentRulesModal] = useModal(<RulesModal />);
+  const [presentRulesModal] = useModal(<RulesModal />);
   const { account, connect } = useWallet()
   const yam = useYam()
   const {
@@ -129,15 +129,15 @@ const Community = () => {
             <SingleTop>
 
 
-            <SuggestionVotes>
-              votes:
+              <SuggestionVotes>
+                votes:
             <ColorVotes style={{ color: votesColor }}>
-                {votesSymbol}{suggestion.totalVotes}
-              </ColorVotes>
-            </SuggestionVotes>
-            <SuggestionVotes>
-              {moment(suggestion.timestamp).fromNow()}
-            </SuggestionVotes>
+                  {votesSymbol}{suggestion.totalVotes}
+                </ColorVotes>
+              </SuggestionVotes>
+              <SuggestionVotes>
+                {moment(suggestion.timestamp).fromNow()}
+              </SuggestionVotes>
             </SingleTop>
             <SuggestionText>
               {suggestion.message}
@@ -196,19 +196,20 @@ const Community = () => {
           </Icon>
         </TitleSide>
         <TitleSide>
-          <Option style={{ color: sort === "new" ? "#ffbe1a" : "white" }} onClick={() => toggleSort("new")}>
-            new
-          </Option>
-          <Option style={{ color: sort === "top" ? "#ffbe1a" : "white" }} onClick={() => toggleSort("top")}>
+          <Option style={{ color: sort === "top" ? "white" : "#ffbe1a", textDecoration: sort === "top" ? "underline" : "none" }} onClick={() => toggleSort("top")}>
             top
           </Option>
+          <Option style={{ color: sort === "new" ? "white" : "#ffbe1a", textDecoration: sort === "new" ? "underline" : "none" }} onClick={() => toggleSort("new")}>
+            new
+          </Option>
+
         </TitleSide>
       </Title>
       {styledSuggestions}
       <Pagination>
         <ReactPaginate
-        previousLabel={'◄'}
-        nextLabel={'►'}
+          previousLabel={'◄'}
+          nextLabel={'►'}
           breakLabel={'...'}
           pageCount={totalPages}
           marginPagesDisplayed={1}

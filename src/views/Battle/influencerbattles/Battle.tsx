@@ -63,24 +63,9 @@ const Battle: React.FC = () => {
   let [prevDayBattles, setPrevDayBattles] = useState([]);
   let [battles, setBattles] = useState([])
   let [schedule, setSchedule] = useState([])
+  let [yesterdaysBattle, setYesterdaysBattle] = useState([])
   let [dailyQuestion, setDailyQuestion] = useState();
   const [betRedeemModal, setBetRedeemModal] = useState(false)
-
-  const [
-    {
-      circSupply,
-      curPrice,
-      // nextRebase,
-      targetPrice,
-      totalSupply,
-    },
-    setStats
-  ] = useState<OverviewData>({});
-
-  const fetchStats = useCallback(async () => {
-    const statsData = await getStats(yam);
-    setStats(statsData);
-  }, [yam, setStats]);
 
   const fetchWarStaked = useCallback(
     async pools => {
@@ -91,10 +76,9 @@ const Battle: React.FC = () => {
   );
 
   useEffect(() => {
-    console.log("using effect");
-    if (yam && account && farms && farms[0]) {
-      fetchStats();
-      if (battles[0] && parseInt(cookie.get('displaywinnings')) === battles[0].day - 1) {
+    console.log(battles);
+    if (battles && battles.length && yesterdaysBattle.length && account) {
+      if (parseInt(cookie.get('displaywinnings')) < battles[0].day) {
         setBetRedeemModal(true)
         cookie.set('displaywinnings', battles[0].day)
       }
@@ -109,21 +93,12 @@ const Battle: React.FC = () => {
         // setPrevDayBattles(res.data.prevDayBattles);
         setBattles(res.data.battles)
         setSchedule(res.data.schedule)
-
+        setYesterdaysBattle(res.data.yesterdaysBattle)
         // setDailyQuestion(res.data.dailyQuestion);
       }).catch(err => {
         console.log(err);
       })
     }
-    if (yam && account) {
-
-      // finishBet(yam, "5fa9789720623600171c1013", 1, account);
-      // placeETHBet(yam, "newId", 1, 0.001, account);
-      // getUserBet(yam, "5fa9789720623600171c1013", account);
-      // getPots(yam, "5fb0333be7d4582c2102a627");
-      // createNewContract(yam, account);
-    }
-
   }, [yam, account, farms, farms[0], battles]);
 
   const stopProp = (e) => {
@@ -134,7 +109,6 @@ const Battle: React.FC = () => {
   const battleFields = () => {
     console.log(battles);
 
-    const yesterday = account ? <Yesterday onClick={() => setBetRedeemModal(true)}>Show Yesterdays Result</Yesterday> : null
 
     if (!battles.length) {
       return (
@@ -147,7 +121,7 @@ const Battle: React.FC = () => {
       return (
         <>
           {battles.length === 2 && <PersVersusCard battles={battles} />}
-          {battles.length === 1 && <SinglePersVersusCard battles={battles} yesterday={yesterday} />}
+          {battles.length === 1 && <SinglePersVersusCard battles={battles} />}
         </>
       )
     }
@@ -155,23 +129,24 @@ const Battle: React.FC = () => {
 
   };
 
+  console.log(yesterdaysBattle);
+  
+
   return (
     <Switch>
       <StyledCanvas>
         <BackgroundSection />
         <ContentContainer>
           <Page>
-            {/* {account &&
-              <Title onClick={() => getRewards(yam, "5fb0333be7d4582c2102a627", account)}>CLICK TO REDEEM</Title>
-            } */}
             <Title>Who Will Win?</Title>
-            {battles.length && <TotalBets battle1={battles[0]} id={battles[0]._id} />}
+            {battles && battles.length && <TotalBets battle1={battles[0]} id={battles[0]._id} />}
             {battleFields()}
+            {account && yesterdaysBattle.length && <Yesterday onClick={() => setBetRedeemModal(true)} >Show Yesterdays Result</Yesterday>}
             <SmallSpace />
-            {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
+            {/* {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
             {prevDayBattles.length > 0 &&
               <InbetweenCard battles={prevDayBattles} />
-            }
+            } */}
             <Pool3 />
             <Title>Information</Title>
             <Instructions />
@@ -181,7 +156,7 @@ const Battle: React.FC = () => {
               <Modal onClick={() => setBetRedeemModal(false)}>
                 <ModalBlock onClick={(e) => stopProp(e)}>
                   {/* {yam &&  */}
-                  <RedeemBetsModal />
+                  <RedeemBetsModal battle={yesterdaysBattle}/>
                   {/* } */}
                 </ModalBlock>
               </Modal>

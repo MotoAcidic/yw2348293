@@ -196,7 +196,7 @@ const Versus = ({ battles }) => {
 			document.body.appendChild(script);
 			setTimeout(() => {
 				setLoading(false)
-			}, 2000);
+			}, 500);
 			return () => {
 				document.body.removeChild(script);
 			}

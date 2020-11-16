@@ -93,7 +93,7 @@ const Battle: React.FC = () => {
         // setPrevDayBattles(res.data.prevDayBattles);
         setBattles(res.data.battles)
         setSchedule(res.data.schedule)
-        setYesterdaysBattle(res.data.yesterdaysBattle)
+        setYesterdaysBattle(res.data.yesterdaysBattle || [])
         // setDailyQuestion(res.data.dailyQuestion);
       }).catch(err => {
         console.log(err);

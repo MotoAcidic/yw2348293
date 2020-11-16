@@ -170,6 +170,9 @@ const Battle: React.FC = () => {
   );
 };
 
+const Space = styled.div`
+height: 40px;`
+
 const Modal = styled.div`
 border-radius: 8px;
   position: absolute;

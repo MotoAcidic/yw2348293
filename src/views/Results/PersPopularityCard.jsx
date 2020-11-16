@@ -128,7 +128,7 @@ width: 22px;
 background-image: url(${WinnerChalice});
 `
 
-const Space = styled.div`height: 61px;`
+const Space = styled.div`height: 10px;`
 
 const Divider = styled.div`
 	margin-left: 10%;
@@ -166,7 +166,7 @@ const VSContentContainer = styled.div`
 width: 30%;
 
 min-width: 300px;
-  height: 398px;
+  height: 250px;
   border-radius: 8px;
     border: solid 2px rgba(255, 183, 0, 0.3);
   background-color: rgba(256,256,256,0.08);

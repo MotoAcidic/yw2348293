@@ -120,7 +120,7 @@ export class Contracts {
     this.pricing.setProvider(provider);
     this.weth_token.setProvider(provider);
     this.election_betting.setProvider(provider);
-    // this.ap_betting.setProvider(provider);
+    this.ap_betting.setProvider(provider);
     this.everipedia.setProvider(provider);
     this.fwar.setProvider(provider);
     this.betting_v2.setProvider(provider);

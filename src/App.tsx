@@ -85,15 +85,16 @@ const App: React.FC = () => {
             <Route path="/farms/:farmId">
               <Farm />
             </Route>
-            <Route path="/crypto-battle" exact>
+            {/* <Route path="/crypto-battle" exact>
               <CryptoBattle />
-            </Route>
-            <Route path="/twitter-battle" exact>
+            </Route> */}
+            <Route path="/battle" exact>
               <InfluencerBattle />
             </Route>
-            <Route path="/battle" exact>
+            {/* this is actually just timer */}
+            {/* <Route path="/battle" exact>
               <Battle />
-            </Route>
+            </Route> */}
             <Route path="/results" exact>
               <Results />
             </Route>

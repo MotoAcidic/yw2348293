@@ -115,19 +115,14 @@ const Battle: React.FC = () => {
         console.log(err);
       })
     }
-
-    if (yam && account && farms && farms[0] && battles.length > 0) {
+    if (yam && account && battles.length === 0) {
       // placeETHBet(yam, "newId", 1, 0.001, account);
       // getUserBet(yam, "newId", account);
       // getPots(yam, "5fa9789720623600171c1013");
-
-
-
       // createNewContract(yam, account);
-
     }
 
-  }, [yam, account, farms, farms[0]]);
+  }, [yam, account, farms, farms[0], battles]);
 
   const stopProp = (e) => {
     e.stopPropagation()

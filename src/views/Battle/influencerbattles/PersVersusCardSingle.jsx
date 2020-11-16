@@ -26,6 +26,8 @@ import useFarm from '../../../hooks/useFarm'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import { getDisplayBalance } from '../../../utils/formatBalance'
 import PersVersusBet from './PersVersusBet'
+import loading from "../../../assets/img/loading.gif";
+
 
 import './swal.css';
 import './twitter.css'
@@ -71,6 +73,7 @@ const Versus = ({ battles, yesterday }) => {
 	const [voted, setVoted] = useState(false)
 	const [checked1, setChecked1] = useState(0)
 	const [betModal, setBetModal] = useState(false)
+	const [isLoading, setLoading] = useState(true)
 	let stakedBalance = useStakedBalance(contract)
 
 	const battle1 = {
@@ -86,13 +89,11 @@ const Versus = ({ battles, yesterday }) => {
 		if (!account) {
 			connect('injected')
 			setTimeout(() => {
-				cookie.set(battles[0]._id, g)
 				setChecked1(g)
 				return
 			}, 800);
 		}
 		else {
-			cookie.set(battles[0]._id, g)
 			setChecked1(g)
 		}
 	}
@@ -191,6 +192,9 @@ const Versus = ({ battles, yesterday }) => {
 			script.src = url;
 			script.async = true;
 			document.body.appendChild(script);
+			setTimeout(() => {
+				setLoading(false)
+			}, 2000);
 			return () => {
 				document.body.removeChild(script);
 			}
@@ -198,18 +202,24 @@ const Versus = ({ battles, yesterday }) => {
 	};
 
 	useEffect(() => {
-		if (account) {
+		if (account && !yam.defaultProvider) {
 			axios.post(`${getServerURI()}/api/pers-status`, {
 				address: account,
 			}).then(res => {
-				console.log(res.data);
-				setVoted(res.data)
+				if (res.data === 2 || res.data === 1) {
+					console.log(res.data);
+					setChecked1(res.data)
+					setVoted(true)
+				}
+				else {
+					setVoted(res.data)
+				}
 			}).catch(err => {
 				console.log(err);
 			})
 		}
 
-	}, [account]);
+	}, [account, yam]);
 
 	let selectedCSS1
 	let selectedCSS2
@@ -250,6 +260,7 @@ const Versus = ({ battles, yesterday }) => {
 									<a className="twitter-timeline" data-width="65%" data-height="58%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 								}
+								{isLoading && <Loading src={loading} />}
 								{useScript("https://platform.twitter.com/widgets.js")}
 							</TLVS>
 						</TLVersusItem>
@@ -275,6 +286,7 @@ const Versus = ({ battles, yesterday }) => {
 									<a className="twitter-timeline" data-width="65%" data-height="58%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 								}
+								{isLoading && <Loading src={loading} />}
 								{useScript("https://platform.twitter.com/widgets.js")}
 							</BLVS>
 						</BLVersusItem>
@@ -296,7 +308,7 @@ const Versus = ({ battles, yesterday }) => {
 
 				<PersVersusBet
 					battle1={battle1}
-					betContract={null}
+					id={battles[0]._id}
 					yesterday={yesterday}
 				/>
 
@@ -318,6 +330,11 @@ const Versus = ({ battles, yesterday }) => {
 		</>
 	)
 }
+
+const Loading = styled.img`
+	width: 200px;
+	height: 200px;
+`
 
 const Container = styled.div`
 display: flex;

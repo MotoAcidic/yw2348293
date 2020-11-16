@@ -90,7 +90,7 @@ const Battle: React.FC = () => {
     if (battles.length === 0) {
       axios.get(`${getServerURI()}/api/pers-battles`).then(res => {
         console.log("battles", res.data);
-        // setPrevDayBattles(res.data.prevDayBattles);
+        setPrevDayBattles(res.data.prevDayBattles);
         setBattles(res.data.battles)
         setSchedule(res.data.schedule)
         setYesterdaysBattle(res.data.yesterdaysBattle)

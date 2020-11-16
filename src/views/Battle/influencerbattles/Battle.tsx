@@ -113,6 +113,7 @@ const Battle: React.FC = () => {
     if (!battles.length) {
       return (
         <>
+        <Space/>
           <Title>Loading Battles...</Title>
           <NextBattle />
         </>
@@ -139,9 +140,9 @@ const Battle: React.FC = () => {
         <ContentContainer>
           <Page>
             <Title>Who Will Win?</Title>
-            {battles && battles.length && <TotalBets battle1={battles[0]} id={battles[0]._id} />}
+            {battles && battles.length > 0 && <TotalBets battle1={battles[0]} id={battles[0]._id} />}
             {battleFields()}
-            {account && yesterdaysBattle.length && <Yesterday onClick={() => setBetRedeemModal(true)} >Show Yesterdays Result</Yesterday>}
+            {account && yesterdaysBattle.length > 0 && <Yesterday onClick={() => setBetRedeemModal(true)} >Show Yesterdays Result</Yesterday>}
             <SmallSpace />
             {/* {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
             {prevDayBattles.length > 0 &&
@@ -169,6 +170,9 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const Space = styled.div`
+height: 40px;`
 
 const Modal = styled.div`
 border-radius: 8px;

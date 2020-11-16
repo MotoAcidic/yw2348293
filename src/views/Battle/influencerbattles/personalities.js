@@ -5,7 +5,6 @@ export default [
 		followerCount: '60.6k',
 		picture: "https://pbs.twimg.com/profile_images/1248734594104545284/-IrCpNRz_400x400.jpg",
 		bio: `Algorithmic trader. All algorithms forward tested publicly on @gainzybot`
-
 	},
 	{
 		name: 'ChainLinkGod.eth',

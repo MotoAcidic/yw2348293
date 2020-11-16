@@ -26,7 +26,7 @@ const Community = () => {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [newSuggestion, setNewSuggestion] = useState("")
-  const [sort, setSort] = useState("top");
+  const [sort, setSort] = useState("new");
   const [userAlreadySuggested, setUserAlreadySuggested] = useState(false);
   const [presentRulesModal] = useModal(<RulesModal />);
   const { account, connect } = useWallet()
@@ -132,7 +132,7 @@ const Community = () => {
               <SuggestionVotes>
                 votes:
             <ColorVotes style={{ color: votesColor }}>
-                  {votesSymbol}{suggestion.totalVotes}
+                  {votesSymbol}{suggestion.totalVotes.toLocaleString()}
                 </ColorVotes>
               </SuggestionVotes>
               <SuggestionVotes>
@@ -288,6 +288,7 @@ font-family: "Gilroy";
 font-size: 20px;
 font-weight: bold;
 font-stretch: normal;
+text-align: left;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;

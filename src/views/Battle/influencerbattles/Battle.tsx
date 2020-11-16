@@ -162,7 +162,7 @@ const Battle: React.FC = () => {
         <ContentContainer>
           <Page>
             {account && 
-          <Title onClick={() => getRewards(yam, "newId", account)}>CLICK TO REDEEM</Title>
+          <Title onClick={() => getRewards(yam, "5fa9789720623600171c1013", account)}>CLICK TO REDEEM</Title>
             }
             <Title>Who Will Win?</Title>
             {/* <TotalBets battles={battles} /> */}

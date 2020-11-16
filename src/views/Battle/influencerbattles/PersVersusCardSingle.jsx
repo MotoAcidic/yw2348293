@@ -26,7 +26,9 @@ import useFarm from '../../../hooks/useFarm'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import { getDisplayBalance } from '../../../utils/formatBalance'
 import PersVersusBet from './PersVersusBet'
+import PlaceBet from './PlaceBet'
 import loading from "../../../assets/img/loading.gif";
+import useModal from '../../../hooks/useModal'
 
 
 import './swal.css';
@@ -201,6 +203,14 @@ const Versus = ({ battles, yesterday }) => {
 		}, [url]);
 	};
 
+	const [onPresentBet] = useModal(
+		<PlaceBet
+			battle1={battle1}
+			contender={checked1 === 1 ? battle1.pers1.handle : battle1.pers2.handle}
+			id={battles[0]._id}
+		/>
+	)
+
 	useEffect(() => {
 		if (account && !yam.defaultProvider) {
 			axios.post(`${getServerURI()}/api/pers-status`, {
@@ -292,17 +302,24 @@ const Versus = ({ battles, yesterday }) => {
 						</BLVersusItem>
 					</Options>
 					{checked1 !== 0 &&
-						<BattleButtonWrapper >
-							<BattleButtonContainer checked={checked1}>
-								{!voted ?
-									<BattleButton onClick={castVote} >
-										Battle
+						<>
+							<BattleButtonWrapper >
+								<BattleButtonContainer checked={checked1}>
+									{!voted ?
+										<BattleButton onClick={castVote} >
+											Battle
+									</BattleButton>
+										:
+										<BattleText>Voted</BattleText>
+									}
+								</BattleButtonContainer>
+								<BetButtonContainer checked={checked1}>
+									<BattleButton onClick={onPresentBet} >
+										Bet
 								</BattleButton>
-									:
-									<BattleText>Voted</BattleText>
-								}
-							</BattleButtonContainer>
-						</BattleButtonWrapper>
+								</BetButtonContainer>
+							</BattleButtonWrapper>
+						</>
 					}
 				</VersusContainer>
 
@@ -313,13 +330,17 @@ const Versus = ({ battles, yesterday }) => {
 				/>
 
 
-				{/* <div style={betModal ? { display: 'block' } : { display: 'none', height: '0px' }}>
-				<Modal onClick={() => setBetModal(false)}>
-					<ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
-						{yam && }
-					</ModalBlock>
-				</Modal>
-			</div> */}
+				{/* <div style={betModal ? { display: 'block' } : { display: 'none' }}>
+					<Modal onClick={() => setBetModal(false)}>
+						<ModalBlock onClick={(e) => stopProp(e)}  >
+							{yam && <PlaceBet
+								battle1={battle1}
+								id={battles[0]._id}
+								yesterday={yesterday}
+							/>}
+						</ModalBlock>
+					</Modal>
+				</div> */}
 			</Container>
 
 			<TotalVotesSection>
@@ -354,11 +375,12 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   z-index: 14000;
+  margin-top: 30px;
 `
 
 const BattleButtonWrapper = styled.span`
 position: relative;
-bottom: 9%;
+bottom: 10%;
 width: 80%;
 pointer-events: none;
 display: flex;
@@ -404,20 +426,33 @@ font-family: "Edo";
 `
 
 const BattleButtonContainer = styled.div`
-transform: translateX(${props => props.checked === 1 ? 170 : -150}px) skew(3deg);
+position: absolute;
+transform: translateX(${props => props.checked === 1 ? 170 : -299}px) skew(3deg);
 width: 230px;
 transition: transform .2s ease-out;
 background-image: url(${Metal});
 border: 10px black solid;
 border-width: 10px 5px 12px 5px;
-background-size: cover;
+background-size: 250px 100px;
+pointer-events: all;
+`
+
+const BetButtonContainer = styled.div`
+position: absolute;
+transform: translateX(${props => props.checked === 1 ? 370 : -99}px) skew(3deg);
+width: 120px;
+transition: transform .2s ease-out;
+background-image: url(${Metal});
+border: 10px black solid;
+border-width: 10px 5px 12px 5px;
+background-size: 300px 100px;
 pointer-events: all;
 `
 
 const BattleText = styled.div`
 font-family: "Edo";
 	font-weight: normal;
-	font-size: 60px;
+	font-size: 50px;
 	background: linear-gradient(blue, purple, black);
 	-webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

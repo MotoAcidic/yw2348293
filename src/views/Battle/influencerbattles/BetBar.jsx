@@ -48,31 +48,28 @@ const Battle = ({ battle1, id }) => {
   const [farmBalances, setFarmBalances] = useState({ bal1: 0, bal2: 0 });
 
   useEffect(() => {
-    const getBets = async () => {
+    const getYourBets = async () => {
+      let precision = new BigNumber(10).pow(18)
       let balances = await getUserBet(yam, id, account);
       if (balances) {
         if (balances.choiceId === battle1.pool1.name)
-          setFarmBalances({ bal1: balances.value, bal2: 0 });
+          setFarmBalances({ bal1: new BigNumber(balances.value).div(precision).toNumber(), bal2: 0 });
         else
-          setFarmBalances({ bal1: 0, bal2: balances.value });
+          setFarmBalances({ bal1: 0, bal2: new BigNumber(balances.value).div(precision).toNumber() });
       }
+    }
+    const getAllBets = async () => {
+      let precision = new BigNumber(10).pow(18)
       let bets = await getPots(yam, id);
-      setFarmBets({ pot1: bets[0].value, pot2: bets[1].value });
-
-      // createNewContract(yam, account);
-      // getPots(yam, "newId");
-      // const bets = await getPots(yam);
-      // const balances = await getCurrentBet(yam, account);
-      // setFarmBalances(balances);
-      // // console.log("gotbets", bets);
-      // setFarmBets(bets);
+      setFarmBets({ pot1: new BigNumber(bets[0].value).div(precision).toNumber(), pot2: new BigNumber(bets[1].value).div(precision).toNumber() });
     }
     console.log("got da yams???", yam)
     if (!yam.defaultProvider && account) {
-      console.log("got da yams");
-      getBets();
+      getYourBets();
     }
-
+    if (yam) {
+      getAllBets()
+    }
   }, [yam, account])
 
   console.log(battle1);

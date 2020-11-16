@@ -36,7 +36,7 @@ function getServerURI() {
 	return 'https://yieldwars-api.herokuapp.com'
 }
 
-const Bet = () => {
+const Bet = ({battle}) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	// const {
@@ -60,7 +60,6 @@ const Bet = () => {
 	// const [battle1Input, setBattle1Input] = useState(0);
 	// const [battle2Input, setBattle2Input] = useState(0);
 	// const [disabled, setDisabled] = useState(false)
-	const [battle, setBattle] = useState(null)
 	const [farmBets, setFarmBets] = useState({ pot1: 0, pot2: 0, pot3: 0, pot4: 0 });
 	const [farmBalances, setFarmBalances] = useState({ bal1: 0, bal2: 0, bal3: 0, bal4: 0 });
 	// const stakedBalance = useStakedBalance(contract)
@@ -80,15 +79,6 @@ const Bet = () => {
 	// 	harvest(contract, account);
 	// 	onPresentUnstake()
 	// }
-
-	useEffect(() => {
-		if (yam) {
-			axios.get(`${getServerURI()}/api/prev-pers-battle`).then(res => {
-				console.log("yesterdaybattle", res.data);
-				setBattle(res.data)
-			})
-		}
-	}, [yam, account])
 
 	if (!battle || !battle.length) {
 		return null

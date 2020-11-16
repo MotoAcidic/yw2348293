@@ -53,7 +53,7 @@ function getServerURI() {
 let cookie = new Cookie()
 
 
-const Versus = ({ battles, yesterday }) => {
+const Versus = ({ battles }) => {
 	const {
 		contract,
 		depositToken,

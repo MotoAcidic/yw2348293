@@ -221,7 +221,7 @@ export class Contracts {
     this.weth_token.options.address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
     this.election_betting.options.address = addressMap["ElectionBetting"];
     
-    // this.betting_v2.options.address = addressMap["BetV2"];
+    this.betting_v2.options.address = addressMap["BetV2"];
 
     this.ap_betting.options.address = addressMap["APBetting"];
     this.everipedia.options.address = addressMap["Everipedia"];

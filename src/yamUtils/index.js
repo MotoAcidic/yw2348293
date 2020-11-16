@@ -759,7 +759,7 @@ export const electionTVL = async (yam, account) => {
   const bidenWar = curPrice * currentBets.bidenWARPot
   const trumpTotal = trumpEth + trumpWar
   const bidenTotal = bidenEth + bidenWar
-  
+
   return { trumpTotal, bidenTotal }
 }
 
@@ -862,14 +862,18 @@ export const TVL_AP = async (yam, account) => {
   const choice2War = curPrice * currentBets.choice2WARPot
   const choice1Total = choice1Eth + choice1War
   const choice2Total = choice2Eth + choice2War
-  
+
   return { choice1Total, choice2Total }
 }
 
 /* ======================================
             bet v2 methods
 ====================================== */
-export const getBetsTotal = async (yam, betId) => {
+export const getPots = async (yam, betId) => {
+  const potsTotal = await yam.contracts.betting_v2.methods.getPots(betId).call()
+  console.log("420ayylmao", potsTotal);
+  return (potsTotal);
+
   // const precision = new BigNumber(10).pow(18);
 
   // const trumpETHPot = new BigNumber(await yam.contracts.election_betting.methods.trumpETHPot().call()) / precision;
@@ -913,8 +917,8 @@ export const getBetContracts = (yam) => {
 }
 
 export const getBetFinished = async (yam) => {
-//   const electionFinished = await yam.contracts.election_betting.methods.winner().call();
-//   return (electionFinished);
+  //   const electionFinished = await yam.contracts.election_betting.methods.winner().call();
+  //   return (electionFinished);
 }
 
 export const getBetRewards = async (yam, account) => {
@@ -937,6 +941,22 @@ export const betTVL = async (yam, account) => {
   // const bidenWar = curPrice * currentBets.bidenWARPot
   // const trumpTotal = trumpEth + trumpWar
   // const bidenTotal = bidenEth + bidenWar
-  
+
   // return { trumpTotal, bidenTotal }
+}
+
+
+export const createNewContract = async (yam, contractVariables) => {
+  const id = "newID";
+  const desc = "big discription";
+  const endTime = new Date(new Date() + 1 * 60 * 60 * 24 * 1000).getTime() / 1000;
+  const lastClaimTime = endTime;
+  const choice1 = "cryptocobain";
+  const choice2 = "CRYPTOGAINZ";
+
+  console.log("attempting")
+  yam.contracts.betting_v2.methods.createBet(id, desc, endTime, lastClaimTime, choice1, choice2).call().then((res) => {
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@2", res);
+
+  })
 }

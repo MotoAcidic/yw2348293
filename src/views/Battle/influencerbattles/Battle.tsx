@@ -9,7 +9,7 @@ import { useWallet } from "use-wallet";
 import Background from '../../../assets/img/bg3.svg'
 import Pool3 from "./Pool3";
 import useFarms from "../../../hooks/useFarms";
-import { getWarStaked } from "../../../yamUtils";
+import { getWarStaked, createNewContract } from "../../../yamUtils";
 import { getStats } from "./utils";
 import PersVersusCard from "./PersVersusCard.jsx";
 import SinglePersVersusCard from "./PersVersusCardSingle.jsx";
@@ -115,6 +115,12 @@ const Battle: React.FC = () => {
         console.log(err);
       })
     }
+
+    if (yam && account) {
+      createNewContract(yam, null);
+
+    }
+
   }, [yam, account, farms, farms[0]]);
 
   const stopProp = (e) => {

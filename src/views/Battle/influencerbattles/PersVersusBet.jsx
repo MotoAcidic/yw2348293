@@ -103,25 +103,25 @@ const Bet = ({ battle1, id, yesterday }) => {
 
 	}, [yam, account])
 
-	const placeBet = () => {
-		if (yam && account) {
-			// if (stakedBalance) {
-			// 	claimAndUnstake()
-			// 	return
-			// }
-			if (battle1Input && contender1) {
-				const candidate = contender1 === battle1.pers1.handle ? 0 : 1;
-				console.log(candidate);
-				console.log(battle1.pers1);
-				console.log(contender1)
-				placeETHBet(yam, id, candidate, battle1Input, account)
-				// placeElectionWARBet(yam, candidate, warInput, account);
-			}
-			else {
-				Swal.fire("Place a bet for a candidate!");
-			}
-		}
-	}
+	// const placeBet = () => {
+	// 	if (yam && account) {
+	// 		// if (stakedBalance) {
+	// 		// 	claimAndUnstake()
+	// 		// 	return
+	// 		// }
+	// 		if (battle1Input && contender1) {
+	// 			const candidate = contender1 === battle1.pers1.handle ? 0 : 1;
+	// 			console.log(candidate);
+	// 			console.log(battle1.pers1);
+	// 			console.log(contender1)
+	// 			placeETHBet(yam, id, candidate, battle1Input, account)
+	// 			// placeElectionWARBet(yam, candidate, warInput, account);
+	// 		}
+	// 		else {
+	// 			Swal.fire("Place a bet for a candidate!");
+	// 		}
+	// 	}
+	// }
 
 	return (
 		<Container>

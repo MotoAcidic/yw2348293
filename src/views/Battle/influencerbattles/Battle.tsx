@@ -161,11 +161,11 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
-            {account && 
-          <Title onClick={() => getRewards(yam, "5fa9789720623600171c1013", account)}>CLICK TO REDEEM</Title>
-            }
+            {/* {account &&
+              <Title onClick={() => getRewards(yam, "5fb0333be7d4582c2102a627", account)}>CLICK TO REDEEM</Title>
+            } */}
             <Title>Who Will Win?</Title>
-            {/* <TotalBets battles={battles} /> */}
+            {battles.length && <TotalBets battle1={battles[0]} id={battles[0]._id} />}
             {battleFields()}
             <SmallSpace />
             {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}

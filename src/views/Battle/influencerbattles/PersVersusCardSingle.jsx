@@ -308,7 +308,7 @@ const Versus = ({ battles, yesterday }) => {
 									{!voted ?
 										<BattleButton onClick={castVote} >
 											Battle
-									</BattleButton>
+										</BattleButton>
 										:
 										<BattleText>Voted</BattleText>
 									}
@@ -316,18 +316,18 @@ const Versus = ({ battles, yesterday }) => {
 								<BetButtonContainer checked={checked1}>
 									<BattleButton onClick={onPresentBet} >
 										Bet
-								</BattleButton>
+									</BattleButton>
 								</BetButtonContainer>
 							</BattleButtonWrapper>
 						</>
 					}
 				</VersusContainer>
 
-				<PersVersusBet
+				{/* <PersVersusBet
 					battle1={battle1}
 					id={battles[0]._id}
 					yesterday={yesterday}
-				/>
+				/> */}
 
 
 				{/* <div style={betModal ? { display: 'block' } : { display: 'none' }}>
@@ -427,8 +427,8 @@ font-family: "Edo";
 
 const BattleButtonContainer = styled.div`
 position: absolute;
-transform: translateX(${props => props.checked === 1 ? 170 : -299}px) skew(3deg);
-width: 230px;
+transform: translateX(${props => props.checked === 1 ? 150 : -270}px) skew(3deg);
+width: 200px;
 transition: transform .2s ease-out;
 background-image: url(${Metal});
 border: 10px black solid;
@@ -439,7 +439,7 @@ pointer-events: all;
 
 const BetButtonContainer = styled.div`
 position: absolute;
-transform: translateX(${props => props.checked === 1 ? 370 : -99}px) skew(3deg);
+transform: translateX(${props => props.checked === 1 ? 330 : -90}px) skew(3deg);
 width: 120px;
 transition: transform .2s ease-out;
 background-image: url(${Metal});
@@ -783,11 +783,11 @@ const VersusContainer = !isMobile() ? styled.div`
 // height: 100%;
 // min-height: 550px;
 width: 60%;
-height: 60vh;
-min-height: 600px;
+height: 55vh;
+min-height: 520px;
 margin-top: 15px;
 margin-bottom: 20px;
-min-width: 800px;
+min-width: 830px;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -822,8 +822,9 @@ const StyledContent = styled.div`
   display: flex;
 	flex-direction: row;
 	height: 30%;
-	width: 60%;
-	align-items: space-evenly;
+	width: 75%;
+	align-items: center;
+	justify-content: space-evenly;
 `
 
 const SubTitle = !isMobile() ? styled.div`

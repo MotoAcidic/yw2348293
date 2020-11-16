@@ -12,6 +12,7 @@ import useFarms from "../../../hooks/useFarms";
 import { getWarStaked } from "../../../yamUtils";
 import { getStats } from "./utils";
 import moment from "moment";
+import { placeETHBet, getPots, getUserBet } from '../../../yamUtils'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -36,42 +37,63 @@ function getServerURI() {
 }
 
 
-const Battle = ({ battles }) => {
+const Battle = ({ battle1, id }) => {
   let [farms] = useFarms()
   const yam = useYam()
   let [warStaked, setWarStaked] = useState({
     warStaked: new BigNumber(0)
   });
   const { account, connect } = useWallet()
-
-  let [totalBets, setTotalBets] = useState({ bets1: 0, bets2: 0 })
+  const [farmBets, setFarmBets] = useState({ pot1: 0, pot2: 0 });
+  const [farmBalances, setFarmBalances] = useState({ bal1: 0, bal2: 0 });
 
   useEffect(() => {
-    console.log("using effect");
-    if (yam && account && farms && farms[0]) {
+    const getBets = async () => {
+      let balances = await getUserBet(yam, id, account);
+      if (balances) {
+        if (balances.choiceId === battle1.pool1.name)
+          setFarmBalances({ bal1: balances.value, bal2: 0 });
+        else
+          setFarmBalances({ bal1: 0, bal2: balances.value });
+      }
+      let bets = await getPots(yam, id);
+      setFarmBets({ pot1: bets[0].value, pot2: bets[1].value });
 
+      // createNewContract(yam, account);
+      // getPots(yam, "newId");
+      // const bets = await getPots(yam);
+      // const balances = await getCurrentBet(yam, account);
+      // setFarmBalances(balances);
+      // // console.log("gotbets", bets);
+      // setFarmBets(bets);
     }
-    if (yam && farms) {
-
+    console.log("got da yams???", yam)
+    if (!yam.defaultProvider && account) {
+      console.log("got da yams");
+      getBets();
     }
-    if (battles.length === 0) {
 
-    }
+  }, [yam, account])
 
-  }, [yam, account, farms, farms[0]]);
-
-  console.log(battles);
-
-  if (!battles.length) {
-    return null
-  }
+  console.log(battle1);
 
   return (
     <BetsDisplayContainer>
-      <Item>Current Bets:</Item>
-      <Item>{battles[0].pool1.name} 💰${totalBets.bets1.toLocaleString()}</Item>
+      <YourBetSection>
+        <Item>Your Bets:</Item>
+        {!farmBalances.bal1 > 0 && !farmBalances.bal2 > 0 ?
+          <Item>none</Item>
+          : null
+        }
+        {farmBalances.bal1 > 0 ? <Item>{battle1.pool1.name} 💰${farmBalances.bal1.toLocaleString()}</Item> : null}
+        {farmBalances.bal2 > 0 ? <Item>{battle1.pool2.name} 💰${farmBalances.bal2.toLocaleString()}</Item> : null}
+      </YourBetSection>
+      <BetSection>
+        <Item>Current Bets:</Item>
+        <Item>{battle1.pool1.name} 💰${farmBets.pot1.toLocaleString()}</Item>
         |
-      <Item>{battles[0].pool2.name} 💰${totalBets.bets2.toLocaleString()}</Item>      
+        <Item>{battle1.pool2.name} 💰${farmBets.pot2.toLocaleString()}</Item>
+      </BetSection>
     </BetsDisplayContainer>
   );
 };
@@ -84,9 +106,10 @@ const BetsDisplayContainer = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
-width: 30%;
+width: 70%;
 font-family: "Gilroy";
-margin-bottom: 5px;
+margin-bottom: 0px;
+margin-top: 15px;
   font-size: 14px;
   font-weight: normal;
   font-stretch: normal;
@@ -94,6 +117,20 @@ margin-bottom: 5px;
   line-height: 1;
   letter-spacing: normal;
   color: #ffffff;
+`
+
+const BetSection = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+width: 40%
+`
+
+const YourBetSection = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+width: 20%
 `
 
 const BigTitle = styled.div`

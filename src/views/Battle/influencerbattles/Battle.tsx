@@ -9,7 +9,7 @@ import { useWallet } from "use-wallet";
 import Background from '../../../assets/img/bg3.svg'
 import Pool3 from "./Pool3";
 import useFarms from "../../../hooks/useFarms";
-import { getWarStaked } from "../../../yamUtils";
+import { getWarStaked, createNewContract } from "../../../yamUtils";
 import { getStats } from "./utils";
 import PersVersusCard from "./PersVersusCard.jsx";
 import SinglePersVersusCard from "./PersVersusCardSingle.jsx";
@@ -93,7 +93,7 @@ const Battle: React.FC = () => {
   useEffect(() => {
     console.log("using effect");
     if (yam && account && farms && farms[0]) {
-      fetchStats();        
+      fetchStats();
       if (battles[0] && parseInt(cookie.get('displaywinnings')) === battles[0].day - 1) {
         setBetRedeemModal(true)
         cookie.set('displaywinnings', battles[0].day)
@@ -115,15 +115,23 @@ const Battle: React.FC = () => {
         console.log(err);
       })
     }
+
+    if (yam && account) {
+      createNewContract(yam, null);
+
+    }
+
   }, [yam, account, farms, farms[0]]);
 
   const stopProp = (e) => {
-		e.stopPropagation()
-	}
+    e.stopPropagation()
+  }
 
 
   const battleFields = () => {
     console.log(battles);
+
+    const yesterday = account ? <Yesterday onClick={() => setBetRedeemModal(true)}>Show Yesterdays Result</Yesterday> : null
 
     if (!battles.length) {
       return (
@@ -136,7 +144,7 @@ const Battle: React.FC = () => {
       return (
         <>
           {battles.length === 2 && <PersVersusCard battles={battles} />}
-          {battles.length === 1 && <SinglePersVersusCard battles={battles} />}
+          {battles.length === 1 && <SinglePersVersusCard battles={battles} yesterday={yesterday} />}
         </>
       )
     }
@@ -153,7 +161,7 @@ const Battle: React.FC = () => {
             <Title>Who Will Win?</Title>
             {/* <TotalBets battles={battles} /> */}
             {battleFields()}
-            <Yesterday onClick={() => setBetRedeemModal(true)}>Show Yesterdays Result</Yesterday>
+
             <SmallSpace />
             {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
             {prevDayBattles.length > 0 &&
@@ -166,8 +174,10 @@ const Battle: React.FC = () => {
             <Schedule schedule={schedule} />
             <div style={betRedeemModal ? { display: 'block' } : { display: 'none' }}>
               <Modal onClick={() => setBetRedeemModal(false)}>
-                <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
-                  {yam && <RedeemBetsModal />}
+                <ModalBlock onClick={(e) => stopProp(e)}>
+                  {/* {yam &&  */}
+                  <RedeemBetsModal />
+                  {/* } */}
                 </ModalBlock>
               </Modal>
             </div>
@@ -202,12 +212,12 @@ font-family: "Gilroy";
   color: #ffffff;
   cursor: pointer;
   text-decoration: underline
+  margin: auto;
 `
 
 const ModalBlock = styled.div`
-width: 534px;
-height: 0px;
 margin-top: 23vh;
+height: fit-content;
 `
 
 const BigTitle = styled.div`

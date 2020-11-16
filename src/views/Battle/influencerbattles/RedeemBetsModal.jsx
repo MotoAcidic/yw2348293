@@ -84,6 +84,7 @@ const Bet = () => {
 	useEffect(() => {
 		if (yam) {
 			axios.get(`${getServerURI()}/api/prev-pers-battle`).then(res => {
+				console.log("yesterdaybattle", res.data);
 				setBattle(res.data)
 			})
 		}
@@ -113,7 +114,6 @@ const Bet = () => {
 						Your Claimable Bets
 					</Text>
 					<YourBets>
-
 					</YourBets>
 					{/* <Text>
 						Your Bets

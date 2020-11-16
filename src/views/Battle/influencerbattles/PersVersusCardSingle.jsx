@@ -49,7 +49,7 @@ function getServerURI() {
 let cookie = new Cookie()
 
 
-const Versus = ({ battles }) => {
+const Versus = ({ battles, yesterday }) => {
 	const {
 		contract,
 		depositToken,
@@ -297,6 +297,7 @@ const Versus = ({ battles }) => {
 				<PersVersusBet
 					battle1={battle1}
 					betContract={null}
+					yesterday={yesterday}
 				/>
 
 

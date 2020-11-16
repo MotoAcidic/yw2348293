@@ -25,7 +25,7 @@ export interface OverviewData {
 }
 
 
-const Value: React.FC= () => {
+const Value: React.FC = () => {
   const yam = useYam()
   let [farms] = useFarms()
   const [
@@ -38,7 +38,7 @@ const Value: React.FC= () => {
     warStaked: new BigNumber(0),
     circSupply: new BigNumber(0)
   });
-  
+
   const fetchWarStaked = useCallback(
     async pools => {
       const st = await getWarStaked(pools, yam);
@@ -69,7 +69,7 @@ const Value: React.FC= () => {
     <TopDisplayContainer>
       <DisplayItem>
         $War Price:&nbsp;
-{currentPrice
+          {currentPrice
           ? `$${Number(currentPrice).toLocaleString(undefined, {
             minimumFractionDigits: 4,
             maximumFractionDigits: 4
@@ -78,7 +78,7 @@ const Value: React.FC= () => {
       </DisplayItem>
       <DisplayItem>
         Supply Staked:&nbsp;
-{warStaked && !warStaked.warStaked.eq(0)
+          {warStaked && !warStaked.warStaked.eq(0)
           ? `${Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
@@ -87,7 +87,7 @@ const Value: React.FC= () => {
       </DisplayItem>
       <DisplayItem>
         Marketcap:&nbsp;
-{currentPrice && warStaked && !warStaked.circSupply.eq(0)
+          {currentPrice && warStaked && !warStaked.circSupply.eq(0)
           ? `$${Number(warStaked.circSupply.multipliedBy(currentPrice).dividedBy(10 ** 18).toFixed(2)).toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2

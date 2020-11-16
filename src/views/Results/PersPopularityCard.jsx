@@ -221,11 +221,11 @@ flex-direction: row;
 align-items: center;
 font-size: 16px;
 border-radius: 10px;
-// cursor: pointer;
-// transition: all .1s linear;
-// &:hover {
-//   background-color: rgba(256,256,256,0.05);
-// }
+cursor: pointer;
+transition: all .1s linear;
+&:hover {
+  background-color: rgba(256,256,256,0.05);
+}
 `
 
 export default PopularityCard

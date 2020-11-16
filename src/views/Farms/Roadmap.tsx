@@ -159,25 +159,25 @@ const Roadmap = () => {
             <a
               className="medium-link"
               style={{ color: "white" }}
-              href="https://yieldwars.medium.com/introducing-yieldwars-the-presidential-election-battle-e93929853fef"
+              href="https://yieldwars.medium.com/the-twitter-war-bracket-is-here-are-you-ready-for-battle-%EF%B8%8F-5529f1d4adcf"
               target="_blank"
               rel="noopener noreferrer"
             >
-              The Presidential Election Battle
+              The Twitter WAR Bracket is Here!
                 </a>
-                Oct 30
+                Nov 14
               </LinkSection>
           <LinkSection>
             <a
               className="medium-link"
               style={{ color: "white" }}
-              href="https://yieldwars.medium.com/the-season-3-selection-process-has-begun-heres-how-to-apply-b4ac90274b2"
+              href="https://yieldwars.medium.com/yieldwars-election-recap-and-twitter-war-update-6a27fd3d4d96"
               target="_blank"
               rel="noopener noreferrer"
             >
-              The Season 3 Selection Process Has Begun!
+              YieldWars Election Recap
                 </a>
-                Oct 23
+                Nov 7
               </LinkSection>
           <LinkSection>
             <a
@@ -219,18 +219,6 @@ const Roadmap = () => {
             <a
               className="medium-link"
               style={{ color: "white" }}
-              href="https://medium.com/@yieldwars/war-liquidity-has-been-unleashed-prepare-for-battle-yieldwars-battle-directions-inside-e0db48b58306"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Liquidity Pool Rewards Unleashed
-                </a>
-                Sep 28
-              </LinkSection>
-          <LinkSection>
-            <a
-              className="medium-link"
-              style={{ color: "white" }}
               href="https://medium.com/@yieldwars/yieldwars-day-1-recap-and-future-plans-aa88082379b8" target="_blank"
               rel="noopener noreferrer"
             >
@@ -249,18 +237,6 @@ const Roadmap = () => {
               Welcome to YieldWars
                 </a>
                 Sep 16
-              </LinkSection>
-          <LinkSection>
-            <a
-              className="medium-link"
-              style={{ color: "white" }}
-              href="https://medium.com/@yieldwars/an-open-letter-to-every-humble-farmer-9cfd97b4dfe9"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              An Open Letter to Every Humble 👨🏻‍🌾
-                </a>
-                Aug 29
               </LinkSection>
         </TextSection>
       </MediumSection>

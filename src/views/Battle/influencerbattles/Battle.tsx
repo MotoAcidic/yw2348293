@@ -174,8 +174,10 @@ const Battle: React.FC = () => {
             }
             <Pool3 />
             <Title>Information</Title>
+            <SmallSpace />
             <Instructions />
             <Title>Schedule</Title>
+            <SmallSpace />
             <Schedule schedule={schedule} />
             <div style={betRedeemModal ? { display: 'block' } : { display: 'none' }}>
               <Modal onClick={() => setBetRedeemModal(false)}>

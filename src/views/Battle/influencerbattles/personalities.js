@@ -1,39 +1,39 @@
 export default [
 	{
-		name: 'Cobie',
-		handle: '@CryptoCobain',
-		followerCount: '174,700',
-		picture: "https://pbs.twimg.com/profile_images/1312496285585469440/73Cf84lP_400x400.jpg",
-		bio: `performance artist, musical chairs world champion 2014 & 2015`
-	},
-	{
 		name: 'CryptoGainz',
 		handle: '@CryptoGainz1',
-		followerCount: '59,000',
+		followerCount: '60.6k',
 		picture: "https://pbs.twimg.com/profile_images/1248734594104545284/-IrCpNRz_400x400.jpg",
 		bio: `Algorithmic trader. All algorithms forward tested publicly on @gainzybot`
 
 	},
 	{
+		name: 'KING CO฿IE',
+		handle: '@CryptoCobain',
+		followerCount: '175k',
+		picture: "https://pbs.twimg.com/profile_images/1312496285585469440/73Cf84lP_400x400.jpg",
+		bio: `performance artist, musical chairs world champion 2014 & 2015`
+	},
+	{
+		name: 'ChainLinkGod',
+		handle: '@ChainLinkGod',
+		followerCount: '60.7k',
+		picture: "https://pbs.twimg.com/profile_images/1245422014988349440/leUuHBXG_400x400.jpg",
+		bio: `Crypto-speculator. I am not your financial advisor.`
+	},
+	{
 		name: 'Ad_Infinitum',
 		handle: '@CryptoMessiah',
-		followerCount: '68,200',
+		followerCount: '69k',
 		picture: "https://pbs.twimg.com/profile_images/1315161975576502274/GJ2iCIq-_400x400.jpg",
 		bio: `Having fun staying poor! | C.E. 
 		@realhxro
 		 | C.S. graduate | I dump in prod | APE TOGETHER STRONG`
 	},
 	{
-		name: 'Sicarious',
-		handle: '@Sicarious_',
-		followerCount: '60,300',
-		picture: "https://pbs.twimg.com/profile_images/1301963707417849856/jLmyKP7f_400x400.jpg",
-		bio: `Crypto-speculator. I am not your financial advisor.`
-	},
-	{
 		name: 'WendyO',
 		handle: '@CryptoWendyO',
-		followerCount: '61,500',
+		followerCount: '62.5k',
 		picture: "https://pbs.twimg.com/profile_images/1309485743979413505/FVbn8dUn_400x400.jpg",
 		bio: `Crypto Event Host | Charts | Marketing | Your Mom
 		Biz inquiries: CryptoWendyO@protonmail.com |

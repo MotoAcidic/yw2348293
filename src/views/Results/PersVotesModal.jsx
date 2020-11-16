@@ -63,7 +63,7 @@ const VotesModal  = ({ battleId, pool1, pool2, winner }) => {
 
   return (
     <Modallg>
-      <Label />
+      <Space/>
       <ModalTitle text="Recorded Votes" />
       <Label />
       <ModalContent>
@@ -97,6 +97,9 @@ const VotesModal  = ({ battleId, pool1, pool2, winner }) => {
     </Modallg>
   )
 }
+
+const Space = styled.div`
+height: 20px;`
 
 const TotalVotes = styled.h4`
 font-family: "Gilroy";

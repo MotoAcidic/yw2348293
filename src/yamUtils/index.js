@@ -871,20 +871,15 @@ export const TVL_AP = async (yam, account) => {
 ====================================== */
 export const getPots = async (yam, betId) => {
   const potsTotal = await yam.contracts.betting_v2.methods.getPots(betId).call()
-  console.log("420ayylmao", potsTotal);
+  console.log("get pots: ", potsTotal);
   return (potsTotal);
-
-  // const precision = new BigNumber(10).pow(18);
-
-  // const trumpETHPot = new BigNumber(await yam.contracts.election_betting.methods.trumpETHPot().call()) / precision;
-  // const bidenETHPot = new BigNumber(await yam.contracts.election_betting.methods.bidenETHPot().call()) / precision;
-  // const trumpWARPot = new BigNumber(await yam.contracts.election_betting.methods.trumpWARPot().call()) / precision;
-  // const bidenWARPot = new BigNumber(await yam.contracts.election_betting.methods.bidenWARPot().call()) / precision;
-
-  // return ({ trumpETHPot, bidenETHPot, trumpWARPot, bidenWARPot });
 }
 
-export const getBetsUser = async (yam, account, betId) => {
+export const getCurrentBet = async (yam, betId, account) => {
+  const currentBet = await yam.contracts.betting_v2.methods.getCurrentBet(betId, account).call()
+  console.log("get current bet: ", currentBet);
+  return (currentBet);
+
   // if (yam.defaultProvider) {
   //   return ({ trumpETHBal: 0, bidenETHBal: 0, trumpWARBal: 0, bidenWARBal: 0 });
   // }
@@ -894,7 +889,6 @@ export const getBetsUser = async (yam, account, betId) => {
   // const bidenETHBal = new BigNumber(await yam.contracts.election_betting.methods.bidenETHBet(account).call()) / precision;
   // const trumpWARBal = new BigNumber(await yam.contracts.election_betting.methods.trumpWARBet(account).call()) / precision;
   // const bidenWARBal = new BigNumber(await yam.contracts.election_betting.methods.bidenWARBet(account).call()) / precision;
-
 
   // return ({ trumpETHBal, bidenETHBal, trumpWARBal, bidenWARBal });
 }
@@ -946,16 +940,16 @@ export const betTVL = async (yam, account) => {
 }
 
 
-export const createNewContract = async (yam, contractVariables) => {
-  const id = "newID";
-  const desc = "big discription";
+export const createNewContract = async (yam, account) => {
+  const id = "newsdf";
+  const desc = "big dissdfcription";
   const endTime = new Date(new Date() + 1 * 60 * 60 * 24 * 1000).getTime() / 1000;
   const lastClaimTime = endTime;
-  const choice1 = "cryptocobain";
-  const choice2 = "CRYPTOGAINZ";
+  const choice1 = "cryptobain";
+  const choice2 = "CRYOGAINZ";
 
   console.log("attempting")
-  yam.contracts.betting_v2.methods.createBet(id, desc, endTime, lastClaimTime, choice1, choice2).call().then((res) => {
+  yam.contracts.betting_v2.methods.createBet(id, desc, endTime, lastClaimTime, choice1, choice2).send({ from: account, gas: 300000 }).then((res) => {
     console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@2", res);
 
   })

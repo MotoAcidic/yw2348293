@@ -78,7 +78,7 @@ const App: React.FC = () => {
             <Route path="/splash" exact>
               <Splash />
             </Route>
-            <Redirect exact from="/" to="/battle" />
+            <Redirect exact from="/" to="/twitter-battle" />
             <Route path="/home" exact>
               <Farms />
             </Route>

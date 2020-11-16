@@ -88,6 +88,9 @@ const Battle: React.FC = () => {
       fetchWarStaked(farms);
     }
     if (battles.length === 0) {
+
+      const endTime = moment.utc('2020-11-17T20:00', "YYYY-MM-DDTHH:mm").unix();
+      console.log("end", endTime)
       axios.get(`${getServerURI()}/api/pers-battles`).then(res => {
         console.log("battles", res.data);
         setPrevDayBattles(res.data.prevDayBattles);
@@ -99,7 +102,7 @@ const Battle: React.FC = () => {
         console.log(err);
       })
     }
-  }, [yam, account, farms, farms[0], battles]);
+  }, [yam, account, farms, farms[0]]);
 
   const stopProp = (e) => {
     e.stopPropagation()
@@ -113,7 +116,7 @@ const Battle: React.FC = () => {
     if (!battles.length) {
       return (
         <>
-          <Title style={{marginTop: '30px'}}>Loading Battles...</Title>
+          <Title style={{ marginTop: '30px' }}>Loading Battles...</Title>
           <NextBattle />
         </>
       )
@@ -130,7 +133,7 @@ const Battle: React.FC = () => {
   };
 
   console.log(yesterdaysBattle);
-  
+
 
   return (
     <Switch>
@@ -158,7 +161,7 @@ const Battle: React.FC = () => {
               <Modal onClick={() => setBetRedeemModal(false)}>
                 <ModalBlock onClick={(e) => stopProp(e)}>
                   {/* {yam &&  */}
-                  <RedeemBetsModal battle={yesterdaysBattle}/>
+                  <RedeemBetsModal battle={yesterdaysBattle} />
                   {/* } */}
                 </ModalBlock>
               </Modal>

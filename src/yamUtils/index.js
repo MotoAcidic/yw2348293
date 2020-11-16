@@ -886,8 +886,9 @@ export const placeETHBet = async (yam, betId, choice, amount, account) => {
   console.log("eth bet: ", choice, amount, account);
   const precision = new BigNumber(10).pow(18);
 
-  let p = await yam.contracts.betting_v2.methods.ETHBet(betId, choice)
+  let p = await yam.contracts.betting_v2.methods.ETHBet(betId, choice.toString())
     .send({ from: account, value: new BigNumber(amount).times(precision).toString(), gas: 200000 });
+  console.log("eth bet placed: ", p)
   return (p);
 }
 

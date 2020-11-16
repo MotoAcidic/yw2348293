@@ -29,7 +29,7 @@ function getServerURI() {
 	return 'https://yieldwars-api.herokuapp.com'
 }
 
-const Bet = ({ battle1, id, yesterday }) => {
+const Bet = ({ battle1, contender, id}) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	// const {
@@ -48,15 +48,11 @@ const Bet = ({ battle1, id, yesterday }) => {
 	// 	icon: ''
 	// }
 
-	const [contender1, setContender1] = useState(null);
 	const [battle1Input, setBattle1Input] = useState(0);
 	const [disabled, setDisabled] = useState(false)
 	// const stakedBalance = useStakedBalance(contract)
 	// const { onUnstake } = useUnstake(contract)
 
-	const handleBattle1Change = e => {
-		setContender1(e.target.value);
-	}
 
 	// const [onPresentUnstake] = useModal(
 	// 	<UnstakeModal
@@ -79,11 +75,9 @@ const Bet = ({ battle1, id, yesterday }) => {
 			// 	claimAndUnstake()
 			// 	return
 			// }
-			if (battle1Input && contender1) {
-				const candidate = contender1 === battle1.pers1.handle ? 0 : 1;
+			if (battle1Input) {
+				const candidate = contender === battle1.pers1.handle ? 0 : 1;
 				console.log(candidate);
-				console.log(battle1.pers1);
-				console.log(contender1)
 				placeETHBet(yam, id, candidate, battle1Input, account)
 				// placeElectionWARBet(yam, candidate, warInput, account);
 			}
@@ -100,7 +94,7 @@ const Bet = ({ battle1, id, yesterday }) => {
 					Bet $ETH
 				</Text>
 				<Top>
-					<Select onChange={handleBattle1Change}>
+					{/* <Select onChange={handleBattle1Change}>
 						<option value={null}>
 							{"select victor"}
 						</option>
@@ -110,7 +104,10 @@ const Bet = ({ battle1, id, yesterday }) => {
 						<option value={battle1.pers2.handle}>
 							{battle1.pers2.handle + " to Win"}
 						</option>
-					</Select>
+					</Select> */}
+					<Text>
+						{contender + " to Win"}
+					</Text>
 					<InputContainer>
 						<Input type="number" value={battle1Input} onChange={e => setBattle1Input(e.target.value)} />
 							ETH
@@ -118,16 +115,15 @@ const Bet = ({ battle1, id, yesterday }) => {
 				</Top>
 				<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
 			</VersusContainer>
-			{yesterday}
 		</Container>
 	)
 }
 
 const Container = styled.div`
-width: 100%;
 display:flex;
 flex-direction: column;
-width: 25%;
+width: 30%;
+z-index: 10000;
 `
 
 const Column = styled.div`
@@ -334,7 +330,6 @@ border: solid 2px rgba(255, 183, 0, 0.3);
 background-color: rgba(4,2,43,1);
 padding: 20px;
 width: calc(100%-40px);
-min-height: 45vh;
 margin-bottom: 20px;
 ` : styled.div`
 margin: 0 0 40px 0;

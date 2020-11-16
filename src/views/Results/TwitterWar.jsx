@@ -114,6 +114,9 @@ const S2Battles = () => {
   )
 }
 
+const Container = styled.div`
+width: 100%;`
+
 const Picture = styled.img`
 height: 40%;
 width: 40%;
@@ -208,11 +211,56 @@ const LeaderBoardItem = !isMobile()
   margin-bottom: 20px;
 `;
 
+// const LeaderBoardItem = !isMobile()
+//   ? styled.div`
+//   text-align: center;
+//   min-width: 120px;
+//   width: 17%;
+//   height: 200px;
+//   border-radius: 8px;
+//   border: solid 2px rgba(255, 183, 0, 0.3);
+//   background-color: rgba(256,256,256,0.08);
+//   font-family: "Gilroy";
+//   font-size: 20px;
+//   font-weight: normal;
+//   font-stretch: normal;
+//   font-style: normal;
+//   line-height: 1;
+//   letter-spacing: normal;
+//   color: #ffffff;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-evenly;
+//   margin-bottom: 20px;`
+//   : styled.div`
+//   text-align: center;
+//   width: 40%;
+//   min-width: 200px;
+//   height: 200px;
+//   border-radius: 8px;
+//   border: solid 2px rgba(255, 183, 0, 0.3);
+//   background-color: rgba(256,256,256,0.08);
+//   font-family: "Gilroy";
+//   font-size: 20px;
+//   font-weight: normal;
+//   font-stretch: normal;
+//   font-style: normal;
+//   line-height: 1;
+//   letter-spacing: normal;
+//   padding: 20px 0 20px 0;
+//   color: #ffffff;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   margin-bottom: 20px;`;
+
 const LeaderBoard = !isMobile() ? styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
-  width: 980px;
+  width: 80%;
+  max-width: 1200px;
   margin-bottom: 60px;
 ` : styled.div`
   display: flex;

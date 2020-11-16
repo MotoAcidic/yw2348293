@@ -80,7 +80,9 @@ const Battle: React.FC = () => {
 const ResultsContents = styled.div`
 display: flex;
 flex-direction: column;
-align-items: center;`
+align-items: center;
+width: 95%;
+max-width: 1200px;`
 
 const BorderTopRight = !isMobile() ? styled.div`
 width: calc(43vw - 303px);

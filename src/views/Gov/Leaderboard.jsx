@@ -65,10 +65,10 @@ const Profile = () => {
     <LeaderboardContainer>
       <Title>Leaderboard
         <Leaderboards>
-          <Option style={{ color: selectVal === "battles" ? "#ffbe1a" : "white" }} onClick={() => setSelectVal("battles")}>
+          <Option style={{ color: selectVal === "battles" ? "white" : "#ffbe1a", textDecoration: selectVal === "battles" ? "underline" : "none" }} onClick={() => setSelectVal("battles")}>
             battles
           </Option>
-          <Option style={{ color: selectVal === "bets" ? "#ffbe1a" : "white" }} onClick={() => setSelectVal("bets")}>
+          <Option style={{ color: selectVal === "bets" ? "white" : "#ffbe1a", textDecoration: selectVal === "bets" ? "underline" : "none" }} onClick={() => setSelectVal("bets")}>
             bets
           </Option>
         </Leaderboards>

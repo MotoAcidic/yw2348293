@@ -117,11 +117,11 @@ const Battle: React.FC = () => {
     }
     if (yam && account) {
 
-      // finishBet(yam, "5fa9789720623600171c1013", 0, account);
+      // finishBet(yam, "5fa9789720623600171c1013", 1, account);
       // placeETHBet(yam, "newId", 1, 0.001, account);
       // getUserBet(yam, "5fa9789720623600171c1013", account);
-      // getPots(yam, "5fa9789720623600171c1013");
-      createNewContract(yam, account);
+      // getPots(yam, "5fb0333be7d4582c2102a627");
+      // createNewContract(yam, account);
     }
 
   }, [yam, account, farms, farms[0], battles]);
@@ -161,9 +161,9 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
-            {account && 
-          <Title onClick={() => getRewards(yam, "5fa9789720623600171c1013", account)}>CLICK TO REDEEM</Title>
-            }
+            {/* {account && 
+          <Title onClick={() => getRewards(yam, "5fb0333be7d4582c2102a627", account)}>CLICK TO REDEEM</Title>
+            } */}
             <Title>Who Will Win?</Title>
             {/* <TotalBets battles={battles} /> */}
             {battleFields()}

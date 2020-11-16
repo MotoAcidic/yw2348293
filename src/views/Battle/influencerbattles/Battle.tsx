@@ -159,7 +159,7 @@ const Battle: React.FC = () => {
         <ContentContainer>
           <Page>
             <Title>Who Will Win?</Title>
-            <TotalBets battles={battles} />
+            {/* <TotalBets battles={battles} /> */}
             {battleFields()}
 
             <SmallSpace />
@@ -265,8 +265,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-  margin-bottom: 20px;
-  margin-top: 20px;
+
 `;
 
 const BackgroundSection = styled.div`

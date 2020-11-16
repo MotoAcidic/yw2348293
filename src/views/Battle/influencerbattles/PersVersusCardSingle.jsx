@@ -20,7 +20,7 @@ import BattleWhite from '../../../assets/img/battlewhite.png'
 import BattleRed from '../../../assets/img/battlered.png'
 import BattleGreen from '../../../assets/img/battlegreen.png'
 import BattleBlue from '../../../assets/img/battleblue.png'
-import MetalButton from '../../../assets/img/battlebutton.png'
+import Metal from '../../../assets/img/sheetmetal.png'
 import Lightning from '../../../assets/img/lightning.png'
 import useFarm from '../../../hooks/useFarm'
 import useStakedBalance from '../../../hooks/useStakedBalance'
@@ -89,7 +89,7 @@ const Versus = ({ battles, yesterday }) => {
 				cookie.set(battles[0]._id, g)
 				setChecked1(g)
 				return
-			}, 500);
+			}, 800);
 		}
 		else {
 			cookie.set(battles[0]._id, g)
@@ -229,7 +229,6 @@ const Versus = ({ battles, yesterday }) => {
 	return (
 		<>
 			<Container>
-				{/* <BattleContainer> */}
 				<VersusContainer>
 					<Options>
 						<TLVersusItem onClick={() => pick1(1)} style={selectedCSS1} checked={checked1 === 1}>
@@ -280,41 +279,26 @@ const Versus = ({ battles, yesterday }) => {
 							</BLVS>
 						</BLVersusItem>
 					</Options>
+					{checked1 !== 0 &&
+						<BattleButtonWrapper >
+							<BattleButtonContainer checked={checked1}>
+								{!voted ?
+									<BattleButton onClick={castVote} >
+										Battle
+								</BattleButton>
+									:
+									<BattleText>Voted</BattleText>
+								}
+							</BattleButtonContainer>
+						</BattleButtonWrapper>
+					}
 				</VersusContainer>
-
-
-				{/* <VerticalSeperator />
-				<BattleButtonWrapper>
-					<GraphicContainer src={MetalButton} />
-					<BattleButtonContainer>
-						{!voted ?
-							<BattleButton onClick={castVote} >
-								Battle
-						</BattleButton>
-							:
-							<BattleText>Voted</BattleText>
-						}
-						<HDivider />
-						<BattleButton onClick={() => {
-							if (!account) {
-								connect('injected')
-							}
-							setBetModal(true)
-						}} >
-							Bet
-						</BattleButton>
-					</BattleButtonContainer>
-				</BattleButtonWrapper> */}
 
 				<PersVersusBet
 					battle1={battle1}
 					betContract={null}
 					yesterday={yesterday}
 				/>
-
-
-				{/* </BattleContainer> */}
-
 
 
 				{/* <div style={betModal ? { display: 'block' } : { display: 'none', height: '0px' }}>
@@ -356,12 +340,12 @@ font-family: "Gilroy";
 `
 
 const BattleButtonWrapper = styled.span`
-position: absolute;
-left: 50%;
-transform: translateX(-50%);
-z-index: 1001;
-filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.9));
+position: relative;
+bottom: 9%;
+width: 80%;
 pointer-events: none;
+display: flex;
+justify-content: center;
 `
 
 const HDivider = styled.div`
@@ -375,7 +359,7 @@ width: 80%;
 const BattleButton = styled.div`
 font-family: "Edo";
 	font-weight: normal;
-	font-size: 60px;
+	font-size: 50px;
 	background: linear-gradient(
 		45deg,
 		rgba(255, 0, 0, 1) 0%,
@@ -403,10 +387,13 @@ font-family: "Edo";
 `
 
 const BattleButtonContainer = styled.div`
-position: absolute;
-top: 39%;
-left: 50%;
-transform: translateX(-50%) translateY(-40%);
+transform: translateX(${props => props.checked === 1 ? 170 : -150}px) skew(3deg);
+width: 230px;
+transition: transform .2s ease-out;
+background-image: url(${Metal});
+border: 10px black solid;
+border-width: 10px 5px 12px 5px;
+background-size: cover;
 pointer-events: all;
 `
 
@@ -583,7 +570,7 @@ const StatBlock = styled.div`
 margin-bottom: 5px;
 display: flex;
 flex-direction: column;
-justify-content: space-between;
+justify-content: center;
 align-items: center;
 `
 
@@ -626,11 +613,12 @@ const TLVersusItem = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
-height: 88%;
+height: 92%;
 width: 50%;
 transform: skew(3deg);
 will-change: padding;
-transition: all .2s ease-out 10ms ;
+transition: all .2s ease-out 10ms;
+z-index: 100;
 &:hover {
 	transform: skew(3deg) scale(${props => props.checked ? 1 : 1.05});
 	cursor: pointer;
@@ -650,11 +638,12 @@ const BLVersusItem = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
-height: 88%;
+height: 92%;
 width: 50%;
 transform: skew(3deg);
 will-change: padding;
 transition: all .2s ease-out 10ms ;
+z-index: 100;
 &:hover {
 	transform: skew(3deg) scale(${props => props.checked ? 1 : 1.05});
 	cursor: pointer;
@@ -745,10 +734,10 @@ width: 60%;
 height: 60vh;
 min-height: 600px;
 margin-top: 15px;
-margin-bottom: 40px;
+margin-bottom: 20px;
 min-width: 800px;
 display: flex;
-flex-direction: row;
+flex-direction: column;
 justify-content: center;
 align-items: center;
 font-size: 30px;
@@ -781,8 +770,8 @@ const StyledContent = styled.div`
   display: flex;
 	flex-direction: row;
 	height: 30%;
-	width: 30%;
-	align-items: center;
+	width: 60%;
+	align-items: space-evenly;
 `
 
 const SubTitle = !isMobile() ? styled.div`

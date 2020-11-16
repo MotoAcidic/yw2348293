@@ -61,7 +61,7 @@ const Community = () => {
   }
 
   useEffect(() => {
-    if (yam && !yam.defaultProvider && account) {
+    if (yam && account && !yam.defaultProvider) {
       fetchSuggestions()
     }
   }, [page, sort, yam, account])

@@ -64,7 +64,7 @@ const Battle = ({ battle1, id }) => {
       setFarmBets({ pot1: new BigNumber(bets[0].value).div(precision).toNumber(), pot2: new BigNumber(bets[1].value).div(precision).toNumber() });
     }
     console.log("got da yams???", yam)
-    if (!yam.defaultProvider && account) {
+    if (account && yam && !yam.defaultProvider) {
       getYourBets();
     }
     if (yam) {

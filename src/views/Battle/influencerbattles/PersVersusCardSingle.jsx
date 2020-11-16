@@ -212,7 +212,7 @@ const Versus = ({ battles }) => {
 	)
 
 	useEffect(() => {
-		if (account && !yam.defaultProvider) {
+		if (account && yam && !yam.defaultProvider) {
 			axios.post(`${getServerURI()}/api/pers-status`, {
 				address: account,
 			}).then(res => {

@@ -96,7 +96,7 @@ const Bet = ({ battle1, id, yesterday }) => {
 			// setFarmBets(bets);
 		}
 		console.log("got da yams???", yam)
-		if (!yam.defaultProvider && account) {
+		if (account && !yam.defaultProvider) {
 			console.log("got da yams");
 			getBets();
 		}

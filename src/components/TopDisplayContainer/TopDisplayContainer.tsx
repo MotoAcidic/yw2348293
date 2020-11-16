@@ -55,11 +55,11 @@ const Value: React.FC = () => {
   }, [yam, setStats]);
 
   useEffect(() => {
-    if (
-      window.location.hostname === 'localhost'
-    ) {
-      return;
-    }
+    // if (
+    //   window.location.hostname === 'localhost'
+    // ) {
+    //   return;
+    // }
     if (yam && farms.length) {
       fetchStats();
     }
@@ -69,9 +69,9 @@ const Value: React.FC = () => {
   }, [yam, account, farms]);
 
   let currentPrice = curPrice || 0;
-  if (window.location.hostname === 'localhost') {
-    return <div></div>
-  }
+  // if (window.location.hostname === 'localhost') {
+  //   return <div></div>
+  // }
 
 
   return (

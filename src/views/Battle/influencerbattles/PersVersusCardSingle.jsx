@@ -308,7 +308,7 @@ const Versus = ({ battles, yesterday }) => {
 
 				<PersVersusBet
 					battle1={battle1}
-					betContract={null}
+					id={battles[0]._id}
 					yesterday={yesterday}
 				/>
 

@@ -117,7 +117,7 @@ const Battle: React.FC = () => {
     }
 
     if (yam && account) {
-      getUserBet(yam, "newId", account);
+      // getUserBet(yam, "newId", account);
       // createNewContract(yam, account);
       // getPots(yam, "newId");
     }

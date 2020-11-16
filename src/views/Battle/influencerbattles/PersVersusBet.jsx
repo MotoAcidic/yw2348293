@@ -10,7 +10,7 @@ import UnstakeModal from './UnstakeModal'
 import useFarm from '../../../hooks/useFarm'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
-import { placeElectionWARBet, getPots, getUserBet } from '../../../yamUtils'
+import { placeETHBet, getPots, getUserBet } from '../../../yamUtils'
 import Swal from 'sweetalert2';
 
 function isMobile() {
@@ -29,7 +29,7 @@ function getServerURI() {
 	return 'https://yieldwars-api.herokuapp.com'
 }
 
-const Bet = ({ battle1, yesterday }) => {
+const Bet = ({ battle1, id,  yesterday }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	// const {
@@ -77,6 +77,14 @@ const Bet = ({ battle1, yesterday }) => {
 
 	useEffect(() => {
 		const getBets = async () => {
+			console.log(battle1);
+			// let balances = await getUserBet(yam, battle1._id, account);
+			let bets = await getPots(yam, id);
+			// setFarmBalances(balances);
+			setFarmBets({ pot1: bets[0].value, pot2: bets[1].value });
+
+			// createNewContract(yam, account);
+			// getPots(yam, "newId");
 			// const bets = await getPots(yam);
 			// const balances = await getCurrentBet(yam, account);
 			// setFarmBalances(balances);
@@ -84,7 +92,7 @@ const Bet = ({ battle1, yesterday }) => {
 			// setFarmBets(bets);
 		}
 		console.log("got da yams???", yam)
-		if (yam) {
+		if (!yam.defaultProvider && account) {
 			console.log("got da yams");
 			getBets();
 		}
@@ -97,8 +105,12 @@ const Bet = ({ battle1, yesterday }) => {
 			// 	claimAndUnstake()
 			// 	return
 			// }
-			if (battle1Input) {
-				const candidate = contender1;
+			if (battle1Input && contender1) {
+				const candidate = contender1 === battle1.pers1.handle ? 0 : 1;
+				console.log(candidate);
+				console.log(battle1.pers1);
+				console.log(contender1)
+				placeETHBet(yam, "newId", candidate, battle1Input, account)
 				// placeElectionWARBet(yam, candidate, warInput, account);
 			}
 			else {
@@ -170,6 +182,9 @@ const Bet = ({ battle1, yesterday }) => {
 					</Text>
 				<Top>
 					<Select onChange={handleBattle1Change}>
+						<option value={null}>
+							{"select victor"}
+						</option>
 						<option value={battle1.pers1.handle}>
 							{battle1.pers1.handle + " to Win"}
 						</option>
@@ -180,7 +195,7 @@ const Bet = ({ battle1, yesterday }) => {
 					<InputContainer>
 						<Input type="number" value={battle1Input} onChange={e => setBattle1Input(e.target.value)} />
 							ETH
-						</InputContainer>
+					</InputContainer>
 				</Top>
 				<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
 			</VersusContainer>

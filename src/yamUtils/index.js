@@ -932,7 +932,7 @@ export const getBetRewards = async (yam, account) => {
 
 export const betTVL = async (yam, account) => {
   const ethPrice = await getETHPrice(yam)
-  const curPrice = await getCurrentPrice(yam)
+  // const curPrice = await getCurrentPrice(yam)
 
   // const currentBets = await getCurrentBets(yam)
   // const trumpEth = ethPrice * currentBets.trumpETHPot

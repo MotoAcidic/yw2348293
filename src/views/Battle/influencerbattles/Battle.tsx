@@ -116,10 +116,10 @@ const Battle: React.FC = () => {
       })
     }
 
-    if (yam && account) {
-      createNewContract(yam, null);
+    // if (yam && account) {
+    //   createNewContract(yam, null);
 
-    }
+    // }
 
   }, [yam, account, farms, farms[0]]);
 

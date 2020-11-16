@@ -289,7 +289,7 @@ export class Contracts {
     this.uni_router.options.from = account;
     this.pricing.options.from = account;
     this.election_betting.options.from = account;
-    // this.ap_betting.options.from = account;
+    this.ap_betting.options.from = account;
     this.everipedia.options.from = account;
     this.fwar.options.from = account;
     this.betting_v2.options.from = account;

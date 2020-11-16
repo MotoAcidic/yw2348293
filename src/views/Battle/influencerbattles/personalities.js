@@ -12,7 +12,6 @@ export default [
 		followerCount: '59,000',
 		picture: "https://pbs.twimg.com/profile_images/1248734594104545284/-IrCpNRz_400x400.jpg",
 		bio: `Algorithmic trader. All algorithms forward tested publicly on @gainzybot`
-
 	},
 	{
 		name: 'Ad_Infinitum',

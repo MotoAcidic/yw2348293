@@ -74,16 +74,21 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	useEffect(() => {
 		const getBets = async () => {
 			const bets = await getCurrentBets(yam);
-			const balances = await getCurrentBalances(yam, account);
-			setFarmBalances(balances);
 			// console.log("gotbets", bets);
 			setFarmBets(bets);
+		}
+		const getYourBets = async () => {
+			const balances = await getCurrentBalances(yam, account);
+			setFarmBalances(balances);
 		}
 		// console.log("got da yams???", yam)
 		if (yam) {
 			getBets();
 		}
-		fireUnstakeSWAL();
+		if (yam && account) {
+			getYourBets()
+		}
+		// fireUnstakeSWAL();
 	}, [yam, account])
 
 

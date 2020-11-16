@@ -922,7 +922,7 @@ export const createNewContract = async (yam, account) => {
   const desc = "test";
   // const endTime = parseInt(new Date(new Date().getTime() + 1 * 60 * 60 * 24 * 1000).getTime() / 1000);
 
-  const endTime = moment.utc('2020-12-16T5:30', "YYYY-MM-DDTHH:mm").unix();
+  const endTime = moment.utc('2020-11-16T05:00', "YYYY-MM-DDTHH:mm").unix();
   const lastClaimTime = parseInt(new Date(new Date().getTime() + 30 * 60 * 60 * 24 * 1000).getTime() / 1000);
   const choice1 = "@loomdart";
   const choice2 = "@CryptoCobain";

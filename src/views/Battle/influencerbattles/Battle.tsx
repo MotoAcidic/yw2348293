@@ -119,7 +119,8 @@ const Battle: React.FC = () => {
     if (yam && account && farms && farms[0] && battles.length > 0) {
       // placeETHBet(yam, "newId", 1, 0.001, account);
       // getUserBet(yam, "newId", account);
-      getPots(yam, "5fa9789720623600171c1013");
+      // getPots(yam, "5fa9789720623600171c1013");
+
 
 
       // createNewContract(yam, account);

@@ -162,7 +162,7 @@ Once a bet is placed it is locked in, it cannot be withdrawn or changed.
         <MilestoneRow>
           <img className="milestone-image" alt="milestone" src={img_3} />
           <MilestoneText>
-          You can only bet from your wallet and not from your WARchest. If you have funds in your WARchest you will need to unstake them. There are no fees for staking/unstaking from WARchest.
+            Battles and Bets last 24 hours, starting at 8:00 PM UTC and ending at 7:00 PM UTC the next day.
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>

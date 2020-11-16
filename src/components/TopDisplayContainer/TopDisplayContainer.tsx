@@ -25,7 +25,7 @@ export interface OverviewData {
 }
 
 
-const Value: React.FC= () => {
+const Value: React.FC = () => {
   const yam = useYam()
   let [farms] = useFarms()
   const [
@@ -38,7 +38,7 @@ const Value: React.FC= () => {
     warStaked: new BigNumber(0),
     circSupply: new BigNumber(0)
   });
-  
+
   const fetchWarStaked = useCallback(
     async pools => {
       const st = await getWarStaked(pools, yam);
@@ -55,6 +55,11 @@ const Value: React.FC= () => {
   }, [yam, setStats]);
 
   useEffect(() => {
+    if (
+      window.location.hostname === 'localhost'
+    ) {
+      return;
+    }
     if (yam && farms.length) {
       fetchStats();
     }
@@ -64,6 +69,10 @@ const Value: React.FC= () => {
   }, [yam, account, farms]);
 
   let currentPrice = curPrice || 0;
+  if (window.location.hostname === 'localhost') {
+    return <div></div>
+  }
+
 
   return (
     <TopDisplayContainer>

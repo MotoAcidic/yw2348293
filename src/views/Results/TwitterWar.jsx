@@ -42,8 +42,10 @@ const S2Battles = () => {
       let lb = res.data.leaderboard.leaderboard.sort((a, b) => {
         return b.votes - a.votes;
       }).slice(0, 5);
+      console.log("pers-info: ", res.data, lb);
       const leaderboardContent = lb.map((item, index) => {
         const votes = Number(item.votes.toFixed(0));
+        console.log("finding", personalities, item.pool);
         let pool = personalities.find(person => person.handle === item.pool);
         let rank = "th";
         if (index === 0) rank = "st";
@@ -83,6 +85,7 @@ const S2Battles = () => {
         const startDate = moment("09-28", 'MM-DD').add(item[0].day, 'day').format('MMM Do');
         return (<PopularityCard key={startDate} farms={farms} startDate={startDate} item={item} />);
       })
+      console.log("to set?: ", currSeasonHistory, leaderboardContent)
 
       setSeasonHistory(currSeasonHistory);
       setLeaderboard(leaderboardContent);

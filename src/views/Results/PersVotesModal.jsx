@@ -120,19 +120,16 @@ font-size: 12px;
 
 const TableContainer = styled.div`
 overflow-y: scroll;
-width: 80%;
-`
+width: 80%;`
 
 const TR = styled.tr``
 
 const Address = styled.th`
-text-align: left;
-`
+text-align: left;`
 
 const Votes = styled.th`
 text-align: left;
-padding-left: 20px;
-`
+padding-left: 20px;`
 
 const StyledTitle = styled.h4`
 font-family: "Gilroy";
@@ -144,8 +141,7 @@ line-height: 1;
 letter-spacing: normal;
 text-align: center;
 color: #003677;
-margin: 20px auto 20px auto;
-`
+margin: 20px auto 20px auto;`
 
 const StyledCardIcon = styled.img`
 font-size: 50px;

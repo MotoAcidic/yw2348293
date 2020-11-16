@@ -161,7 +161,6 @@ const Battle: React.FC = () => {
             <Title>Who Will Win?</Title>
             {/* <TotalBets battles={battles} /> */}
             {battleFields()}
-
             <SmallSpace />
             {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
             {prevDayBattles.length > 0 &&

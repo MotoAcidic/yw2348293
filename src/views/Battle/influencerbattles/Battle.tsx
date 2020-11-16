@@ -117,7 +117,7 @@ const Battle: React.FC = () => {
     }
     if (yam && account) {
 
-      finishBet(yam, "newId", 0, account);
+      // finishBet(yam, "newId", 0, account);
       // placeETHBet(yam, "newId", 1, 0.001, account);
       // getUserBet(yam, "5fa9789720623600171c1013", account);
       // getPots(yam, "5fa9789720623600171c1013");

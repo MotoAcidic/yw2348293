@@ -255,8 +255,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-  margin-bottom: 20px;
-  margin-top: 20px;
+
 `;
 
 const BackgroundSection = styled.div`

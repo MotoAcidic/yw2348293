@@ -20,7 +20,7 @@ import BattleWhite from '../../../assets/img/battlewhite.png'
 import BattleRed from '../../../assets/img/battlered.png'
 import BattleGreen from '../../../assets/img/battlegreen.png'
 import BattleBlue from '../../../assets/img/battleblue.png'
-import MetalButton from '../../../assets/img/battlebutton.png'
+import Metal from '../../../assets/img/sheetmetal.png'
 import Lightning from '../../../assets/img/lightning.png'
 import useFarm from '../../../hooks/useFarm'
 import useStakedBalance from '../../../hooks/useStakedBalance'
@@ -279,17 +279,19 @@ const Versus = ({ battles }) => {
 							</BLVS>
 						</BLVersusItem>
 					</Options>
-					<BattleButtonWrapper>
-						<BattleButtonContainer>
-							{!voted ?
-								<BattleButton onClick={castVote} >
-									Battle
+					{checked1 !== 0 &&
+						<BattleButtonWrapper >
+							<BattleButtonContainer checked={checked1}>
+								{!voted ?
+									<BattleButton onClick={castVote} >
+										Battle
 								</BattleButton>
-								:
-								<BattleText>Voted</BattleText>
-							}
-						</BattleButtonContainer>
-					</BattleButtonWrapper>
+									:
+									<BattleText>Voted</BattleText>
+								}
+							</BattleButtonContainer>
+						</BattleButtonWrapper>
+					}
 				</VersusContainer>
 
 				<PersVersusBet
@@ -337,9 +339,12 @@ font-family: "Gilroy";
 `
 
 const BattleButtonWrapper = styled.span`
-z-index: 1001;
-filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.9));
+position: relative;
+bottom: 9%;
+width: 80%;
 pointer-events: none;
+display: flex;
+justify-content: center;
 `
 
 const HDivider = styled.div`
@@ -353,7 +358,7 @@ width: 80%;
 const BattleButton = styled.div`
 font-family: "Edo";
 	font-weight: normal;
-	font-size: 60px;
+	font-size: 50px;
 	background: linear-gradient(
 		45deg,
 		rgba(255, 0, 0, 1) 0%,
@@ -381,10 +386,13 @@ font-family: "Edo";
 `
 
 const BattleButtonContainer = styled.div`
-position: absolute;
-top: 39%;
-left: 50%;
-transform: translateX(-50%) translateY(-40%);
+transform: translateX(${props => props.checked === 1 ? 170 : -150}px) skew(3deg);
+width: 230px;
+transition: transform .2s ease-out;
+background-image: url(${Metal});
+border: 10px black solid;
+border-width: 10px 5px 12px 5px;
+background-size: cover;
 pointer-events: all;
 `
 
@@ -561,7 +569,7 @@ const StatBlock = styled.div`
 margin-bottom: 5px;
 display: flex;
 flex-direction: column;
-justify-content: space-between;
+justify-content: center;
 align-items: center;
 `
 
@@ -604,11 +612,12 @@ const TLVersusItem = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
-height: 88%;
+height: 92%;
 width: 50%;
 transform: skew(3deg);
 will-change: padding;
-transition: all .2s ease-out 10ms ;
+transition: all .2s ease-out 10ms;
+z-index: 100;
 &:hover {
 	transform: skew(3deg) scale(${props => props.checked ? 1 : 1.05});
 	cursor: pointer;
@@ -628,11 +637,12 @@ const BLVersusItem = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
-height: 88%;
+height: 92%;
 width: 50%;
 transform: skew(3deg);
 will-change: padding;
 transition: all .2s ease-out 10ms ;
+z-index: 100;
 &:hover {
 	transform: skew(3deg) scale(${props => props.checked ? 1 : 1.05});
 	cursor: pointer;
@@ -759,8 +769,8 @@ const StyledContent = styled.div`
   display: flex;
 	flex-direction: row;
 	height: 30%;
-	width: 30%;
-	align-items: center;
+	width: 60%;
+	align-items: space-evenly;
 `
 
 const SubTitle = !isMobile() ? styled.div`

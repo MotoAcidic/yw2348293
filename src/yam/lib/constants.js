@@ -90,7 +90,7 @@ if (chainId === 1) {
     Everipedia: "0x0792724900B551d200D954a5Ed709d9514d73A9F",
     fwar: "0x5896e1c50e4d2d315052aad8383d7104c3891cd6",
 
-    BetV2: "0x63B2ef3Eb597bBaFC9DD6a6FDb16df98a8aF576d",
+    BetV2: "0x3d83423a8CbEd403450615ce6796A649bec72B53",
   }
 } else { // 42 = kovan
   addressMap = {

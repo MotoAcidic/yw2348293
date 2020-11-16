@@ -141,7 +141,7 @@ const Battle: React.FC = () => {
             <Title>Who Will Win?</Title>
             {battles && battles.length > 0 && <TotalBets battle1={battles[0]} id={battles[0]._id} />}
             {battleFields()}
-            {account && yesterdaysBattle.length && <Yesterday onClick={() => setBetRedeemModal(true)} >Show Yesterdays Result</Yesterday>}
+            {account && yesterdaysBattle.length > 0 && <Yesterday onClick={() => setBetRedeemModal(true)} >Show Yesterdays Result</Yesterday>}
             <SmallSpace />
             {/* {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
             {prevDayBattles.length > 0 &&

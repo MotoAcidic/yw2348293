@@ -84,53 +84,53 @@ const Instructions: React.FC = () => {
   if (page === "battle") {
     return (
       <Rectangle>
-      <Tabs>
-        <ActiveTab>
-          battle
+        <Tabs>
+          <ActiveTab>
+            battle
         </ActiveTab>
-        <Tab onClick={() => setPage("bet")}>
-          bet
+          <Tab onClick={() => setPage("bet")}>
+            bet
         </Tab>
-      </Tabs> 
-      <RecDesc>
-        <MilestoneRow>
-          <img className="milestone-image" alt="milestone" src={img_1} />
-          <MilestoneText>
-          Stake $WAR in your $WARchest to vote on battles!
+        </Tabs>
+        <RecDesc>
+          <MilestoneRow>
+            <img className="milestone-image" alt="milestone" src={img_1} />
+            <MilestoneText>
+              Stake $WAR in your $WARchest to vote on battles!
               </MilestoneText>
-        </MilestoneRow>
-        <MilestoneRow>
-          <img className="milestone-image" alt="milestone" src={img_2} />
-          <MilestoneText>
-          Vote daily to earn rewards. Battles start at 20:00 UTC and last for 23hours. If you unstake during a battle, you will not earn rewards and your vote will not count.
+          </MilestoneRow>
+          <MilestoneRow>
+            <img className="milestone-image" alt="milestone" src={img_2} />
+            <MilestoneText>
+              Vote daily to earn rewards. Battles start at 20:00 UTC and last for 23hours. If you unstake during a battle, you will not earn rewards and your vote will not count.
               </MilestoneText>
-        </MilestoneRow>
-        {/* <MilestoneRow>
+          </MilestoneRow>
+          {/* <MilestoneRow>
           <img className="milestone-image" alt="milestone" src={img_3} />
           <MilestoneText>
           You can vote once per day, the time of your vote doesn’t matter. We take a snapshot of your wallet when voting ends and apply your $WARchest total to the side you have voted on. 
               </MilestoneText>
         </MilestoneRow> */}
-        <MilestoneRow>
-          <img className="milestone-image" alt="milestone" src={img_4} />
-          <MilestoneText>
-          You can vote once per day, the time of your vote doesn’t matter. We take a snapshot of your wallet when voting ends and apply your $WARchest total to the side you have voted on. 
+          <MilestoneRow>
+            <img className="milestone-image" alt="milestone" src={img_4} />
+            <MilestoneText>
+              You can vote once per day, the time of your vote doesn’t matter. We take a snapshot of your wallet when voting ends and apply your $WARchest total to the side you have voted on.
               </MilestoneText>
-        </MilestoneRow>
-        <MilestoneRow>
-          <img className="milestone-image" alt="milestone" src={img_5} />
-          <MilestoneText>
-          Whichever side has the most votes wins. If you vote on the winning side, then you will earn the yield for the day. Vote on the losing side and get nothing!
+          </MilestoneRow>
+          <MilestoneRow>
+            <img className="milestone-image" alt="milestone" src={img_5} />
+            <MilestoneText>
+              Whichever side has the most votes wins. If you vote on the winning side, then you will earn the yield for the day. Vote on the losing side and get nothing!
               </MilestoneText>
-        </MilestoneRow>
-        <MilestoneRow>
-          <img className="milestone-image" alt="milestone" src={img_6} />
-          <MilestoneText>
-          $WAR rewards will show in your $WARchest once the battle ends at 19:00 UTC
+          </MilestoneRow>
+          <MilestoneRow>
+            <img className="milestone-image" alt="milestone" src={img_6} />
+            <MilestoneText>
+              $WAR rewards will show in your $WARchest once the battle ends at 19:00 UTC
               </MilestoneText>
-        </MilestoneRow>
-      </RecDesc>
-    </Rectangle>
+          </MilestoneRow>
+        </RecDesc>
+      </Rectangle>
 
     )
   }
@@ -138,43 +138,43 @@ const Instructions: React.FC = () => {
   return (
     <Rectangle>
 
-            <Tabs>
-            <Tab onClick={() => setPage("battle")}>
-              battle
+      <Tabs>
+        <Tab onClick={() => setPage("battle")}>
+          battle
             </Tab>
-            <ActiveTab>
-              bet
+        <ActiveTab>
+          bet
             </ActiveTab>
-          </Tabs>
+      </Tabs>
       <RecDesc>
         <MilestoneRow>
           <img className="milestone-image" alt="milestone" src={img_1} />
           <MilestoneText>
-          Betting on YieldWars is winner takes all. Don't bet what you cannot afford to lose! 
+            Betting on YieldWars is winner takes all. Don't bet what you cannot afford to lose!
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>
           <img className="milestone-image" alt="milestone" src={img_2} />
           <MilestoneText>
-Once a bet is placed it is locked in, it cannot be withdrawn or changed.
+            Once a bet is placed it is locked in, it cannot be withdrawn or changed.
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>
           <img className="milestone-image" alt="milestone" src={img_3} />
           <MilestoneText>
-            Bets last 17 hours, starting at 20:00 UTC and ending at 13:00 UTC the next day.
+            Bets last 23 hours, starting at 20:00 UTC and ending at 19:00 UTC the next day.
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>
           <img className="milestone-image" alt="milestone" src={img_4} />
           <MilestoneText>
-          10% of winnings go to the house. Half of this rake goes directly back into the community as additional battle rewards, the other half goes into the $WAR community DAO to fund additional development.
+            10% of winnings go to the house. Half of this rake goes directly back into the community as additional battle rewards, the other half goes into the $WAR community DAO to fund additional development.
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>
           <img className="milestone-image" alt="milestone" src={img_5} />
           <MilestoneText>
-          The winner of the bet is determined by the winner of the Battle.
+            The winner of the bet is determined by the winner of the Battle.
               </MilestoneText>
         </MilestoneRow>
         {/* <MilestoneRow>

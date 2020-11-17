@@ -11,7 +11,7 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import '../swal.css'
 import FarmGraph from "./FarmGraph";
-import VotingBalance from "../VotingBalance";
+// import VotingBalance from "../VotingBalance";
 import DailyQuestion from "../DailyQuestion.jsx";
 import CountDown from "./BigCountDown";
 import BetCard from "./BetCard";
@@ -202,7 +202,7 @@ const Versus = ({ battles, question }) => {
 								</ButtonContainer>
 							</VersusItem>
 						</Options>
-						<VotingBalance farm1={battle1.farm1} farm2={battle1.farm2} />
+						{/* <VotingBalance farm1={battle1.farm1} farm2={battle1.farm2} /> */}
 					</VersusContainer>
 
 					<VersusContainer>
@@ -229,7 +229,7 @@ const Versus = ({ battles, question }) => {
 								</ButtonContainer>
 							</VersusItem>
 						</Options>
-						<VotingBalance farm1={battle2.farm1} farm2={battle2.farm2} />
+						{/* <VotingBalance farm1={battle2.farm1} farm2={battle2.farm2} /> */}
 					</VersusContainer>
 				</>
 			}

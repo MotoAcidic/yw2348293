@@ -15,7 +15,7 @@ import Swal from 'sweetalert2'
 import Warning from "../../assets/img/warning@2x.png";
 import BettingCardSingle from "./VersusCardSingle";
 import './swal.css'
-import Countdown from "./CountDown";
+import Countdown from "../CountDown";
 import moment from "moment";
 
 function isMobile() {

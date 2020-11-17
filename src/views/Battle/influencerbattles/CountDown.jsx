@@ -19,11 +19,11 @@ class CountDown extends React.Component {
 
 		let endTime;
 		const format = 'hh:mm:ss';
-		if (moment.utc().isBetween(moment.utc('18:00:00', format), moment.utc('19:00:00', format))) {
+		if (moment.utc().isBetween(moment.utc('19:00:00', format), moment.utc('20:00:00', format))) {
 			this.setState({inBetween: true})
 			endTime = moment.utc().startOf('hour').hours(19)
 		} else {
-			if (moment.utc().isBetween(moment.utc('19:00:00', format), moment.utc('23:59:59', format))) {
+			if (moment.utc().isBetween(moment.utc('20:00:00', format), moment.utc('23:59:59', format))) {
 				endTime = moment.utc().add(1, 'days').startOf('hour').hours(18)
 			} else {
 				endTime = moment.utc().startOf('hour').hours(18)
@@ -46,7 +46,7 @@ class CountDown extends React.Component {
 	render() {
 		return (
 			<Desc>
-				{this.state.inBetween ? "Next battle starts in" : "Battle ends in"}
+				{this.state.inBetween ? "Next battle starts in " : "Battle ends in "}
 				<Countdown>
 					<Item>
 						{this.state.hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
@@ -75,23 +75,23 @@ text-align: center;
 const Desc = styled.div`
 display: flex;
 align-items: center;
-font-family: "Gilroy";
-  font-size: 20px;
+font-family: Alegreya;
+  font-size: 22px;
 	font-stretch: normal;
-  font-style: normal;
+	font-style: normal;
+	font-weight: bold;
   letter-spacing: normal;
   text-align: center;
   color: #ffffff;
-	color: #ffffff;
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 `;
 
 const TimerText = styled.div`
 text-align: center;
 width: 100%;
 margin-top: 1vh;
-font-family: "Gilroy";
-  font-size: 20px;
+font-family: Alegreya;
+  font-size: 30px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
@@ -101,14 +101,17 @@ font-family: "Gilroy";
 
 const Countdown = styled.div`
 display: flex;
-margin-left: 5px;
-font-family: "Gilroy";
-  font-size: 20px;
+margin-left: 10px;
+font-family: Alegreya;
+  font-size: 35px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  letter-spacing: 2px;
-  color: #ffb700;
+	letter-spacing: 2px;
+	margin-top: -5px;
+	color: #ffb700;
+	width: 125px;
+	justify-content: center;
 `
 
 

@@ -150,7 +150,7 @@ const Instructions: React.FC = () => {
         <MilestoneRow>
           <img className="milestone-image" alt="milestone" src={img_1} />
           <MilestoneText>
-          Betting on YieldWars is winner takes all. Don't bet what you cannot afford to loose! 
+          Betting on YieldWars is winner takes all. Don't bet what you cannot afford to lose! 
               </MilestoneText>
         </MilestoneRow>
         <MilestoneRow>

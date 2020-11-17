@@ -4,7 +4,7 @@ import useFarms from '../../../../hooks/useFarms'
 import '../swal.css'
 import FarmGraph from "./InbetweenFarmGraph";
 import VotingBalance from "../VotingBalance";
-import CountDown from "./CountDown";
+import CountDown from "../CountDown";
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {

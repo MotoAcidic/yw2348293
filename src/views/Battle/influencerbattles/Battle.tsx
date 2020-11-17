@@ -20,6 +20,7 @@ import moment from "moment";
 import TotalBets from './BetBar'
 import RedeemBetsModal from './RedeemBetsModal'
 import Cookies from 'universal-cookie'
+import Countdown from "./CountDown";
 
 const cookie = new Cookies()
 
@@ -66,6 +67,8 @@ const Battle: React.FC = () => {
   let [yesterdaysBattle, setYesterdaysBattle] = useState([])
   let [dailyQuestion, setDailyQuestion] = useState();
   const [betRedeemModal, setBetRedeemModal] = useState(false)
+
+
 
   const fetchWarStaked = useCallback(
     async pools => {
@@ -141,7 +144,7 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
-            <Title>Who Will Win?</Title>
+            <Countdown/>
             {battles && battles.length > 0 && <TotalBets battle1={battles[0]} id={battles[0]._id} />}
             {battleFields()}
             {account && yesterdaysBattle.length > 0 && <Yesterday onClick={() => setBetRedeemModal(true)} >Show Yesterdays Result</Yesterday>}

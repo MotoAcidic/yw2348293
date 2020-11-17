@@ -13,9 +13,9 @@ const Modal: React.FC = ({ children }) => {
   return (
     <Container size="sm">
       <StyledModal>
-            <CardContent>
-              {children}
-            </CardContent>
+        <CardContent>
+          {children}
+        </CardContent>
       </StyledModal>
     </Container>
   )

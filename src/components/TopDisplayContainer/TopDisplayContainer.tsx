@@ -24,7 +24,6 @@ export interface OverviewData {
   totalSupply?: string;
 }
 
-
 const Value: React.FC = () => {
   const yam = useYam()
   let [farms] = useFarms()

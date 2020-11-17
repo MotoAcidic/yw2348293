@@ -628,7 +628,7 @@ align-items: center;
 `
 
 const Picture = styled.img`
-height: 40%;
+height: 100%;
 width: 40%;
 min-width: 130px;
 min-height: 130px;

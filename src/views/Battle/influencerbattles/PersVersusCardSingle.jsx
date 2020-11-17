@@ -267,8 +267,8 @@ const Versus = ({ battles }) => {
 									</StatBlock>
 								</StyledContent>
 								{!isMobile() ?
-									<a className="twitter-timeline" data-width="65%" data-height="58%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									<a className="twitter-timeline" data-width="65%" data-height="58%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 								}
 								{isLoading && <Loading src={loading} />}
 								{useScript("https://platform.twitter.com/widgets.js")}
@@ -293,8 +293,8 @@ const Versus = ({ battles }) => {
 									</StatBlock>
 								</StyledContent>
 								{!isMobile() ?
-									<a className="twitter-timeline" data-width="65%" data-height="58%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									<a className="twitter-timeline" data-width="65%" data-height="58%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 								}
 								{isLoading && <Loading src={loading} />}
 								{useScript("https://platform.twitter.com/widgets.js")}
@@ -628,12 +628,8 @@ align-items: center;
 `
 
 const Picture = styled.img`
-height: 100%;
-width: 40%;
-min-width: 130px;
-min-height: 130px;
-max-width: 160px;
-max-height: 160px;
+width: 140px;
+height: 140px;
 border-radius: 50%;
 margin-bottom: 20px;
 `

@@ -307,7 +307,7 @@ const Versus = ({ battles }) => {
 								<BattleButtonContainer checked={checked1}>
 									{!voted ?
 										<BattleButton onClick={castVote} >
-											VOTE
+											Vote
 										</BattleButton>
 										:
 										<BattleText>Voted</BattleText>

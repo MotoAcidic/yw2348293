@@ -103,13 +103,14 @@ const Battle = ({ battle1, id }) => {
       {
         (farmBalances.bal1 > 0 || farmBalances.bal2 > 0) &&
         <YourBetSection>
-          <Item>Your Bets:</Item>
+          <Item>Your Bets:
           {!farmBalances.bal1 > 0 && !farmBalances.bal2 > 0 ?
-            <Item>none</Item>
+            "none"
             : null
           }
-          {farmBalances.bal1 > 0 ? <Item>{battle1.pool1.name} 💰${farmBalances.bal1.toLocaleString()}</Item> : null}
-          {farmBalances.bal2 > 0 ? <Item>{battle1.pool2.name} 💰${farmBalances.bal2.toLocaleString()}</Item> : null}
+          {farmBalances.bal1 > 0 ? <>{" "}{battle1.pool1.name} 💰${farmBalances.bal1.toLocaleString()}</> : null}
+          {farmBalances.bal2 > 0 ? <>{" "}{battle1.pool2.name} 💰${farmBalances.bal2.toLocaleString()}</> : null}
+          </Item>
         </YourBetSection>
       }
       {/* <BetsDisplayContainer>
@@ -218,6 +219,7 @@ const YourBetSection = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
+align-items: center;
 width: 20%;
 margin: auto;
 color: white;

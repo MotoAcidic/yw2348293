@@ -172,7 +172,7 @@ const Bet = ({ battle1, id, yesterday }) => {
 						</AmountBet>
 					</BetDisplay>
 							vs
-							<BetDisplay>
+					<BetDisplay>
 						<CardIcon src={battle1.pers2.picture} />
 						<AmountBet>
 							{farmBets.pot2.toLocaleString() + " $ETH"}

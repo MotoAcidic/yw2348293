@@ -313,11 +313,13 @@ const Versus = ({ battles }) => {
 										<BattleText>Voted</BattleText>
 									}
 								</BattleButtonContainer>
-								<BetButtonContainer checked={checked1}>
-									<BattleButton onClick={onPresentBet} >
-										Bet
-									</BattleButton>
-								</BetButtonContainer>
+								{Math.floor((((Date.now() / 1000) + (3600 * 6) - 1601406000) / 86400) + 1) === 49 &&
+									<BetButtonContainer checked={checked1}>
+										<BattleButton onClick={onPresentBet} >
+											Bet
+										</BattleButton>
+									</BetButtonContainer>
+								}
 							</BattleButtonWrapper>
 						</>
 					}

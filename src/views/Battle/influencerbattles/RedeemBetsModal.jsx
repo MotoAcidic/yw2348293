@@ -16,9 +16,10 @@ import UnstakeModal from './UnstakeModal'
 import useFarm from '../../../hooks/useFarm'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
-import { placeElectionWARBet, getCurrentBets, getCurrentBalances } from '../../../yamUtils'
+import { placeElectionWARBet, getCurrentBets, getCurrentBalances, getOutstandingBets, getRewards } from '../../../yamUtils'
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import personalities from './personalities'
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -36,7 +37,7 @@ function getServerURI() {
 	return 'https://yieldwars-api.herokuapp.com'
 }
 
-const Bet = ({battle}) => {
+const Bet = ({ battle }) => {
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	// const {
@@ -62,6 +63,7 @@ const Bet = ({battle}) => {
 	// const [disabled, setDisabled] = useState(false)
 	const [farmBets, setFarmBets] = useState({ pot1: 0, pot2: 0, pot3: 0, pot4: 0 });
 	const [farmBalances, setFarmBalances] = useState({ bal1: 0, bal2: 0, bal3: 0, bal4: 0 });
+	const [outstandingBets, setOutstandingBets] = useState([])
 	// const stakedBalance = useStakedBalance(contract)
 	// const { onUnstake } = useUnstake(contract)
 
@@ -80,6 +82,21 @@ const Bet = ({battle}) => {
 	// 	onPresentUnstake()
 	// }
 
+	const redeemBet = (betId) => {
+		getRewards(yam, betId, account)
+	}
+
+	useEffect(() => {
+		const getta = async () => {
+			let outstandingBets = await getOutstandingBets(yam, account)
+			setOutstandingBets(outstandingBets)
+			console.log(outstandingBets);
+		}
+		if (yam && account) {
+			getta()
+		}
+	}, [yam, account]);
+
 	if (!battle || !battle.length) {
 		return null
 	}
@@ -87,23 +104,32 @@ const Bet = ({battle}) => {
 	let battle1 = battle[0]
 	let winner1 = battle1.pool1.totalVotes > battle1.pool2.totalVotes ? battle1.pool1 : battle1.pool2
 	let correctVote1 = winner1.votes.find(vote => vote.address === account)
+	let person = personalities.find(person => person.handle === winner1.name)
+
+	let bets = outstandingBets.map(bet => {
+		return (
+			<BetItem>
+				<Button onClick={() => redeemBet(bet.betId)} >Claim</Button>
+				<SmallText>{bet.betId}</SmallText>
+			</BetItem>
+		)
+	})
 
 	return (
 		<Container size="sm">
 			<StyledModal>
 				<VersusContainer>
-					<SubTitle>
+					<Title>
 						{correctVote1 ? "💰 YOU WON! 💰" : "😞 YOU LOST! 😞"}
-					</SubTitle>
+					</Title>
+					<Picture src={person.picture} />
 					<Text>
-						The Winner is {winner1.name}!!!
+						The Winner is {winner1.name}!
 					</Text>
 					<Space />
 					<Separator />
-					<Text>
-						Your Claimable Bets
-					</Text>
 					<YourBets>
+						{bets}
 					</YourBets>
 					{/* <Text>
 						Your Bets
@@ -206,6 +232,49 @@ const Bet = ({battle}) => {
 	)
 }
 
+const BetItem = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center
+`
+
+const Title = !isMobile() ? styled.div`
+font-family: "Gilroy";
+  font-size: 26px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  max-width: 80vw;
+  margin-bottom: 5px;
+` : styled.div`
+font-family: "Gilroy";
+  font-size: 30px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  max-width: 80vw;
+  margin-bottom: 10px;
+  margin-top: 40px;
+`;
+
+const Picture = styled.img`
+height: 40%;
+width: 40%;
+min-width: 130px;
+min-height: 130px;
+max-width: 160px;
+max-height: 160px;
+border-radius: 50%;
+margin-bottom: 20px;
+`
+
 const SubTitle = !isMobile() ? styled.div`
 font-family: "GilroyMedium";
 margin-bottom: 5px;
@@ -295,7 +364,9 @@ justify-content: space-evenly;
 const YourBets = styled.div`
 display: flex;
 width: 100%;
-justify-content: space-evenly;`
+justify-content: space-evenly;
+margin-top: 10px;
+`
 
 const Space = styled.div`
 height: 20px;`
@@ -371,7 +442,7 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
-margin-bottom: 5px;
+margin-top: 5px;
 `
 
 const Input = styled.input`

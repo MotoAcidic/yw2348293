@@ -632,6 +632,8 @@ height: 40%;
 width: 40%;
 min-width: 130px;
 min-height: 130px;
+max-width: 160px;
+max-height: 160px;
 border-radius: 50%;
 margin-bottom: 20px;
 `

@@ -119,7 +119,7 @@ const Battle: React.FC = () => {
     if (!battles.length) {
       return (
         <>
-          <Title style={{ marginTop: '30px' }}>Loading Battles...</Title>
+          {/* <Title style={{ marginTop: '30px' }}>Loading Battles...</Title> */}
           <NextBattle />
         </>
       )

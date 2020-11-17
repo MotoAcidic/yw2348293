@@ -78,7 +78,7 @@ const PopularityCard = ({ farms, startDate, item }) => {
 					</StyledContent>
 				</VersusCard>
 			</VersusItem>
-			{account ? <Button size="lg" onClick={() => redeemBet(item[0]._id)} >Claim Rewards</Button> : <Text>connect wallet to claim</Text>}
+			{account ? <Button size="lg" onClick={() => redeemBet(item[0]._id)} >Claim ETH Bet</Button> : <Text>connect wallet to claim</Text>}
 			{item.length === 1 && <Space />}
 			{item.length === 2 && (
 				<>

@@ -32,7 +32,7 @@ const Profile = () => {
 
   useEffect(() => {
     console.log("here", yam)
-    if (!yam.defaultProvider) {
+    if (yam && !yam.defaultProvider) {
       fetchAccount()
     }
   }, [yam, account])

@@ -54,11 +54,11 @@ const Value: React.FC = () => {
   }, [yam, setStats]);
 
   useEffect(() => {
-    if (
-      window.location.hostname === 'localhost'
-    ) {
-      return;
-    }
+    // if (
+    //   window.location.hostname === 'localhost'
+    // ) {
+    //   return;
+    // }
     if (yam && farms.length) {
       fetchStats();
     }
@@ -68,16 +68,16 @@ const Value: React.FC = () => {
   }, [yam, account, farms]);
 
   let currentPrice = curPrice || 0;
-  if (window.location.hostname === 'localhost') {
-    return <div></div>
-  }
+  // if (window.location.hostname === 'localhost') {
+  //   return <div></div>
+  // }
 
 
   return (
     <TopDisplayContainer>
       <DisplayItem>
         $War Price:&nbsp;
-{currentPrice
+          {currentPrice
           ? `$${Number(currentPrice).toLocaleString(undefined, {
             minimumFractionDigits: 4,
             maximumFractionDigits: 4
@@ -86,7 +86,7 @@ const Value: React.FC = () => {
       </DisplayItem>
       <DisplayItem>
         Supply Staked:&nbsp;
-{warStaked && !warStaked.warStaked.eq(0)
+          {warStaked && !warStaked.warStaked.eq(0)
           ? `${Number(warStaked.warStaked.toFixed(2)).toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
@@ -95,7 +95,7 @@ const Value: React.FC = () => {
       </DisplayItem>
       <DisplayItem>
         Marketcap:&nbsp;
-{currentPrice && warStaked && !warStaked.circSupply.eq(0)
+          {currentPrice && warStaked && !warStaked.circSupply.eq(0)
           ? `$${Number(warStaked.circSupply.multipliedBy(currentPrice).dividedBy(10 ** 18).toFixed(2)).toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2

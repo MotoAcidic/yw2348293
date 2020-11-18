@@ -88,8 +88,8 @@ const WarPool: React.FC = () => {
 	}*/
 
 	const onClaimRestake = async () => {
-		onStake(earnings.dividedBy(10 ** 18).toString());
 		harvest(contract, account);
+		onStake(earnings.dividedBy(10 ** 18).toString());
 	}
 
 	const [onPresentStake] = useModal(

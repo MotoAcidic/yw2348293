@@ -644,8 +644,9 @@ const StatBlock = styled.div`
 margin-bottom: 5px;
 display: flex;
 flex-direction: column;
-justify-content: center;
+justify-content: space-evenly;
 align-items: center;
+height: 50%;
 `
 
 const Picture = styled.img`
@@ -852,7 +853,7 @@ const StyledContent = styled.div`
 const SubTitle = !isMobile() ? styled.div`
 font-family: "GilroyMedium";
 margin-bottom: 5px;
-font-size: 20px;
+font-size: 26px;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
@@ -875,7 +876,7 @@ color: #ffffff;
 
 const Text = !isMobile() ? styled.div`
 font-family: "GilroyMedium";
-font-size: 12px;
+font-size: 16px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;

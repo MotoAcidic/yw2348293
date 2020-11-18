@@ -131,7 +131,7 @@ const Bet = ({ battle }) => {
 					<YourBets>
 						{/* {bets} */}
 						<BetItem>
-							<Button onClick={() => redeemBet(battle1._id)} >Claim ETH Bet</Button>
+							<Button size="lg" onClick={() => redeemBet(battle1._id)} >Claim ETH Bet</Button>
 							<SmallText>{battle1._id}</SmallText>
 						</BetItem>
 					</YourBets>

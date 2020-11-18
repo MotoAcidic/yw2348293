@@ -1,6 +1,11 @@
 .twitter-timeline {
 	opacity: 1;
-
+	transform: scale(.7) translateY(-23%);
 	z-index: 100000;
 	pointer-events: none;
+	height: 350px !important;
+	max-width: 200% !important;
+	max-height: 200% !important;
+	width: 120% !important;
+	margin-bottom: -50px !important;
 }

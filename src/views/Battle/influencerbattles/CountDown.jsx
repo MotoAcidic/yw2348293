@@ -20,7 +20,7 @@ class CountDown extends React.Component {
 		let endTime;
 		const format = 'hh:mm:ss';
 		if (moment.utc().isBetween(moment.utc('19:00:00', format), moment.utc('20:00:00', format))) {
-			this.setState({inBetween: true})
+			this.setState({ inBetween: true })
 			endTime = moment.utc().startOf('hour').hours(20)
 		} else {
 			if (moment.utc().isBetween(moment.utc('20:00:00', format), moment.utc('23:59:59', format))) {
@@ -101,17 +101,17 @@ font-family: Alegreya;
 
 const Countdown = styled.div`
 display: flex;
-margin-left: 10px;
 font-family: Alegreya;
-  font-size: 35px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-	letter-spacing: 2px;
-	margin-top: -5px;
-	color: #ffb700;
-	width: 125px;
-	justify-content: center;
+font-size: 30px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+letter-spacing: 2px;
+margin-top: -5px;
+margin-left: 10px;
+color: #ffb700;
+width: 110px;
+justify-content: center;
 `
 
 

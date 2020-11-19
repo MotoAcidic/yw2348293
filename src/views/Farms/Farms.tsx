@@ -105,7 +105,7 @@ const Farms: React.FC = () => {
 
                 <TopDisplayContainer />
                   
-                <BigTitle>The Future of Betting, Tournaments, and Blockchain Battles Lives Here!</BigTitle>
+                <BigTitle>The Future of Betting, Tournaments, and Prediction Markets Lives Here!</BigTitle>
                 <Title>YieldWars is a next generation betting platform, where you can battle (and vote) on almost anything</Title>
 
                 {!isMobile() ?

@@ -268,7 +268,7 @@ const Versus = ({ battles }) => {
 								</StyledContent>
 								{isLoading && <Loading src={loading} />}
 								{!isMobile() ?
-									<a className="twitter-timeline" data-width="130%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									<a style={{ zIndex: 2000000, position: "relative" }} className="twitter-timeline" data-width="130%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 								}
 								{useScript("https://platform.twitter.com/widgets.js")}
@@ -294,7 +294,7 @@ const Versus = ({ battles }) => {
 								</StyledContent>
 								{isLoading && <Loading src={loading} />}
 								{!isMobile() ?
-									<a className="twitter-timeline" data-width="130%"  data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									<a className="twitter-timeline" data-width="130%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 								}
 								{useScript("https://platform.twitter.com/widgets.js")}

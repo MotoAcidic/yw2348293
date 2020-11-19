@@ -23,7 +23,7 @@ const TopBar: React.FC = () => {
     <StyledTopBar>
       <Notice>
         <Text>
-          ⚔️ 🚨  WAR is an experiment in Degen Gambling. DYORz.<a style={{ color: 'white', margin: "0 4px 0 4px", }} target="_blank"
+          ⚔️ 🚨  WAR is an experiment in Degen Gambling. DYOR.<a style={{ color: 'white', margin: "0 4px 0 4px", }} target="_blank"
             rel="noopener noreferrer" href="https://yieldwars.medium.com/twitter-war-premieres-today-with-a-brand-new-platform-heres-how-to-participate-fbea267d6646">Learn More.</a>  🚨⚔️
         </Text>
       </Notice>

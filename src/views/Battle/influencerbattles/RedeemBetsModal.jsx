@@ -16,7 +16,7 @@ import UnstakeModal from './UnstakeModal'
 import useFarm from '../../../hooks/useFarm'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
-import { placeElectionWARBet, getCurrentBets, getCurrentBalances, getOutstandingBets, getRewards } from '../../../yamUtils'
+import { placeElectionWARBet, getCurrentBets, getCurrentBalances, getOutstandingBets, getRewards, getUserBet } from '../../../yamUtils'
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import personalities from './personalities'
@@ -38,73 +38,57 @@ function getServerURI() {
 }
 
 const Bet = ({ battle }) => {
+	const [userBet, setUserBet] = useState(false);
+	const [alreadyRedeemed, setAlreadyRedeemed] = useState(false);
+	const [userLost, setUserLost] = useState(false);
 	const yam = useYam()
 	const { account, connect } = useWallet()
-	// const {
-	// 	contract,
-	// 	depositToken,
-	// 	depositTokenAddress,
-	// 	earnToken,
-	// 	name,
-	// 	icon,
-	// } = useFarm('BATTLEPOOL') || {
-	// 	contract: null,
-	// 	depositToken: '',
-	// 	depositTokenAddress: '',
-	// 	earnToken: '',
-	// 	name: '',
-	// 	icon: ''
-	// }
 
-	// const [contender1, setContender1] = useState(null);
-	// const [contender2, setContender2] = useState(null);
-	// const [battle1Input, setBattle1Input] = useState(0);
-	// const [battle2Input, setBattle2Input] = useState(0);
-	// const [disabled, setDisabled] = useState(false)
-	const [farmBets, setFarmBets] = useState({ pot1: 0, pot2: 0, pot3: 0, pot4: 0 });
-	const [farmBalances, setFarmBalances] = useState({ bal1: 0, bal2: 0, bal3: 0, bal4: 0 });
 	const [outstandingBets, setOutstandingBets] = useState([])
-	// const stakedBalance = useStakedBalance(contract)
-	// const { onUnstake } = useUnstake(contract)
 
-	// const [onPresentUnstake] = useModal(
-	// 	<UnstakeModal
-	// 		max={stakedBalance}
-	// 		onConfirm={onUnstake}
-	// 		tokenName={"WAR"}
-	// 	/>
-	// )
+	useEffect(() => {
+		if (yam && account) {
+			getta()
+		}
+		if (account && yam) {
+			getRedeemable();
+		}
+	}, [yam, account]);
 
-	// const claimAndUnstake = () => {
-	// 	console.log(contract);
-	// 	console.log(account);
-	// 	harvest(contract, account);
-	// 	onPresentUnstake()
-	// }
+	let battle1 = battle[0]
+	console.log("battle1", battle1)
+	if (!battle1) {
+		return <div/>
+	}
+	let winner1  = battle1.pool1.totalVotes > battle1.pool2.totalVotes ? battle1.pool1 : battle1.pool2
+	let correctVote1 = winner1.votes.find(vote => vote.address === account)
+	let person = personalities.find(person => person.handle === winner1.name)
+
 
 	const redeemBet = (betId) => {
 		getRewards(yam, betId, account)
 	}
 
-	useEffect(() => {
-		const getta = async () => {
-			let outstandingBets = await getOutstandingBets(yam, account)
-			setOutstandingBets(outstandingBets)
-			console.log(outstandingBets);
+	const getta = async () => {
+		let outstandingBets = await getOutstandingBets(yam, account)
+		setOutstandingBets(outstandingBets)
+		console.log(outstandingBets);
+	}
+
+	const getRedeemable = async () => {
+		const isRedeemable = await getUserBet(yam, battle1._id, account);
+		if (isRedeemable) {
+			setUserBet(true);
+			if (isRedeemable.isClaimed) setAlreadyRedeemed(true);
+			if (!isRedeemable.won) setUserLost(true);
 		}
-		if (yam && account) {
-			getta()
-		}
-	}, [yam, account]);
+	}
+
+
 
 	if (!battle || !battle.length) {
 		return null
 	}
-
-	let battle1 = battle[0]
-	let winner1 = battle1.pool1.totalVotes > battle1.pool2.totalVotes ? battle1.pool1 : battle1.pool2
-	let correctVote1 = winner1.votes.find(vote => vote.address === account)
-	let person = personalities.find(person => person.handle === winner1.name)
 
 	// let bets = outstandingBets.map(bet => {
 	// 	return (
@@ -115,12 +99,38 @@ const Bet = ({ battle }) => {
 	// 	)
 	// })
 
+	const getClaim = () => {
+		if (userLost) {
+			return (
+				<Text>😞 YOU LOST! 😞</Text>
+			)
+		} else if (alreadyRedeemed) {
+			return (
+				<Text>bet rewards redeemed</Text>
+			)
+		} else if (!userBet) {
+			return (
+				<Text>you didn't bet</Text>
+			)
+		}
+		return (
+			<>
+					<Title>
+
+			💰 YOU WON! 💰
+			</Title>
+			<Button size="lg" onClick={() => redeemBet(battle1._id)} >Claim ETH Bet</Button>
+			</>
+		)
+	}
+
 	return (
 		<Container size="sm">
 			<StyledModal>
 				<VersusContainer>
 					<Title>
-						{correctVote1 ? "💰 YOU WON! 💰" : "😞 YOU LOST! 😞"}
+
+						{/* {correctVote1 ? "💰 YOU WON! 💰" : "😞 YOU LOST! 😞"} */}
 					</Title>
 					<Picture src={person.picture} />
 					<Text>
@@ -131,8 +141,11 @@ const Bet = ({ battle }) => {
 					<YourBets>
 						{/* {bets} */}
 						<BetItem>
-							<Button size="lg" onClick={() => redeemBet(battle1._id)} >Claim ETH Bet</Button>
-							<SmallText>{battle1._id}</SmallText>
+							
+					{getClaim()}
+
+							{/* <Button size="lg" onClick={() => redeemBet(battle1._id)} >Claim ETH Bet</Button> */}
+							{/* <SmallText>{battle1._id}</SmallText> */}
 						</BetItem>
 					</YourBets>
 					{/* <Text>
@@ -279,70 +292,6 @@ border-radius: 50%;
 margin-bottom: 20px;
 `
 
-const SubTitle = !isMobile() ? styled.div`
-font-family: "GilroyMedium";
-margin-bottom: 5px;
-font-size: 20px;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-text-align: center;
-color: #ffffff;
-	text-align: left;
-` : styled.div`
-font-family: "GilroyMedium";
-margin-bottom: 2px;
-font-size: 20px;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-text-align: center;
-color: #ffffff;
-	text-align: left;
-`
-
-const Column = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;`
-
-const BetContainer = styled.div`
-display: flex;
-flex-direction: row;
-align-items: center;
-`
-
-const StyledText1 = styled.div`
-	height: 40px;
-  width: 40px;
-	border-radius: 50%;
-  display: flex;
-  align-items: center;
-	justify-content: center;
-	font-family: "Edo";
-	font-weight: normal;
-background-color: #AB1003;
-font-size: 40px;
-border-radius: 50%;
-color: white;
-`
-const StyledText2 = styled.div`
-	height: 40px;
-  width: 40px;
-color: white;
-font-size: 40px;
-border-radius: 50%;
-  display: flex;
-  align-items: center;
-	justify-content: center;
-	font-family: "Edo";
-	font-weight: normal;
-	background-color: #15437F;
-  border-radius: 50%;
-`
-
 const Separator = styled.div`
   width: 80%;
   height: 1px;
@@ -350,20 +299,6 @@ const Separator = styled.div`
   background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
 `
 
-const BetDisplay = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: space-evenly;
-align-items: center;
-`
-
-const AllBets = styled.div`
-width: 100%;
-height: 100px;
-display: flex;
-flex-direction: row;
-justify-content: space-evenly;
-`
 
 const YourBets = styled.div`
 display: flex;
@@ -382,48 +317,6 @@ border-radius: 8px;
   height: 100%;
   z-index: 100000;
 `
-
-const AmountBet = styled.div`
-font-family: Gilroy;
-font-size: 18px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: #ffffff;`
-
-const CardIcon = styled.img`
-	height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin: 0 15px;
-`
-const Bets = styled.div`
-display: flex;
-align-items: center;
-margin-bottom: 10px;`
-
-const Bottom = styled.div`
-width: 100%;
-display: flex;
-justify-content: space-between;`
-
-const Row = styled.div`
-width: 100%;
-display: flex;
-justify-content: space-evenly;`
-
-const Top = styled.div`
-width: 100%;
-display: flex;
-flex-direction: row;
-flex-wrap: nowrap;
-margin-bottom: 20px;
-justify-content: space-between;`
 
 const Text = styled.div`
 font-family: "Gilroy";
@@ -446,78 +339,8 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
-margin-top: 5px;
+margin-top: 15px;
 `
-
-const Input = styled.input`
-font-family: "SF Mono Semibold";
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-letter-spacing: normal;
-color: #ffb700;
-text-align: right;
-width: 90%;
-background: none;
-border: none;
-margin-right: 10px;
-:focus{
-	outline: none;
-}`
-
-const InputContainer = styled.div`
-width: 170px;
-border-radius: 8px;
-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-border: solid 1px rgba(255, 183, 0, 0.5);
-background-color: rgba(255, 255, 255, 0.2);
-font-family: "SF Mono Semibold";
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-letter-spacing: normal;
-color: #ffb700;
-text-align: right;
-display: flex;
-justify-content: flex-end;
-align-items: center;
-padding-right: 10px;
-`
-
-const Select = styled.select`
-	width: 280px;
-  height: 44px;
-  font-family: "Gilroy";
-  font-size: 30px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-  padding-left: 8px;
-	font-size: 18px;
-	border-radius: 8px;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-  border: solid 1px rgba(255, 183, 0, 0.5);
-	background-color: rgba(255, 255, 255, 0.2);
-	padding-right: 20px;
-  option {
-		color: black;
-		display: flex;
-		position: absolute;
-		top: 100%;
-		font-size: 18px;
-    white-space: pre;
-		min-height: 20px;
-		border: solid 1px rgba(255, 183, 0, 0.5);
-		background-color: rgba(255, 255, 255, 0.2) !important;
-		padding: 2px;
-  }
-`;
-
 
 
 const VersusContainer = !isMobile() ? styled.div`

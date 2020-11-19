@@ -5,6 +5,10 @@ import './swal.css'
 import VotesModal from "./PersVotesModal.jsx";
 import useModal from '../../hooks/useModal'
 import personalities from '../Battle/influencerbattles/personalities'
+import Button from '../../components/Button'
+import useYam from '../../hooks/useYam'
+import { useWallet } from "use-wallet";
+import { getRewards } from '../../yamUtils'
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -16,6 +20,8 @@ function isMobile() {
 }
 
 const PopularityCard = ({ farms, startDate, item }) => {
+	const yam = useYam()
+	const { account, connect } = useWallet()
 	let pool1, pool2, pool3, pool4, winner1, winner2
 	if (item.length === 2) {
 		pool1 = personalities.find(person => person.handle === item[0].pool1.name)
@@ -28,6 +34,12 @@ const PopularityCard = ({ farms, startDate, item }) => {
 		pool1 = personalities.find(person => person.handle === item[0].pool1.name)
 		pool2 = personalities.find(person => person.handle === item[0].pool2.name)
 		winner1 = item[0].pool1.totalVotes - item[0].pool2.totalVotes > 0 ? 1 : 2
+	}
+
+	const redeemBet = (betId) => {
+		setTimeout(() => {
+			getRewards(yam, betId, account)
+		}, 1000);
 	}
 
 	const [presentVotesModal1] = useModal(<VotesModal battleId={item[0]._id} farms={farms} pool1={pool1} pool2={pool2} winner={winner1} />);
@@ -66,6 +78,7 @@ const PopularityCard = ({ farms, startDate, item }) => {
 					</StyledContent>
 				</VersusCard>
 			</VersusItem>
+			{account ? <Button size="lg" onClick={() => redeemBet(item[0]._id)} >Claim ETH Bet</Button> : <Text>connect wallet to claim</Text>}
 			{item.length === 1 && <Space />}
 			{item.length === 2 && (
 				<>
@@ -105,6 +118,18 @@ const PopularityCard = ({ farms, startDate, item }) => {
 		</VSContentContainer>
 	)
 }
+
+const Text = styled.div`
+font-family: "Gilroy";
+font-size: 18px;
+font-weight: normal;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+margin-top: 5px;
+`
 
 const Percent = styled.div`
 	font-family: "Gilroy";
@@ -173,6 +198,7 @@ min-width: 300px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  align-items: center;
 font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;

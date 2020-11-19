@@ -87,6 +87,21 @@ const Battle = ({ battle1, id }) => {
     pers1: personalities.find(person => person.handle === battle1.pool1.name),
     pers2: personalities.find(person => person.handle === battle1.pool2.name)
   }
+
+  let yourBets = null
+  if (!farmBalances.bal1 > 0 && !farmBalances.bal2 > 0)
+    yourBets = "none"
+  else if (farmBalances.bal1 > 0)
+    yourBets = `💰${farmBalances.bal1.toLocaleString()} $ETH on ${battle1.pool1.name}💰`
+  else
+    yourBets = `💰${farmBalances.bal2.toLocaleString()} $ETH on ${battle1.pool2.name}💰`
+
+  let width = (100 * (farmBets.pot1 / (farmBets.pot1 + farmBets.pot2)))
+  if (width > 99)
+    width = 99
+  if (width < 1)
+    width = 1
+
   return (
     <VotingBalance>
       <SubTitle>
@@ -95,23 +110,15 @@ const Battle = ({ battle1, id }) => {
       <StyledContent>
         <CardIcon src={battleDetail.pers1.picture} />
         <BalanceBar>
-          <div style={{ backgroundColor: '#d270ff', height: '100%', borderRadius: "2px 0 0 2px", width: (100 * (farmBets.pot1 / (farmBets.pot1 + farmBets.pot2))) + '%', borderRight: "3px solid black" }} />
+          <div style={{ backgroundColor: '#d270ff', height: '100%', borderRadius: "6px 0 0 6px", width: width + '%', borderRight: "3px solid rgba(255, 183, 0, 0.3)" }} />
         </BalanceBar>
         <CardIcon src={battleDetail.pers2.picture} />
-
       </StyledContent>
-      {
-        (farmBalances.bal1 > 0 || farmBalances.bal2 > 0) &&
-        <YourBetSection>
-          <Item>Your Bets:</Item>
-          {!farmBalances.bal1 > 0 && !farmBalances.bal2 > 0 ?
-            <Item>none</Item>
-            : null
-          }
-          {farmBalances.bal1 > 0 ? <Item>{battle1.pool1.name} 💰${farmBalances.bal1.toLocaleString()}</Item> : null}
-          {farmBalances.bal2 > 0 ? <Item>{battle1.pool2.name} 💰${farmBalances.bal2.toLocaleString()}</Item> : null}
-        </YourBetSection>
-      }
+      <YourBetSection>
+        <SubTitle>
+          Your Bets: {yourBets}
+        </SubTitle>
+      </YourBetSection>
       {/* <BetsDisplayContainer>
       <BetSection>
         <Item>Current Bets:</Item>
@@ -137,29 +144,29 @@ color: #ffffff;
 `
 
 const CardIcon = styled.img`
-	height: 50px;
-  width: 50px;
+	height: 42px;
+  width: 42px;
   border-radius: 50%;
   align-items: center;
   display: flex;
   justify-content: center;
   margin: 0 15px;
-  border: 2px solid #ffb700;
+  border: 1px solid rgba(255, 183, 0, 0.3);
 `
 
 const BalanceBar = styled.div`
 width: calc(100% - 110px);
-height: 22px;
+height: 16px;
 background-color: #0C438C;
-border: 3px solid black;
+border: 2px solid rgba(255, 183, 0, 0.3);
 border-radius: 8px;
 `
 
 const SubTitle = styled.div`
 font-family: "Gilroy";
-margin: 5px auto -5px;
-font-size: 20px;
-font-weight: bold;
+margin: 2px auto -8px;
+font-size: 14px;
+font-weight: normal;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
@@ -173,7 +180,7 @@ const VotingBalance = styled.div`
 display: flex;
 flex-direction: column;
 width: 89%;
-margin: 0 auto 5px auto;
+margin: 2px auto 5px auto;
 `
 
 
@@ -218,7 +225,8 @@ const YourBetSection = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
-width: 20%;
+align-items: center;
+width: 25%;
 margin: auto;
 color: white;
 margin-top: -10px;
@@ -265,7 +273,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-  margin-bottom: 2px;
+  margin-top: 5px;
 `;
 
 const BackgroundSection = styled.div`

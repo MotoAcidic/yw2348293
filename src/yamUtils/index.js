@@ -922,7 +922,11 @@ export const getUserCurrentBet = async (yam, betId, account) => {
 }
 
 export const getOutstandingBets = async (yam, account) => {
-  const outstandingBets = await yam.contracts.betting_v2.methods.listOutstandingRewards(account).call()
+  let outstandingBets = await yam.contracts.betting_v2.methods.listOutstandingRewards(account).call()
+  // console.log(outstandingBets);
+  // for (let i = 0; i < outstandingBets.length; i++) {
+  //   outstandingBets[i] = await yam.contracts.betting_v2.methods.getBet(outstandingBets[i].betId).call()
+  // }
   return outstandingBets
 }
 

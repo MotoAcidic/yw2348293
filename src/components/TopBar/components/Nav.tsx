@@ -92,7 +92,7 @@ justify-content: space-around;
 
 const StyledLink = !isMobile() ? styled(NavLink)`
 font-family: "Gilroy";
-font-size: 18px;
+font-size: 16px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;

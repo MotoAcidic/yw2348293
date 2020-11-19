@@ -137,6 +137,42 @@ const Battle: React.FC = () => {
 
   console.log(yesterdaysBattle);
 
+  if (isMobile()) {
+    return (
+      <Switch>
+        <StyledCanvas>
+          <BackgroundSection />
+          <ContentContainer>
+            <Page>
+              {/* <Countdown/> */}
+              <Title style={{marginTop: '40px'}}>Please View on Desktop</Title>
+              <SmallSpace />
+              {/* {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
+              {prevDayBattles.length > 0 &&
+                <InbetweenCard battles={prevDayBattles} />
+              } */}
+              <Pool3 />
+              <Title>Information</Title>
+              <SmallSpace />
+              <Instructions />
+              <Title>Schedule</Title>
+              <SmallSpace />
+              <Schedule schedule={schedule} />
+              <div style={betRedeemModal ? { display: 'block' } : { display: 'none' }}>
+                <Modal onClick={() => setBetRedeemModal(false)}>
+                  <ModalBlock onClick={(e) => stopProp(e)}>
+                    {/* {yam &&  */}
+                    <RedeemBetsModal battle={yesterdaysBattle} />
+                    {/* } */}
+                  </ModalBlock>
+                </Modal>
+              </div>
+            </Page>
+          </ContentContainer>
+        </StyledCanvas>
+      </Switch>
+    );
+  }
 
   return (
     <Switch>

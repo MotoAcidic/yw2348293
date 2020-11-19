@@ -4,14 +4,16 @@ export default [
 		handle: '@CryptoGainz1',
 		followerCount: '60.6k',
 		picture: "https://pbs.twimg.com/profile_images/1248734594104545284/-IrCpNRz_400x400.jpg",
-		bio: `Algorithmic trader. All algorithms forward tested publicly on @gainzybot`
+		bio: `Algorithmic trader. All algorithms forward tested publicly on @gainzybot`,
+		tweet: 'https://twitter.com/CryptoGainz1/status/1181417933790208000'
 	},
 	{
 		name: 'ChainLinkGod.eth',
 		handle: '@ChainLinkGod',
 		followerCount: '60.7k',
 		picture: "https://pbs.twimg.com/profile_images/1245422014988349440/leUuHBXG_400x400.jpg",
-		bio: `Crypto-speculator. I am not your financial advisor.`
+		bio: `Crypto-speculator. I am not your financial advisor.`,
+		tweet: 'https://twitter.com/ChainLinkGod/status/1321466307498311680'
 	},
 	{
 		name: 'Ad_Infinitum',

@@ -106,14 +106,14 @@ const Bet = ({ battle }) => {
 	let correctVote1 = winner1.votes.find(vote => vote.address === account)
 	let person = personalities.find(person => person.handle === winner1.name)
 
-	let bets = outstandingBets.map(bet => {
-		return (
-			<BetItem>
-				<Button onClick={() => redeemBet(bet.betId)} >Claim</Button>
-				<SmallText>{bet.betId}</SmallText>
-			</BetItem>
-		)
-	})
+	// let bets = outstandingBets.map(bet => {
+	// 	return (
+	// 		<BetItem>
+	// 			<Button onClick={() => redeemBet(bet.betId)} >Claim</Button>
+	// 			<SmallText>{bet.betId}</SmallText>
+	// 		</BetItem>
+	// 	)
+	// })
 
 	return (
 		<Container size="sm">
@@ -129,7 +129,11 @@ const Bet = ({ battle }) => {
 					<Space />
 					<Separator />
 					<YourBets>
-						{bets}
+						{/* {bets} */}
+						<BetItem>
+							<Button size="lg" onClick={() => redeemBet(battle1._id)} >Claim ETH Bet</Button>
+							<SmallText>{battle1._id}</SmallText>
+						</BetItem>
 					</YourBets>
 					{/* <Text>
 						Your Bets

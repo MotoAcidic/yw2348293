@@ -93,7 +93,7 @@ const Versus = ({ battles }) => {
 			setTimeout(() => {
 				setChecked1(g)
 				return
-			}, 800);
+			}, 1300);
 		}
 		else {
 			setChecked1(g)
@@ -196,7 +196,7 @@ const Versus = ({ battles }) => {
 			document.body.appendChild(script);
 			setTimeout(() => {
 				setLoading(false)
-			}, 500);
+			}, 1500);
 			return () => {
 				document.body.removeChild(script);
 			}
@@ -257,7 +257,7 @@ const Versus = ({ battles }) => {
 							<LeftBar />
 							<BigRightBar />
 							<BottomBar />
-							<TLVS>
+							<TLVS checked={checked1 === 1}>
 								<StyledContent>
 									<Picture src={battle1.pers1.picture} />
 									<StatBlock>
@@ -266,11 +266,11 @@ const Versus = ({ battles }) => {
 										<Text>Followers: {battle1.pers1.followerCount}</Text>
 									</StatBlock>
 								</StyledContent>
-								{!isMobile() ?
-									<a className="twitter-timeline" data-width="65%" data-height="58%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-								}
 								{isLoading && <Loading src={loading} />}
+								{!isMobile() ?
+									<a className="twitter-timeline" data-width="130%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								}
 								{useScript("https://platform.twitter.com/widgets.js")}
 							</TLVS>
 						</TLVersusItem>
@@ -283,7 +283,7 @@ const Versus = ({ battles }) => {
 							<BigLeftBar />
 							<RightBar />
 							<BottomBar />
-							<BLVS>
+							<BLVS checked={checked1 === 2}>
 								<StyledContent>
 									<Picture src={battle1.pers2.picture} />
 									<StatBlock>
@@ -292,34 +292,32 @@ const Versus = ({ battles }) => {
 										<Text>Followers: {battle1.pers2.followerCount}</Text>
 									</StatBlock>
 								</StyledContent>
-								{!isMobile() ?
-									<a className="twitter-timeline" data-width="65%" data-height="58%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
-								}
 								{isLoading && <Loading src={loading} />}
+								{!isMobile() ?
+									<a className="twitter-timeline" data-width="130%"  data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+								}
 								{useScript("https://platform.twitter.com/widgets.js")}
 							</BLVS>
 						</BLVersusItem>
 					</Options>
 					{checked1 !== 0 &&
-						<>
-							<BattleButtonWrapper >
-								<BattleButtonContainer checked={checked1}>
-									{!voted ?
-										<BattleButton onClick={castVote} >
-											Battle
+						<BattleButtonWrapper >
+							<BattleButtonContainer checked={checked1}>
+								{!voted ?
+									<BattleButton onClick={castVote} >
+										Vote
 										</BattleButton>
-										:
-										<BattleText>Voted</BattleText>
-									}
-								</BattleButtonContainer>
-								<BetButtonContainer checked={checked1}>
-									<BattleButton onClick={onPresentBet} >
-										Bet
+									:
+									<BattleText>Voted</BattleText>
+								}
+							</BattleButtonContainer>
+							<BetButtonContainer checked={checked1}>
+								<BattleButton onClick={onPresentBet} >
+									Bet
 									</BattleButton>
-								</BetButtonContainer>
-							</BattleButtonWrapper>
-						</>
+							</BetButtonContainer>
+						</BattleButtonWrapper>
 					}
 				</VersusContainer>
 
@@ -345,7 +343,7 @@ const Versus = ({ battles }) => {
 
 			<TotalVotesSection>
 				{voted && 'Come back tomorrow and claim your victory!'}
-				{!voted && (account ? `You currently have ${getDisplayBalance(stakedBalance)} votes available for BATTLE and you may BET with ETH.` : 'Connect wallet to see available votes')}
+				{!voted && account && `You currently have ${getDisplayBalance(stakedBalance)} votes available for BATTLE and you may BET with ETH.`}
 			</TotalVotesSection>
 			<SmallSpace />
 		</>
@@ -355,6 +353,7 @@ const Versus = ({ battles }) => {
 const Loading = styled.img`
 	width: 80px;
 	height: 80px;
+	position: relative;
 `
 
 const Container = styled.div`
@@ -381,6 +380,16 @@ font-family: "Gilroy";
 const BattleButtonWrapper = styled.span`
 position: relative;
 bottom: 10%;
+width: 80%;
+pointer-events: none;
+display: flex;
+user-select: none;
+justify-content: center;
+`
+
+const ChooseButtonWrapper = styled.span`
+position: relative;
+bottom: 0%;
 width: 80%;
 pointer-events: none;
 display: flex;
@@ -429,7 +438,7 @@ font-family: "Edo";
 const BattleButtonContainer = styled.div`
 position: absolute;
 transform: translateX(${props => props.checked === 1 ? 150 : -270}px) skew(3deg);
-width: 200px;
+width: 160px;
 transition: transform .2s ease-out;
 background-image: url(${Metal});
 border: 10px black solid;
@@ -440,13 +449,25 @@ pointer-events: all;
 
 const BetButtonContainer = styled.div`
 position: absolute;
-transform: translateX(${props => props.checked === 1 ? 330 : -90}px) skew(3deg);
+transform: translateX(${props => props.checked === 1 ? 310 : -110}px) skew(3deg);
 width: 120px;
 transition: transform .2s ease-out;
 background-image: url(${Metal});
 border: 10px black solid;
 border-width: 10px 5px 12px 5px;
 background-size: 300px 100px;
+pointer-events: all;
+`
+
+const ChooseButtonContainer = styled.div`
+position: absolute;
+transform: translateX(${props => props.checked === 1 ? 150 : -270}px) skew(3deg);
+width: 450px;
+transition: transform .2s ease-out;
+background-image: url(${Metal});
+border: 10px black solid;
+border-width: 10px 5px 12px 5px;
+background-size: 250px 100px;
 pointer-events: all;
 `
 
@@ -539,7 +560,7 @@ background-color: black;
 
 const TopBar = styled.div`
 width: 100%;
-height: 20px;
+height: 16px;
 position: absolute;
 top: 0%;
 left: 0%;
@@ -548,7 +569,7 @@ background-color: black;
 
 const BottomBar = styled.div`
 width: 100%;
-height: 20px;
+height: 16px;
 position: absolute;
 bottom: 0%;
 left: 0%;
@@ -612,7 +633,7 @@ flex-direction: row;
 align-items: center;
 justify-content: space-evenly;
 width: 100%;
-height: 70vh;
+height: 65vh;
 min-height: 600px;
 margin-top: 40px;
 margin-bottom: 30px;
@@ -623,17 +644,14 @@ const StatBlock = styled.div`
 margin-bottom: 5px;
 display: flex;
 flex-direction: column;
-justify-content: center;
+justify-content: space-evenly;
 align-items: center;
+height: 50%;
 `
 
 const Picture = styled.img`
-height: 100%;
-width: 40%;
-min-width: 130px;
-min-height: 130px;
-max-width: 160px;
-max-height: 160px;
+width: 170px;
+height: 170px;
 border-radius: 50%;
 margin-bottom: 20px;
 `
@@ -722,9 +740,10 @@ height: 100%;
 min-height: 220px;
 display: flex;
 flex-direction: column;
-justify-content: flex-start;
+// justify-content: flex-start;
 align-items: center;
-transform: skew(-3deg);
+transform: skew(-3deg) scale(${props => props.checked ? 1.2 : 1});
+transition: transform .2s ease-out 15ms;
 pointer-events: none;
 z-index: 102;
 margin-top: 30px;
@@ -739,9 +758,10 @@ height: 100%;
 min-height: 220px;
 display: flex;
 flex-direction: column;
-justify-content: flex-start;
+// justify-content: flex-start;
 align-items: center;
-transform: skew(-3deg);
+transform: skew(-3deg) scale(${props => props.checked ? 1.2 : 1});
+transition: transform .2s ease-out 15ms;
 pointer-events: none;
 z-index: 102;
 margin-top: 30px;
@@ -785,7 +805,7 @@ const VersusContainer = !isMobile() ? styled.div`
 // min-width: 600px;
 // height: 100%;
 // min-height: 550px;
-width: 60%;
+width: 75%;
 height: 55vh;
 min-height: 520px;
 margin-top: 15px;
@@ -824,7 +844,7 @@ border: 2px solid rgba(255, 183, 0, 0.3);`
 const StyledContent = styled.div`
   display: flex;
 	flex-direction: row;
-	height: 30%;
+	height: 40%;
 	width: 75%;
 	align-items: center;
 	justify-content: space-evenly;
@@ -833,7 +853,7 @@ const StyledContent = styled.div`
 const SubTitle = !isMobile() ? styled.div`
 font-family: "GilroyMedium";
 margin-bottom: 5px;
-font-size: 20px;
+font-size: 26px;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
@@ -856,7 +876,7 @@ color: #ffffff;
 
 const Text = !isMobile() ? styled.div`
 font-family: "GilroyMedium";
-font-size: 12px;
+font-size: 16px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;

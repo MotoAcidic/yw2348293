@@ -46,6 +46,19 @@ const Bet = ({ battle }) => {
 
 	const [outstandingBets, setOutstandingBets] = useState([])
 
+
+	let battle1 = battle[0]
+	console.log("battle1", battle1)
+
+	const getRedeemable = async () => {
+		const isRedeemable = await getUserBet(yam, battle1._id, account);
+		if (isRedeemable) {
+			setUserBet(true);
+			if (isRedeemable.isClaimed) setAlreadyRedeemed(true);
+			if (!isRedeemable.won) setUserLost(true);
+		}
+	}
+
 	const getta = async () => {
 		let outstandingBets = await getOutstandingBets(yam, account)
 		setOutstandingBets(outstandingBets)
@@ -61,8 +74,6 @@ const Bet = ({ battle }) => {
 		}
 	}, [yam, account]);
 
-	let battle1 = battle[0]
-	console.log("battle1", battle1)
 	if (!battle1) {
 		return <div/>
 	}
@@ -76,15 +87,6 @@ const Bet = ({ battle }) => {
 	}
 
 
-
-	const getRedeemable = async () => {
-		const isRedeemable = await getUserBet(yam, battle1._id, account);
-		if (isRedeemable) {
-			setUserBet(true);
-			if (isRedeemable.isClaimed) setAlreadyRedeemed(true);
-			if (!isRedeemable.won) setUserLost(true);
-		}
-	}
 
 
 

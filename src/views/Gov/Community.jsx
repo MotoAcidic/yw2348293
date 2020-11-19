@@ -26,7 +26,7 @@ const Community = () => {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [newSuggestion, setNewSuggestion] = useState("")
-  const [sort, setSort] = useState("new");
+  const [sort, setSort] = useState("top");
   const [userAlreadySuggested, setUserAlreadySuggested] = useState(false);
   const [presentRulesModal] = useModal(<RulesModal />);
   const { account, connect } = useWallet()
@@ -115,6 +115,7 @@ const Community = () => {
         if (downDooted) return;
         castVote(getDisplayBalance(stakedBalance) * -1);
       }
+      console.log("suggest", suggestion)
       return (
         <SingleSuggestion>
           <VoteButtons>

@@ -63,14 +63,22 @@ const Profile = () => {
 
   return (
     <LeaderboardContainer>
-      <Title>Leaderboard
+      <Title>
+        <LeaderboardTitle>
+          Leaderboard
+        {selectVal === "battles" &&
+            <LeaderboardInfo>
+              (average between win % and participation %)
+        </LeaderboardInfo>
+          }
+        </LeaderboardTitle>
         <Leaderboards>
           <Option style={{ color: selectVal === "battles" ? "white" : "#ffbe1a", textDecoration: selectVal === "battles" ? "underline" : "none" }} onClick={() => setSelectVal("battles")}>
             battles
           </Option>
-          <Option style={{ color: selectVal === "bets" ? "white" : "#ffbe1a", textDecoration: selectVal === "bets" ? "underline" : "none" }} onClick={() => setSelectVal("bets")}>
+          {/* <Option style={{ color: selectVal === "bets" ? "white" : "#ffbe1a", textDecoration: selectVal === "bets" ? "underline" : "none" }} onClick={() => setSelectVal("bets")}>
             bets
-          </Option>
+          </Option> */}
         </Leaderboards>
       </Title>
       {leaderboard.length > 0 ?
@@ -84,6 +92,15 @@ const Profile = () => {
     </LeaderboardContainer>
   )
 }
+
+const LeaderboardInfo = styled.div`
+font-size: 12px;
+margin-left: 15px;
+font-weight: normal;
+padding-top: 5px;`
+
+const LeaderboardTitle = styled.div`
+display: flex;`
 
 const LoadingContainer = styled.div`
 height: 204px;

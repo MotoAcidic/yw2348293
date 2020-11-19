@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import WinnerChalice from "../../assets/img/win@2x.png";
 import './swal.css'
@@ -8,7 +8,7 @@ import personalities from '../Battle/influencerbattles/personalities'
 import Button from '../../components/Button'
 import useYam from '../../hooks/useYam'
 import { useWallet } from "use-wallet";
-import { getRewards } from '../../yamUtils'
+import { getRewards, getUserBet } from '../../yamUtils'
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -20,6 +20,9 @@ function isMobile() {
 }
 
 const PopularityCard = ({ farms, startDate, item }) => {
+	const [userBet, setUserBet] = useState(false);
+	const [alreadyRedeemed, setAlreadyRedeemed] = useState(false);
+	const [userLost, setUserLost] = useState(false);
 	const yam = useYam()
 	const { account, connect } = useWallet()
 	let pool1, pool2, pool3, pool4, winner1, winner2
@@ -35,6 +38,8 @@ const PopularityCard = ({ farms, startDate, item }) => {
 		pool2 = personalities.find(person => person.handle === item[0].pool2.name)
 		winner1 = item[0].pool1.totalVotes - item[0].pool2.totalVotes > 0 ? 1 : 2
 	}
+	const [presentVotesModal1] = useModal(<VotesModal battleId={item[0]._id} farms={farms} pool1={pool1} pool2={pool2} winner={winner1} />);
+	const [presentVotesModal2] = useModal(<VotesModal battleId={item[1] ? item[1]._id : ""} pool1={pool3} pool2={pool4} winner={winner2} />);
 
 	const redeemBet = (betId) => {
 		setTimeout(() => {
@@ -42,15 +47,46 @@ const PopularityCard = ({ farms, startDate, item }) => {
 		}, 1000);
 	}
 
-	const [presentVotesModal1] = useModal(<VotesModal battleId={item[0]._id} farms={farms} pool1={pool1} pool2={pool2} winner={winner1} />);
-	const [presentVotesModal2] = useModal(<VotesModal battleId={item[1] ? item[1]._id : ""} pool1={pool3} pool2={pool4} winner={winner2} />);
+	const getRedeemable = async () => {
+		const isRedeemable = await getUserBet(yam, item[0]._id, account);
+		if (isRedeemable) {
+			setUserBet(true);
+			if (isRedeemable.isClaimed) setAlreadyRedeemed(true);
+			if (!isRedeemable.won) setUserLost(true);
+		}
+	}
+	useEffect(() => {
+		if (account && yam) {
+			getRedeemable();
+		}
+	}, [account, yam])
+
+
+
+	const getClaim = () => {
+		if (userLost) {
+			return (
+				<Text>you lost the bet</Text>
+			)
+		} else if (alreadyRedeemed) {
+			return (
+				<Text>bet rewards redeemed</Text>
+			)
+		} else if (!userBet) {
+			return (
+				<Text>you didn't bet</Text>
+			)
+		}
+		return (
+			<Button size="lg" onClick={() => redeemBet(item[0]._id)} >Claim ETH Bet</Button>
+		)
+	}
 
 	return (
 		<VSContentContainer>
 			<div>{startDate}</div>
-			{item.length === 1 && <Space />}
 			<VersusItem
-			onClick={presentVotesModal1}
+				onClick={presentVotesModal1}
 			>
 				<VersusCard>
 					<StyledContent>
@@ -78,43 +114,8 @@ const PopularityCard = ({ farms, startDate, item }) => {
 					</StyledContent>
 				</VersusCard>
 			</VersusItem>
-			{account ? <Button size="lg" onClick={() => redeemBet(item[0]._id)} >Claim ETH Bet</Button> : <Text>connect wallet to claim</Text>}
-			{item.length === 1 && <Space />}
-			{item.length === 2 && (
-				<>
-					<Divider />
-					<VersusItem
-					onClick={presentVotesModal2}
-					>
-						<VersusCard>
-							<StyledContent>
-								{winner2 === 1 ? <WinningCardIcon src={pool3.picture} /> : <StyledCardIcon src={pool3.picture} />}
-								{winner2 === 1 && <Chalice />}
-								<StyledTitle>{pool3.name}</StyledTitle>
-								<Percent>{
-									((parseInt(item[1].pool1.totalVotes, 10) /
-										(parseInt(item[1].pool1.totalVotes, 10) + parseInt(item[1].pool2.totalVotes, 10)))
-										* 100).toFixed(0)
-								}%</Percent>
-							</StyledContent>
-						</VersusCard>
-								VS
-						<VersusCard>
-							<StyledContent>
-								{winner2 === 2 ? <WinningCardIcon src={pool4.picture} /> : <StyledCardIcon src={pool4.picture} />}
-								{winner2 === 2 && <Chalice />}
+			{account ? getClaim() : <Text>connect wallet to claim</Text>}
 
-								<StyledTitle>{pool4.name}</StyledTitle>
-								<Percent>{
-									((parseInt(item[1].pool2.totalVotes, 10) /
-										(parseInt(item[1].pool1.totalVotes, 10) + parseInt(item[1].pool2.totalVotes, 10)))
-										* 100).toFixed(0)
-								}%</Percent>
-							</StyledContent>
-						</VersusCard>
-					</VersusItem>
-				</>
-			)}
 		</VSContentContainer>
 	)
 }
@@ -191,7 +192,7 @@ const VSContentContainer = styled.div`
 width: 30%;
 
 min-width: 300px;
-  height: 250px;
+  height: 300px;
   border-radius: 8px;
     border: solid 2px rgba(255, 183, 0, 0.3);
   background-color: rgba(256,256,256,0.08);

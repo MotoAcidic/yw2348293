@@ -46,6 +46,12 @@ const Bet = ({ battle }) => {
 
 	const [outstandingBets, setOutstandingBets] = useState([])
 
+	const getta = async () => {
+		let outstandingBets = await getOutstandingBets(yam, account)
+		setOutstandingBets(outstandingBets)
+		console.log(outstandingBets);
+	}
+
 	useEffect(() => {
 		if (yam && account) {
 			getta()
@@ -69,11 +75,7 @@ const Bet = ({ battle }) => {
 		getRewards(yam, betId, account)
 	}
 
-	const getta = async () => {
-		let outstandingBets = await getOutstandingBets(yam, account)
-		setOutstandingBets(outstandingBets)
-		console.log(outstandingBets);
-	}
+
 
 	const getRedeemable = async () => {
 		const isRedeemable = await getUserBet(yam, battle1._id, account);

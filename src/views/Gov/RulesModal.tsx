@@ -16,7 +16,7 @@ const BetRulesModal: React.FC<ModalProps> = ({ onDismiss }) => {
       <ModalSpacer>
         <Label />
         <ModalContent>
-          You must have $WAR staked to participate in community governance. The more $WAR you have staked, the more voting power you weild.
+          You must have $WAR staked to participate in community governance. The more $WAR you have staked, the more voting power you wield.
           </ModalContent>
         <ModalContent>
           You can make one suggestion every 24 hours.

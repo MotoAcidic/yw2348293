@@ -144,7 +144,9 @@ const Versus = ({ battles }) => {
 				}
 			]
 		}), account).catch(err => console.log(err))
-		console.log(signature);
+		if (!signature) {
+			return
+		}
 		axios.post(`${getServerURI()}/api/pers-vote`, {
 			address: account,
 			vote: [
@@ -211,6 +213,25 @@ const Versus = ({ battles }) => {
 		/>
 	)
 
+	const openBetModal = () => {
+		if (!account) {
+			connect('injected')
+		}
+		if (!checked1) {
+			Swal.fire({
+				title: 'Pick your Champion!',
+				customClass: {
+					container: 'container-class',
+					title: 'title-class',
+					content: 'text-class',
+					confirmButton: 'confirm-button-class',
+				}
+			})
+			return
+		}
+		onPresentBet()
+	}
+
 	useEffect(() => {
 		if (account && yam && !yam.defaultProvider) {
 			axios.post(`${getServerURI()}/api/pers-status`, {
@@ -234,16 +255,16 @@ const Versus = ({ battles }) => {
 	let selectedCSS1
 	let selectedCSS2
 	if (checked1 === 0) {
-		selectedCSS1 = { padding: '2%' }
-		selectedCSS2 = { padding: '2%' }
+		selectedCSS1 = { paddingLeft: '3%', paddingRight: '3%' }
+		selectedCSS2 = { paddingLeft: '3%', paddingRight: '3%' }
 	}
 	if (checked1 === 1) {
-		selectedCSS1 = { padding: '4%' }
-		selectedCSS2 = { padding: '0%' }
+		selectedCSS1 = { paddingLeft: '6%', paddingRight: '6%' }
+		selectedCSS2 = { paddingLeft: '0%', paddingRight: "0%" }
 	}
 	if (checked1 === 2) {
-		selectedCSS1 = { padding: '0%' }
-		selectedCSS2 = { padding: '4%' }
+		selectedCSS1 = { paddingLeft: '0%', paddingRight: "0%" }
+		selectedCSS2 = { paddingLeft: '6%', paddingRight: '6%' }
 	}
 
 	return (
@@ -301,24 +322,22 @@ const Versus = ({ battles }) => {
 							</BLVS>
 						</BLVersusItem>
 					</Options>
-					{checked1 !== 0 &&
-						<BattleButtonWrapper >
-							<BattleButtonContainer checked={checked1}>
-								{!voted ?
-									<BattleButton onClick={castVote} >
-										Vote
-										</BattleButton>
-									:
-									<BattleText>Voted</BattleText>
-								}
-							</BattleButtonContainer>
-							<BetButtonContainer checked={checked1}>
-								<BattleButton onClick={onPresentBet} >
-									Bet
-									</BattleButton>
-							</BetButtonContainer>
-						</BattleButtonWrapper>
-					}
+					<BattleButtonWrapper >
+						<BattleButtonContainer>
+							{!voted ?
+								<BattleButton onClick={castVote} >
+									Vote
+								</BattleButton>
+								:
+								<BattleText>Voted</BattleText>
+							}
+						</BattleButtonContainer>
+						<BetButtonContainer>
+							<BattleButton onClick={openBetModal} >
+								Bet
+							</BattleButton>
+						</BetButtonContainer>
+					</BattleButtonWrapper>
 				</VersusContainer>
 
 				{/* <PersVersusBet
@@ -379,30 +398,12 @@ font-family: "Gilroy";
 
 const BattleButtonWrapper = styled.span`
 position: relative;
-bottom: 10%;
-width: 80%;
-pointer-events: none;
-display: flex;
-user-select: none;
-justify-content: center;
-`
-
-const ChooseButtonWrapper = styled.span`
-position: relative;
 bottom: 0%;
-width: 80%;
+width: 100%;
 pointer-events: none;
 display: flex;
 user-select: none;
 justify-content: center;
-`
-
-const HDivider = styled.div`
-margin-left: 10%;
-width: 80%;
-	height: 1px;
-	background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
-	box-shadow: 0 3px 7px 4px rgba(14, 14, 14, .6);
 `
 
 const BattleButton = styled.div`
@@ -436,38 +437,24 @@ font-family: "Edo";
 `
 
 const BattleButtonContainer = styled.div`
-position: absolute;
-transform: translateX(${props => props.checked === 1 ? 150 : -270}px) skew(3deg);
+transform: skew(3deg);
 width: 160px;
-transition: transform .2s ease-out;
 background-image: url(${Metal});
 border: 10px black solid;
-border-width: 10px 5px 12px 5px;
+border-width: 10px 5px 10px 5px;
 background-size: 250px 100px;
 pointer-events: all;
+margin-right: 10px;
+margin-left: -10px;
 `
 
 const BetButtonContainer = styled.div`
-position: absolute;
-transform: translateX(${props => props.checked === 1 ? 310 : -110}px) skew(3deg);
+transform: skew(3deg);
 width: 120px;
-transition: transform .2s ease-out;
 background-image: url(${Metal});
 border: 10px black solid;
-border-width: 10px 5px 12px 5px;
+border-width: 10px 5px 10px 5px;
 background-size: 300px 100px;
-pointer-events: all;
-`
-
-const ChooseButtonContainer = styled.div`
-position: absolute;
-transform: translateX(${props => props.checked === 1 ? 150 : -270}px) skew(3deg);
-width: 450px;
-transition: transform .2s ease-out;
-background-image: url(${Metal});
-border: 10px black solid;
-border-width: 10px 5px 12px 5px;
-background-size: 250px 100px;
 pointer-events: all;
 `
 
@@ -690,10 +677,13 @@ height: 92%;
 width: 50%;
 transform: skew(3deg);
 will-change: padding;
+will-change: transform;
 transition: all .2s ease-out 10ms;
 z-index: 100;
+padding-top: 2%;
+padding-bottom: 2%;
 &:hover {
-	transform: skew(3deg) scale(${props => props.checked ? 1 : 1.05});
+	transform: skew(3deg) scale(${props => props.checked ? 1 : 1.025});
 	cursor: pointer;
 	z-index: 101;
 }
@@ -715,10 +705,13 @@ height: 92%;
 width: 50%;
 transform: skew(3deg);
 will-change: padding;
+will-change: transform;
 transition: all .2s ease-out 10ms ;
 z-index: 100;
+padding-top: 2%;
+padding-bottom: 2%;
 &:hover {
-	transform: skew(3deg) scale(${props => props.checked ? 1 : 1.05});
+	transform: skew(3deg) scale(${props => props.checked ? 1 : 1.025});
 	cursor: pointer;
 	z-index: 101;
 }
@@ -742,8 +735,9 @@ display: flex;
 flex-direction: column;
 // justify-content: flex-start;
 align-items: center;
-transform: skew(-3deg) scale(${props => props.checked ? 1.2 : 1});
+transform: skew(-3deg) scale(${props => props.checked ? 1.1 : 1});
 transition: transform .2s ease-out 15ms;
+will-change: transform;
 pointer-events: none;
 z-index: 102;
 margin-top: 30px;
@@ -760,8 +754,9 @@ display: flex;
 flex-direction: column;
 // justify-content: flex-start;
 align-items: center;
-transform: skew(-3deg) scale(${props => props.checked ? 1.2 : 1});
+transform: skew(-3deg) scale(${props => props.checked ? 1.1 : 1});
 transition: transform .2s ease-out 15ms;
+will-change: transform;
 pointer-events: none;
 z-index: 102;
 margin-top: 30px;

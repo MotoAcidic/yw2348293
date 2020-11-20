@@ -49,7 +49,7 @@ const Profile = () => {
     return (`${won}/${total} `)
   }
   function getDay() {
-    let day = Math.floor((((Date.now() / 1000) - 3600 - 1601406000) / 86400) + 1)
+    let day = Math.floor(((Date.now() / 1000 - 1601406000) / 86400) + 1)
 
     console.log(day);
     return day

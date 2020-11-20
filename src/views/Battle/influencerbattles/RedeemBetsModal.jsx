@@ -69,10 +69,10 @@ const Bet = ({ battle }) => {
 		if (yam && account) {
 			getta()
 		}
-		if (account && yam) {
+		if (account && yam && battle1) {
 			getRedeemable();
 		}
-	}, [yam, account]);
+	}, [yam, account, battle1]);
 
 	if (!battle1) {
 		return <div/>

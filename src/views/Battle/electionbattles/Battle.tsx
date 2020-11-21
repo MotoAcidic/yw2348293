@@ -18,10 +18,11 @@ import BetModalElection from "./BetCardElection.jsx";
 import Biden from "../../../assets/img/biden.png";
 import Trump from "../../../assets/img/trump.png";
 
+import Twitch from "../../../assets/img/twitch.png"
 import Vitalik from "../../../assets/img/chess_vitalik.jpg"
-import Alexandra from "../../../assets/img/chess_alexandra.jpg"
+import Alexandra from "../../../assets/img/chess_alexandra.png"
 
-import AmericanFlag from "../../../assets/img/american-flag.jpg";
+import AmericanFlag from "../../../assets/img/chess_bg.jpeg";
 import chainlinkLogo from "../../../assets/img/chainlinklogo.png";
 import everipediaLogo from "../../../assets/img/everipedialogo.png";
 
@@ -36,6 +37,7 @@ import { provider } from 'web3-core'
 import PriceHistoryCard from "../../Results/PercentChangeCard";
 import VotingBalance from "./VotingBalance";
 import Countdown from './CountDown'
+import moment from 'moment';
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -202,7 +204,7 @@ const Battle: React.FC = () => {
           <Page>
 
             <Title>Who Will Win?</Title>
-            <Countdown endTime={1604440800000} />
+            <Countdown endTime={moment.utc("2020-11-23T02:00", "YYYY-MM-DDTHH:mm").unix() * 1000} />
             {roughBets.trump > 0 &&
               <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
             }
@@ -236,14 +238,13 @@ const Battle: React.FC = () => {
                 </ModalBlock>
               </Modal>
             </div>
-            <InfoBlock>
-              <img src={everipediaLogo} width="20px" height="20px" />
-              <img src={chainlinkLogo} width="20px" height="20px" />
-              <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
-              Election Results brought to you by AP + Everipedia. Powered by Chainlink.
-              <img src="https://2.bp.blogspot.com/-sJ8mGd6LmkU/T0ajVykwreI/AAAAAAAAESA/WNOI4QF4lIw/s1600/AP+logo+2012.png" width="20px" height="20px" />
-              <img src={chainlinkLogo} width="20px" height="20px" />
-              <img src={everipediaLogo} width="20px" height="20px" />
+            <InfoBlock href={"https://www.twitch.tv/botezlive"}
+              target="_blank"
+            >
+              <img src={Twitch} width="30px" height="30px" />
+                  We will be streaming BotezLive on Twitch
+              <img src={Twitch} width="30px" height="30px" />
+
             </InfoBlock>
 
             <Rules />
@@ -261,7 +262,7 @@ height: 100%;
 transition: all 0.2s ease-in-out;
 `
 
-const InfoBlock = styled.div`
+const InfoBlock = styled.a`
 font-family: "Gilroy";
 color: rgb(255, 190, 26);
 font-size: 22px;
@@ -276,7 +277,11 @@ display: flex;
 flex-direction: row;
 justify-content: space-evenly;
 align-items: center;
-width: 900px;
+width: 550px;
+margin-bottom: 80px;
+background-color: rgba(256,256,256,0.2);
+border-radius: 8px;
+height: 40px;
 `
 
 const ModalBlock = styled.div`
@@ -386,7 +391,7 @@ const BackgroundSection = styled.div`
   width: 100vw;
   height: 100vh;
   top: 0;
-  filter: brightness(40%);
+  filter: brightness(120tellui%);
   background-repeat: no-repeat;
   background-size: cover;`
 
@@ -471,11 +476,13 @@ const StyledA = styled.a`
 
 const VersusContainer = !isMobile() ? styled.div`
 width: 90vw;
-height: 500px;
+max-width: 1400px;
+max-height: 650px;
+height: 40vw;
 display: flex;
 align-items: center;
 font-size: 30px;
-margin: 0 auto 5vh auto;
+margin: 0 auto 40px auto;
 font-family: "Gilroy";
 font-weight: bold;
 font-stretch: normal;

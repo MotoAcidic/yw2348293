@@ -192,8 +192,8 @@ const Battle: React.FC = () => {
     }, 10);
   }
 
-  const bidenStyle = hoverCandidate === "Biden" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%) grayscale(80%)`, transition: `all 0.2s ease-in-out`, zIndex: 2000 } : { filter: `brightness(100%) contrast(100%) grayscale(100%)`, transition: `all 0.2s ease-in-out` };
-  const trumpStyle = hoverCandidate === "Trump" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%) grayscale(80%)`, transition: `all 0.2s ease-in-out`, zIndex: 2001 } : { filter: `brightness(100%) contrast(100%) grayscale(100%)`, transition: `all 0.2s ease-in-out`, zIndex: 1000 };
+  const bidenStyle = hoverCandidate === "Biden" ? { transform: `scale(1.05)`, filter: `grayscale(60%)`, transition: `all 0.2s ease-in-out`, zIndex: 2000 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out` };
+  const trumpStyle = hoverCandidate === "Trump" ? { transform: `scale(1.05)`, filter: `grayscale(60%)`, transition: `all 0.2s ease-in-out`, zIndex: 2001 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out`, zIndex: 1000 };
 
 
   return (

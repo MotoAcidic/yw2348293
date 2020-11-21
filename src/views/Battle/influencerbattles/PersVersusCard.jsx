@@ -480,7 +480,7 @@ width: 12vw;
 min-width: 230px;
 height: 15vh;
 // min-height: 550px;
-pointer-events: none;
+// pointer-events: none;
 // filter: grayscale(.8);
 `
 
@@ -738,7 +738,7 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 transform: skew(-3deg);
-pointer-events: none;
+// pointer-events: none;
 z-index: 102;
 `
 
@@ -752,7 +752,7 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 transform: skew(3deg);
-pointer-events: none;
+// pointer-events: none;
 z-index: 102;
 `
 
@@ -766,7 +766,7 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 transform: skew(-3deg);
-pointer-events: none;
+// pointer-events: none;
 z-index: 102;
 margin-top: 5px;
 `
@@ -781,7 +781,7 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 transform: skew(3deg);
-pointer-events: none;
+// pointer-events: none;
 z-index: 102;
 margin-top: 5px;
 `

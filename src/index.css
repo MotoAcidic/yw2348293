@@ -41,6 +41,24 @@ code {
   }
 }
 
+@keyframes marquee {
+  0% {
+    -webkit-transform: translateX(0vw);
+  }
+  25% {
+    -webkit-transform: translateX(-80vw);
+  }
+  50% {
+    -webkit-transform: translateX(0vw);
+  }
+  75% {
+    -webkit-transform: translateX(-80vw);
+  }
+  100% {
+    -webkit-transform: translateX(0vw);
+  }
+}
+
 .Series  > g > path {
   stroke: white !important;
 }

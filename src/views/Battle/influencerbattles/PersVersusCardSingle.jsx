@@ -289,7 +289,7 @@ const Versus = ({ battles }) => {
 								</StyledContent>
 								{isLoading && <Loading src={loading} />}
 								{!isMobile() ?
-									<a style={{ zIndex: 2000000, position: "relative" }} className="twitter-timeline" data-width="130%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									<a style={{ zIndex: 2000000, position: "relative" }} className="twitter-timeline" data-width="130%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers1.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 								}
 								{useScript("https://platform.twitter.com/widgets.js")}
@@ -315,7 +315,7 @@ const Versus = ({ battles }) => {
 								</StyledContent>
 								{isLoading && <Loading src={loading} />}
 								{!isMobile() ?
-									<a className="twitter-timeline" data-width="130%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
+									<a className="twitter-timeline" data-width="130%" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 									: <a className="twitter-timeline" data-width="65%" data-height="250px" data-dnt="true" data-theme="dark" data-chrome="noheader nofooter noscrollbar" href={`https://twitter.com/${battle1.pers2.handle.substring(1)}?ref_src=twsrc%5Etfw`} />
 								}
 								{useScript("https://platform.twitter.com/widgets.js")}
@@ -738,7 +738,7 @@ align-items: center;
 transform: skew(-3deg) scale(${props => props.checked ? 1.1 : 1});
 transition: transform .2s ease-out 15ms;
 will-change: transform;
-pointer-events: none;
+// pointer-events: none;
 z-index: 102;
 margin-top: 30px;
 margin-bottom: 30px;
@@ -757,7 +757,7 @@ align-items: center;
 transform: skew(-3deg) scale(${props => props.checked ? 1.1 : 1});
 transition: transform .2s ease-out 15ms;
 will-change: transform;
-pointer-events: none;
+// pointer-events: none;
 z-index: 102;
 margin-top: 30px;
 margin-bottom: 30px;

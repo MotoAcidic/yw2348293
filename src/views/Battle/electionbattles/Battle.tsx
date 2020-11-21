@@ -22,7 +22,7 @@ import Twitch from "../../../assets/img/twitch.png"
 import Vitalik from "../../../assets/img/chess_vitalik.jpg"
 import Alexandra from "../../../assets/img/chess_alexandra.png"
 
-import AmericanFlag from "../../../assets/img/chess_bg.jpeg";
+import Chess from "../../../assets/img/chess.png";
 import chainlinkLogo from "../../../assets/img/chainlinklogo.png";
 import everipediaLogo from "../../../assets/img/everipedialogo.png";
 
@@ -309,7 +309,7 @@ let Candidate2
 Candidate1 = styled.img`
 width: 100%;
 height: 100%;
-border-radius: 8px 0 0 8px;
+border-radius: 6px 0 0 6px;
 cursor: pointer;
 object-fit: cover;
 `
@@ -317,7 +317,7 @@ object-fit: cover;
 Candidate2 = styled.img`
 width: 100%;
 height: 100%;
-border-radius: 0 8px 8px 0;
+border-radius: 0 6px 6px 0;
 cursor: pointer;
 object-fit: cover;
 
@@ -386,14 +386,17 @@ font-family: "Gilroy";
 `;
 
 const BackgroundSection = styled.div`
-  background-image: url(${AmericanFlag});
+  background-image: url(${Chess});
   position: fixed;
-  width: 100vw;
+  width: 180vw;
   height: 100vh;
   top: 0;
-  filter: brightness(120tellui%);
+  filter: brightness(120%);
   background-repeat: no-repeat;
-  background-size: cover;`
+  background-position: fit;
+  background-size: cover;
+  animation: marquee 400s ease-in-out 200ms infinite;
+  `
 
 const StyledCanvas = styled.div`
   position: absolute;
@@ -491,7 +494,7 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
-border: solid 2px rgba(255, 183, 0, 0.3);
+border: solid 2px rgba(255, 255, 255, 0.8);
 background-color: rgba(256,256,256,0.08);
 ` : styled.div`
 margin: 0 0 40px 0;

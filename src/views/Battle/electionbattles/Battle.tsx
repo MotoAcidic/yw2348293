@@ -192,8 +192,8 @@ const Battle: React.FC = () => {
     }, 10);
   }
 
-  const bidenStyle = hoverCandidate === "Biden" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)` } : null;
-  const trumpStyle = hoverCandidate === "Trump" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%)` } : null;
+  const bidenStyle = hoverCandidate === "Biden" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%) grayscale(80%)`, transition: `all 0.2s ease-in-out`, zIndex: 2000 } : { filter: `brightness(100%) contrast(100%) grayscale(100%)`, transition: `all 0.2s ease-in-out` };
+  const trumpStyle = hoverCandidate === "Trump" ? { transform: `scale(1.05)`, filter: `brightness(110%) contrast(110%) grayscale(80%)`, transition: `all 0.2s ease-in-out`, zIndex: 2001 } : { filter: `brightness(100%) contrast(100%) grayscale(100%)`, transition: `all 0.2s ease-in-out`, zIndex: 1000 };
 
 
   return (
@@ -260,6 +260,13 @@ const ImgWrapper = styled.div`
 width: 50%;
 height: 100%;
 transition: all 0.2s ease-in-out;
+// filter: brightness(100%) contrast(100%) grayscale(100%) ;
+// &:hover {
+// transition: all 0.2s ease-in-out;
+//   filter: brightness(110%) contrast(110%) grayscale(80%);
+//   transform: scale(1.05);
+//   z-index: 2000000;
+// }
 `
 
 const InfoBlock = styled.a`

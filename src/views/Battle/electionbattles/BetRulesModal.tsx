@@ -29,7 +29,7 @@ const BetRulesModal: React.FC<ModalProps> = ({ onDismiss }) => {
           <ModalSpacer>
             <Label />
             <ModalContent>
-              1. Election Betting on YieldWars is winner takes all. Meaning if Biden wins then those who bet split the Trump betting pool equally per how much they bet, and vice versa.
+              1. Betting on YieldWars is winner takes all. Meaning if Vitalik wins then those who bet split the Alexandra betting pool equally per how much they bet, and vice versa.
           </ModalContent>
             <ModalContent>
               2. You can bet with $WAR or $ETH. Once you place a bet it is locked in and can not be changed.
@@ -41,10 +41,7 @@ const BetRulesModal: React.FC<ModalProps> = ({ onDismiss }) => {
               4. 10% of winnings go to the house, which will be split between current $WAR stakers/betters and the $WAR Community DAO.
           </ModalContent>
             <ModalContent>
-              5. Betting will end at 22:00 UTC on Nov 3rd. This is to stop anyone from having an unfair advantage of knowing polling data as the polls close.
-          </ModalContent>
-            <ModalContent>
-              6. The winner of the election will be determined by the AP results oracle being supplied by Everipedia and the Associated Press.
+              5. Betting will end at 21:00 EST on Nov 22nd. This is when the chess match starts.
           </ModalContent>
           </ModalSpacer>
         </StyledCardContent>

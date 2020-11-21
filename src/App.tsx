@@ -19,6 +19,7 @@ import Farm from './views/Farm'
 import Splash from './views/Splash/Splash'
 import CryptoBattle from './views/Battle/cryptobattles/Battle'
 import InfluencerBattle from './views/Battle/influencerbattles/Battle'
+import Markets from './views/Battle/electionbattles/Battle'
 import Battle from './views/Battle/AFK'
 import Results from './views/Results/Results'
 import Gov from './views/Gov'
@@ -90,6 +91,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/twitter-battle" exact>
               <InfluencerBattle />
+            </Route>
+            <Route path="/markets" exact>
+              <Markets />
             </Route>
             <Route path="/battle" exact>
               <Battle />

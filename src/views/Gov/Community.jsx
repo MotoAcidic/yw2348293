@@ -77,13 +77,6 @@ const Community = () => {
       } else if (suggestion.totalVotes < 0) {
         votesColor = "#ff4343";
       }
-      let upDooted = false;
-      let downDooted = false;
-      const voteIndex = suggestion.votes.findIndex(vote => vote.address === account);
-      if (voteIndex !== -1) {
-        upDooted = suggestion.votes[voteIndex].amount > 0 ? true : false;
-        downDooted = suggestion.votes[voteIndex].amount < 0 ? true : false;
-      }
 
       const castVote = async (voteAmount) => {
         if (getDisplayBalance(stakedBalance) <= 0) {
@@ -108,31 +101,33 @@ const Community = () => {
           })
       }
       const upDoot = () => {
-        if (upDooted) return;
+        if (suggestion.upDooted) return;
         castVote(getDisplayBalance(stakedBalance));
       }
       const downDoot = () => {
-        if (downDooted) return;
+        if (suggestion.downDooted) return;
         castVote(getDisplayBalance(stakedBalance) * -1);
       }
       console.log("suggest", suggestion)
       return (
         <SingleSuggestion>
           <VoteButtons>
-            <UpVote onClick={() => upDoot()} style={upDooted ? { fill: "#38ff00" } : {}} viewBox="0 0 400 400">
+            <UpVote onClick={() => upDoot()} style={suggestion.upDooted ? { fill: "#38ff00" } : {}} viewBox="0 0 400 400">
               <path stroke-width="3" d="M 100 100 L 300 100 L 200 300 z" />
             </UpVote>
-            <DownVote onClick={() => downDoot()} style={downDooted ? { fill: "#ff4343" } : {}} viewBox="0 0 400 400">
+            <DownVote onClick={() => downDoot()} style={suggestion.downDooted ? { fill: "#ff4343" } : {}} viewBox="0 0 400 400">
               <path stroke-width="3" d="M 100 100 L 300 100 L 200 300 z" />
             </DownVote>
           </VoteButtons>
           <SuggestionBody>
             <SingleTop>
-
-
               <SuggestionVotes>
-                votes:
-            <ColorVotes style={{ color: votesColor }}>
+                <SuggestedUserInfo>
+                  <StyledCardIcon style={{ backgroundColor: suggestion.pictureColor }}>{suggestion.picture}</StyledCardIcon>
+        {suggestion.nickname ? suggestion.nickname : suggestion.address.substring(0, 12) + "..."}
+
+                </SuggestedUserInfo>
+                <ColorVotes style={{ color: votesColor }}>
                   {votesSymbol}{suggestion.totalVotes.toLocaleString()}
                 </ColorVotes>
               </SuggestionVotes>
@@ -252,10 +247,28 @@ const Community = () => {
   )
 }
 
+const SuggestedUserInfo = styled.div`
+display: flex;
+align-items: center;
+`
+
+const StyledCardIcon = styled.div`
+  font-size: 16px;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  border: solid 2px rgba(256,256,256,0.3);
+  margin-right: 5px;
+`;
+
 const SingleTop = styled.div`
 width: 100%;
 display: flex;
-justify-content: space-between;`
+justify-content: space-between;
+margin-bottom: 8px;`
 
 const Pagination = styled.div`
 display:flex;
@@ -269,7 +282,7 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 display: flex;
-margin-left: 5px;
+margin-left: 10px;
 align-items: center;`
 
 const SuggestionVotes = styled.div`
@@ -281,8 +294,7 @@ line-height: 1;
 letter-spacing: normal;
 display: flex;
 color: white;
-align-items: center;
-margin-bottom: 10px;`
+align-items: center;`
 
 const SuggestionText = styled.div`
 font-family: "Gilroy";
@@ -294,6 +306,7 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: white;
+word-break: break-word;
 `
 
 const SuggestionBody = styled.div`

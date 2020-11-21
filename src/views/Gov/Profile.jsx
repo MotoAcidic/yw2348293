@@ -49,13 +49,13 @@ const Profile = () => {
     return (`${won}/${total} `)
   }
   function getDay() {
-    let day = Math.floor((((Date.now() / 1000) - 3600 - 1601406000) / 86400) + 1)
+    let day = Math.floor(((Date.now() / 1000 - 1601406000) / 86400) + 1)
 
     console.log(day);
     return day
   }
   const getBattlesParticipated = (user) => {
-    return (`${user.participatedBattles.length}/${getDay() - 48} `)
+    return (`${user.participatedBattles.length}/${getDay() - 49} `)
   }
   const getPercent = (user) => {
     let won = 0;
@@ -63,7 +63,7 @@ const Profile = () => {
     for (let i = 0; i < total; i++) {
       if (user.participatedBattles[i].won) won++;
     }
-    return (parseInt(100 * (won / total + total / (getDay() - 48)) / 2))
+    return (parseInt(100 * (won / total + total / (getDay() - 49)) / 2))
   }
 
   return (

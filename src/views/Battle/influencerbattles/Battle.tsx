@@ -145,7 +145,7 @@ const Battle: React.FC = () => {
           <ContentContainer>
             <Page>
               {/* <Countdown/> */}
-              <Title style={{marginTop: '40px'}}>Please View on Desktop</Title>
+              <Title style={{ marginTop: '40px' }}>Please View on Desktop</Title>
               <SmallSpace />
               {/* {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
               {prevDayBattles.length > 0 &&
@@ -180,7 +180,13 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
-            <Countdown/>
+
+            <PageTitle>
+
+              Come Back Later Today
+</PageTitle>
+
+            {/* <Countdown/> */}
             {battles && battles.length > 0 && <TotalBets battle1={battles[0]} id={battles[0]._id} />}
             {battleFields()}
             {account && yesterdaysBattle.length > 0 && <Yesterday onClick={() => setBetRedeemModal(true)} >Show Yesterdays Result</Yesterday>}
@@ -211,6 +217,19 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const PageTitle = styled.div`
+font-family: "Gilroy";
+  font-size: 60px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: rgb(255, 204, 74);
+  max-width: 80vw;
+  margin: 140px auto 40px;
+`
 
 const Space = styled.div`
 height: 40px;`

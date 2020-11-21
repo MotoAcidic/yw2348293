@@ -20,7 +20,7 @@ import Trump from "../../../assets/img/trump.png";
 
 import Twitch from "../../../assets/img/twitch.png"
 import Vitalik from "../../../assets/img/chess_vitalik.jpg"
-import Alexandra from "../../../assets/img/chess_alexandra.png"
+import Alexandra from "../../../assets/img/chess_alexandra_2.png"
 
 import Chess from "../../../assets/img/chess.png";
 import chainlinkLogo from "../../../assets/img/chainlinklogo.png";
@@ -319,6 +319,8 @@ height: 100%;
 border-radius: 6px 0 0 6px;
 cursor: pointer;
 object-fit: cover;
+border: 10px solid black;
+border-right: none;
 `
 
 Candidate2 = styled.img`
@@ -327,7 +329,8 @@ height: 100%;
 border-radius: 0 6px 6px 0;
 cursor: pointer;
 object-fit: cover;
-
+border: 10px solid black;
+border-left: none;
 `
 
 const VersusBackground = styled.div`
@@ -501,7 +504,6 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
-border: solid 2px rgba(255, 255, 255, 0.8);
 background-color: rgba(256,256,256,0.08);
 ` : styled.div`
 margin: 0 0 40px 0;

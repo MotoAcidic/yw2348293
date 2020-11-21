@@ -93,7 +93,7 @@ display: flex;
 margin-left: 5px;
 font-family: "Gilroy";
 	font-size: 20px;
-  color: rgb(255, 204, 74);
+  color: rgb(255, 204, 160);
 	
   font-weight: bold;
   font-stretch: normal;

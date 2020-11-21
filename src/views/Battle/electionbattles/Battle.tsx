@@ -271,7 +271,7 @@ transition: all 0.2s ease-in-out;
 
 const InfoBlock = styled.a`
 font-family: "Gilroy";
-color: rgb(255, 190, 26);
+color: rgb(255, 204, 160);
 font-size: 22px;
 font-weight: bold;
 font-stretch: normal;

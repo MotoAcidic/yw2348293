@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import './swal.css'
-import MiniBiden from "../../../assets/img/biden@2x.png";
-import MiniTrump from "../../../assets/img/trump@2x.png";
+import MiniVitalik from "../../../assets/img/vitalikicon.jpg";
+import MiniAlexandra from "../../../assets/img/alexandraicon.png";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -22,12 +22,12 @@ const FarmGraph = ({ votes1, votes2 }) => {
         Voting Balance
       </SubTitle> */}
       <StyledContent>
-        <CardIcon src={MiniTrump} />
+        <CardIcon src={MiniVitalik} />
 
         <BalanceBar>
-          <div style={{ backgroundColor: 'grey', height: '100%', borderRadius: "2px 0 0 2px", width: percent1 + '%', borderRight: "2px solid white" }} />
+          <div style={{ backgroundColor: 'rgb(154,220,180)', height: '100%', borderRadius: "2px 0 0 2px", width: percent1 + '%', borderRight: "2px solid white" }} />
         </BalanceBar>
-        <CardIcon src={MiniBiden} />
+        <CardIcon src={MiniAlexandra} />
 
       </StyledContent>
       <SmallText>Volume: ${(votes1 + votes2).toLocaleString(undefined, { maximumFractionDigits: 2 })}💰</SmallText>
@@ -57,12 +57,14 @@ const CardIcon = styled.img`
   display: flex;
   justify-content: center;
   margin: 0 15px;
+  background-color: white;
+  filter: brightness(110%) contrast(110%) grayscale(60%);
 `
 
 const BalanceBar = styled.div`
 width: calc(100% - 110px);
 height: 16px;
-background-color: rgb(154,180,200);
+background-color: rgb(154,180,220);
 border: 1px solid white;
 border-radius: 3px;
 `

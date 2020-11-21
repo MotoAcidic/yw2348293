@@ -25,7 +25,7 @@ const FarmGraph = ({ votes1, votes2 }) => {
         <CardIcon src={MiniTrump} />
 
         <BalanceBar>
-          <div style={{ backgroundColor: '#AB1200', height: '100%', borderRadius: "6px 0 0 6px", width: percent1 + '%', borderRight: "3px solid black" }} />
+          <div style={{ backgroundColor: 'grey', height: '100%', borderRadius: "2px 0 0 2px", width: percent1 + '%', borderRight: "2px solid white" }} />
         </BalanceBar>
         <CardIcon src={MiniBiden} />
 
@@ -62,9 +62,9 @@ const CardIcon = styled.img`
 const BalanceBar = styled.div`
 width: calc(100% - 110px);
 height: 16px;
-background-color: #0C438C;
+background-color: rgb(154,180,200);
 border: 1px solid white;
-border-radius: 8px;
+border-radius: 3px;
 `
 
 const SubTitle = styled.div`
@@ -85,7 +85,7 @@ const VotingBalance = styled.div`
 display: flex;
 flex-direction: column;
 width: 89%;
-margin: 0 auto 15px auto;
+margin: -15px auto 15px auto;
 `
 
 

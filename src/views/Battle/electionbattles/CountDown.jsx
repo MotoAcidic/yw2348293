@@ -48,11 +48,10 @@ class CountDown extends React.Component {
 
 			<Countdown>
 				<Text>Betting Ends:</Text>
-				<Item>
+				{/* <Item>
 					{this.state.days.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-					{/* <TimerText>Hours</TimerText> */}
 				</Item>
-				<div>:</div>
+				<div>:</div> */}
 				<Item>
 					{this.state.hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
 					{/* <TimerText>Hours</TimerText> */}

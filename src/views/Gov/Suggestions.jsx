@@ -12,7 +12,6 @@ import ReactPaginate from 'react-paginate';
 import moment from 'moment';
 import useModal from '../../hooks/useModal'
 import RulesModal from "./RulesModal";
-import Suggestions from "./Suggestions";
 
 function getServerURI() {
   if (window.location.hostname === "localhost") {
@@ -21,14 +20,9 @@ function getServerURI() {
   return "https://yieldwars-api.herokuapp.com";
 }
 
-const Community = () => {
-  const [suggestions, setSuggestions] = useState([]);
-  const [page, setPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-  const [newSuggestion, setNewSuggestion] = useState("")
-  const [sort, setSort] = useState("top");
-  const [userAlreadySuggested, setUserAlreadySuggested] = useState(false);
-  const [presentRulesModal] = useModal(<RulesModal />);
+const Community = ({fetchSuggestions, suggestions}) => {
+  const [exploitPrevent, setExploitPrevent] = useState(false);
+  const [oldAccount, setOldAccount] = useState(null);
   const { account, connect } = useWallet()
   const yam = useYam()
   const {
@@ -47,125 +41,91 @@ const Community = () => {
     icon: ''
   }
   const stakedBalance = useStakedBalance(contract)
+  console.log("whaddoihave", suggestions);
 
-  const fetchSuggestions = () => {
-    axios.post(`${getServerURI()}/gov/get-suggestions`,
-      { address: account, page, sort }).then(res => {
-        console.log("suggestions", res.data);
-        setSuggestions(res.data.suggestions);
-        setUserAlreadySuggested(res.data.userAlreadySuggested);
-        setTotalPages(res.data.totalPages);
-      }).catch(err => {
-        console.log(err);
-      })
-  }
-
-  useEffect(() => {
-    if (yam && account && !yam.defaultProvider) {
-      fetchSuggestions()
+  const newStyledSuggestions = suggestions.map((suggestion, index) => {
+    let votesColor = "white";
+    let votesSymbol = "";
+    if (suggestion.totalVotes > 0) {
+      votesColor = "#38ff00";
+      votesSymbol = "+";
+    } else if (suggestion.totalVotes < 0) {
+      votesColor = "#ff4343";
     }
-  }, [page, sort, yam, account])
 
-
-  const handleChange = (e) => {
-    if (e.target.value.length > 400) return;
-    setNewSuggestion(e.target.value);
-  }
-
-  const submitSuggestion = async (e) => {
-    e.preventDefault();
-    console.log("megastank", suggestions);
-    if (!newSuggestion) return;
-    const signature = await yam.web3.eth.personal.sign(JSON.stringify({
-      address: account,
-      suggestion: newSuggestion,
-    }), account).catch(err => console.log(err))
-    axios.post(`${getServerURI()}/gov/suggestion`,
-      {
-        address: account,
-        sig: signature,
-        suggestion: newSuggestion,
-      }).then(res => {
-        setSort("new");
-        setNewSuggestion("");
-        fetchSuggestions()
-      }).catch(err => {
-        console.log(err.response);
+    const castVote = async (voteAmount) => {
+      if (exploitPrevent) {
         swal.fire({
           icon: 'error',
-          title: `Error: ${err.response ? err.response.status : 404}`,
-          text: `${err.response ? err.response.data : "server error"}`
+          title: `Error`,
+          text: `Wait to vote sdfjil.`
         })
-      })
-  }
+        return;
+      }
+      if (getDisplayBalance(stakedBalance) <= 0) {
+        swal.fire({
+          icon: 'error',
+          title: `Error`,
+          text: `You must have WAR staked in order to participate in governance. Please stake war in the $WARchest on the battle page.`
+        })
+        return;
+      }
+      const sig = await yam.web3.eth.personal.sign(JSON.stringify({
+        address: account,
+        suggestionId: suggestion._id,
+        voteAmount
+      }), account).catch(err => console.log(err))
+      axios.post(`${getServerURI()}/gov/vote`,
+        { address: account, voteAmount, suggestionId: suggestion._id, sig }).then(res => {
+          console.log("user", res.data);
+          fetchSuggestions();
+        }).catch(err => {
+          console.log(err);
+        })
+    }
+    const upDoot = () => {
+      if (suggestion.upDooted) return;
+      castVote(getDisplayBalance(stakedBalance));
+    }
+    const downDoot = () => {
+      if (suggestion.downDooted) return;
+      castVote(getDisplayBalance(stakedBalance) * -1);
+    }
+    console.log("suggest", suggestion)
+    return (
+      <SingleSuggestion>
+        <VoteButtons>
+          <UpVote onClick={() => upDoot()} style={suggestion.upDooted ? { fill: "#38ff00" } : {}} viewBox="0 0 400 400">
+            <path stroke-width="3" d="M 100 100 L 300 100 L 200 300 z" />
+          </UpVote>
+          <DownVote onClick={() => downDoot()} style={suggestion.downDooted ? { fill: "#ff4343" } : {}} viewBox="0 0 400 400">
+            <path stroke-width="3" d="M 100 100 L 300 100 L 200 300 z" />
+          </DownVote>
+        </VoteButtons>
+        <SuggestionBody>
+          <SingleTop>
+            <SuggestionVotes>
+              <SuggestedUserInfo>
+                <StyledCardIcon style={{ backgroundColor: suggestion.pictureColor }}>{suggestion.picture}</StyledCardIcon>
+                {suggestion.nickname ? suggestion.nickname : suggestion.address.substring(0, 12) + "..."}
 
-  const toggleSort = (newSort) => {
-    setSort(newSort);
-    setPage(0);
-  }
-
-  return (
-    <Side>
-      <Title>
-        <TitleSide>
-          Community Governance <Icon onClick={presentRulesModal} viewBox="0 0 180 180">
-            <path fill="none" stroke-width="11" d="M9,89a81,81 0 1,1 0,2zm51-14c0-13 1-19 8-26c7-9 18-10 28-8c10,2 22,12 22,26c0,14-11,19-15,22c-3,3-5,6-5,9v22m0,12v16" />
-          </Icon>
-        </TitleSide>
-        <TitleSide>
-          <Option style={{ color: sort === "top" ? "white" : "#ffbe1a", textDecoration: sort === "top" ? "underline" : "none" }} onClick={() => toggleSort("top")}>
-            top
-          </Option>
-          <Option style={{ color: sort === "new" ? "white" : "#ffbe1a", textDecoration: sort === "new" ? "underline" : "none" }} onClick={() => toggleSort("new")}>
-            new
-          </Option>
-
-        </TitleSide>
-      </Title>
-      {suggestions.length > 0 && <Suggestions fetchSuggestions={() => fetchSuggestions()} suggestions={suggestions} />}
-      <Pagination>
-        <ReactPaginate
-          previousLabel={'◄'}
-          nextLabel={'►'}
-          breakLabel={'...'}
-          pageCount={totalPages}
-          marginPagesDisplayed={1}
-          pageRangeDisplayed={3}
-          onPageChange={(data) => setPage(data.selected)}
-          forcePage={page}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
-        />
-      </Pagination>
-      <Space />
-      <Title>Suggestion Box</Title>
-      <SuggestionBox>
-        <SuggestionTitle>
-          What would you like to see on YieldWars? Let the community decide!
-        </SuggestionTitle>
-        <Form>
-          <Input maxlength="400" placeholder="We should..." value={newSuggestion} onChange={(e) => handleChange(e)} />
-          <FormBottom>
-            {newSuggestion &&
-              <CharLimit
-                disabled={userAlreadySuggested ? true : false}
-                style={{ color: newSuggestion.length >= 400 ? "red" : "white" }}
-              >
-                {newSuggestion.length}/400
-              </CharLimit>}
-            <Button
-              disabled={userAlreadySuggested ? true : false}
-              type="submit"
-              onClick={(e) => submitSuggestion(e)}
-              size="lg"
-              text="Submit"
-            />
-          </FormBottom>
-        </Form>
-      </SuggestionBox>
-    </Side>
-  )
+              </SuggestedUserInfo>
+              <ColorVotes style={{ color: votesColor }}>
+                {votesSymbol}{suggestion.totalVotes.toLocaleString()}
+              </ColorVotes>
+            </SuggestionVotes>
+            <SuggestionVotes>
+              {moment(suggestion.timestamp).fromNow()}
+            </SuggestionVotes>
+          </SingleTop>
+          <SuggestionText>
+            {suggestion.message}
+          </SuggestionText>
+        </SuggestionBody>
+      </SingleSuggestion>
+    )
+  })
+  return (newStyledSuggestions);
 }
 
 const SuggestedUserInfo = styled.div`

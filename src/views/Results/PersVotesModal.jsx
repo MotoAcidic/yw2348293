@@ -68,8 +68,16 @@ const VotesModal  = ({ battleId, pool1, pool2, winner }) => {
       <Label />
       <ModalContent>
         <Side>
-          {winner === 1 ? <WinningCardIcon src={pool1.picture} /> : <StyledCardIcon src={pool1.picture} />}
-          {winner === 1 && <Chalice />}
+        {winner === 1 ? <Top>
+               <>
+               <Empty/>
+               <WinningCardIcon src={pool1.picture} />
+               </>
+               <Chalice />
+               </Top>
+             : <Top>
+               <StyledCardIcon src={pool1.picture} />
+               </Top>}
           <StyledTitle>{pool1.name}</StyledTitle>
           <TotalVotes>
             {pool1Total}
@@ -81,8 +89,16 @@ const VotesModal  = ({ battleId, pool1, pool2, winner }) => {
           </TableContainer>
         </Side>
         <Side>
-          {winner === 2 ? <WinningCardIcon src={pool2.picture} /> : <StyledCardIcon src={pool2.picture} />}
-          {winner === 2 && <Chalice />}
+          {winner === 2 ? <Top>
+               <>
+               <Empty/>
+               <WinningCardIcon src={pool2.picture} />
+               <Chalice />
+               </>
+               </Top>
+             : <Top>
+               <StyledCardIcon src={pool2.picture} />
+               </Top>}
           <StyledTitle>{pool2.name}</StyledTitle>
           <TotalVotes>
             {pool2Total}
@@ -97,6 +113,15 @@ const VotesModal  = ({ battleId, pool1, pool2, winner }) => {
     </Modallg>
   )
 }
+
+const Empty = styled.div`
+width: 30px;`
+
+const Top = styled.div`
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;`
 
 const Space = styled.div`
 height: 20px;`
@@ -118,9 +143,11 @@ const Table = styled.table`
 font-size: 12px;
 `
 
-const TableContainer = styled.div`
+const TableContainer = !isMobile() ? styled.div`
 overflow-y: scroll;
-width: 80%;`
+width: 80%;` : styled.div`
+overflow-y: scroll;
+width: 100%;`
 
 const TR = styled.tr``
 
@@ -158,6 +185,7 @@ margin: 2px;
 const WinningCardIcon = styled.img`
 font-size: 50px;
 height: 80px;
+
 width: 80px;
 border-radius: 40px;
 align-items: center;
@@ -165,20 +193,23 @@ display: flex;
 justify-content: center;
 box-shadow: rgba(1, 27, 59, 0.3) 4px 4px 8px inset, rgba(1, 27, 59, 0.3) -6px -6px 12px inset;
 border: solid 2px rgba(255, 213, 0, 0.7);
-margin: 2px;
+margin: 2px 10px 2px 10px;
+
 `
 
-const Side = styled.div`
+const Side = !isMobile () ? styled.div`
   display: flex;
   flex-direction: column;
   height: 75vh;
   align-items: center;
   width: 45%;
+` : styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 95%;
 `
 const Chalice = styled.div`
-position: absolute;
-margin-left: 140px;
-margin-top: 20px;
 background-repeat: no-repeat;
 background-size: cover;
 height: 40px;
@@ -186,7 +217,7 @@ width: 30px;
 background-image: url(${WinnerChalice});
 `
 
-const ModalContent = styled.div`
+const ModalContent = !isMobile() ? styled.div`
 font-family: Gilroy;
 font-size: 18px;
 font-weight: bold;
@@ -198,6 +229,20 @@ color: #003677;
 margin: 10px;
 display: flex;
 justify-content: space-evenly;
+` :styled.div`
+font-family: Gilroy;
+font-size: 18px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1.5;
+letter-spacing: normal;
+color: #003677;
+margin: 10px 0 10px 0;
+display: flex;
+flex-direction: column;
+max-height: 70vh;
+overflow-y: scroll;
 `
 
 

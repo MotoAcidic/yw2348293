@@ -110,7 +110,7 @@ const WarPool: React.FC = () => {
 	)
 
 	const unstake = () => {
-		alert()
+		// alert()
 		onPresentUnstake()
 	}
 

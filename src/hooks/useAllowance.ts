@@ -13,7 +13,6 @@ const useAllowance = (tokenContract: Contract, poolContract: Contract) => {
 
   const fetchAllowance = useCallback(async () => {
     const allowance = await getAllowance(tokenContract, poolContract, account);
-    console.log(allowance);
     setAllowance(new BigNumber(allowance))
   }, [account, poolContract, tokenContract])
 

@@ -9,7 +9,7 @@ import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 import Pool3 from "./Pool3";
 import useFarms from "../../../hooks/useFarms";
-import { getWarStaked, getElectionContracts, getCurrentBets, electionTVL } from "../../../yamUtils";
+import { getWarStaked, getChessContracts, getChessBets, chessTVL } from "../../../yamUtils";
 import { getStats } from "./utils";
 
 import Uniswap from "../../../assets/img/uniswap@2x.png";
@@ -76,10 +76,10 @@ const Battle: React.FC = () => {
     {
       finished: false,
       farm1: {
-        name: "Trump",
+        name: "Vitalik",
       },
       farm2: {
-        name: "Biden",
+        name: "Alexandra",
       }
     }
   )
@@ -139,9 +139,10 @@ const Battle: React.FC = () => {
   }
 
   const getRoughBets = async () => {
-    let tvl = await electionTVL(yam, account)
+    let tvl = await chessTVL(yam, account)
     const trump = tvl.trumpTotal
     const biden = tvl.bidenTotal
+    console.log(trump, biden);
     setRoughBets({ trump, biden });
   }
 
@@ -168,7 +169,7 @@ const Battle: React.FC = () => {
     e.stopPropagation()
   }
 
-  const electionContract = getElectionContracts(yam)
+  const electionContract = getChessContracts(yam)
 
   const hoverOver = (candidate) => {
     console.log("called", candidate, hoverCandidate)
@@ -192,8 +193,8 @@ const Battle: React.FC = () => {
     }, 10);
   }
 
-  const bidenStyle = hoverCandidate === "Biden" ? { transform: `scale(1.05)`, filter: `grayscale(60%)`, transition: `all 0.2s ease-in-out`, zIndex: 2000 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out` };
-  const trumpStyle = hoverCandidate === "Trump" ? { transform: `scale(1.05)`, filter: `grayscale(60%)`, transition: `all 0.2s ease-in-out`, zIndex: 2001 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out`, zIndex: 1000 };
+  const bidenStyle = hoverCandidate === "Alexandra" ? { transform: `scale(1.05)`, filter: `grayscale(40%)`, transition: `all 0.2s ease-in-out`, zIndex: 2000 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out` };
+  const trumpStyle = hoverCandidate === "Vitalik" ? { transform: `scale(1.05)`, filter: `grayscale(40%)`, transition: `all 0.2s ease-in-out`, zIndex: 2001 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out`, zIndex: 1000 };
 
 
   return (
@@ -205,20 +206,20 @@ const Battle: React.FC = () => {
 
             <Title>Who Will Win?</Title>
             <Countdown endTime={moment.utc("2020-11-23T02:00", "YYYY-MM-DDTHH:mm").unix() * 1000} />
-            {roughBets.trump > 0 &&
+            {roughBets.trump > 0 || roughBets.biden > 0 &&
               <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
             }
 
             <VersusContainer>
               <VersusBackground>
-                <ImgWrapper style={trumpStyle} onMouseOver={() => hoverOver("Trump")} onMouseOut={() => hoverExit()}
+                <ImgWrapper style={trumpStyle} onMouseOver={() => hoverOver("Vitalik")} onMouseOut={() => hoverExit()}
                   onClick={(e) => onClickTrump(e)}>
                   <Candidate1
                     src={Vitalik}
 
                   />
                 </ImgWrapper>
-                <ImgWrapper style={bidenStyle} onMouseOver={() => hoverOver("Biden")} onMouseOut={() => hoverExit()}
+                <ImgWrapper style={bidenStyle} onMouseOver={() => hoverOver("Alexandra")} onMouseOut={() => hoverExit()}
                   onClick={(e) => onClickBiden(e)} >
                   <Candidate2
                     src={Alexandra}
@@ -242,7 +243,7 @@ const Battle: React.FC = () => {
               target="_blank"
             >
               <img src={Twitch} width="30px" height="30px" />
-                  We will be streaming BotezLive on Twitch
+                  Watch the match on Twitch!
               <img src={Twitch} width="30px" height="30px" />
 
             </InfoBlock>
@@ -284,7 +285,7 @@ display: flex;
 flex-direction: row;
 justify-content: space-evenly;
 align-items: center;
-width: 550px;
+width: 420px;
 margin-bottom: 80px;
 background-color: rgba(256,256,256,0.2);
 border-radius: 8px;
@@ -401,7 +402,6 @@ const BackgroundSection = styled.div`
   width: 180vw;
   height: 100vh;
   top: 0;
-  filter: brightness(120%);
   background-repeat: no-repeat;
   background-position: fit;
   background-size: cover;

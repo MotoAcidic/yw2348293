@@ -13,7 +13,9 @@ export const getContract = (provider: provider, address: string) => {
 
 export const getAllowance = async (tokenContract: Contract, poolContract: Contract, account: string): Promise<string> => {
   try {
+    
     const allowance: string = await tokenContract.methods.allowance(account, poolContract.options.address).call()
+    
     return allowance
   } catch (e) {
     return '0'

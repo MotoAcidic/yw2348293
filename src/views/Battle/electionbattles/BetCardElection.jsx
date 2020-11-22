@@ -6,8 +6,8 @@ import useModal from '../../../hooks/useModal'
 import RulesModal from "./BetRulesModal";
 import Cookie from 'universal-cookie'
 import Container from '../../../components/Container'
-import MiniBiden from "../../../assets/img/biden@2x.png";
-import MiniTrump from "../../../assets/img/trump@2x.png";
+import MiniBiden from "../../../assets/img/alexandraicon.png";
+import MiniTrump from "../../../assets/img/vitalikicon.jpg";
 import useFarm from '../../../hooks/useFarm'
 import useYam from '../../../hooks/useYam'
 import { getDisplayBalance } from '../../../utils/formatBalance'
@@ -18,7 +18,7 @@ import UnstakeModal from './UnstakeModal'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
 import useAllowance from '../../../hooks/useAllowance'
-import { placeElectionWARBet, placeElectionETHBet, getCurrentBets, getCurrentBalances, getElectionRewards, getElectionFinished, redeem } from '../../../yamUtils'
+import { placeChessWARBet, placeChessETHBet, getChessBets, getChessBalances, getChessRewards, getChessFinished, redeem } from '../../../yamUtils'
 import Swal from 'sweetalert2';
 import { getElectionContracts, harvest } from '../../../yamUtils'
 import Pool3 from "./Pool3";
@@ -77,9 +77,10 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		return getContract(ethereum, "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde")
 	}, [ethereum, "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"])
 
+	console.log(tokenContract);
 	const { onApprove } = useApprove(tokenContract, electionContract)
 	const allowance = useAllowance(tokenContract, electionContract)
-	// console.log(allowance);
+	console.log(allowance);
 
 	const [onPresentUnstake] = useModal(
 		<UnstakeModal
@@ -107,8 +108,8 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 
 	useEffect(() => {
 		const getBets = async () => {
-			const bets = await getCurrentBets(yam);
-			const balances = await getCurrentBalances(yam, account);
+			const bets = await getChessBets(yam);
+			const balances = await getChessBalances(yam, account);
 			setFarmBalances(balances);
 			// console.log("gotbets", bets);
 			setFarmBets(bets);
@@ -131,16 +132,16 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 				return
 			}
 			if (warInput) {
-				const candidate = candidateInfo.name === "Biden" ? 1 : 2;
+				const candidate = candidateInfo.name === "Vitalik" ? 1 : 2;
 				// console.log("War Bet", candidate, warInput)
 				setPending(true)
-				placeElectionWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => setPending(false))
+				placeChessWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => setPending(false))
 			}
 			if (ethInput) {
-				const candidate = candidateInfo.name === "Biden" ? 1 : 2;
+				const candidate = candidateInfo.name === "Vitalik" ? 1 : 2;
 				// console.log("Eth Bet", candidate, ethInput)
 				setPending(true)
-				placeElectionETHBet(yam, candidate, parseFloat(ethInput), account).then((ret) => {
+				placeChessETHBet(yam, candidate, parseFloat(ethInput), account).then((ret) => {
 					setPending(false)
 				})
 			}
@@ -151,9 +152,9 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	}
 
 	const redeemRewards = async () => {
-		const done = await getElectionFinished(yam);
+		const done = await getChessFinished(yam);
 		console.log("election finished?", done);
-		getElectionRewards(yam, account);
+		getChessRewards(yam, account);
 	}
 
 	const handleApprove = useCallback(async () => {
@@ -174,7 +175,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 
 				<TitleText>
 					Your Bets
-					</TitleText>
+				</TitleText>
 				<YourBets>
 					{!farmBalances.trumpWARBal > 0 && !farmBalances.trumpETHBal > 0 &&
 						!farmBalances.bidenWARBal > 0 && !farmBalances.bidenETHBal > 0 ?

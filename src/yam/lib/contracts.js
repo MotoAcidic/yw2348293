@@ -15,6 +15,7 @@ import WARPoolJson from '../clean_build/contracts/WARPool.json';
 import ElectionBettingJson from '../clean_build/contracts/ElectionBetting.json';
 import APBettingJson from '../clean_build/contracts/Betting2Choice.json';
 import EveripediaJson from '../clean_build/contracts/Everipedia.json'
+import OneOffBettingJson from '../clean_build/contracts/OneOffBetting.json'
 
 import BetV2Json from "../clean_build/contracts/BettingV2.json";
 
@@ -47,6 +48,7 @@ export class Contracts {
     this.election_betting = new this.web3.eth.Contract(ElectionBettingJson.abi);
     this.ap_betting = new this.web3.eth.Contract(APBettingJson.abi);
     this.everipedia = new this.web3.eth.Contract(EveripediaJson.abi);
+    this.chess_one_off = new this.web3.eth.Contract(OneOffBettingJson.abi);
     this.fwar = new this.web3.eth.Contract(ERC20Json.abi);
 
     this.betting_v2 = new this.web3.eth.Contract(BetV2Json.abi);
@@ -120,6 +122,7 @@ export class Contracts {
     this.pricing.setProvider(provider);
     this.weth_token.setProvider(provider);
     this.election_betting.setProvider(provider);
+    this.chess_one_off.setProvider(provider);
     this.ap_betting.setProvider(provider);
     this.everipedia.setProvider(provider);
     this.fwar.setProvider(provider);
@@ -220,7 +223,7 @@ export class Contracts {
     this.pricing.options.address = addressMap["Pricing"];
     this.weth_token.options.address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
     this.election_betting.options.address = addressMap["ElectionBetting"];
-    
+    this.chess_one_off.options.address = addressMap["ChessOneOff"];
     this.betting_v2.options.address = addressMap["BetV2"];
 
     this.ap_betting.options.address = addressMap["APBetting"];
@@ -289,6 +292,7 @@ export class Contracts {
     this.uni_router.options.from = account;
     this.pricing.options.from = account;
     this.election_betting.options.from = account;
+    this.chess_one_off.from = account
     this.ap_betting.options.from = account;
     this.everipedia.options.from = account;
     this.fwar.options.from = account;

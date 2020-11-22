@@ -111,7 +111,7 @@ font-family: "Gilroy";
   font-stretch: normal;
   font-style: normal;
 	letter-spacing: 2px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 `
 
 

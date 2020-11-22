@@ -110,7 +110,8 @@ font-family: "Gilroy";
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  letter-spacing: 2px;
+	letter-spacing: 2px;
+	margin-bottom: 20px;
 `
 
 

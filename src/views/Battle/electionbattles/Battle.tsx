@@ -205,17 +205,18 @@ const Battle: React.FC = () => {
         <ContentContainer>
           <Page>
 
-            <Title>Who Will Win?</Title>
             <SubTitle>
-              <a href="https://en.wikipedia.org/wiki/Vitalik_Buterin">
+              <a target="_blank"
+        rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Vitalik_Buterin">
                 Vitalik Buterin
               </a>
 
               &nbsp;is playing&nbsp;
-              <a href="https://en.wikipedia.org/wiki/Alexandra_Botez">
+              <a target="_blank"
+        rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Alexandra_Botez">
                 Alexandra Botez
               </a>
-               &nbsp;in chess
+               &nbsp;in chess. Who Will Win?
             </SubTitle>
             <Countdown endTime={moment.utc("2020-11-23T02:00", "YYYY-MM-DDTHH:mm").unix() * 1000} />
             {roughBets.trump > 0 &&
@@ -272,7 +273,7 @@ const Battle: React.FC = () => {
 
 const SubTitle = styled.div`
 font-family: "Gilroy";
-  font-size: 18px;
+  font-size: 22px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;

@@ -219,6 +219,7 @@ const Battle: React.FC = () => {
 
                   />
                 </ImgWrapper>
+                <Versus>VS</Versus>
                 <ImgWrapper style={bidenStyle} onMouseOver={() => hoverOver("Alexandra")} onMouseOut={() => hoverExit()}
                   onClick={(e) => onClickBiden(e)} >
                   <Candidate2
@@ -256,6 +257,14 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const Versus = styled.div`
+position: absolute;
+z-index: 20004;
+display: flex;
+flex-direction: row;
+align-items: center;
+`
 
 const ImgWrapper = styled.div`
 width: 50%;
@@ -338,6 +347,9 @@ const VersusBackground = styled.div`
 width: 100%;
 height: 100%;
 display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
 `
 
 const BigTitle = styled.div`

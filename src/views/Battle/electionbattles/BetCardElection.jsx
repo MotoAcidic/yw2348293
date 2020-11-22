@@ -99,11 +99,11 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 
 	const fireUnstakeSWAL = () => {
 		let cookie = new Cookie()
-		if (cookie.get("seenUnstakeSWAL")) {
+		if (cookie.get("seenChessUnstakeSWAL")) {
 			return;
 		}
 		Swal.fire("Please make sure you have $WAR or $ETH in your MetaMask Wallet to place a bet.\n\n$WAR in your WARchest (below) needs to be unstaked to use it in a bet.\n\nView the full betting rules below.")
-		cookie.set("seenUnstakeSWAL", true)
+		cookie.set("seenChessUnstakeSWAL", true)
 	}
 
 	useEffect(() => {

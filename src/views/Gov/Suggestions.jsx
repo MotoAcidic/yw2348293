@@ -20,7 +20,7 @@ function getServerURI() {
   return "https://yieldwars-api.herokuapp.com";
 }
 
-const Community = ({fetchSuggestions, suggestions}) => {
+const Community = ({ fetchSuggestions, suggestions }) => {
   const [exploitPrevent, setExploitPrevent] = useState(false);
   const [oldAccount, setOldAccount] = useState(null);
   const { account, connect } = useWallet()
@@ -107,7 +107,7 @@ const Community = ({fetchSuggestions, suggestions}) => {
             <SuggestionVotes>
               <SuggestedUserInfo>
                 <StyledCardIcon style={{ backgroundColor: suggestion.pictureColor }}>{suggestion.picture}</StyledCardIcon>
-                {suggestion.nickname ? suggestion.nickname : suggestion.address.substring(0, 12) + "..."}
+                {suggestion.nickname ? suggestion.nickname : suggestion.address.substring(0, 6) + '...' + suggestion.address.substring(account.length - 4)}
 
               </SuggestedUserInfo>
               <ColorVotes style={{ color: votesColor }}>

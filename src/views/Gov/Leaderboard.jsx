@@ -40,7 +40,7 @@ const Profile = () => {
               <StyledCardIcon style={{ backgroundColor: item.pictureColor }}>{item.picture}</StyledCardIcon>
               <LeaderboardText>
 
-                <StyledTitle>{item.nickname ? item.nickname : item.address.substring(0, 10) + "..."}</StyledTitle>
+                <StyledTitle>{item.nickname ? item.nickname : item.address.substring(0, 6) + '...' + item.address.substring(item.address.length - 4)}</StyledTitle>
                 {selectVal === "battles" ?
                   <StyledVotes>{item.battleWinPercent}%</StyledVotes>
                   :
@@ -93,14 +93,23 @@ const Profile = () => {
   )
 }
 
-const LeaderboardInfo = styled.div`
+const LeaderboardInfo = !isMobile() ? styled.div`
 font-size: 12px;
 margin-left: 15px;
 font-weight: normal;
+padding-top: 5px;` : styled.div`
+font-size: 12px;
+margin-left: 5px;
+margin-right: 5px;
+font-weight: normal;
 padding-top: 5px;`
 
-const LeaderboardTitle = styled.div`
-display: flex;`
+const LeaderboardTitle =  !isMobile() ? styled.div`
+display: flex;
+align-items: center;` : styled.div`
+display: flex;
+align-items: center;
+margin-bottom: 10px;`
 
 const LoadingContainer = styled.div`
 height: 204px;
@@ -224,8 +233,15 @@ const LeaderBoardItem = !isMobile()
   justify-content: space-between;
   margin-bottom: 20px;`;
 
-const LeaderboardContainer = styled.div`
+const LeaderboardContainer = !isMobile() ? styled.div`
 width: 80vw;
+max-width: 1200px;
+border-radius: 16px;
+display: flex;
+flex-direction: column;
+margin-bottom: 80px;
+` : styled.div`
+width: 95vw;
 max-width: 1200px;
 border-radius: 16px;
 display: flex;
@@ -263,7 +279,7 @@ const LeaderBoard = !isMobile() ? styled.div`
   width: 100%;
 ` : styled.div`
   display: flex;
-  width: 90vw;
+  width: 95vw;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;

@@ -15,12 +15,8 @@ import Leaderboard from "./Leaderboard"
 import Community from "./Community";
 
 function isMobile() {
-  if (window.innerWidth < window.innerHeight) {
-    return true
-  }
-  else {
-    return false
-  }
+  if (window.innerWidth < window.innerHeight) return true
+  else return false
 }
 
 function getServerURI() {
@@ -62,11 +58,15 @@ const Governance: React.FC = () => {
             <TopDisplayContainer />
             <Leaderboard />
             {account ?
-
-              <GovContent>
-                <Community />
-                <Profile />
-              </GovContent>
+              !isMobile() ?
+                <GovContent>
+                  <Community />
+                  <Profile />
+                </GovContent> :
+                <GovContent>
+                  <Profile />
+                  <Community />
+                </GovContent>
               :
               <ConnectContainer onClick={() => connect('injected')}>
                 <BigTitle>
@@ -163,12 +163,15 @@ justify-content: center;
 `
 
 
-const GovContent = styled.div`
+const GovContent = !isMobile() ? styled.div`
 width: 80vw;
 max-width: 1200px;
 display: flex;
 flex-direction: row;
-justify-content: space-between;`
+justify-content: space-between;` : styled.div`
+width: 95vw;
+display: flex;
+flex-direction: column;`
 
 const BackgroundSection = styled.div`
   background-image: url(${Background});

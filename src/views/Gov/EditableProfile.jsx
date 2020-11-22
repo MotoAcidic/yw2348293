@@ -161,7 +161,7 @@ const Profile = ({ user, fetchAccount }) => {
         {newPicture}
       </ProfilePicContainer>
       <Nickname>
-        {newNickname ? newNickname : account.substring(0, 20) + "..."}
+        {newNickname ? newNickname : account.substring(0, 6) + '...' + account.substring(account.length - 4)}
       </Nickname>
     </>
   )

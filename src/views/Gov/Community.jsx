@@ -14,6 +14,11 @@ import useModal from '../../hooks/useModal'
 import RulesModal from "./RulesModal";
 import Suggestions from "./Suggestions";
 
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) return true
+  else return false
+}
+
 function getServerURI() {
   if (window.location.hostname === "localhost") {
     return "http://localhost:5000";
@@ -106,13 +111,13 @@ const Community = () => {
 
   return (
     <Side>
-      <Title>
-        <TitleSide>
+      <TopTitle>
+        <Left>
           Community Governance <Icon onClick={presentRulesModal} viewBox="0 0 180 180">
             <path fill="none" stroke-width="11" d="M9,89a81,81 0 1,1 0,2zm51-14c0-13 1-19 8-26c7-9 18-10 28-8c10,2 22,12 22,26c0,14-11,19-15,22c-3,3-5,6-5,9v22m0,12v16" />
           </Icon>
-        </TitleSide>
-        <TitleSide>
+        </Left>
+        <Right>
           <Option style={{ color: sort === "top" ? "white" : "#ffbe1a", textDecoration: sort === "top" ? "underline" : "none" }} onClick={() => toggleSort("top")}>
             top
           </Option>
@@ -120,8 +125,8 @@ const Community = () => {
             new
           </Option>
 
-        </TitleSide>
-      </Title>
+        </Right>
+      </TopTitle>
       {suggestions.length > 0 && <Suggestions fetchSuggestions={() => fetchSuggestions()} suggestions={suggestions} />}
       <Pagination>
         <ReactPaginate
@@ -168,127 +173,15 @@ const Community = () => {
   )
 }
 
-const SuggestedUserInfo = styled.div`
-display: flex;
-align-items: center;
-`
-
-const StyledCardIcon = styled.div`
-  font-size: 16px;
-  height: 18px;
-  width: 18px;
-  border-radius: 50%;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  border: solid 2px rgba(256,256,256,0.3);
-  margin-right: 5px;
-`;
-
-const SingleTop = styled.div`
-width: 100%;
-display: flex;
-justify-content: space-between;
-margin-bottom: 8px;`
-
 const Pagination = styled.div`
 display:flex;
 justify-content: flex-end;`
 
-const ColorVotes = styled.div`
-font-family: GilroyMedium;
-font-size: 12px;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-display: flex;
-margin-left: 10px;
-align-items: center;`
-
-const SuggestionVotes = styled.div`
-font-family: GilroyMedium;
-font-size: 12px;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-display: flex;
-color: white;
-align-items: center;`
-
-const SuggestionText = styled.div`
-font-family: "Gilroy";
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-text-align: left;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: white;
-word-break: break-word;
-`
-
-const SuggestionBody = styled.div`
-width: 100%;
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-`
-
 const Space = styled.div`
 height: 20px;`
 
-const UpVote = styled.svg`
-width: 20px;
-height: 20px;
-stroke: grey;
-fill: grey;
-cursor: pointer;
-transition: all 0.2s linear;
-transform: scaleY(-1);
-&:hover {
-  fill: white;
-  stroke: rgb(255,204,74);
-}
-`
-const DownVote = styled.svg`
-width: 20px;
-height: 20px;
-stroke: grey;
-fill: grey;
-cursor: pointer;
-transition: all 0.2s linear;
-&:hover {
-  fill: white;
-  stroke: rgb(255,204,74);
-}
-`
 
-
-const VoteButtons = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-right: 20px;
-`
-
-
-const SingleSuggestion = styled.div`
-width: calc(100% - 40px);
-padding: 10px 20px;
-border-radius: 8px;
-border: solid 2px rgba(255,183,0,0.3);
-background-color: rgba(256,256,256,0.08);
-display: flex;
-flex-direction: row;
-margin-bottom: 20px;
-`
-
-const Option = styled.div`
+const Option = !isMobile () ? styled.div`
 font-family: "Gilroy";
 font-size: 16px;
 font-weight: bold;
@@ -303,10 +196,35 @@ margin-right: 16px;
 &:hover {
   opacity: 1;
 }
+` : styled.div`
+font-family: "Gilroy";
+font-size: 16px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+opacity: 0.9;
+cursor: pointer;
+margin-right: 16px;
+&:hover {
+  opacity: 1;
+}
+margin-left: 20vw;
 `
 
-const TitleSide = styled.div`
-display: flex;`
+const Left= !isMobile() ? styled.div`
+display: flex;` : styled.div`
+width: 70%;
+display: flex;
+font-size: 18px;`
+
+const Right = !isMobile() ? styled.div`
+display: flex;` : styled.div`
+width: 30%;
+display: flex;
+font-size: 16px;`
 
 const CharLimit = styled.div`
 color: white;
@@ -389,6 +307,38 @@ margin-left: 10px;
 }
 `
 
+const TopTitle = !isMobile() ? styled.div`
+width: 100%;
+display: flex;
+font-family: Alegreya;
+  font-size: 25px;
+  // height: 30px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+` : styled.div`
+width: 100%;
+display: flex;
+font-family: Alegreya;
+  font-size: 25px;
+  // height: 30px;
+  align-items: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+`
+
+
 const Title = styled.div`
 display: flex;
 width: 100%;
@@ -407,8 +357,13 @@ font-family: Alegreya;
   color: #ffffff;
 `
 
-const Side = styled.div`
+const Side = !isMobile() ? styled.div`
 width: 59%;
+display: flex;
+flex-direction: column;
+position: relative;
+` : styled.div`
+width: 95vw;
 display: flex;
 flex-direction: column;
 position: relative;

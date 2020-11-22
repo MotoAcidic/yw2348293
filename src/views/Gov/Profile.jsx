@@ -6,6 +6,11 @@ import useYam from '../../hooks/useYam'
 import editIcon from "../../assets/img/edit@2x.png"
 import EditableProfile from "./EditableProfile";
 
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) return true
+  else return false
+}
+
 function getServerURI() {
   if (window.location.hostname === "localhost") {
     return "http://localhost:5000";
@@ -125,12 +130,17 @@ letter-spacing: normal;
 color: #ffffff;
 `
 
-const Side = styled.div`
+const Side = !isMobile() ?  styled.div`
 position: relative;
 width: 39%;
 display: flex;
+flex-direction: column; 
+` : styled.div`
+position: relative;
+width: 95vw;
+display: flex;
 flex-direction: column;
-`
+margin-bottom: 80px;`
 
 const Container = styled.div`
 position: relative;

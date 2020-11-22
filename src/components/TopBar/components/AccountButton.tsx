@@ -26,9 +26,11 @@ const AccountButton: React.FC<AccountButtonProps> = (props) => {
 
   const handleUnlockClick = useCallback(() => {
     if (isMobile()) {
+      // connect('injected');
       connect("walletconnect")
     } else {
-      onPresentWalletProviderModal()
+      connect('injected');
+      // onPresentWalletProviderModal()
     }
   }, [onPresentWalletProviderModal, connect])
 

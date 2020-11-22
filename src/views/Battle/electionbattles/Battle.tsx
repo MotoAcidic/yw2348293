@@ -324,7 +324,7 @@ let Candidate1
 let Candidate2
 
 Candidate1 = styled.img`
-width: 100%;
+width: calc(100% - 10px);
 height: 100%;
 border-radius: 6px 0 0 6px;
 cursor: pointer;
@@ -334,7 +334,7 @@ border-right: none;
 `
 
 Candidate2 = styled.img`
-width: 100%;
+width: calc(100% - 10px);
 height: 100%;
 border-radius: 0 6px 6px 0;
 cursor: pointer;

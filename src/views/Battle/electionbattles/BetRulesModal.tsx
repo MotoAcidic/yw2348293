@@ -32,7 +32,7 @@ const BetRulesModal: React.FC<ModalProps> = ({ onDismiss }) => {
               1. Betting on YieldWars is winner takes all. Meaning if Vitalik wins then those who bet split the Alexandra betting pool equally per how much they bet, and vice versa.
           </ModalContent>
             <ModalContent>
-              2. You can bet with $WAR or $ETH. Once you place a bet it is locked in and can not be changed.
+              2. You can bet with $WAR or $ETH. If you bet $WAR then you can only win $WAR, and vice versa. Once you place a bet it is locked in and can not be changed. 
           </ModalContent>
             <ModalContent>
               3. You can only bet from your wallet and not from your WARchest. If you have funds in your WARchest you will need to unstake them. There are no longer fees for staking/unstaking from WARchest.

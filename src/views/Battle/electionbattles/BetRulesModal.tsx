@@ -52,7 +52,7 @@ const BetRulesModal: React.FC<ModalProps> = ({ onDismiss }) => {
 
 const Title = styled.div`
   font-family: "Gilroy";
-  color: #ffb700;
+  color: rgb(255,204,160);
   font-size: 30px;
   margin: 10px 0;
   `
@@ -61,7 +61,7 @@ const StyledCardContent = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 16px;
+  padding: 30px;
   height: 100%;
 `
 
@@ -71,19 +71,19 @@ margin: auto;
 min-width: 300px;
   border-radius: 8px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-  border: solid 1px rgba(255, 183, 0, 0.5);
-  background-color: rgba(4,2,43,0.7);
+  border: solid 1px white;
+  background-color: rgba(0,0,0,0.7);
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-font-family: "Gilroy";
+  font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 1;
   letter-spacing: normal;
-  color: #ffffff;
+  color: black;
   margin-bottom: 40px;
 `
 

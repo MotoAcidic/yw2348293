@@ -205,6 +205,17 @@ const Battle: React.FC = () => {
           <Page>
 
             <Title>Who Will Win?</Title>
+            <SubTitle>
+              <a href="https://en.wikipedia.org/wiki/Vitalik_Buterin">
+                Vitalik Buterin
+              </a>
+
+              &nbsp;is playing&nbsp;
+              <a href="https://en.wikipedia.org/wiki/Alexandra_Botez">
+                Alexandra Botez
+              </a>
+               &nbsp;in chess
+            </SubTitle>
             <Countdown endTime={moment.utc("2020-11-23T02:00", "YYYY-MM-DDTHH:mm").unix() * 1000} />
             {roughBets.trump > 0 || roughBets.biden > 0 &&
               <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
@@ -258,12 +269,32 @@ const Battle: React.FC = () => {
   );
 };
 
+const SubTitle = styled.div`
+font-family: "Gilroy";
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  max-width: 80vw;
+  margin-bottom: 5px;
+`
+
 const Versus = styled.div`
 position: absolute;
 z-index: 20004;
 display: flex;
 flex-direction: row;
 align-items: center;
+// font-family: "Edo";
+font-size: 80px;
+font-weight: normal;
+text-shadow: -1px 1px 0 #000,
+                          1px 1px 0 #000,
+                         1px -1px 0 #000,
+                        -1px -1px 0 #000;
 `
 
 const ImgWrapper = styled.div`
@@ -296,7 +327,7 @@ justify-content: space-evenly;
 align-items: center;
 width: 420px;
 margin-bottom: 80px;
-background-color: rgba(256,256,256,0.2);
+background-color: rgba(0,0,0,0.3);
 border-radius: 8px;
 height: 40px;
 `

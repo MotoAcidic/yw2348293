@@ -249,50 +249,6 @@ justify-content: center;
 height: 60px;
 align-items: center;
 `
-const StyledDetails = !isMobile() ? styled.div`
-position: absolute;
-display: flex;
--webkit-box-pack: justify;
-justify-content: space-between;
-box-sizing: border-box;
-border-radius: 8px;
-background-color: rgba(256, 256, 256, 0.05);
-color: rgb(170, 149, 132);
-width: 200px;
-margin-top: 6px;
-margin-left: 780px;
-line-height: 32px;
-font-size: 13px;
-border: solid 2px #ffb700;
-text-align: center;
-padding: 0px 12px;
-` : styled.div`
-position: absolute;
-display: flex;
--webkit-box-pack: justify;
-justify-content: space-between;
-box-sizing: border-box;
-border-radius: 8px;
-background-color: rgba(256, 256, 256, 0.05);
-color: rgb(170, 149, 132);
-width: 200px;
-margin-top: 100px;
-font-size: 13px;
-border: solid 2px #ffb700;
-text-align: center;
-padding: 0px 12px;`
-
-const StyledDetail = styled.div`
-font-family: "Gilroy";
-line-height: 32px;
-font-size: 18px;
-font-weight: normal;
-font-stretch: normal;
-font-style: normal;
-letter-spacing: normal;
-color: #ffffff;
-}
-`
 
 const MobileButtons = styled.div`
 display: flex;
@@ -373,8 +329,9 @@ font-family: "Gilroy";
 const InfoContainer = !isMobile() ? styled.div`
 width: 1000px;
   border-radius: 8px;
-  border: solid 2px rgba(255, 183, 0, 0.3);
-  background-color: rgba(4,2,43,0.7);
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  border: solid 1px white;
+  background-color: rgba(0,0,0,0.7);
 	margin: 20px auto 80px auto;
 `: styled.div`
 width: 300px;

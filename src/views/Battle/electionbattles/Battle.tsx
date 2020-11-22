@@ -107,6 +107,7 @@ const Battle: React.FC = () => {
     const statsData = await getStats(yam);
     setStats(statsData);
   }, [yam, setStats]);
+
   let [modal, setShowModal] = useState(false);
   let [candidate, setCandidate] = useState(battles.farm1);
   let [hoverCandidate, setHoverCandidate] = useState("");
@@ -157,7 +158,7 @@ const Battle: React.FC = () => {
       fetchWarStaked(farms);
 
     }
-    if (yam && account && !roughBets.trump) {
+    if (yam && !roughBets.trump) {
       getRoughBets();
     }
   }, [yam, farms, farms[0]]);

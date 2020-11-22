@@ -19,7 +19,7 @@ import Biden from "../../../assets/img/biden.png";
 import Trump from "../../../assets/img/trump.png";
 
 import Twitch from "../../../assets/img/twitch.png"
-import Vitalik from "../../../assets/img/chess_vitalik.jpg"
+import Vitalik from "../../../assets/img/chess_vitalik.png"
 import Alexandra from "../../../assets/img/chess_alexandra_2.png"
 
 import Chess from "../../../assets/img/chess.png";

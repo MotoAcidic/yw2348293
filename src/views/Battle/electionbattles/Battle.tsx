@@ -23,6 +23,7 @@ import Vitalik from "../../../assets/img/chess_vitalik.jpg"
 import Alexandra from "../../../assets/img/chess_alexandra_2.png"
 
 import Chess from "../../../assets/img/chess.png";
+import Rook from '../../../assets/img/rook.png'
 import chainlinkLogo from "../../../assets/img/chainlinklogo.png";
 import everipediaLogo from "../../../assets/img/everipedialogo.png";
 
@@ -206,7 +207,7 @@ const Battle: React.FC = () => {
 
             <Title>Who Will Win?</Title>
             <Countdown endTime={moment.utc("2020-11-23T02:00", "YYYY-MM-DDTHH:mm").unix() * 1000} />
-            {roughBets.trump > 0 || roughBets.biden > 0 &&
+            {roughBets.trump > 0 &&
               <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
             }
 
@@ -260,10 +261,17 @@ const Battle: React.FC = () => {
 
 const Versus = styled.div`
 position: absolute;
+height: 180px;
+width: 110px;
 z-index: 20004;
 display: flex;
-flex-direction: row;
 align-items: center;
+justify-content: center;
+background-image: url(${Rook});
+background-size: contain;
+background-repeat: no-repeat;
+margin-top: 50px;
+filter: drop-shadow(0 0 0.75rem white)
 `
 
 const ImgWrapper = styled.div`
@@ -330,7 +338,7 @@ border-radius: 6px 0 0 6px;
 cursor: pointer;
 object-fit: cover;
 border: 10px solid black;
-border-right: none;
+border-right: 2px solid black;
 `
 
 Candidate2 = styled.img`
@@ -340,7 +348,7 @@ border-radius: 0 6px 6px 0;
 cursor: pointer;
 object-fit: cover;
 border: 10px solid black;
-border-left: none;
+border-left: 2px solid black;
 `
 
 const VersusBackground = styled.div`

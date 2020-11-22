@@ -46,33 +46,45 @@ class CountDown extends React.Component {
 	render() {
 		return (
 
-				<Countdown>
-										<Item>
-						{this.state.days.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-						{/* <TimerText>Hours</TimerText> */}
-					</Item>
-					<div>:</div>
-					<Item>
-						{this.state.hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-						{/* <TimerText>Hours</TimerText> */}
-					</Item>
-					<div>:</div>
-					<Item>
-						{this.state.minutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-						{/* <TimerText>Minutes</TimerText> */}
-					</Item>
-					<div>:</div>
-					<Item>
-						{this.state.seconds.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-						{/* <TimerText>Seconds</TimerText> */}
-					</Item>
-				</Countdown>
+			<Countdown>
+				<Text>Betting Ends:</Text>
+				<Item>
+					{this.state.days.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+					{/* <TimerText>Hours</TimerText> */}
+				</Item>
+				<div>:</div>
+				<Item>
+					{this.state.hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+					{/* <TimerText>Hours</TimerText> */}
+				</Item>
+				<div>:</div>
+				<Item>
+					{this.state.minutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+					{/* <TimerText>Minutes</TimerText> */}
+				</Item>
+				<div>:</div>
+				<Item>
+					{this.state.seconds.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+					{/* <TimerText>Seconds</TimerText> */}
+				</Item>
+			</Countdown>
 		)
 	}
 }
 
 const Item = styled.div`
 text-align: center;
+`
+
+const Text = styled.div`
+font-family: "Gilroy";
+  font-size: 20px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+  margin-right: 3px;
 `
 
 const TimerText = styled.div`

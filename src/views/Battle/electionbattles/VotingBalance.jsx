@@ -87,7 +87,7 @@ const VotingBalance = styled.div`
 display: flex;
 flex-direction: column;
 width: 89%;
-margin: -15px auto 15px auto;
+margin: -15px auto 0px auto;
 `
 
 

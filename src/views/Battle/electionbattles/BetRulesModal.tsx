@@ -43,6 +43,9 @@ const BetRulesModal: React.FC<ModalProps> = ({ onDismiss }) => {
             <ModalContent>
               5. Betting will end at 21:00 EST on Nov 22nd. This is when the chess match starts.
           </ModalContent>
+          <ModalContent>
+          6. The battle will be resolved using Botez’s Twitch livestream. In the event that multiple chess matches are played, then only the first match counts. In addition, the first match counts even if one or both players play with a handicap.
+          </ModalContent>
           </ModalSpacer>
         </StyledCardContent>
       </StyledCard>

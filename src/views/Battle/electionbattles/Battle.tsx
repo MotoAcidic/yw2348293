@@ -197,6 +197,21 @@ const Battle: React.FC = () => {
   const bidenStyle = hoverCandidate === "Alexandra" ? { transform: `scale(1.05)`, filter: `grayscale(40%)`, transition: `all 0.2s ease-in-out`, zIndex: 2000 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out` };
   const trumpStyle = hoverCandidate === "Vitalik" ? { transform: `scale(1.05)`, filter: `grayscale(40%)`, transition: `all 0.2s ease-in-out`, zIndex: 2001 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out`, zIndex: 1000 };
 
+  if (isMobile()) return (
+    <Switch>
+      <StyledCanvas>
+        <BackgroundSection />
+        <ContentContainer>
+          <Page>
+
+            <AFK>
+              <Title>Please View on Desktop</Title>
+            </AFK>
+          </Page>
+        </ContentContainer>
+      </StyledCanvas>
+    </Switch>
+  )
 
   return (
     <Switch>
@@ -207,13 +222,13 @@ const Battle: React.FC = () => {
 
             <SubTitle>
               <a target="_blank"
-        rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Vitalik_Buterin">
+                rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Vitalik_Buterin">
                 Vitalik Buterin
               </a>
 
               &nbsp;is playing&nbsp;
               <a target="_blank"
-        rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Alexandra_Botez">
+                rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Alexandra_Botez">
                 Alexandra Botez
               </a>
                &nbsp;in chess. Who Will Win?
@@ -270,6 +285,16 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const AFK = styled.div`
+height: 65vh;
+display: flex;
+align-items: center;
+justify-content: center;
+text-shadow: -1px 1px 0 #000,
+1px 1px 0 #000,
+1px -1px 0 #000,
+-1px -1px 0 #000;`
 
 const SubTitle = styled.div`
 font-family: "Gilroy";

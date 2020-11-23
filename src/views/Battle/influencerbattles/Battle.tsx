@@ -183,6 +183,8 @@ const Battle: React.FC = () => {
 
             <Countdown/>
             {battles && battles.length > 0 && <TotalBets battle1={battles[0]} id={battles[0]._id} />}
+            <SmallSpace />
+
             {battleFields()}
             {account && yesterdaysBattle.length > 0 && <Yesterday onClick={() => setBetRedeemModal(true)} >Show Yesterdays Result</Yesterday>}
             <SmallSpace />

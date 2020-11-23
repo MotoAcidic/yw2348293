@@ -9,12 +9,12 @@ import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 import Pool3 from "./Pool3";
 import useFarms from "../../../hooks/useFarms";
-import { getWarStaked, getElectionContracts, getCurrentBets, electionTVL } from "../../../yamUtils";
+import { getWarStaked, getChessContracts, getCurrentBets, electionTVL } from "../../../yamUtils";
 import { getStats } from "./utils";
 
 import Uniswap from "../../../assets/img/uniswap@2x.png";
 import BetModalElection from "./RedeemCardElection"
-
+import Alexandra from "../../../assets/img/chess_alexandra_2.png"
 import BidenWin from "../../../assets/img/bidenwin.jpg"
 import TrumpWin from "../../../assets/img/trumpwin.jpg"
 
@@ -134,7 +134,7 @@ const Results: React.FC = () => {
     e.stopPropagation()
   }
 
-  const electionContract = getElectionContracts(yam)
+  const chessContract = getChessContracts(yam)
 
   const hoverOver = (candidate) => {
     console.log("called", candidate, hoverCandidate)
@@ -163,7 +163,7 @@ const Results: React.FC = () => {
     <Container>
       <VersusContainer>
         <VersusBackground>
-          <Candidate2 onMouseOver={() => hoverOver("Biden")} onMouseOut={() => hoverExit()} src={BidenWin} />
+          <Candidate2 onMouseOver={() => hoverOver("Biden")} onMouseOut={() => hoverExit()} src={Alexandra} />
           <Overlay>
             <Congrats>
               A VICTOR HAS RISEN
@@ -180,7 +180,7 @@ const Results: React.FC = () => {
             {yam && <BetModalElection
               battle={battles}
               candidateInfo={candidate}
-              electionContract={electionContract}
+              electionContract={chessContract}
             />
             }
           </ModalBlock>
@@ -231,7 +231,11 @@ margin-left: 2%;
 margin-top: 2%;
 `
 
-const Container = styled.div``
+const Container = styled.div`
+display: flex;
+height: 95vh;
+align-items: center;
+`
 
 const ModalBlock = styled.div`
 width: 534px;
@@ -257,6 +261,8 @@ height: 100%;
 border-radius: 8px;
 transition: all 0.2s ease-in-out;
 object-fit: cover;
+filter: grayscale(100%);
+transition: all 0.2s ease-in-out;
 `
 
 const VersusBackground = styled.div`

@@ -6,8 +6,8 @@ import useModal from '../../../hooks/useModal'
 import RulesModal from "./BetRulesModal";
 import Cookie from 'universal-cookie'
 import Container from '../../../components/Container'
-import MiniBiden from "../../../assets/img/biden@2x.png";
-import MiniTrump from "../../../assets/img/trump@2x.png";
+import MiniTrump from "../../../assets/img/vitalikicon.jpg";
+import MiniBiden from "../../../assets/img/alexandraicon.png";
 import useFarm from '../../../hooks/useFarm'
 import useYam from '../../../hooks/useYam'
 import { getDisplayBalance } from '../../../utils/formatBalance'
@@ -210,13 +210,13 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 				<Separator />
 				<Space />
 				{!farmBalances.trumpWARBal > 0 && !farmBalances.trumpETHBal > 0 &&
-						!farmBalances.bidenWARBal > 0 && !farmBalances.bidenETHBal > 0 ?
-						<SmallText>nothing to redeem</SmallText>
-						: 
-						<Button size="xlg" onClick={() => redeemRewards()}>Redeem Rewards</Button>
-					}
+					!farmBalances.bidenWARBal > 0 && !farmBalances.bidenETHBal > 0 ?
+					<SmallText>nothing to redeem</SmallText>
+					:
+					<Button size="xlg" onClick={() => redeemRewards()}>Redeem Rewards</Button>
+				}
 			</VersusContainer>
-		
+
 		</Container>
 	)
 }
@@ -400,8 +400,8 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
-border: solid 2px rgba(255, 183, 0, 0.3);
-background-color: rgba(4,2,43,1);
+border: solid 2px white;
+background-color: rgba(30,30,30);
 padding: 20px;
 ` : styled.div`
 margin: 0 0 40px 0;

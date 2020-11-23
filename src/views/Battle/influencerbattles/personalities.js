@@ -118,7 +118,7 @@ export default [
 		name: 'DegenSpartan',
 		handle: '@DegenSpartan',
 		followerCount: '21.3k',
-		picture: "https://pbs.twimg.com/profile_images/1325674969515192321/_a59endu_400x400.jpg",
+		picture: "https://pbs.twimg.com/profile_images/1328599356744863744/iaVDCFLg_400x400.jpg",
 		bio: `AT THERMOPYLAE I HELD ETH $300. WHAT DID YOU DO? 
 		Lead Casting Couch Interviewer at 
 		@egirl_capital`
@@ -127,7 +127,7 @@ export default [
 		name: 'Qiao Wang',
 		handle: '@QwQiao',
 		followerCount: '35.3k',
-		picture: "https://pbs.twimg.com/profile_images/1318111927399182337/2hF9Twzk_400x400.jpg",
+		picture: "https://pbs.twimg.com/profile_images/1064003929485254656/-ktJcHQU_400x400.jpg",
 		bio: `Helping crypto startups @ DeFi Alliance. Previously entrepreneur @ Messari and trader @ Tower Research. Mostly shitpost. Occasional insights but not advice.`
 	},
 	{

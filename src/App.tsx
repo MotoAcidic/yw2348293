@@ -79,7 +79,7 @@ const App: React.FC = () => {
             <Route path="/splash" exact>
               <Splash />
             </Route>
-            <Redirect exact from="/" to="/battle" />
+            <Redirect exact from="/" to="/twitter-battle" />
             <Route path="/home" exact>
               <Farms />
             </Route>
@@ -92,9 +92,9 @@ const App: React.FC = () => {
             <Route path="/twitter-battle" exact>
               <InfluencerBattle />
             </Route>
-            <Route path="/battle" exact>
+            {/* <Route path="/battle" exact>
               <Markets />
-            </Route>
+            </Route> */}
             {/* <Route path="/battle" exact>
               <Battle />
             </Route> */}

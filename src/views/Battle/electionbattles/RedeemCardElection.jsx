@@ -18,7 +18,7 @@ import UnstakeModal from './UnstakeModal'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useUnstake from '../../../hooks/useUnstake'
 import useAllowance from '../../../hooks/useAllowance'
-import { placeElectionWARBet, placeElectionETHBet, getCurrentBets, getCurrentBalances, getElectionRewards, getElectionFinished, redeem } from '../../../yamUtils'
+import { placeElectionWARBet, placeElectionETHBet, getChessBets, getChessBalances, getChessRewards, getChessFinished, redeem } from '../../../yamUtils'
 import Swal from 'sweetalert2';
 import { getElectionContracts, harvest } from '../../../yamUtils'
 import Pool3 from "./Pool3";
@@ -107,8 +107,8 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 
 	useEffect(() => {
 		const getBets = async () => {
-			const bets = await getCurrentBets(yam);
-			const balances = await getCurrentBalances(yam, account);
+			const bets = await getChessBets(yam);
+			const balances = await getChessBalances(yam, account);
 			setFarmBalances(balances);
 			// console.log("gotbets", bets);
 			setFarmBets(bets);
@@ -122,9 +122,9 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 
 
 	const redeemRewards = async () => {
-		const done = await getElectionFinished(yam);
+		const done = await getChessFinished(yam);
 		console.log("election finished?", done);
-		getElectionRewards(yam, account);
+		getChessRewards(yam, account);
 	}
 
 	return (

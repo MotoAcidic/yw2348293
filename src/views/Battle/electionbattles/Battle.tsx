@@ -39,6 +39,7 @@ import PriceHistoryCard from "../../Results/PercentChangeCard";
 import VotingBalance from "./VotingBalance";
 import Countdown from './CountDown'
 import moment from 'moment';
+import Results from "./Results"
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -221,20 +222,71 @@ const Battle: React.FC = () => {
         <ContentContainer>
           <Page>
 
-            <Title>
+            {/* <Title>
               Alexandra Botez has claimed Victory!
 		        </Title>
             <Title>
               Come back soon to claim rewards
-		        </Title>
-          <Rules />
-          <Pool3 />
+		        </Title> */}
+            {yam ? <Results /> :
+              <ConnectContainer onClick={() => connect('injected')}>
+                <BigTitle>
+                  Connect Your Wallet
+                    </BigTitle>
+                <SubTitle>
+                  to redeem bet rewards
+                    </SubTitle>
+              </ConnectContainer>
+            }
+            <Rules />
+            <Pool3 />
           </Page>
         </ContentContainer>
       </StyledCanvas>
     </Switch >
   );
 };
+
+
+const ConnectContainer = !isMobile() ? styled.div`
+width: 600px;
+height: 140px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 30px;
+margin: 0 auto 5vh auto;
+font-family: "Gilroy";
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+flex-direction: column;
+color: #ffffff;
+border-radius: 8px;
+border: solid 2px rgba(255, 183, 0, 0.3);
+ background-color: rgba(4,2,43,0.4);
+ cursor: pointer;
+ margin: 40vh auto 40vh auto;
+` : styled.div`
+margin: 0 0 40px 0;
+width: 90vw;
+display: flex;
+flex-direction: column;
+padding-top: 20px;
+font-family: "Gilroy";
+  font-size: 25px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+	color: #ffffff;
+	border-radius: 8px;
+  border: solid 2px rgba(255, 183, 0, 0.3);
+ background-color: rgba(4,2,43,0.4); 
+`
 
 const AFK = styled.div`
 height: 65vh;
@@ -248,15 +300,14 @@ text-shadow: -1px 1px 0 #000,
 
 const SubTitle = styled.div`
 font-family: "Gilroy";
-  font-size: 22px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-  max-width: 80vw;
-  margin-bottom: 5px;
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+	color: white;
+	margin-bottom: 10px;
 `
 
 const Versus = styled.div`
@@ -359,10 +410,9 @@ flex-direction: row;
 justify-content: center;
 align-items: center;
 `
-
 const BigTitle = styled.div`
 font-family: "Gilroy";
-  font-size: 60px;
+  font-size: 50px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -370,7 +420,9 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: rgb(255, 204, 74);
   max-width: 80vw;
-  margin: -30px auto 40px;
+	margin: 0 auto 20px auto;
+	display: flex;
+	align-items: center;
 `
 
 const Seperator = !isMobile() ? styled.div`

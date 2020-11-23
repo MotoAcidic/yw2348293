@@ -221,61 +221,13 @@ const Battle: React.FC = () => {
         <ContentContainer>
           <Page>
 
-            <SubTitle>
-              <a target="_blank"
-                rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Vitalik_Buterin">
-                Vitalik Buterin
-              </a>
-
-              &nbsp;is playing&nbsp;
-              <a target="_blank"
-                rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Alexandra_Botez">
-                Alexandra Botez
-              </a>
-               &nbsp;in chess. Who Will Win?
-            </SubTitle>
-            <Countdown endTime={moment.utc("2020-11-23T02:00", "YYYY-MM-DDTHH:mm").unix() * 1000} />
-            {roughBets.trump > 0 &&
-              <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
-            }
-
-            <VersusContainer>
-              <VersusBackground>
-                <ImgWrapper style={trumpStyle} onMouseOver={() => hoverOver("Vitalik")} onMouseOut={() => hoverExit()}
-                  onClick={(e) => onClickTrump(e)}>
-                  <Candidate1
-                    src={Vitalik}
-
-                  />
-                </ImgWrapper>
-                <Versus>VS</Versus>
-                <ImgWrapper style={bidenStyle} onMouseOver={() => hoverOver("Alexandra")} onMouseOut={() => hoverExit()}
-                  onClick={(e) => onClickBiden(e)} >
-                  <Candidate2
-                    src={Alexandra}
-                  />
-                </ImgWrapper>
-              </VersusBackground>
-            </VersusContainer>
-            <div style={modal ? { display: 'block' } : { display: 'none' }}>
-              <Modal onClick={(e) => closeModal(e)}>
-                <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
-                  {yam && <BetModalElection
-                    battle={battles}
-                    candidateInfo={candidate}
-                    electionContract={electionContract}
-                  />
-                  }
-                </ModalBlock>
-              </Modal>
-            </div>
-            <InfoBlock href={"https://www.twitch.tv/botezlive"}
-              target="_blank"
-            >
-              <img src={Twitch} width="30px" height="30px" />
-                  Watch the match on Twitch!
-              <img src={Twitch} width="30px" height="30px" />
-
+		  <Title>
+			  Alexandra Botez has claimed Victory!
+		  </Title>
+		  <Subtitle>
+			  Come back soon to claim rewards
+		  </Subtitle>
+		  
             </InfoBlock>
 
             <Rules />

@@ -221,21 +221,18 @@ const Battle: React.FC = () => {
         <ContentContainer>
           <Page>
 
-		  <Title>
-			  Alexandra Botez has claimed Victory!
-		  </Title>
-		  <Subtitle>
-			  Come back soon to claim rewards
-		  </Subtitle>
-		  
-            </InfoBlock>
-
-            <Rules />
-            <Pool3 />
+            <Title>
+              Alexandra Botez has claimed Victory!
+		        </Title>
+            <Title>
+              Come back soon to claim rewards
+		        </Title>
+          <Rules />
+          <Pool3 />
           </Page>
         </ContentContainer>
       </StyledCanvas>
-    </Switch>
+    </Switch >
   );
 };
 

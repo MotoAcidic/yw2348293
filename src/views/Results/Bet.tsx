@@ -20,6 +20,8 @@ import ElectionResults from "./BetElectionResults";
 import Results from "./BetResults";
 import APRedeemModal from "./BetRedeemCardAP";
 
+import ChessResults from "./ChessResults"
+
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
     return true;
@@ -124,7 +126,7 @@ const Battle: React.FC = () => {
           </BigTitle>
           {!isMobile() &&
             <SubTitle>
-              to view election results
+              to view special bet results
             </SubTitle>
           }
         </ConnectContainer>
@@ -135,6 +137,13 @@ const Battle: React.FC = () => {
 
   return (
     <>
+    <TopTitle>
+      Vitalik Buterin VS Alexandra Botez - Chess Match - 11/22
+    </TopTitle>
+      <ChessResults />
+      <TopTitle>
+      Donald Trump VS Joe Biden - Presidential Election - 11/3
+    </TopTitle>
       {roughBets.trump > 0 &&
         <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
       }
@@ -143,8 +152,11 @@ const Battle: React.FC = () => {
         <Results />
       </Section>
       <Seperator />
-      <TopTitle>The Associated Press did not call the election before 00:00 UTC on Nov 7th&nbsp;
-      </TopTitle>
+      <TopTitle>
+      The Associated Press - Call Time - 11/5
+    </TopTitle>
+      <SmallTitle>The AP did not call the election before 00:00 UTC on Nov 7th&nbsp;
+      </SmallTitle>
       <Claim onClick={() => {
         connect('injected')
         setAPRedeemModal(true)
@@ -363,6 +375,31 @@ font-family: "Gilroy";
   margin-bottom: 40px;
 `;
 
+
+const SmallTitle = !isMobile() ? styled.div`
+font-family: "Gilroy";
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  max-width: 80vw;
+  margin-bottom: 20px;
+` : styled.div`
+font-family: "Gilroy";
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  max-width: 80vw;
+  margin-bottom: 20px;
+  margin-top: 40px;
+`;
 
 const Title = !isMobile() ? styled.div`
 font-family: "Gilroy";

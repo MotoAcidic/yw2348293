@@ -47,8 +47,8 @@ const Battle: React.FC = () => {
                 <Tab onClick={() => setTab("influencer")}>influencer</Tab>} */}
               {tab === "twitterwar" ? <ActiveTab>Twitter War</ActiveTab> :
                 <Tab onClick={() => setTab("twitterwar")}>Twitter War</Tab>}
-              {tab === "election" ? <ActiveTab>Election</ActiveTab> :
-                <Tab onClick={() => setTab("election")}>Election</Tab>}
+              {tab === "special" ? <ActiveTab>Election</ActiveTab> :
+                <Tab onClick={() => setTab("special")}>Special</Tab>}
               {tab === "season2" ? <ActiveTab>Season 2</ActiveTab> :
                 <Tab onClick={() => setTab("season2")}>Season 2</Tab>}
               {tab === "season1" ? <ActiveTab>Season 1</ActiveTab> :
@@ -63,7 +63,7 @@ const Battle: React.FC = () => {
               <ResultsContents>
 
                 {tab === "twitterwar" && <TwitterWar />}
-                {tab === "election" && <Bet />}
+                {tab === "special" && <Bet />}
                 {tab === "season2" && <S2Battles />}
                 {tab === "season1" && <S1Battles />}
 

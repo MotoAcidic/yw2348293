@@ -44,47 +44,47 @@ const YamProvider: React.FC = ({ children }) => {
       setYam(yamLib)
       window.yamsauce = yamLib
     }
-    else if (window.location.hostname === "localhost"){
-      // s.connect('injected')
-      // const yamLib = new Yam(
-      //   'https://mainnet.infura.io/v3/a768678405854cf584ae620be7844cc3',
-      //   "42",
-      //   false,
-      //   {
-      //     defaultProvider: true,
-      //     defaultAccount: "",
-      //     defaultConfirmations: 1,
-      //     autoGasMultiplier: 1.5,
-      //     testing: false,
-      //     defaultGas: "6000000",
-      //     defaultGasPrice: "1000000000000",
-      //     accounts: [],
-      //     ethereumNodeTimeout: 10000
-      //   }
-      // )
-      // setYam(yamLib)
-      // window.yamsauce = yamLib
-    }
-    else {
-      const yamLib = new Yam(
-        'https://mainnet.infura.io/v3/a768678405854cf584ae620be7844cc3',
-        "42",
-        false,
-        {
-          defaultProvider: true,
-          defaultAccount: "",
-          defaultConfirmations: 1,
-          autoGasMultiplier: 1.5,
-          testing: false,
-          defaultGas: "6000000",
-          defaultGasPrice: "1000000000000",
-          accounts: [],
-          ethereumNodeTimeout: 10000
-        }
-      )
-      setYam(yamLib)
-      window.yamsauce = yamLib
-    }
+    // else if (window.location.hostname === "localhost"){
+    //   s.connect('injected')
+    //   const yamLib = new Yam(
+    //     'https://mainnet.infura.io/v3/a768678405854cf584ae620be7844cc3',
+    //     "42",
+    //     false,
+    //     {
+    //       defaultProvider: true,
+    //       defaultAccount: "",
+    //       defaultConfirmations: 1,
+    //       autoGasMultiplier: 1.5,
+    //       testing: false,
+    //       defaultGas: "6000000",
+    //       defaultGasPrice: "1000000000000",
+    //       accounts: [],
+    //       ethereumNodeTimeout: 10000
+    //     }
+    //   )
+    //   setYam(yamLib)
+    //   window.yamsauce = yamLib
+    // }
+    // else {
+    //   const yamLib = new Yam(
+    //     'https://mainnet.infura.io/v3/a768678405854cf584ae620be7844cc3',
+    //     "42",
+    //     false,
+    //     {
+    //       defaultProvider: true,
+    //       defaultAccount: "",
+    //       defaultConfirmations: 1,
+    //       autoGasMultiplier: 1.5,
+    //       testing: false,
+    //       defaultGas: "6000000",
+    //       defaultGasPrice: "1000000000000",
+    //       accounts: [],
+    //       ethereumNodeTimeout: 10000
+    //     }
+    //   )
+    //   setYam(yamLib)
+    //   window.yamsauce = yamLib
+    // }
   }, [ethereum])
 
   return (

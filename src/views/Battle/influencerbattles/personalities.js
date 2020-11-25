@@ -134,7 +134,7 @@ export default [
 		name: 'Crypto Bitlord',
 		handle: '@Crypto_Bitlord',
 		followerCount: '130.6k',
-		picture: "https://pbs.twimg.com/profile_images/1316076499250810880/nZ73W31H_400x400.jpg",
+		picture: "https://pbs.twimg.com/profile_images/1330229407206813696/FYxNm7hJ_400x400.jpg",
 		bio: `24/7 #Crypto 2012-2020. I’m all in. Trade your crypto here: https://go.primexbt.com/click?pid=1009&offer_id=12`
 	}
 ]

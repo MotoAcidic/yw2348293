@@ -56,7 +56,7 @@ const FarmCards: React.FC = () => {
   return (
     <FarmCardsContainer>
       <FarmIcon src={farmIcon}></FarmIcon>
-      <LargeText>New Season 2 Farms (CLOSED)</LargeText>
+      <LargeText>Season 2 Farms (CLOSED)</LargeText>
       <DisclaimerLink href="https://medium.com/@yieldwars/yieldwars-season-2-farms-are-upon-us-heres-how-to-participate-bal-pool-tutorial-included-78a30028f61">
         Learn how to setup Balancer Pools
       </DisclaimerLink>
@@ -311,9 +311,11 @@ width: 80%;
 max-width: 1200px;
 margin: 20px auto 20px auto;
 ` : styled.div`
-margin-top: 40px;
-  width: 100%;
-`
+margin: 40px auto;
+  width: 95vw;
+  display: flex;
+  flex-direction: column;
+`;
 
 const StyledRow = !isMobile() ? styled.div`
   display: flex;
@@ -332,7 +334,6 @@ position: relative;
 ` : styled.div`
 position: relative;
   display: flex;
-  width: 275px;
   height: 370px;
   margin: 0 auto 20px auto;
 `
@@ -343,7 +344,6 @@ position: relative;
 ` : styled.div`
 position: relative;
   display: flex;
-  width: 275px;
   height: 370px;
   margin: 0 auto 20px auto;
 `

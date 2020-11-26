@@ -365,9 +365,10 @@ background-color: rgba(4,2,43,1);
 padding: 20px;
 ` : styled.div`
 margin: 0 0 40px 0;
-width: 90vw;
+width: calc(95vw-20px);
 display: flex;
 flex-direction: column;
+align-items: center;
 font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;
@@ -379,6 +380,7 @@ font-family: "Gilroy";
 	padding: 20px;
 	border-radius: 8px;
 	border: solid 2px rgba(255, 183, 0, 0.3);
-	background-color: rgba(256,256,256,0.08);`
+	background-color: rgba(4,2,43,1);
+	`
 
 export default Bet

@@ -25,11 +25,8 @@ import Countdown from "./CountDown";
 const cookie = new Cookies()
 
 function isMobile() {
-  if (window.innerWidth < window.innerHeight) {
-    return true;
-  } else {
-    return false;
-  }
+  if (window.innerWidth < window.innerHeight) return true;
+  return false;
 }
 
 function switchingBattles() {
@@ -137,42 +134,42 @@ const Battle: React.FC = () => {
 
   console.log(yesterdaysBattle);
 
-  if (isMobile()) {
-    return (
-      <Switch>
-        <StyledCanvas>
-          <BackgroundSection />
-          <ContentContainer>
-            <Page>
-              {/* <Countdown/> */}
-              <Title style={{ marginTop: '40px' }}>Please View on Desktop</Title>
-              <SmallSpace />
-              {/* {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
-              {prevDayBattles.length > 0 &&
-                <InbetweenCard battles={prevDayBattles} />
-              } */}
-              <Pool3 />
-              <Title>Information</Title>
-              <SmallSpace />
-              <Instructions />
-              <Title>Schedule</Title>
-              <SmallSpace />
-              <Schedule schedule={schedule} />
-              <div style={betRedeemModal ? { display: 'block' } : { display: 'none' }}>
-                <Modal onClick={() => setBetRedeemModal(false)}>
-                  <ModalBlock onClick={(e) => stopProp(e)}>
-                    {/* {yam &&  */}
-                    <RedeemBetsModal battle={yesterdaysBattle} />
-                    {/* } */}
-                  </ModalBlock>
-                </Modal>
-              </div>
-            </Page>
-          </ContentContainer>
-        </StyledCanvas>
-      </Switch>
-    );
-  }
+  // if (isMobile()) {
+  //   return (
+  //     <Switch>
+  //       <StyledCanvas>
+  //         <BackgroundSection />
+  //         <ContentContainer>
+  //           <Page>
+  //             {/* <Countdown/> */}
+  //             <Title style={{ marginTop: '40px' }}>Please View on Desktop</Title>
+  //             <SmallSpace />
+  //             {/* {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
+  //             {prevDayBattles.length > 0 &&
+  //               <InbetweenCard battles={prevDayBattles} />
+  //             } */}
+  //             <Pool3 />
+  //             <Title>Information</Title>
+  //             <SmallSpace />
+  //             <Instructions />
+  //             <Title>Schedule</Title>
+  //             <SmallSpace />
+  //             <Schedule schedule={schedule} />
+  //             <div style={betRedeemModal ? { display: 'block' } : { display: 'none' }}>
+  //               <Modal onClick={() => setBetRedeemModal(false)}>
+  //                 <ModalBlock onClick={(e) => stopProp(e)}>
+  //                   {/* {yam &&  */}
+  //                   <RedeemBetsModal battle={yesterdaysBattle} />
+  //                   {/* } */}
+  //                 </ModalBlock>
+  //               </Modal>
+  //             </div>
+  //           </Page>
+  //         </ContentContainer>
+  //       </StyledCanvas>
+  //     </Switch>
+  //   );
+  // }
 
   return (
     <Switch>
@@ -181,7 +178,7 @@ const Battle: React.FC = () => {
         <ContentContainer>
           <Page>
 
-            <Countdown/>
+            <Countdown />
             {battles && battles.length > 0 && <TotalBets battle1={battles[0]} id={battles[0]._id} />}
             <SmallSpace />
 
@@ -258,10 +255,14 @@ font-family: "Gilroy";
   margin: auto;
 `
 
-const ModalBlock = styled.div`
+const ModalBlock = !isMobile() ?  styled.div`
 margin-top: 23vh;
 height: fit-content;
-`
+` :styled.div`
+margin-top: 23vh;
+height: fit-content;
+position: fixed;
+` 
 
 const BigTitle = styled.div`
 font-family: "Gilroy";

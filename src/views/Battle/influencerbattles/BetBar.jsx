@@ -184,13 +184,20 @@ margin: 2px auto 5px auto;
 `
 
 
-const StyledContent = styled.div`
+const StyledContent = !isMobile() ?  styled.div`
   display: flex;
 	flex-direction: row;
   flex-wrap: nowrap;
   width: 70%;
   align-items: center;
   margin: auto;
+` : styled.div`
+display: flex;
+flex-direction: row;
+flex-wrap: nowrap;
+width: 100%;
+align-items: center;
+margin: auto;
 `
 
 const Item = styled.div`

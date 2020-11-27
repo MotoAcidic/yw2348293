@@ -154,8 +154,13 @@ const WarPool: React.FC = () => {
 					) : (
 							<MobileButtons>
 								<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
+								<MS/>
 								<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
+								<MS/>
+								
 								<Button size='xlg' onClick={onClaimRestake} disabled={!earnings.toNumber()}>Claim & Restake</Button>
+								<MS/>
+								
 								<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
 							</MobileButtons>
 						)}
@@ -217,6 +222,9 @@ const WarPool: React.FC = () => {
 	)
 }
 
+const MS = styled.div`
+height: 5px;`
+
 const PoolButton = styled.button`
   align-items: center;
   border: solid 2px #ffb700;
@@ -263,10 +271,8 @@ font-family: "SF Mono Semibold";
   font-style: normal;
   letter-spacing: 1px;
   color: #ffffff;
-  transform: translateY(16px);
-	margin-top: -40px;
-	margin-bottom: 20px;
-`
+	margin: -10px 0 10px 0;
+	`
 
 const WarTopContainer = styled.div`
 display: flex;
@@ -323,6 +329,8 @@ color: #ffffff;
 const MobileButtons = styled.div`
 display: flex;
 flex-direction: column;
+width: 100%;
+align-items: center;
 `
 
 const BottomButtonContainer = styled.div`
@@ -365,9 +373,25 @@ font-family: "SF Mono Semibold";
   color: #ffffff;
 `
 
-const MobileInfoLines = styled.div`
+const MobileInfoLines = !isMobile () ? styled.div`
 width: 80%;
 height: 60%;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+text-align: left;
+padding: 50px 10% 0% 10%;
+font-family: "SF Mono Semibold";
+  font-size: 18px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: #ffffff;
+` : styled.div`
+width: 80%;
+// height: 60%;
 display: flex;
 flex-direction: column;
 justify-content: space-evenly;
@@ -412,11 +436,10 @@ width: 300px;
 
 const MobileInfoContainer = styled.div`
 width: 80vw;
-  height: 450px;
   border-radius: 8px;
   border: solid 2px rgba(255, 183, 0, 0.3);
   background-color: rgba(256,256,256,0.08);
-	margin: 20px auto 60px auto;
+	margin: 20px auto 80px auto;
 `
 
 export default WarPool

@@ -295,9 +295,27 @@ const Versus = ({ battles }) => {
 								{useScript("https://platform.twitter.com/widgets.js")}
 							</TLVS>
 						</TLVersusItem>
+						{
+							isMobile() ? 					<BattleButtonWrapper >
+							<BattleButtonContainer>
+								{!voted ?
+									<BattleButton onClick={castVote} >
+										Vote
+									</BattleButton>
+									:
+									<BattleText>Voted</BattleText>
+								}
+							</BattleButtonContainer>
+							<BetButtonContainer>
+								<BattleButton onClick={openBetModal} >
+									Bet
+								</BattleButton>
+							</BetButtonContainer>
+						</BattleButtonWrapper> :
 						<Divider>
 							<img src={VSPNG} width="85px" style={{ position: 'absolute', zIndex: 10000 }} />
 						</Divider>
+						}
 						<BLVersusItem onClick={() => pick1(2)} style={selectedCSS2} checked={checked1 === 2}>
 							{checked1 === 2 && <RainbowShadow />}
 							<TopBar />
@@ -322,6 +340,8 @@ const Versus = ({ battles }) => {
 							</BLVS>
 						</BLVersusItem>
 					</Options>
+					{!isMobile() &&
+
 					<BattleButtonWrapper >
 						<BattleButtonContainer>
 							{!voted ?
@@ -338,6 +358,7 @@ const Versus = ({ battles }) => {
 							</BattleButton>
 						</BetButtonContainer>
 					</BattleButtonWrapper>
+}
 				</VersusContainer>
 
 				{/* <PersVersusBet
@@ -396,7 +417,7 @@ font-family: "Gilroy";
   margin-top: 50px;
 `
 
-const BattleButtonWrapper = styled.span`
+const BattleButtonWrapper = !isMobile() ? styled.span`
 position: relative;
 bottom: 0%;
 width: 100%;
@@ -404,6 +425,15 @@ pointer-events: none;
 display: flex;
 user-select: none;
 justify-content: center;
+` : styled.span`
+position: relative;
+bottom: 0%;
+width: 100%;
+pointer-events: none;
+display: flex;
+user-select: none;
+justify-content: center;
+z-index: 100000;
 `
 
 const BattleButton = styled.div`
@@ -636,9 +666,14 @@ align-items: center;
 height: 50%;
 `
 
-const Picture = styled.img`
+const Picture = !isMobile () ? styled.img`
 width: 170px;
 height: 170px;
+border-radius: 50%;
+margin-bottom: 20px;
+` : styled.img`
+width: 120px;
+height: 120px;
 border-radius: 50%;
 margin-bottom: 20px;
 `
@@ -669,7 +704,7 @@ font-family: "Gilroy";
 `;
 
 
-const TLVersusItem = styled.div`
+const TLVersusItem = !isMobile() ? styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
@@ -695,14 +730,65 @@ padding-bottom: 2%;
 	background-image: url(${BattleBlue});
 	background-size: cover;
 }
+` : styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+height: 350px;
+width: 74vw;
+transform: skew(3deg);
+will-change: padding;
+will-change: transform;
+transition: all .2s ease-out 10ms;
+z-index: 100;
+padding-top: 2%;
+padding-bottom: 2%;
+&:hover {
+	transform: skew(3deg) scale(${props => props.checked ? 1 : 1.025});
+	cursor: pointer;
+	z-index: 101;
+}
+::before {
+	content: "";
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%; height: 100%;
+	background-image: url(${BattleBlue});
+	background-size: cover;
+}
 `
 
-const BLVersusItem = styled.div`
+const BLVersusItem = !isMobile() ? styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
 height: 92%;
 width: 50%;
+transform: skew(3deg);
+will-change: padding;
+will-change: transform;
+transition: all .2s ease-out 10ms ;
+z-index: 100;
+padding-top: 2%;
+padding-bottom: 2%;
+&:hover {
+	transform: skew(3deg) scale(${props => props.checked ? 1 : 1.025});
+	cursor: pointer;
+	z-index: 101;
+}
+::before {
+	content: "";
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%; height: 100%;
+	background-image: url(${BattleRed});
+	background-size: cover;
+}` : styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+height: 350px;
+width: 74vw;
 transform: skew(3deg);
 will-change: padding;
 will-change: transform;
@@ -832,9 +918,10 @@ font-family: "Gilroy";
   line-height: 1;
   letter-spacing: normal;
 	color: #ffffff;
-	background-color: rgba(256,256,256,0.08);
+	// background-color: rgba(256,256,256,0.08);
 	border-radius: 8px;
-border: 2px solid rgba(255, 183, 0, 0.3);`
+// border: 2px solid rgba(255, 183, 0, 0.3);
+`
 
 const StyledContent = styled.div`
   display: flex;

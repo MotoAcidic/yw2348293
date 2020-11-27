@@ -859,9 +859,10 @@ font-family: "Gilroy";
   line-height: 1;
   letter-spacing: normal;
 	color: #ffffff;
-	background-color: rgba(256,256,256,0.08);
+	// background-color: rgba(256,256,256,0.08);
 	border-radius: 8px;
-border: 2px solid rgba(255, 183, 0, 0.3);`
+// border: 2px solid rgba(255, 183, 0, 0.3);
+`
 
 const StyledContent = styled.div`
   display: flex;

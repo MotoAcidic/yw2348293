@@ -108,6 +108,7 @@ const StyledTopBar = styled.div`
 const StyledTopBarInner = styled.div`
   align-items: center;
   display: flex;
+  min-height: 70px;
   height: ${props => props.theme.topBarSize}px;
   justify-content: space-between;
   max-width: ${props => props.theme.siteWidth}px;

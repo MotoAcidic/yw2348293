@@ -119,102 +119,31 @@ const Bet = ({ battle1, contender, id}) => {
 	)
 }
 
-const Container = styled.div`
+const Container = !isMobile() ? styled.div`
 display:flex;
 flex-direction: column;
 width: 30%;
 z-index: 10000;
+` : styled.div`
+display:flex;
+flex-direction: column;
+width: 95vw;
+z-index: 10000;
 `
 
-const Column = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;`
 
-const BetContainer = styled.div`
+const Top = !isMobile () ? styled.div`
+width: 100%;
 display: flex;
 flex-direction: row;
-align-items: center;
-width: 80%;
-justify-content: space-evenly;
-`
-
-const Separator = styled.div`
-  width: 80%;
-  height: 1px;
-  margin: 15px;
-  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
-`
-
-const BetDisplay = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: space-evenly;
-align-items: center;
-`
-
-const AllBets = styled.div`
-width: 100%;
-height: 100px;
-display: flex;
-flex-direction: row;
-justify-content: space-evenly;
-`
-
-const YourBets = styled.div`
-display: flex;
-width: 100%;
-justify-content: space-evenly;`
-
-const Space = styled.div`
-height: 20px;`
-
-const StyledModal = styled.div`
-border-radius: 8px;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  z-index: 100000;
-`
-
-const AmountBet = styled.div`
-font-family: Gilroy;
-font-size: 18px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: #ffffff;`
-
-const CardIcon = styled.img`
-	height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-`
-const Bets = styled.div`
-display: flex;
-align-items: center;
-margin-bottom: 10px;`
-
-const Bottom = styled.div`
-width: 100%;
-display: flex;
+flex-wrap: nowrap;
+margin-bottom: 20px;
 justify-content: space-between;`
-
-const Row = styled.div`
+: styled.div`
 width: 100%;
 display: flex;
-justify-content: space-evenly;`
-
-const Top = styled.div`
-width: 100%;
-display: flex;
-flex-direction: row;
+flex-direction: column;
+align-items: center;
 flex-wrap: nowrap;
 margin-bottom: 20px;
 justify-content: space-between;`
@@ -260,7 +189,7 @@ margin-right: 10px;
 	outline: none;
 }`
 
-const InputContainer = styled.div`
+const InputContainer = !isMobile() ? styled.div`
 width: 30%;
 border-radius: 8px;
 box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
@@ -279,38 +208,26 @@ justify-content: flex-end;
 align-items: center;
 height: 30px;
 padding-right: 10px;
-`
-
-const Select = styled.select`
-	width: 60%;
-  height: 30px;
-  font-family: "Gilroy";
-  font-size: 18px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-  padding-left: 8px;
-	font-size: 16px;
-	border-radius: 8px;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-  border: solid 1px rgba(255, 183, 0, 0.5);
-	background-color: rgba(255, 255, 255, 0.2);
-  option {
-		color: black;
-		display: flex;
-		position: absolute;
-		top: 100%;
-		font-size: 18px;
-    white-space: pre;
-		min-height: 20px;
-		border: solid 1px rgba(255, 183, 0, 0.5);
-		background-color: rgba(255, 255, 255, 0.2) !important;
-		padding: 2px;
-  }
-`;
+` : styled.div`
+width: 176px;
+border-radius: 8px;
+box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+border: solid 1px rgba(255, 183, 0, 0.5);
+background-color: rgba(255, 255, 255, 0.2);
+font-family: "SF Mono Semibold";
+font-size: 16px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+letter-spacing: normal;
+color: #ffb700;
+text-align: right;
+display: flex;
+justify-content: flex-end;
+align-items: center;
+height: 30px;
+padding-right: 10px;
+padding-left: 10px;`
 
 const VersusContainer = !isMobile() ? styled.div`
 display: flex;
@@ -332,10 +249,10 @@ padding: 20px;
 width: calc(100%-40px);
 margin-bottom: 20px;
 ` : styled.div`
-margin: 0 0 40px 0;
-width: 90vw;
+max-width: 100%;
 display: flex;
 flex-direction: column;
+align-items: center;
 font-family: "Gilroy";
   font-size: 25px;
   font-weight: bold;
@@ -347,6 +264,6 @@ font-family: "Gilroy";
 	padding: 20px;
 	border-radius: 8px;
 	border: solid 2px rgba(255, 183, 0, 0.3);
-	background-color: rgba(256,256,256,0.08);`
+	background-color: rgba(4,2,43,1);`
 
 export default Bet

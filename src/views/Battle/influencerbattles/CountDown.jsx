@@ -2,6 +2,11 @@ import React from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
 
+function isMobile() {
+  if (window.innerWidth < window.innerHeight) return true;
+  return false;
+}
+
 class CountDown extends React.Component {
 	constructor(props) {
 		super(props)
@@ -72,7 +77,20 @@ const Item = styled.div`
 text-align: center;
 `
 
-const Desc = styled.div`
+const Desc = !isMobile() ? styled.div`
+display: flex;
+align-items: center;
+font-family: Alegreya;
+  font-size: 22px;
+	font-stretch: normal;
+	font-style: normal;
+	font-weight: bold;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+	margin-bottom: 5px;
+` : styled.div`
+margin-top: 40px;
 display: flex;
 align-items: center;
 font-family: Alegreya;

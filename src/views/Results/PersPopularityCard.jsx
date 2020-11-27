@@ -55,6 +55,7 @@ const PopularityCard = ({ farms, startDate, item }) => {
 			if (!isRedeemable.won) setUserLost(true);
 		}
 	}
+
 	useEffect(() => {
 		if (account && yam) {
 			getRedeemable();

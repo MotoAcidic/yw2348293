@@ -19,7 +19,7 @@ export default [
 		name: 'Ad_Infinitum',
 		handle: '@CryptoMessiah',
 		followerCount: '69k',
-		picture: "https://pbs.twimg.com/profile_images/1220574882800504833/U1QNLto1_400x400.jpg",
+		picture: "https://pbs.twimg.com/profile_images/1328548227038244879/CDaL-0iw_400x400.jpg",
 		bio: `Having fun staying poor! | C.E. 
 		@realhxro
 		 | C.S. graduate | I dump in prod | APE TOGETHER STRONG`

@@ -39,7 +39,7 @@ const Roadmap = () => {
 
   return (
     <Container>
-      <Title >
+      {/* <Title >
         YieldWars Roadmap
           </Title>
       <Rectangle>
@@ -151,10 +151,22 @@ const Roadmap = () => {
               </MilestoneText>
           </MilestoneRow>
         </RecDesc>
-      </Rectangle>
+      </Rectangle> */}
       <Title>Official Medium Posts</Title>
       <MediumSection>
         <TextSection>
+        <LinkSection>
+            <a
+              className="medium-link"
+              style={{ color: "white" }}
+              href="https://yieldwars.medium.com/yieldwars-special-edition-battle-buterin-vs-botez-chess-match-%EF%B8%8F-7ddec4c7651e"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Chess Battle: Buterin vs. Botez
+                </a>
+                Nov 21
+              </LinkSection>
           <LinkSection>
             <a
               className="medium-link"
@@ -240,7 +252,7 @@ const Roadmap = () => {
               </LinkSection>
         </TextSection>
       </MediumSection>
-      <Title>YieldWars Job Board // Bounties</Title>
+      {/* <Title>YieldWars Job Board // Bounties</Title>
       <MediumSection>
         <JobSection>
 
@@ -253,7 +265,7 @@ const Roadmap = () => {
             Please reach out to @DefiFox on	&nbsp;<u>Telegram</u>	&nbsp;to apply
           </JobTextSection>
         </JobSection>
-      </MediumSection>
+      </MediumSection> */}
 
     </Container>
   );

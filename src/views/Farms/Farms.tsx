@@ -105,8 +105,8 @@ const Farms: React.FC = () => {
 
                 <TopDisplayContainer />
                   
-                <BigTitle>The Future of Betting, Tournaments, and Prediction Markets Lives Here!</BigTitle>
-                <Title>YieldWars is a next generation betting platform, where you can battle (and vote) on almost anything</Title>
+                <BigTitle>The Future of Prediction Markets, Community Participation, and Governance lives here! </BigTitle>
+                <Title>YieldWars is building prediction markets from the bottom-up with extra emphasis on participation and communty</Title>
 
                 {!isMobile() ?
                   <iframe title="promo" style={{ width: "650px", height: "365.4px", margin: "10px auto 40px auto" }} src={`https://www.youtube.com/embed/uVJI32AnOUM`} frameBorder="0" />

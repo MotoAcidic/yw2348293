@@ -19,7 +19,7 @@ export default [
 		name: 'Ad_Infinitum',
 		handle: '@CryptoMessiah',
 		followerCount: '69k',
-		picture: "https://pbs.twimg.com/profile_images/1220574882800504833/U1QNLto1_400x400.jpg",
+		picture: "https://pbs.twimg.com/profile_images/1328548227038244879/CDaL-0iw_400x400.jpg",
 		bio: `Having fun staying poor! | C.E. 
 		@realhxro
 		 | C.S. graduate | I dump in prod | APE TOGETHER STRONG`
@@ -35,7 +35,7 @@ export default [
 		name: 'Daryl Lau',
 		handle: '@Daryllautk',
 		followerCount: '11.6k',
-		picture: "https://pbs.twimg.com/profile_images/1325691991917645824/do3IsfRz_400x400.jpg",
+		picture: "https://pbs.twimg.com/profile_images/1330394984642703360/zHi0-3rt_400x400.jpg",
 		bio: `Investing 
 		@MechanismCap
 		 | $YFI Maximalist`
@@ -134,7 +134,7 @@ export default [
 		name: 'Crypto Bitlord',
 		handle: '@Crypto_Bitlord',
 		followerCount: '130.6k',
-		picture: "https://pbs.twimg.com/profile_images/1330229407206813696/FYxNm7hJ_400x400.jpg",
+		picture: "https://pbs.twimg.com/profile_images/1332418697760186371/_vVTGSLn_400x400.jpg",
 		bio: `24/7 #Crypto 2012-2020. I’m all in. Trade your crypto here: https://go.primexbt.com/click?pid=1009&offer_id=12`
 	}
 ]

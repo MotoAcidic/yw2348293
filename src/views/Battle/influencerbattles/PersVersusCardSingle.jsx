@@ -888,7 +888,7 @@ const VersusContainer = !isMobile() ? styled.div`
 // min-height: 550px;
 width: 75%;
 height: 55vh;
-min-height: 520px;
+min-height: 480px;
 margin-top: 15px;
 margin-bottom: 20px;
 min-width: 830px;

@@ -94,8 +94,8 @@ const App: React.FC = () => {
             </Route>
             {/* <Route path="/battle" exact>
               <Markets />
-            </Route> */}
-            {/* <Route path="/battle" exact>
+            </Route>
+            <Route path="/battle" exact>
               <Battle />
             </Route> */}
             <Route path="/results" exact>

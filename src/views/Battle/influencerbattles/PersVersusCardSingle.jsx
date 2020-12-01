@@ -815,8 +815,8 @@ padding-bottom: 2%;
 const TLVS = styled.div`
 width: 100%;
 min-width: 300px;
-height: 100%;
-min-height: 220px;
+height: 95%;
+min-height: 180px;
 display: flex;
 flex-direction: column;
 // justify-content: flex-start;
@@ -827,7 +827,6 @@ will-change: transform;
 // pointer-events: none;
 z-index: 102;
 margin-top: 30px;
-margin-bottom: 30px;
 `
 
 
@@ -835,7 +834,7 @@ const BLVS = styled.div`
 width: 100%;
 min-width: 300px;
 height: 100%;
-min-height: 220px;
+min-height: 180px;
 display: flex;
 flex-direction: column;
 // justify-content: flex-start;

@@ -92,10 +92,10 @@ const App: React.FC = () => {
             <Route path="/twitter-battle" exact>
               <InfluencerBattle />
             </Route>
-            {/* <Route path="/battle" exact>
+            <Route path="/markets" exact>
               <Markets />
             </Route>
-            <Route path="/battle" exact>
+            {/* <Route path="/battle" exact>
               <Battle />
             </Route> */}
             <Route path="/results" exact>

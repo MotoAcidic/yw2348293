@@ -9,22 +9,23 @@ import { useWallet } from "use-wallet";
 import Background from '../../../assets/img/bg3.svg'
 import Pool3 from "./Pool3";
 import useFarms from "../../../hooks/useFarms";
-import { getWarStaked } from "../../../yamUtils";
+import { getWarStaked, createNewContract, getPots, getUserBet, placeETHBet, finishBet, getRewards } from "../../../yamUtils";
 import { getStats } from "./utils";
-import VersusCard from "./VersusCard.jsx";
-import SingleVersusCard from "./VersusCardSingle.jsx";
+import PersVersusCard from "./PersVersusCard.jsx";
+import SinglePersVersusCard from "./PersVersusCardSingle.jsx";
 import Schedule from './Schedule'
 import Instructions from "./Instructions";
-import InbetweenCard from "./InbetweenCard";
 import moment from "moment";
-import Spacer from "../../../components/Spacer";
+import TotalBets from './BetBar'
+import RedeemBetsModal from './RedeemBetsModal'
+import Cookies from 'universal-cookie'
+import Countdown from "./CountDown";
+
+const cookie = new Cookies()
 
 function isMobile() {
-  if (window.innerWidth < window.innerHeight) {
-    return true;
-  } else {
-    return false;
-  }
+  if (window.innerWidth < window.innerHeight) return true;
+  return false;
 }
 
 function switchingBattles() {
@@ -59,23 +60,11 @@ const Battle: React.FC = () => {
   let [prevDayBattles, setPrevDayBattles] = useState([]);
   let [battles, setBattles] = useState([])
   let [schedule, setSchedule] = useState([])
+  let [yesterdaysBattle, setYesterdaysBattle] = useState([])
   let [dailyQuestion, setDailyQuestion] = useState();
+  const [betRedeemModal, setBetRedeemModal] = useState(false)
 
-  const [
-    {
-      circSupply,
-      curPrice,
-      // nextRebase,
-      targetPrice,
-      totalSupply,
-    },
-    setStats
-  ] = useState<OverviewData>({});
 
-  const fetchStats = useCallback(async () => {
-    const statsData = await getStats(yam);
-    setStats(statsData);
-  }, [yam, setStats]);
 
   const fetchWarStaked = useCallback(
     async pools => {
@@ -86,26 +75,100 @@ const Battle: React.FC = () => {
   );
 
   useEffect(() => {
-    console.log("using effect");
-    if (yam && account && farms && farms[0]) {
-      fetchStats();
+    console.log(battles);
+    if (battles && battles.length && yesterdaysBattle.length && account) {
+      if (parseInt(cookie.get('displaywinnings')) < battles[0].day) {
+        setBetRedeemModal(true)
+        cookie.set('displaywinnings', battles[0].day)
+      }
     }
     if (yam && farms) {
       console.log(farms);
       fetchWarStaked(farms);
     }
     if (battles.length === 0) {
-      axios.get(`${getServerURI()}/api/battles`).then(res => {
+
+      const endTime = moment.utc('2020-11-17T20:00', "YYYY-MM-DDTHH:mm").unix();
+      console.log("end", endTime)
+      axios.get(`${getServerURI()}/api/pers-battles`).then(res => {
         console.log("battles", res.data);
         setPrevDayBattles(res.data.prevDayBattles);
         setBattles(res.data.battles)
         setSchedule(res.data.schedule)
-        setDailyQuestion(res.data.dailyQuestion);
+        setYesterdaysBattle(res.data.yesterdaysBattle || [])
+        // setDailyQuestion(res.data.dailyQuestion);
       }).catch(err => {
         console.log(err);
       })
     }
   }, [yam, account, farms, farms[0]]);
+
+  const stopProp = (e) => {
+    e.stopPropagation()
+  }
+
+
+  const battleFields = () => {
+    console.log(battles);
+
+
+    if (!battles.length) {
+      return (
+        <>
+          {/* <Title style={{ marginTop: '30px' }}>Loading Battles...</Title> */}
+          <NextBattle />
+        </>
+      )
+    } else if (battles.length) {
+      return (
+        <>
+          {battles.length === 2 && <PersVersusCard battles={battles} />}
+          {battles.length === 1 && <SinglePersVersusCard battles={battles} />}
+        </>
+      )
+    }
+    return null;
+
+  };
+
+  console.log(yesterdaysBattle);
+
+  // if (isMobile()) {
+  //   return (
+  //     <Switch>
+  //       <StyledCanvas>
+  //         <BackgroundSection />
+  //         <ContentContainer>
+  //           <Page>
+  //             {/* <Countdown/> */}
+  //             <Title style={{ marginTop: '40px' }}>Please View on Desktop</Title>
+  //             <SmallSpace />
+  //             {/* {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
+  //             {prevDayBattles.length > 0 &&
+  //               <InbetweenCard battles={prevDayBattles} />
+  //             } */}
+  //             <Pool3 />
+  //             <Title>Information</Title>
+  //             <SmallSpace />
+  //             <Instructions />
+  //             <Title>Schedule</Title>
+  //             <SmallSpace />
+  //             <Schedule schedule={schedule} />
+  //             <div style={betRedeemModal ? { display: 'block' } : { display: 'none' }}>
+  //               <Modal onClick={() => setBetRedeemModal(false)}>
+  //                 <ModalBlock onClick={(e) => stopProp(e)}>
+  //                   {/* {yam &&  */}
+  //                   <RedeemBetsModal battle={yesterdaysBattle} />
+  //                   {/* } */}
+  //                 </ModalBlock>
+  //               </Modal>
+  //             </div>
+  //           </Page>
+  //         </ContentContainer>
+  //       </StyledCanvas>
+  //     </Switch>
+  //   );
+  // }
 
   return (
     <Switch>
@@ -113,32 +176,92 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
-            {!isMobile() ?
-              <iframe title="promo" style={{ width: "500px", height: "281.25px", margin: "10px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
-              :
-              <iframe title="promo" style={{ width: "90vw", height: "50.6vw", margin: "40px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
-            }
-            <Title>Step 1: Stake $WAR to enter the arena</Title>
-            <Pool3 />
-            <BigTitle>Mid Season</BigTitle>
-            <Title>We've got big things in store. Come back soon.</Title>
-            <Spacer/>
-            <Spacer/>
-            {/* {battleFields()}
-            {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
+
+            <Countdown />
+            {battles && battles.length > 0 && <TotalBets battle1={battles[0]} id={battles[0]._id} />}
+            <SmallSpace />
+
+            {battleFields()}
+            {account && yesterdaysBattle.length > 0 && <Yesterday onClick={() => setBetRedeemModal(true)} >Show Yesterdays Result</Yesterday>}
+            <SmallSpace />
+            {/* {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
             {prevDayBattles.length > 0 &&
               <InbetweenCard battles={prevDayBattles} />
             } */}
-            <Title>How battles work </Title>
+            <Pool3 />
+            <Title>Information</Title>
+            <SmallSpace />
             <Instructions />
             <Title>Schedule</Title>
+            <SmallSpace />
             <Schedule schedule={schedule} />
+            <div style={betRedeemModal ? { display: 'block' } : { display: 'none' }}>
+              <Modal onClick={() => setBetRedeemModal(false)}>
+                <ModalBlock onClick={(e) => stopProp(e)}>
+                  {/* {yam &&  */}
+                  <RedeemBetsModal battle={yesterdaysBattle} />
+                  {/* } */}
+                </ModalBlock>
+              </Modal>
+            </div>
           </Page>
         </ContentContainer>
       </StyledCanvas>
     </Switch>
   );
 };
+
+const PageTitle = styled.div`
+font-family: "Gilroy";
+  font-size: 60px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: rgb(255, 204, 74);
+  max-width: 80vw;
+  margin: 140px auto 40px;
+`
+
+const Space = styled.div`
+height: 40px;`
+
+const Modal = styled.div`
+border-radius: 8px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100000;
+  background-color: rgba(0, 0, 0, 0.2);
+  top: 0px;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+`
+
+const Yesterday = styled.div`
+font-family: "Gilroy";
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: underline
+  margin: auto;
+`
+
+const ModalBlock = !isMobile() ?  styled.div`
+margin-top: 23vh;
+height: fit-content;
+` :styled.div`
+margin-top: 23vh;
+height: fit-content;
+position: fixed;
+` 
 
 const BigTitle = styled.div`
 font-family: "Gilroy";
@@ -171,9 +294,13 @@ const NextBattle = styled.div`
   color: white;
 `
 
+const SmallSpace = styled.div`
+height: 30px;`
+
 const Title = styled.div`
 font-family: "Gilroy";
-  font-size: 30px;
+  font-size: 26px;
+  
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -181,7 +308,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 80vw;
-  margin-bottom: 20px;
+
 `;
 
 const BackgroundSection = styled.div`

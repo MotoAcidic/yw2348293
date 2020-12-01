@@ -6,7 +6,6 @@ import useFarms from '../../../hooks/useFarms'
 import Cookie from 'universal-cookie'
 import './swal.css'
 import moment from 'moment';
-import personalities from './personalities'
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {
@@ -52,14 +51,14 @@ const Versus = ({ schedule }) => {
 			return null
 		}
 		if (item.length === 1) {
-			pool1 = personalities.find(person => person.handle === item[0].pool1.name)
-			pool2 = personalities.find(person => person.handle === item[0].pool2.name)
+			pool1 = farms.find(farm => farm.id === item[0].pool1.name)
+			pool2 = farms.find(farm => farm.id === item[0].pool2.name)
 		}
 		if (item.length === 2) {
-			pool1 = personalities.find(person => person.handle === item[0].pool1.name)
-			pool2 = personalities.find(person => person.handle === item[0].pool2.name)
-			pool3 = personalities.find(person => person.handle === item[1].pool1.name)
-			pool4 = personalities.find(person => person.handle === item[1].pool2.name)
+			pool1 = farms.find(farm => farm.id === item[0].pool1.name)
+			pool2 = farms.find(farm => farm.id === item[0].pool2.name)
+			pool3 = farms.find(farm => farm.id === item[1].pool1.name)
+			pool4 = farms.find(farm => farm.id === item[1].pool2.name)
 		}
 		if (!pool1 || !pool2) {
 			return null
@@ -74,15 +73,15 @@ const Versus = ({ schedule }) => {
 					<VersusItem>
 						<VersusCard>
 							<StyledContent>
-								<Picture src={pool1.picture} />
-								<StyledTitle>{pool1.handle}</StyledTitle>
+								<StyledCardIcon>{pool1.icon}</StyledCardIcon>
+								<StyledTitle>{pool1.name}</StyledTitle>
 							</StyledContent>
 						</VersusCard>
                     VS
 					<VersusCard>
 							<StyledContent>
-								<Picture src={pool2.picture} />
-								<StyledTitle>{pool2.handle}</StyledTitle>
+								<StyledCardIcon>{pool2.icon}</StyledCardIcon>
+								<StyledTitle>{pool2.name}</StyledTitle>
 							</StyledContent>
 						</VersusCard>
 					</VersusItem>
@@ -92,15 +91,15 @@ const Versus = ({ schedule }) => {
 							<VersusItem>
 								<VersusCard>
 									<StyledContent>
-										<Picture src={pool3.picture} />
-										<StyledTitle>{pool3.handle}</StyledTitle>
+										<StyledCardIcon>{pool3.icon}</StyledCardIcon>
+										<StyledTitle>{pool3.name}</StyledTitle>
 									</StyledContent>
 								</VersusCard>
                     VS
 								<VersusCard>
 									<StyledContent>
-										<Picture src={pool4.picture} />
-										<StyledTitle>{pool4.handle}</StyledTitle>
+										<StyledCardIcon>{pool4.icon}</StyledCardIcon>
+										<StyledTitle>{pool4.name}</StyledTitle>
 									</StyledContent>
 								</VersusCard>
 							</VersusItem>
@@ -116,13 +115,6 @@ const Versus = ({ schedule }) => {
 	)
 }
 
-const Picture = styled.img`
-width: 80px;
-height: 80px;
-border-radius: 50%;
-margin-bottom: 20px;
-`
-
 const Divider = !isMobile() ? styled.div`
 width: 3px;
   height: 80%;
@@ -132,9 +124,12 @@ margin: 20px 0 20px 10%;
 width: 80%;
   height: 2px;
   background-color: rgba(255, 256, 256, 0.5);
+
 `
 
+
 const StyledCardIcon = styled.div`
+
 font-size: 50px;
 height: 62px;
 width: 62px;
@@ -217,15 +212,16 @@ const StyledContent = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 80%;
+  justify-content: space-evenly;
+  height: 100%;
 `
 
 const StyledTitle = styled.div`
+width: 80%;
 margin: 0;
 font-family: "Gilroy";
-font-size: 14px;
-font-weight: normal;
+font-size: 16px;
+font-weight: bold;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;

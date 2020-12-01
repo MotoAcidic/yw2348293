@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import './swal.css'
-import { Chart } from 'react-charts'
+import { Chart } from '../old/node_modules/react-charts'
 import moment from "moment";
 
 function isMobile() {

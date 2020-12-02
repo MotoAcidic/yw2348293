@@ -188,7 +188,7 @@ const Battle = ({ bet }) => {
             <>
               <Volume>
                 Volume:&nbsp;
-              <Money>
+                <Money>
                   ${(roughBets.choice1 + roughBets.choice2).toFixed(2)}
                 </Money>
               </Volume>
@@ -222,16 +222,17 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
-font-size: 24px;
+font-size: 20px;
 `
 
 const BetAmount = styled.div`
 display: flex;
 flex-direction: column;
-height: calc(100% - 30px);
-justify-content: space-around;
+height: calc(100% - 24px);
+justify-content: space-between;
 padding-bottom: 20px;
 padding-top: 10px;
+padding-right: 2%;
 width: 30%;
 align-items: center;`
 
@@ -243,14 +244,14 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
-font-size: 16px;
+font-size: 24px;
 width: 65%;
 text-align: left;
-padding: 0 2.5% 0 2.5%;`
+padding: 0 2% 0 4%;`
 
 const Info = styled.div`
 position: absolute;
-height: 25%;
+height: 17%;
 width: 100%;
 display: flex;
 align-items: center;

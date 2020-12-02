@@ -90,7 +90,7 @@ const BalanceBar = styled.div`
 // width: calc(100% - 110px);
 width: 95%;
 margin: 0 auto;
-height: 16px;
+height: 12px;
 background-color: rgb(154,180,220);
 border: 1px solid white;
 border-radius: 3px;

@@ -386,8 +386,8 @@ const BackgroundSection = styled.div`
   top: 0;
   background-repeat: no-repeat;
   background-position: fit;
-  background-size: cover;
-  animation: marquee 400s ease-in-out 200ms infinite;
+  background-size: contain;
+  // animation: marquee 400s ease-in-out 200ms infinite;
   `
 
 const StyledCanvas = styled.div`

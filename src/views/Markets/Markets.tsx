@@ -13,33 +13,14 @@ import { getWarStaked, getChessContracts, getChessBets, chessTVL } from "../../y
 import { getStats } from "./utils";
 
 import Uniswap from "../../assets/img/uniswap@2x.png";
-
-import BetModalElection from "./BetCardElection.jsx";
-import Biden from "../../assets/img/biden.png";
-import Trump from "../../assets/img/trump.png";
-
-import Twitch from "../../assets/img/twitch.png"
-import Vitalik from "../../assets/img/chess_vitalik.png"
-import Alexandra from "../../assets/img/chess_alexandra_2.png"
-
 import Chess from "../../assets/img/chess.png";
 import Rook from '../../assets/img/rook.png'
-import chainlinkLogo from "../../assets/img/chainlinklogo.png";
-import everipediaLogo from "../../assets/img/everipedialogo.png";
-
-import useModal from '../../hooks/useModal'
 import Rules from './BetRulesModal'
-import useFarm from '../../hooks/useFarm'
-import Swal from 'sweetalert2';
-import './swal.css'
-import AccountModal from "../../components/TopBar/components/AdvertisementFormModal";
-import { getContract } from '../../utils/erc20'
-import { provider } from 'web3-core'
-import PriceHistoryCard from "../Results/PercentChangeCard";
-import VotingBalance from "./VotingBalance";
 import Countdown from './CountDown'
 import moment from 'moment';
 import Results from "./Results"
+import Background from '../../assets/img/bg3.svg'
+
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -182,37 +163,14 @@ const Battle: React.FC = () => {
     }
   }
 
-  const hoverExit = () => {
-    setTimeout(() => {
-      setHoverCandidate(null);
-    }, 10);
-  }
-
-  const bidenStyle = hoverCandidate === "Alexandra" ? { transform: `scale(1.05)`, filter: `grayscale(40%)`, transition: `all 0.2s ease-in-out`, zIndex: 2000 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out` };
-  const trumpStyle = hoverCandidate === "Vitalik" ? { transform: `scale(1.05)`, filter: `grayscale(40%)`, transition: `all 0.2s ease-in-out`, zIndex: 2001 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out`, zIndex: 1000 };
-
-  if (isMobile()) return (
-    <Switch>
-      <StyledCanvas>
-        <BackgroundSection />
-        <ContentContainer>
-          <Page>
-
-            <AFK>
-              <Title>Please View on Desktop</Title>
-            </AFK>
-          </Page>
-        </ContentContainer>
-      </StyledCanvas>
-    </Switch>
-  )
-
   return (
     <Switch>
       <StyledCanvas>
         <BackgroundSection />
         <ContentContainer>
           <Page>
+          {/* <TopDisplayContainer /> */}
+
 
             {/* <Title>
               Alexandra Botez has claimed Victory!
@@ -452,16 +410,14 @@ font-family: "Gilroy";
 `;
 
 const BackgroundSection = styled.div`
-  background-image: url(${Chess});
+  background-image: url(${Background});
   position: fixed;
-  width: 180vw;
+  width: 100vw;
   height: 100vh;
   top: 0;
   background-repeat: no-repeat;
-  background-position: fit;
   background-size: cover;
-  animation: marquee 400s ease-in-out 200ms infinite;
-  `
+  `;
 
 const StyledCanvas = styled.div`
   position: absolute;

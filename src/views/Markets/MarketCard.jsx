@@ -15,6 +15,7 @@ import { getStats } from "./unused/utils";
 import Uniswap from "../../assets/img/uniswap@2x.png";
 import Chess from "../../assets/img/chess.png";
 import Rook from '../../assets/img/rook.png'
+import { NavLink } from 'react-router-dom'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -165,7 +166,7 @@ const Battle = ({ bet, primary }) => {
   console.log("incbet", bet)
 
   return (
-    <VersusContainer>
+    <VersusContainer to={`/market/${bet._id}`}>
       <ImgWrapper>
         <Candidate1
           src={bet.pool1.graphic}
@@ -261,7 +262,7 @@ border: 5px solid black;
 border-left: 2px solid black;
 `
 
-const VersusContainer = !isMobile() ? styled.div`
+const VersusContainer = !isMobile() ? styled(NavLink)`
 width: 100%;
 max-width: 1400px;
 max-height: 650px;

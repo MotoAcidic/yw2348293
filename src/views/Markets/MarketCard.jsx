@@ -13,17 +13,8 @@ import { getWarStaked, getChessContracts, getChessBets, chessTVL } from "../../y
 import { getStats } from "./unused/utils";
 
 import Uniswap from "../../assets/img/uniswap@2x.png";
-
-import BetModalElection from "./unused/BetCardElection.jsx";
-import Biden from "../../assets/img/biden.png";
-import Trump from "../../assets/img/trump.png";
-
-import Twitch from "../../assets/img/twitch.png"
-
 import Chess from "../../assets/img/chess.png";
 import Rook from '../../assets/img/rook.png'
-import chainlinkLogo from "../../assets/img/chainlinklogo.png";
-import everipediaLogo from "../../assets/img/everipedialogo.png";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -46,7 +37,7 @@ function getServerURI() {
   return "https://yieldwars-api.herokuapp.com";
 }
 
-const Battle = ({bet}) => {
+const Battle = ({ bet, primary }) => {
   let [farms] = useFarms()
   const yam = useYam()
 
@@ -54,10 +45,10 @@ const Battle = ({bet}) => {
     {
       finished: false,
       farm1: {
-        name: "Vitalik",
+        name: "choice1",
       },
       farm2: {
-        name: "Alexandra",
+        name: "choice2",
       }
     }
   )
@@ -171,75 +162,71 @@ const Battle = ({bet}) => {
     }, 10);
   }
 
-  const bidenStyle = hoverCandidate === "Alexandra" ? { transform: `scale(1.05)`, filter: `grayscale(40%)`, transition: `all 0.2s ease-in-out`, zIndex: 2000 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out` };
-  const trumpStyle = hoverCandidate === "Vitalik" ? { transform: `scale(1.05)`, filter: `grayscale(40%)`, transition: `all 0.2s ease-in-out`, zIndex: 2001 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out`, zIndex: 1000 };
-
-  console.log("herebet", bet);
+  console.log("incbet", bet)
 
   return (
-      <StyledCanvas>
-            <VersusContainer>
-              <VersusBackground>
-                <ImgWrapper style={trumpStyle} onMouseOver={() => hoverOver("Vitalik")} onMouseOut={() => hoverExit()}
-                  onClick={(e) => onClickTrump(e)}>
-                  <Candidate1
-                    src={bet.pool1.graphic}
+    <VersusContainer>
+      <ImgWrapper>
+        <Candidate1
+          src={bet.pool1.graphic}
 
-                  />
-                </ImgWrapper>
-                <Versus>VS</Versus>
-                <ImgWrapper style={bidenStyle} onMouseOver={() => hoverOver("Alexandra")} onMouseOut={() => hoverExit()}
-                  onClick={(e) => onClickBiden(e)} >
-                  <Candidate2
-                    src={bet.pool2.graphic}
-                  />
-                </ImgWrapper>
-              </VersusBackground>
-            </VersusContainer>
-      </StyledCanvas>
+        />
+        {
+          primary ? 
+        <Title>
+          {bet.pool1.name}
+        </Title> : 
+                <SmallTitle>
+                {bet.pool1.name}
+              </SmallTitle>
+        }
+      </ImgWrapper>
+      {/* <Versus>VS</Versus> */}
+      <ImgWrapper  >
+        <Candidate2
+          src={bet.pool2.graphic}
+        />
+        {
+          primary ? 
+        <Title>
+          {bet.pool2.name}
+        </Title> : 
+                <SmallTitle>
+                {bet.pool2.name}
+              </SmallTitle>
+        }
+      </ImgWrapper>
+    </VersusContainer>
   );
 };
 
-const AFK = styled.div`
-height: 65vh;
+const SmallTitle = styled.div`
+position: absolute;
+height: 20%;
+width: 100%;
 display: flex;
 align-items: center;
 justify-content: center;
-text-shadow: -1px 1px 0 #000,
-1px 1px 0 #000,
-1px -1px 0 #000,
--1px -1px 0 #000;`
-
-const SubTitle = styled.div`
-font-family: "Gilroy";
-  font-size: 22px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-  max-width: 80vw;
-  margin-bottom: 5px;
+bottom: 0;
+background: rgba(0,0,0,0.7);
+font-size: 16px;
 `
 
-const Versus = styled.div`
+
+const Title = styled.div`
 position: absolute;
-height: 180px;
-width: 110px;
-z-index: 20004;
+height: 12%;
+width: 100%;
 display: flex;
 align-items: center;
 justify-content: center;
-background-image: url(${Rook});
-background-size: contain;
-background-repeat: no-repeat;
-margin-top: 50px;
-filter: drop-shadow(0 0 0.75rem white)
+bottom: 0;
+background: rgba(0,0,0,0.7);
 `
 
 const ImgWrapper = styled.div`
 width: 50%;
+position: relative;
 height: 100%;
 transition: all 0.2s ease-in-out;
 // filter: brightness(100%) contrast(100%) grayscale(100%) ;
@@ -251,219 +238,28 @@ transition: all 0.2s ease-in-out;
 // }
 `
 
-const InfoBlock = styled.a`
-font-family: "Gilroy";
-color: rgb(255, 204, 160);
-font-size: 22px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-margin-bottom: 2vh;
-align-items: center;
-display: flex;
-flex-direction: row;
-justify-content: space-evenly;
-align-items: center;
-width: 420px;
-margin-bottom: 80px;
-background-color: rgba(0,0,0,0.3);
-border-radius: 8px;
-height: 40px;
-`
-
-const ModalBlock = styled.div`
-width: 534px;
-height: 0px;
-margin-top: 23vh;
-`
-
-const Modal = styled.div`
-border-radius: 8px;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 100000;
-  background-color: rgba(0, 0, 0, 0.2);
-  top: 0px;
-  left: 0px;
-  display: flex;
-  justify-content: center;
-`
-
 let Candidate1
 let Candidate2
 
 Candidate1 = styled.img`
-width: calc(100% - 10px);
-height: 100%;
+width: calc(100% - 5px);
+height: calc(100% - 10px);
 border-radius: 6px 0 0 6px;
 cursor: pointer;
 object-fit: cover;
-border: 10px solid black;
-border-right: 2px solid black;
+border: 5px solid black;
+border-right: 2px solid white;
 `
 
 Candidate2 = styled.img`
-width: calc(100% - 10px);
-height: 100%;
+width: calc(100% - 5px);
+height: calc(100% - 10px);
 border-radius: 0 6px 6px 0;
 cursor: pointer;
 object-fit: cover;
-border: 10px solid black;
+border: 5px solid black;
 border-left: 2px solid black;
 `
-
-const VersusBackground = styled.div`
-width: 100%;
-height: 100%;
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-`
-
-const BigTitle = styled.div`
-font-family: "Gilroy";
-  font-size: 60px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: rgb(255, 204, 74);
-  max-width: 80vw;
-  margin: -30px auto 40px;
-`
-
-const Seperator = !isMobile() ? styled.div`
-  width: 1000px;
-  height: 1px;
-  margin-bottom: 80px;
-  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
-` : styled.div`
-  width: 90vw;
-  height: 1px;
-  background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
-  margin-bottom: 80px;`
-
-const NextBattle = styled.div`
-  margin-bottom: 80px;
-  font-size: 18px;
-  font-family: "Gilroy";
-  color: white;
-`
-
-const Title = !isMobile() ? styled.div`
-font-family: "Gilroy";
-  font-size: 30px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-  max-width: 80vw;
-  margin-bottom: 5px;
-` : styled.div`
-font-family: "Gilroy";
-  font-size: 30px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: #ffffff;
-  max-width: 80vw;
-  margin-bottom: 10px;
-  margin-top: 40px;
-`;
-
-const BackgroundSection = styled.div`
-  background-image: url(${Chess});
-  position: fixed;
-  width: 180vw;
-  height: 100vh;
-  top: 0;
-  background-repeat: no-repeat;
-  background-position: fit;
-  background-size: cover;
-  animation: marquee 400s ease-in-out 200ms infinite;
-  `
-
-const StyledCanvas = styled.div`
-  width: 100%;
-  background-color: #154f9b;
-`;
-
-
-
-const TopDisplayContainer = !isMobile()
-  ? styled.div`
-        width:80vw;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-evenly;
-        margin: 16px auto 10px auto;
-      `
-  : styled.div`
-        width: 60vw;
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-evenly;
-        margin: 60px auto 40px auto;
-        display: flex;
-        flex-wrap: wrap;
-      `;
-
-const DisplayItem = !isMobile()
-  ? styled.div`
-        color: white;
-        font-family: "Gilroy";
-        font-size: 18px;
-        font-weight: bold;
-        font-stretch: normal;
-        font-style: normal;
-        line-height: 1;
-        letter-spacing: normal;
-        color: #ffffff;
-        opacity: 0.9;
-      `
-  : styled.div`
-        width: 100%;
-        margin-bottom: 10px;
-        color: white;
-        text-align: center;
-        font-family: "Gilroy";
-        font-size: 18px;
-        font-weight: bold;
-        font-stretch: normal;
-        font-style: normal;
-        line-height: 1;
-        letter-spacing: normal;
-        opacity: 0.9;
-        color: #ffffff;
-      `;
-
-const StyledA = styled.a`
-  cursor: pointer;
-  display: flex;
-  background-image: url(${Uniswap});
-  background-size: cover;
-  background-position: center;
-  height: 30px;
-  opacity: 0.9;
-  width: 137px;
-  transition: all .1s linear;
-  &:hover {
-          opacity: 1;
-  }
-`
-
 
 const VersusContainer = !isMobile() ? styled.div`
 width: 100%;
@@ -471,6 +267,7 @@ max-width: 1400px;
 max-height: 650px;
 height: 100%;
 display: flex;
+flex-direction: row;
 align-items: center;
 font-size: 30px;
 margin: 0 auto 40px auto;

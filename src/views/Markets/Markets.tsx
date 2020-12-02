@@ -48,69 +48,69 @@ export interface OverviewData {
 }
 
 
-const importedData = [
-  {
-    pool1: {
-      name: "Maryland Minions",
-      graphic: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
-    },
-    pool2: {
-      name: "Boston Ballerinas",
-      graphic: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
-    },
-    primary: true,
-    bettingStart: 1606872001,
-    bettingEnd: 1606992001,
-    battleEnd: 1608992001,
-  },
-  {
-    pool1: {
-      name: "Maryland Minions",
-      graphic: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
-    },
-    pool2: {
-      name: "Boston Ballerinas",
-      graphic: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
-    },
-    primary: false,
-    bettingStart: 1606872001,
-    bettingEnd: 1606992001,
-    battleEnd: 1608992001,
-  },
-  {
-    pool1: {
-      name: "Maryland Minions",
-      graphic: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
-    },
-    pool2: {
-      name: "Boston Ballerinas",
-      graphic: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
-    },
-    primary: false,
-    bettingStart: 1606872001,
-    bettingEnd: 1606992001,
-    battleEnd: 1608992001,
-  },
-  {
-    pool1: {
-      name: "Maryland Minions",
-      graphic: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
-    },
-    pool2: {
-      name: "Boston Ballerinas",
-      graphic: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
-    },
-    primary: false,
-    bettingStart: 1606872001,
-    bettingEnd: 1606992001,
-    battleEnd: 1608992001,
-  },
-]
+// const importedData = [
+//   {
+//     pool1: {
+//       name: "Maryland Minions",
+//       graphic: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
+//     },
+//     pool2: {
+//       name: "Boston Ballerinas",
+//       graphic: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
+//     },
+//     primary: true,
+//     bettingStart: 1606872001,
+//     bettingEnd: 1606992001,
+//     battleEnd: 1608992001,
+//   },
+//   {
+//     pool1: {
+//       name: "Maryland Minions",
+//       graphic: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
+//     },
+//     pool2: {
+//       name: "Boston Ballerinas",
+//       graphic: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
+//     },
+//     primary: false,
+//     bettingStart: 1606872001,
+//     bettingEnd: 1606992001,
+//     battleEnd: 1608992001,
+//   },
+//   {
+//     pool1: {
+//       name: "Maryland Minions",
+//       graphic: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
+//     },
+//     pool2: {
+//       name: "Boston Ballerinas",
+//       graphic: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
+//     },
+//     primary: false,
+//     bettingStart: 1606872001,
+//     bettingEnd: 1606992001,
+//     battleEnd: 1608992001,
+//   },
+//   {
+//     pool1: {
+//       name: "Maryland Minions",
+//       graphic: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
+//     },
+//     pool2: {
+//       name: "Boston Ballerinas",
+//       graphic: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
+//     },
+//     primary: false,
+//     bettingStart: 1606872001,
+//     bettingEnd: 1606992001,
+//     battleEnd: 1608992001,
+//   },
+// ]
 
 const Battle: React.FC = () => {
 
 
-  const [bets, setBets] = useState(importedData);
+  const [markets, setMarkets] = useState(null);
 
 
   let [farms] = useFarms()
@@ -210,30 +210,42 @@ const Battle: React.FC = () => {
     }
   }
 
+  useEffect(() => {
+    axios.get(`${getServerURI()}/markets/get-markets`).then(res => {
+      console.log("markets", res.data);
+      setMarkets(res.data.activeMarkets);
+    }).catch(err => {
+      console.log(err);
+    })
+  }, []);
 
   const BetsDisplay = () => {
-    let allBets = bets;
+    if (!markets) return null;
+    let allMarkets = markets;
     let primaryBet;
-    const primaryBetIndex = bets.findIndex(bet => bet.primary)
+    const primaryBetIndex = allMarkets.findIndex(bet => bet.primary)
     if (primaryBetIndex !== -1) {
-      primaryBet = allBets.splice(primaryBetIndex, 1);
+      primaryBet = allMarkets.splice(primaryBetIndex, 1);
       primaryBet = primaryBet[0];
     } else {
-      primaryBet = allBets.shift();
+      primaryBet = allMarkets.shift();
     }
     const PrimaryBet = () => (
       <PrimaryContainer>
-        <MarketCard bet={primaryBet} />
+        <MarketCard primary={true} bet={primaryBet} />
       </PrimaryContainer>
     )
     return (
       <MarketsContainer>
         <PrimaryBet />
-        {allBets.map(bet =>
-          <SecondaryContainer>
-            <MarketCard bet={bet} />
-          </SecondaryContainer>
-        )}
+        <MarketsGrid>
+
+          {allMarkets.map(bet =>
+            <SecondaryContainer>
+              <MarketCard primary={false} bet={bet} />
+            </SecondaryContainer>
+          )}
+        </MarketsGrid>
       </MarketsContainer>
     )
 
@@ -268,6 +280,21 @@ const Battle: React.FC = () => {
   );
 };
 
+const MarketsGrid = !isMobile() ? styled.div`
+width: 100%;
+grid-column-gap: 25px;
+    -webkit-column-gap: 25px;
+    column-gap: 25px;
+    display: grid;
+    grid-template-columns: 33%;
+    grid-template-columns: repeat(3,1fr);
+    grid-row-gap: 19px;
+    row-gap: 19px;
+    grid-template-rows: auto;
+    height: 30%;
+` : styled.div`
+width: 100%;`;
+
 const MarketsContainer = !isMobile() ? styled.div`
 height: 100%;
 width: 100%;
@@ -278,18 +305,13 @@ flex-wrap: wrap;
 `
 
 const SecondaryContainer = !isMobile() ? styled.div`
-width: 30%;
-height: 12%;
-background-color: rgba(256,256,256, 0.3);
-border: 2px solid black;
+// height: 16vh;
 ` : styled.div`
 width: 100%;`;
 
 const PrimaryContainer = !isMobile() ? styled.div`
 width: 100%;
-height: 40%;
-background-color: rgba(256,256,256, 0.3);
-border: 2px solid black;
+height: 60%;
 margin-bottom: 2vh;
 ` : styled.div`
 width: 100%;`;

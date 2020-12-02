@@ -51,10 +51,78 @@ export interface OverviewData {
   totalSupply?: string;
 }
 
+
+const importedData = [
+  {
+    pool1: {
+      name: "Maryland Minions",
+      bets: 24234.234,
+      image: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
+    },
+    pool2: {
+      name: "Boston Ballerinas",
+      bets: 3456.421,
+      image: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
+    },
+    primary: true,
+    startTime: 1606872001,
+    endTime: 1606992001,
+  },
+  {
+    pool1: {
+      name: "Maryland Minions",
+      bets: 24234.234,
+      image: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
+    },
+    pool2: {
+      name: "Boston Ballerinas",
+      bets: 3456.421,
+      image: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
+    },
+    primary: false,
+    startTime: 1606872001,
+    endTime: 1606992001,
+  },
+  {
+    pool1: {
+      name: "Maryland Minions",
+      bets: 24234.234,
+      image: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
+    },
+    pool2: {
+      name: "Boston Ballerinas",
+      bets: 3456.421,
+      image: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
+    },
+    primary: false,
+    startTime: 1606872001,
+    endTime: 1606992001,
+  },
+  {
+    pool1: {
+      name: "Maryland Minions",
+      bets: 24234.234,
+      image: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
+    },
+    pool2: {
+      name: "Boston Ballerinas",
+      bets: 3456.421,
+      image: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
+    },
+    primary: false,
+    startTime: 1606872001,
+    endTime: 1606992001,
+  },
+]
+
 const Battle: React.FC = () => {
+
+
+  const [bets, setBets] = useState(importedData);
+
+
   let [farms] = useFarms()
   const yam = useYam()
-
   let [battles, setBattles] = useState(
     {
       finished: false,
@@ -66,10 +134,8 @@ const Battle: React.FC = () => {
       }
     }
   )
-
   const { account, connect, ethereum } = useWallet()
   let [schedule, setSchedule] = useState([])
-
   const [
     {
       circSupply,
@@ -84,20 +150,16 @@ const Battle: React.FC = () => {
     warStaked: new BigNumber(0),
     circSupply: new BigNumber(0)
   });
-
   const fetchStats = useCallback(async () => {
     const statsData = await getStats(yam);
     setStats(statsData);
   }, [yam, setStats]);
-
   let [modal, setShowModal] = useState(false);
   let [candidate, setCandidate] = useState(battles.farm1);
   let [hoverCandidate, setHoverCandidate] = useState("");
   const [transitioning, setTransitioning] = useState(false);
   const [roughBets, setRoughBets] = useState({ trump: 0, biden: 0 });
-
   let currentPrice = curPrice || 0;
-
   const fetchWarStaked = useCallback(
     async pools => {
       const st = await getWarStaked(pools, yam);
@@ -105,7 +167,6 @@ const Battle: React.FC = () => {
     },
     [yam, setWarStaked]
   );
-
   const onClickTrump = (e) => {
     if (!account) {
       connect('injected')
@@ -113,7 +174,6 @@ const Battle: React.FC = () => {
     setCandidate(battles.farm1)
     setShowModal(true)
   }
-
   const onClickBiden = (e) => {
     if (!account) {
       connect('injected')
@@ -121,7 +181,6 @@ const Battle: React.FC = () => {
     setCandidate(battles.farm2)
     setShowModal(true)
   }
-
   const getRoughBets = async () => {
     let tvl = await chessTVL(yam, account)
     const trump = tvl.trumpTotal
@@ -129,7 +188,6 @@ const Battle: React.FC = () => {
     console.log(trump, biden);
     setRoughBets({ trump, biden });
   }
-
   useEffect(() => {
     console.log("using effect");
     if (yam && account && farms && farms[0]) {
@@ -144,9 +202,6 @@ const Battle: React.FC = () => {
       getRoughBets();
     }
   }, [yam, farms, farms[0]]);
-
-
-
   const hoverOver = (candidate) => {
     console.log("called", candidate, hoverCandidate)
     if ((!candidate || !hoverCandidate) && !transitioning) {
@@ -163,13 +218,38 @@ const Battle: React.FC = () => {
     }
   }
 
+
+  const BetsDisplay = () => {
+    if (!bets) return <div/>
+
+    let allBets = bets;
+    let primaryBet;
+    const primaryBetIndex = bets.findIndex(bet => bet.primary)
+    if (primaryBetIndex !== -1) {
+      primaryBet = allBets.splice(primaryBetIndex, 1);
+      primaryBet = primaryBet[0];
+    } else {
+      primaryBet = allBets.shift();
+    }
+    const PrimaryBet = () => (
+      <PrimaryContainer>
+        
+      </PrimaryContainer>
+    )
+
+
+  }
+
+
   return (
     <Switch>
       <StyledCanvas>
         <BackgroundSection />
         <ContentContainer>
           <Page>
-          {/* <TopDisplayContainer /> */}
+          <TopDisplayContainer />
+          <LandingSection>
+
 
 
             {/* <Title>
@@ -178,9 +258,10 @@ const Battle: React.FC = () => {
             <Title>
               Come back soon to claim rewards
 		        </Title> */}
-<Results /> 
+            </LandingSection>
+            {/* <Results /> 
             <Rules />
-            <Pool3 />
+            <Pool3 /> */}
           </Page>
         </ContentContainer>
       </StyledCanvas>
@@ -188,6 +269,23 @@ const Battle: React.FC = () => {
   );
 };
 
+const PrimaryContainer = !isMobile() ? styled.div`
+width: 100%;
+height: 40vh;
+background-color: rgba(256,256,256, 0.3);
+border: 2px solid black;
+` : styled.div`
+width: 100%;`;
+
+const LandingSection = !isMobile() ? styled.div`
+height: calc(100vh - 154px);
+display: flex;
+flex-direction: column;
+justify-content: center;
+width: 80vw;
+`: styled.div`
+min-height: calc(100vh - 73px);
+`
 
 const ConnectContainer = !isMobile() ? styled.div`
 width: 600px;

@@ -11,9 +11,15 @@ import { useWallet } from "use-wallet";
 import Uniswap from "../../assets/img/uniswap@2x.png";
 import Vitalik from "../../assets/img/chess_vitalik.png"
 import Alexandra from "../../assets/img/chess_alexandra_2.png"
+import { getWarStaked, getChessContracts, getChessBets, chessTVL } from "../../yamUtils";
 
 import Chess from "../../assets/img/chess.png";
 import Rook from '../../assets/img/rook.png'
+import VSPNG from '../../assets/img/VS.png'
+import VotingBalance from './VotingBalance'
+import Pool3 from './Pool3'
+import Rules from './Instructions'
+import BetModal from './BetCard'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -108,6 +114,8 @@ const Battle = () => {
     e.stopPropagation()
   }
 
+  const contract = getChessContracts(yam)
+
   return (
     <Switch>
       <StyledCanvas>
@@ -129,9 +137,9 @@ const Battle = () => {
                &nbsp;in chess. Who Will Win?
             </SubTitle> */}
             {/* <Countdown endTime={moment.utc("2020-11-23T02:00", "YYYY-MM-DDTHH:mm").unix() * 1000} /> */}
-            {/* {roughBets.trump > 0 &&
-              <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
-            } */}
+            {roughBets.pool1 > 0 &&
+              <VotingBalance votes1={roughBets.pool1} votes2={roughBets.pool2} />
+            }
             {battle && battle !== -1 && (
               <VersusContainer>
                 <VersusBackground>
@@ -141,7 +149,9 @@ const Battle = () => {
 
                     />
                   </ImgWrapper>
-                  <Versus>VS</Versus>
+                  <Divider>
+                    <img src={VSPNG} width="125px" style={{ position: 'absolute', zIndex: 10000 }} />
+                  </Divider>
                   <ImgWrapper onClick={(e) => onClickPool2(e)} >
                     <Candidate2
                       src={img2}
@@ -155,35 +165,45 @@ const Battle = () => {
                 the page you are looking for was not found. (404)
               </Error404>
             )}
-            {/* <div style={modal ? { display: 'block' } : { display: 'none' }}>
+            <div style={modal ? { display: 'block' } : { display: 'none' }}>
               <Modal onClick={(e) => closeModal(e)}>
                 <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
-                  {yam && <BetModalElection
-                    battle={battles}
+                  {yam && <BetModal
+                    battle={battle}
                     candidateInfo={candidate}
-                    electionContract={electionContract}
+                    contract={contract}
                   />
                   }
                 </ModalBlock>
               </Modal>
-            </div> */}
-            {/* <InfoBlock href={"https://www.twitch.tv/botezlive"}
-              target="_blank"
-            >
-              <img src={Twitch} width="30px" height="30px" />
-                  Watch the match on Twitch!
-              <img src={Twitch} width="30px" height="30px" />
-
+            </div>
+            <InfoBlock >
+              Watch the match on Twitch!
             </InfoBlock>
 
             <Rules />
-            <Pool3 /> */}
+            <Pool3 />
           </Page>
         </ContentContainer>
       </StyledCanvas>
     </Switch>
   );
 };
+
+const Divider = !isMobile() ? styled.div` 
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100%;
+z-index: 10000;
+` : styled.div`
+width: 95%;
+height: 70px;
+
+display: flex;
+justify-content: center;
+align-items: center;
+`
 
 const Error404 = styled.div`
 font-family: "Gilroy";
@@ -240,12 +260,11 @@ const ImgWrapper = styled.div`
 width: 50%;
 height: 100%;
 transition: all 0.2s ease-in-out;
-// filter: brightness(100%) contrast(100%) grayscale(100%) ;
+filter: brightness(100%) contrast(100%) ;
 &:hover {
   transition: all 0.2s ease-in-out;
-  // filter: brightness(110%) contrast(110%) grayscale(80%);
+  filter: brightness(115%) contrast(115%);
   transform: scale(1.05);
-  z-index: 2000000;
 }
 `
 
@@ -469,10 +488,12 @@ const StyledA = styled.a`
 
 
 const VersusContainer = !isMobile() ? styled.div`
-width: 90vw;
-max-width: 1400px;
-max-height: 650px;
-height: 40vw;
+width: 96vw;
+height: 32.5vw;
+max-width: 1800px;
+max-height: 600px;
+min-width: 900px;
+min-height: 300px;
 display: flex;
 align-items: center;
 font-size: 30px;

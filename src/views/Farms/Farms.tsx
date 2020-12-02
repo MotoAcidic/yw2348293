@@ -19,6 +19,7 @@ import Roadmap from "./Roadmap";
 import FarmCards from "./components/FarmCards";
 import CountDown from "./components/CountDown";
 import MobileCountDown from "./components/MobileCountdown";
+import moment from 'moment';
 
 import { Account } from "../../yam/lib/accounts";
 import { getStartTime, getWarStaked } from "../../yamUtils";
@@ -93,6 +94,9 @@ const Farms: React.FC = () => {
   }
 
   let diffTime = launch - Math.round(new Date().getTime());
+
+  const start = moment.utc("2020-12-06T20:00", "YYYY-MM-DDTHH:mm");
+
 
   return (
     <Switch>

@@ -13,14 +13,30 @@ import { getWarStaked, getChessContracts, getChessBets, chessTVL } from "../../y
 import { getStats } from "./utils";
 
 import Uniswap from "../../assets/img/uniswap@2x.png";
+
+import BetModalElection from "./BetCardElection.jsx";
+import Biden from "../../assets/img/biden.png";
+import Trump from "../../assets/img/trump.png";
+
+import Twitch from "../../assets/img/twitch.png"
+
 import Chess from "../../assets/img/chess.png";
 import Rook from '../../assets/img/rook.png'
+import chainlinkLogo from "../../assets/img/chainlinklogo.png";
+import everipediaLogo from "../../assets/img/everipedialogo.png";
+
+import useModal from '../../hooks/useModal'
 import Rules from './BetRulesModal'
+import useFarm from '../../hooks/useFarm'
+import Swal from 'sweetalert2';
+import './swal.css'
+import AccountModal from "../../components/TopBar/components/AdvertisementFormModal";
+import { getContract } from '../../utils/erc20'
+import { provider } from 'web3-core'
+import PriceHistoryCard from "../Results/PercentChangeCard";
+import VotingBalance from "./VotingBalance";
 import Countdown from './CountDown'
 import moment from 'moment';
-import Results from "./Results"
-import Background from '../../assets/img/bg3.svg'
-import MarketCard from "./MarketCard";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -43,82 +59,10 @@ function getServerURI() {
   return "https://yieldwars-api.herokuapp.com";
 }
 
-export interface OverviewData {
-  circSupply?: string;
-  curPrice?: number;
-  nextRebase?: number;
-  targetPrice?: number;
-  totalSupply?: string;
-}
-
-
-const importedData = [
-  {
-    pool1: {
-      name: "Maryland Minions",
-      graphic: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
-    },
-    pool2: {
-      name: "Boston Ballerinas",
-      graphic: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
-    },
-    primary: true,
-    bettingStart: 1606872001,
-    bettingEnd: 1606992001,
-    battleEnd: 1608992001,
-  },
-  {
-    pool1: {
-      name: "Maryland Minions",
-      graphic: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
-    },
-    pool2: {
-      name: "Boston Ballerinas",
-      graphic: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
-    },
-    primary: false,
-    bettingStart: 1606872001,
-    bettingEnd: 1606992001,
-    battleEnd: 1608992001,
-  },
-  {
-    pool1: {
-      name: "Maryland Minions",
-      graphic: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
-    },
-    pool2: {
-      name: "Boston Ballerinas",
-      graphic: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
-    },
-    primary: false,
-    bettingStart: 1606872001,
-    bettingEnd: 1606992001,
-    battleEnd: 1608992001,
-  },
-  {
-    pool1: {
-      name: "Maryland Minions",
-      graphic: "https://i.pinimg.com/originals/82/31/15/823115ab5af1ec984fc9754fa702cf3a.jpg",
-    },
-    pool2: {
-      name: "Boston Ballerinas",
-      graphic: "https://calendar.artsboston.org/wp-content/uploads/sites/calendar.artsboston.org/images/2020/01/event-featured-Bos-1580405932.jpeg",
-    },
-    primary: false,
-    bettingStart: 1606872001,
-    bettingEnd: 1606992001,
-    battleEnd: 1608992001,
-  },
-]
-
-const Battle: React.FC = () => {
-
-
-  const [bets, setBets] = useState(importedData);
-
-
+const Battle = ({bet}) => {
   let [farms] = useFarms()
   const yam = useYam()
+
   let [battles, setBattles] = useState(
     {
       finished: false,
@@ -130,8 +74,10 @@ const Battle: React.FC = () => {
       }
     }
   )
+
   const { account, connect, ethereum } = useWallet()
   let [schedule, setSchedule] = useState([])
+
   const [
     {
       circSupply,
@@ -141,11 +87,12 @@ const Battle: React.FC = () => {
       totalSupply,
     },
     setStats
-  ] = useState<OverviewData>({});
+  ] = useState({});
   let [warStaked, setWarStaked] = useState({
     warStaked: new BigNumber(0),
     circSupply: new BigNumber(0)
   });
+
   const fetchStats = useCallback(async () => {
     const statsData = await getStats(yam);
     setStats(statsData);
@@ -155,7 +102,9 @@ const Battle: React.FC = () => {
   let [hoverCandidate, setHoverCandidate] = useState("");
   const [transitioning, setTransitioning] = useState(false);
   const [roughBets, setRoughBets] = useState({ trump: 0, biden: 0 });
+
   let currentPrice = curPrice || 0;
+
   const fetchWarStaked = useCallback(
     async pools => {
       const st = await getWarStaked(pools, yam);
@@ -163,6 +112,7 @@ const Battle: React.FC = () => {
     },
     [yam, setWarStaked]
   );
+
   const onClickTrump = (e) => {
     if (!account) {
       connect('injected')
@@ -170,6 +120,7 @@ const Battle: React.FC = () => {
     setCandidate(battles.farm1)
     setShowModal(true)
   }
+
   const onClickBiden = (e) => {
     if (!account) {
       connect('injected')
@@ -177,6 +128,7 @@ const Battle: React.FC = () => {
     setCandidate(battles.farm2)
     setShowModal(true)
   }
+
   const getRoughBets = async () => {
     let tvl = await chessTVL(yam, account)
     const trump = tvl.trumpTotal
@@ -184,6 +136,7 @@ const Battle: React.FC = () => {
     console.log(trump, biden);
     setRoughBets({ trump, biden });
   }
+
   useEffect(() => {
     console.log("using effect");
     if (yam && account && farms && farms[0]) {
@@ -194,10 +147,21 @@ const Battle: React.FC = () => {
       fetchWarStaked(farms);
 
     }
-    if (yam && !roughBets.trump) {
+    if (yam && account && !roughBets.trump) {
       getRoughBets();
     }
   }, [yam, farms, farms[0]]);
+
+  const closeModal = (event) => {
+    setShowModal(false)
+  }
+
+  const stopProp = (e) => {
+    e.stopPropagation()
+  }
+
+  const electionContract = getChessContracts(yam)
+
   const hoverOver = (candidate) => {
     console.log("called", candidate, hoverCandidate)
     if ((!candidate || !hoverCandidate) && !transitioning) {
@@ -214,139 +178,40 @@ const Battle: React.FC = () => {
     }
   }
 
-
-  const BetsDisplay = () => {
-    let allBets = bets;
-    let primaryBet;
-    const primaryBetIndex = bets.findIndex(bet => bet.primary)
-    if (primaryBetIndex !== -1) {
-      primaryBet = allBets.splice(primaryBetIndex, 1);
-      primaryBet = primaryBet[0];
-    } else {
-      primaryBet = allBets.shift();
-    }
-    const PrimaryBet = () => (
-      <PrimaryContainer>
-        <MarketCard bet={primaryBet} />
-      </PrimaryContainer>
-    )
-    return (
-      <MarketsContainer>
-        <PrimaryBet />
-        {allBets.map(bet =>
-          <SecondaryContainer>
-            <MarketCard bet={bet} />
-          </SecondaryContainer>
-        )}
-      </MarketsContainer>
-    )
-
+  const hoverExit = () => {
+    setTimeout(() => {
+      setHoverCandidate(null);
+    }, 10);
   }
 
+  const bidenStyle = hoverCandidate === "Alexandra" ? { transform: `scale(1.05)`, filter: `grayscale(40%)`, transition: `all 0.2s ease-in-out`, zIndex: 2000 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out` };
+  const trumpStyle = hoverCandidate === "Vitalik" ? { transform: `scale(1.05)`, filter: `grayscale(40%)`, transition: `all 0.2s ease-in-out`, zIndex: 2001 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out`, zIndex: 1000 };
+
+  console.log("herebet", bet);
 
   return (
-    <Switch>
       <StyledCanvas>
-        <BackgroundSection />
-        <ContentContainer>
-          <Page>
-            <TopDisplayContainer />
-            <LandingSection>
+            <VersusContainer>
+              <VersusBackground>
+                <ImgWrapper style={trumpStyle} onMouseOver={() => hoverOver("Vitalik")} onMouseOut={() => hoverExit()}
+                  onClick={(e) => onClickTrump(e)}>
+                  <Candidate1
+                    src={bet.pool1.graphic}
 
-
-              <BetsDisplay />
-              {/* <Title>
-              Alexandra Botez has claimed Victory!
-		        </Title>
-            <Title>
-              Come back soon to claim rewards
-		        </Title> */}
-            </LandingSection>
-            {/* <Results /> 
-            <Rules />
-            <Pool3 /> */}
-          </Page>
-        </ContentContainer>
+                  />
+                </ImgWrapper>
+                <Versus>VS</Versus>
+                <ImgWrapper style={bidenStyle} onMouseOver={() => hoverOver("Alexandra")} onMouseOut={() => hoverExit()}
+                  onClick={(e) => onClickBiden(e)} >
+                  <Candidate2
+                    src={bet.pool2.graphic}
+                  />
+                </ImgWrapper>
+              </VersusBackground>
+            </VersusContainer>
       </StyledCanvas>
-    </Switch >
   );
 };
-
-const MarketsContainer = !isMobile() ? styled.div`
-height: 100%;
-width: 100%;
-display: flex;
-flex-direction: row;
-flex-wrap: wrap;
-`: styled.div`
-`
-
-const SecondaryContainer = !isMobile() ? styled.div`
-width: 30%;
-height: 12%;
-background-color: rgba(256,256,256, 0.3);
-border: 2px solid black;
-` : styled.div`
-width: 100%;`;
-
-const PrimaryContainer = !isMobile() ? styled.div`
-width: 100%;
-height: 40%;
-background-color: rgba(256,256,256, 0.3);
-border: 2px solid black;
-margin-bottom: 2vh;
-` : styled.div`
-width: 100%;`;
-
-const LandingSection = !isMobile() ? styled.div`
-height: calc(100vh - 154px);
-display: flex;
-flex-direction: column;
-justify-content: center;
-width: 80vw;
-`: styled.div`
-min-height: calc(100vh - 73px);
-`
-
-const ConnectContainer = !isMobile() ? styled.div`
-width: 600px;
-height: 140px;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 30px;
-margin: 0 auto 5vh auto;
-font-family: "Gilroy";
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-flex-direction: column;
-color: #ffffff;
-border-radius: 8px;
-border: solid 2px rgba(255, 183, 0, 0.3);
- background-color: rgba(4,2,43,0.4);
- cursor: pointer;
- margin: 40vh auto 40vh auto;
-` : styled.div`
-margin: 0 0 40px 0;
-width: 90vw;
-display: flex;
-flex-direction: column;
-padding-top: 20px;
-font-family: "Gilroy";
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-	color: #ffffff;
-	border-radius: 8px;
-  border: solid 2px rgba(255, 183, 0, 0.3);
- background-color: rgba(4,2,43,0.4); 
-`
 
 const AFK = styled.div`
 height: 65vh;
@@ -360,14 +225,15 @@ text-shadow: -1px 1px 0 #000,
 
 const SubTitle = styled.div`
 font-family: "Gilroy";
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-	color: white;
-	margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  max-width: 80vw;
+  margin-bottom: 5px;
 `
 
 const Versus = styled.div`
@@ -470,9 +336,10 @@ flex-direction: row;
 justify-content: center;
 align-items: center;
 `
+
 const BigTitle = styled.div`
 font-family: "Gilroy";
-  font-size: 50px;
+  font-size: 60px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -480,9 +347,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: rgb(255, 204, 74);
   max-width: 80vw;
-	margin: 0 auto 20px auto;
-	display: flex;
-	align-items: center;
+  margin: -30px auto 40px;
 `
 
 const Seperator = !isMobile() ? styled.div`
@@ -529,26 +394,22 @@ font-family: "Gilroy";
 `;
 
 const BackgroundSection = styled.div`
-  background-image: url(${Background});
+  background-image: url(${Chess});
   position: fixed;
-  width: 100vw;
+  width: 180vw;
   height: 100vh;
   top: 0;
   background-repeat: no-repeat;
+  background-position: fit;
   background-size: cover;
-  `;
+  animation: marquee 400s ease-in-out 200ms infinite;
+  `
 
 const StyledCanvas = styled.div`
-  position: absolute;
   width: 100%;
   background-color: #154f9b;
 `;
 
-const ContentContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  text-align: center;
-`;
 
 
 const TopDisplayContainer = !isMobile()
@@ -618,10 +479,10 @@ const StyledA = styled.a`
 
 
 const VersusContainer = !isMobile() ? styled.div`
-width: 90vw;
+width: 100%;
 max-width: 1400px;
 max-height: 650px;
-height: 40vw;
+height: 100%;
 display: flex;
 align-items: center;
 font-size: 30px;

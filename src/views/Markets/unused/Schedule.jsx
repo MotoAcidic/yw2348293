@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import useYam from '../../hooks/useYam'
+import useYam from '../../../hooks/useYam'
 import { useWallet } from 'use-wallet'
-import useFarms from '../../hooks/useFarms'
+import useFarms from '../../../hooks/useFarms'
 import Cookie from 'universal-cookie'
 import './swal.css'
 import moment from 'moment';

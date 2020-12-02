@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import './swal.css'
 import states from './states'
-import { getLiveElectionResults } from '../../yamUtils/index'
-import useYam from "../../hooks/useYam";
+import { getLiveElectionResults } from '../../../yamUtils/index'
+import useYam from "../../../hooks/useYam";
 import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 import MiniBiden from "../../assets/img/biden@2x.png";
 import MiniTrump from "../../assets/img/trump@2x.png";

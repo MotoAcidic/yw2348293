@@ -20,6 +20,7 @@ import Splash from './views/Splash/Splash'
 import ElectionBattle from './views/Battle/electionbattles/Battle'
 import InfluencerBattle from './views/Battle/influencerbattles/Battle'
 import Markets from './views/Markets/Markets'
+import Market from './views/Market/Battle.jsx'
 import Battle from './views/Battle/AFK'
 import Results from './views/Results/Results'
 import Gov from './views/Gov'
@@ -91,6 +92,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/markets" exact>
               <Markets />
+            </Route>
+            <Route path="/market" >
+              <Market />
             </Route>
             <Route path="/results" exact>
               <Results />

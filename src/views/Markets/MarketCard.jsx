@@ -7,14 +7,14 @@ import useYam from "../../hooks/useYam";
 // import useBet from "../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
-import Pool3 from "./Pool3";
+import Pool3 from "./unused/Pool3";
 import useFarms from "../../hooks/useFarms";
 import { getWarStaked, getChessContracts, getChessBets, chessTVL } from "../../yamUtils";
-import { getStats } from "./utils";
+import { getStats } from "./unused/utils";
 
 import Uniswap from "../../assets/img/uniswap@2x.png";
 
-import BetModalElection from "./BetCardElection.jsx";
+import BetModalElection from "./unused/BetCardElection.jsx";
 import Biden from "../../assets/img/biden.png";
 import Trump from "../../assets/img/trump.png";
 
@@ -24,19 +24,6 @@ import Chess from "../../assets/img/chess.png";
 import Rook from '../../assets/img/rook.png'
 import chainlinkLogo from "../../assets/img/chainlinklogo.png";
 import everipediaLogo from "../../assets/img/everipedialogo.png";
-
-import useModal from '../../hooks/useModal'
-import Rules from './BetRulesModal'
-import useFarm from '../../hooks/useFarm'
-import Swal from 'sweetalert2';
-import './swal.css'
-import AccountModal from "../../components/TopBar/components/AdvertisementFormModal";
-import { getContract } from '../../utils/erc20'
-import { provider } from 'web3-core'
-import PriceHistoryCard from "../Results/PercentChangeCard";
-import VotingBalance from "./VotingBalance";
-import Countdown from './CountDown'
-import moment from 'moment';
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {

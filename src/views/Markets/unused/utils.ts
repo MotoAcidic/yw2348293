@@ -1,4 +1,4 @@
-import { Yam } from '../../yam'
+import { Yam } from '../../../yam'
 
 import {
   getCurrentPrice as gCP,
@@ -8,7 +8,7 @@ import {
   getTotalSupply as gTS,
   stake,
   unstake
-} from '../../yamUtils'
+} from '../../../yamUtils'
 
 const getCurrentPrice = async (yam: typeof Yam): Promise<number> => {
   // FORBROCK: get current YAM price

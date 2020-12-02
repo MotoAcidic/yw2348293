@@ -1,12 +1,12 @@
 import React, { useCallback, useMemo } from 'react'
 import styled from 'styled-components'
-import logo from '../../assets/img/logo.png'
+import logo from '../../../assets/img/logo.png'
 
 
-import Label from '../../components/Label'
-import Modalmd, { ModalProps } from '../../components/Modal'
-import ModalTitle from '../../components/ModalTitle'
-import Container from '../../components/Container'
+import Label from '../../../components/Label'
+import Modalmd, { ModalProps } from '../../../components/Modal'
+import ModalTitle from '../../../components/ModalTitle'
+import Container from '../../../components/Container'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {

@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import Button from '../../components/Button'
+import Button from '../../../components/Button'
 import checkedIcon from '../../assets/img/checked.png'
 import uncheckedIcon from '../../assets/img/unchecked.png'
-import useYam from '../../hooks/useYam'
+import useYam from '../../../hooks/useYam'
 import { useWallet } from 'use-wallet'
 import DailyQuestion from "./DailyQuestion.jsx";
 import BetCard from "./BetCard";
 
-import useFarms from '../../hooks/useFarms'
+import useFarms from '../../../hooks/useFarms'
 import Cookie from 'universal-cookie'
 import axios from 'axios'
 import Swal from 'sweetalert2'

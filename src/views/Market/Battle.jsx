@@ -7,39 +7,13 @@ import useYam from "../../hooks/useYam";
 // import useBet from "../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
-import Pool3 from "./Pool3";
-import useFarms from "../../hooks/useFarms";
-import { getWarStaked, getChessContracts, getChessBets, chessTVL } from "../../yamUtils";
-import { getStats } from "./utils";
 
 import Uniswap from "../../assets/img/uniswap@2x.png";
-
-import BetModalElection from "./BetCardElection.jsx";
-import Biden from "../../assets/img/biden.png";
-import Trump from "../../assets/img/trump.png";
-
-import Twitch from "../../assets/img/twitch.png"
 import Vitalik from "../../assets/img/chess_vitalik.png"
 import Alexandra from "../../assets/img/chess_alexandra_2.png"
 
 import Chess from "../../assets/img/chess.png";
 import Rook from '../../assets/img/rook.png'
-import chainlinkLogo from "../../assets/img/chainlinklogo.png";
-import everipediaLogo from "../../assets/img/everipedialogo.png";
-
-import useModal from '../../hooks/useModal'
-import Rules from './BetRulesModal'
-import useFarm from '../../hooks/useFarm'
-import Swal from 'sweetalert2';
-import './swal.css'
-import AccountModal from "../../components/TopBar/components/AdvertisementFormModal";
-import { getContract } from '../../utils/erc20'
-import { provider } from 'web3-core'
-import PriceHistoryCard from "../Results/PercentChangeCard";
-import VotingBalance from "./VotingBalance";
-import Countdown from './CountDown'
-import moment from 'moment';
-import Results from "./Results"
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -49,12 +23,6 @@ function isMobile() {
   }
 }
 
-function switchingBattles() {
-  let day = Math.floor((((Date.now() / 1000) - 1601406000) / 86400) + 1)
-  let tomorrow = Math.floor(((Date.now() / 1000 + 3600 - 1601406000) / 86400) + 1)
-  return (tomorrow > day);
-}
-
 function getServerURI() {
   if (window.location.hostname === "localhost") {
     return "http://localhost:5000";
@@ -62,107 +30,75 @@ function getServerURI() {
   return "https://yieldwars-api.herokuapp.com";
 }
 
-export interface OverviewData {
-  circSupply?: string;
-  curPrice?: number;
-  nextRebase?: number;
-  targetPrice?: number;
-  totalSupply?: string;
-}
 
-const Battle: React.FC = () => {
-  let [farms] = useFarms()
+const Battle = () => {
   const yam = useYam()
 
-  let [battles, setBattles] = useState(
-    {
-      finished: false,
-      farm1: {
-        name: "Vitalik",
-      },
-      farm2: {
-        name: "Alexandra",
-      }
-    }
-  )
-
   const { account, connect, ethereum } = useWallet()
-  let [schedule, setSchedule] = useState([])
 
-  const [
-    {
-      circSupply,
-      curPrice,
-      // nextRebase,
-      targetPrice,
-      totalSupply,
-    },
-    setStats
-  ] = useState<OverviewData>({});
-  let [warStaked, setWarStaked] = useState({
-    warStaked: new BigNumber(0),
-    circSupply: new BigNumber(0)
-  });
-
-  const fetchStats = useCallback(async () => {
-    const statsData = await getStats(yam);
-    setStats(statsData);
-  }, [yam, setStats]);
-
+  let [battle, setBattle] = useState(null)
+  let [img1, setImg1] = useState(null)
+  let [img2, setImg2] = useState(null)
+  let [background, setBackground] = useState(null)
   let [modal, setShowModal] = useState(false);
-  let [candidate, setCandidate] = useState(battles.farm1);
-  let [hoverCandidate, setHoverCandidate] = useState("");
-  const [transitioning, setTransitioning] = useState(false);
-  const [roughBets, setRoughBets] = useState({ trump: 0, biden: 0 });
+  let [candidate, setCandidate] = useState("pool1");
+  const [roughBets, setRoughBets] = useState({ pool1: 0, pool2: 0 });
 
-  let currentPrice = curPrice || 0;
-
-  const fetchWarStaked = useCallback(
-    async pools => {
-      const st = await getWarStaked(pools, yam);
-      setWarStaked(st);
-    },
-    [yam, setWarStaked]
-  );
-
-  const onClickTrump = (e) => {
+  const onClickPool1 = (e) => {
     if (!account) {
       connect('injected')
     }
-    setCandidate(battles.farm1)
+    setCandidate("pool1")
     setShowModal(true)
   }
 
-  const onClickBiden = (e) => {
+  const onClickPool2 = (e) => {
     if (!account) {
       connect('injected')
     }
-    setCandidate(battles.farm2)
+    setCandidate("pool2")
     setShowModal(true)
   }
 
-  const getRoughBets = async () => {
-    let tvl = await chessTVL(yam, account)
-    const trump = tvl.trumpTotal
-    const biden = tvl.bidenTotal
-    console.log(trump, biden);
-    setRoughBets({ trump, biden });
-  }
+  // const getRoughBets = async () => {
+  //   let tvl = await chessTVL(yam, account)
+  //   const pool1 = tvl.pool1Total
+  //   const pool2 = tvl.pool2Total
+  //   setRoughBets({ pool1, pool2 });
+  // }
 
   useEffect(() => {
     console.log("using effect");
-    if (yam && account && farms && farms[0]) {
-      fetchStats();
-    }
-    if (yam && farms) {
-      console.log(farms);
-      fetchWarStaked(farms);
+    if (!battle) {
+      let url = window.location.pathname
+      console.log(url);
 
+      url = url.substring(8, url.length)
+      axios.post(`${getServerURI()}/markets/get-market`, {
+        id: url
+      }).then(res => {
+        setBattle(res.data)
+
+        let img1 = new Image();
+        img1.onload = function () { setImg1(res.data.pool1.graphic) }
+        img1.src = res.data.pool1.graphic;
+
+        let img2 = new Image();
+        img2.onload = function () { setImg2(res.data.pool2.graphic) }
+        img2.src = res.data.pool2.graphic;
+
+        let background = new Image();
+        background.onload = function () { setBackground(res.data.background) }
+        background.src = res.data.background;
+      }).catch(err => {
+        console.log(err);
+        setBattle(-1)
+      })
     }
-    if (yam && !roughBets.trump) {
-      getRoughBets();
-    }
-  }, [yam, farms, farms[0]]);
+    // if (yam && account && !roughBets.pool1) {
+    //   getRoughBets();
+    // }
+  }, [yam]);
 
   const closeModal = (event) => {
     setShowModal(false)
@@ -172,120 +108,94 @@ const Battle: React.FC = () => {
     e.stopPropagation()
   }
 
-  const electionContract = getChessContracts(yam)
-
-  const hoverOver = (candidate) => {
-    console.log("called", candidate, hoverCandidate)
-    if ((!candidate || !hoverCandidate) && !transitioning) {
-      console.log("1", candidate)
-      setHoverCandidate(candidate)
-    } else if (candidate !== hoverCandidate) {
-      console.log("2")
-      setTransitioning(true);
-      setHoverCandidate(null);
-      setTimeout(() => {
-        setHoverCandidate(candidate);
-        setTransitioning(false);
-      }, 180);
-    }
-  }
-
-  const hoverExit = () => {
-    setTimeout(() => {
-      setHoverCandidate(null);
-    }, 10);
-  }
-
-  const bidenStyle = hoverCandidate === "Alexandra" ? { transform: `scale(1.05)`, filter: `grayscale(40%)`, transition: `all 0.2s ease-in-out`, zIndex: 2000 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out` };
-  const trumpStyle = hoverCandidate === "Vitalik" ? { transform: `scale(1.05)`, filter: `grayscale(40%)`, transition: `all 0.2s ease-in-out`, zIndex: 2001 } : { filter: `grayscale(100%)`, transition: `all 0.2s ease-in-out`, zIndex: 1000 };
-
-  if (isMobile()) return (
+  return (
     <Switch>
       <StyledCanvas>
-        <BackgroundSection />
+        <BackgroundSection background={background} />
         <ContentContainer>
           <Page>
 
-            <AFK>
-              <Title>Please View on Desktop</Title>
-            </AFK>
+            {/* <SubTitle>
+              <a target="_blank"
+                rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Vitalik_Buterin">
+                Vitalik Buterin
+              </a>
+
+              &nbsp;is playing&nbsp;
+              <a target="_blank"
+                rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Alexandra_Botez">
+                Alexandra Botez
+              </a>
+               &nbsp;in chess. Who Will Win?
+            </SubTitle> */}
+            {/* <Countdown endTime={moment.utc("2020-11-23T02:00", "YYYY-MM-DDTHH:mm").unix() * 1000} /> */}
+            {/* {roughBets.trump > 0 &&
+              <VotingBalance votes1={roughBets.trump} votes2={roughBets.biden} />
+            } */}
+            {battle && battle !== -1 && (
+              <VersusContainer>
+                <VersusBackground>
+                  <ImgWrapper onClick={(e) => onClickPool1(e)}>
+                    <Candidate1
+                      src={img1}
+
+                    />
+                  </ImgWrapper>
+                  <Versus>VS</Versus>
+                  <ImgWrapper onClick={(e) => onClickPool2(e)} >
+                    <Candidate2
+                      src={img2}
+                    />
+                  </ImgWrapper>
+                </VersusBackground>
+              </VersusContainer>
+            )}
+            {battle === -1 && (
+              <Error404>
+                the page you are looking for was not found. (404)
+              </Error404>
+            )}
+            {/* <div style={modal ? { display: 'block' } : { display: 'none' }}>
+              <Modal onClick={(e) => closeModal(e)}>
+                <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
+                  {yam && <BetModalElection
+                    battle={battles}
+                    candidateInfo={candidate}
+                    electionContract={electionContract}
+                  />
+                  }
+                </ModalBlock>
+              </Modal>
+            </div> */}
+            {/* <InfoBlock href={"https://www.twitch.tv/botezlive"}
+              target="_blank"
+            >
+              <img src={Twitch} width="30px" height="30px" />
+                  Watch the match on Twitch!
+              <img src={Twitch} width="30px" height="30px" />
+
+            </InfoBlock>
+
+            <Rules />
+            <Pool3 /> */}
           </Page>
         </ContentContainer>
       </StyledCanvas>
     </Switch>
-  )
-
-  return (
-    <Switch>
-      <StyledCanvas>
-        <BackgroundSection />
-        <ContentContainer>
-          <Page>
-
-            {/* <Title>
-              Alexandra Botez has claimed Victory!
-		        </Title>
-            <Title>
-              Come back soon to claim rewards
-		        </Title> */}
-            {yam ? <Results /> :
-              <ConnectContainer onClick={() => connect('injected')}>
-                <BigTitle>
-                  Connect Your Wallet
-                    </BigTitle>
-                <SubTitle>
-                  to redeem bet rewards
-                    </SubTitle>
-              </ConnectContainer>
-            }
-            <Rules />
-            <Pool3 />
-          </Page>
-        </ContentContainer>
-      </StyledCanvas>
-    </Switch >
   );
 };
 
-
-const ConnectContainer = !isMobile() ? styled.div`
-width: 600px;
-height: 140px;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 30px;
-margin: 0 auto 5vh auto;
+const Error404 = styled.div`
 font-family: "Gilroy";
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-flex-direction: column;
-color: #ffffff;
-border-radius: 8px;
-border: solid 2px rgba(255, 183, 0, 0.3);
- background-color: rgba(4,2,43,0.4);
- cursor: pointer;
- margin: 40vh auto 40vh auto;
-` : styled.div`
-margin: 0 0 40px 0;
-width: 90vw;
-display: flex;
-flex-direction: column;
-padding-top: 20px;
-font-family: "Gilroy";
-  font-size: 25px;
-  font-weight: bold;
+  font-size: 22px;
+  font-weight: normal;
   font-stretch: normal;
   font-style: normal;
   line-height: 1;
   letter-spacing: normal;
-	color: #ffffff;
-	border-radius: 8px;
-  border: solid 2px rgba(255, 183, 0, 0.3);
- background-color: rgba(4,2,43,0.4); 
+  color: #ffffff;
+  margin-top: 20px;
+
 `
 
 const AFK = styled.div`
@@ -300,14 +210,15 @@ text-shadow: -1px 1px 0 #000,
 
 const SubTitle = styled.div`
 font-family: "Gilroy";
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-	color: white;
-	margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #ffffff;
+  max-width: 80vw;
+  margin-bottom: 5px;
 `
 
 const Versus = styled.div`
@@ -410,9 +321,10 @@ flex-direction: row;
 justify-content: center;
 align-items: center;
 `
+
 const BigTitle = styled.div`
 font-family: "Gilroy";
-  font-size: 50px;
+  font-size: 60px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -420,9 +332,7 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: rgb(255, 204, 74);
   max-width: 80vw;
-	margin: 0 auto 20px auto;
-	display: flex;
-	align-items: center;
+  margin: -30px auto 40px;
 `
 
 const Seperator = !isMobile() ? styled.div`
@@ -469,7 +379,7 @@ font-family: "Gilroy";
 `;
 
 const BackgroundSection = styled.div`
-  background-image: url(${Chess});
+  background-image: url(${props => props.background});
   position: fixed;
   width: 180vw;
   height: 100vh;

@@ -241,12 +241,12 @@ width: 50%;
 height: 100%;
 transition: all 0.2s ease-in-out;
 // filter: brightness(100%) contrast(100%) grayscale(100%) ;
-// &:hover {
-// transition: all 0.2s ease-in-out;
-//   filter: brightness(110%) contrast(110%) grayscale(80%);
-//   transform: scale(1.05);
-//   z-index: 2000000;
-// }
+&:hover {
+  transition: all 0.2s ease-in-out;
+  // filter: brightness(110%) contrast(110%) grayscale(80%);
+  transform: scale(1.05);
+  z-index: 2000000;
+}
 `
 
 const InfoBlock = styled.a`

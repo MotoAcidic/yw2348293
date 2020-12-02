@@ -42,125 +42,37 @@ const Battle = ({ bet }) => {
   let [farms] = useFarms()
   const yam = useYam()
 
-  let [battles, setBattles] = useState(
-    {
-      finished: false,
-      farm1: {
-        name: "choice1",
-      },
-      farm2: {
-        name: "choice2",
-      }
-    }
-  )
-
   const { account, connect, ethereum } = useWallet()
-  let [schedule, setSchedule] = useState([])
 
-  const [
-    {
-      circSupply,
-      curPrice,
-      // nextRebase,
-      targetPrice,
-      totalSupply,
-    },
-    setStats
-  ] = useState({});
-  let [warStaked, setWarStaked] = useState({
-    warStaked: new BigNumber(0),
-    circSupply: new BigNumber(0)
-  });
+  const [roughBets, setRoughBets] = useState({ pool1: 0, pool2: 0 });
+  let [img1, setImg1] = useState(null)
+  let [img2, setImg2] = useState(null)
 
-  const fetchStats = useCallback(async () => {
-    const statsData = await getStats(yam);
-    setStats(statsData);
-  }, [yam, setStats]);
-  let [modal, setShowModal] = useState(false);
-  let [candidate, setCandidate] = useState(battles.farm1);
-  let [hoverCandidate, setHoverCandidate] = useState("");
-  const [transitioning, setTransitioning] = useState(false);
-  const [roughBets, setRoughBets] = useState({ trump: 0, biden: 0 });
+  let imag1 = new Image();
+  imag1.onload = function () { setImg1(bet.pool1.graphic) }
+  imag1.src = bet.pool1.graphic;
 
-  let currentPrice = curPrice || 0;
+  let imag2 = new Image();
+  imag2.onload = function () { setImg2(bet.pool2.graphic) }
+  imag2.src = bet.pool2.graphic;
 
-  const fetchWarStaked = useCallback(
-    async pools => {
-      const st = await getWarStaked(pools, yam);
-      setWarStaked(st);
-    },
-    [yam, setWarStaked]
-  );
-
-  const onClickTrump = (e) => {
-    if (!account) {
-      connect('injected')
-    }
-    setCandidate(battles.farm1)
-    setShowModal(true)
-  }
-
-  const onClickBiden = (e) => {
-    if (!account) {
-      connect('injected')
-    }
-    setCandidate(battles.farm2)
-    setShowModal(true)
-  }
-
-  const getRoughBets = async () => {
-    let tvl = await chessTVL(yam, account)
-    const trump = tvl.trumpTotal
-    const biden = tvl.bidenTotal
-    console.log(trump, biden);
-    setRoughBets({ trump, biden });
-  }
+  // const getRoughBets = async () => {
+  //   let tvl = await chessTVL(yam, account)
+  //   const trump = tvl.trumpTotal
+  //   const biden = tvl.bidenTotal
+  //   console.log(trump, biden);
+  //   setRoughBets({ trump, biden });
+  // }
 
   useEffect(() => {
     console.log("using effect");
-    if (yam && account && farms && farms[0]) {
-      fetchStats();
-    }
-    if (yam && farms) {
-      console.log(farms);
-      fetchWarStaked(farms);
-
-    }
-    if (yam && account && !roughBets.trump) {
-      getRoughBets();
-    }
-  }, [yam, farms, farms[0]]);
-
-  const closeModal = (event) => {
-    setShowModal(false)
-  }
+    // if (yam && account && !roughBets.pool1) {
+    //   getRoughBets();
+    // }
+  }, [yam]);
 
   const stopProp = (e) => {
     e.stopPropagation()
-  }
-
-  const electionContract = getChessContracts(yam)
-
-  const hoverOver = (candidate) => {
-    console.log("called", candidate, hoverCandidate)
-    if ((!candidate || !hoverCandidate) && !transitioning) {
-      console.log("1", candidate)
-      setHoverCandidate(candidate)
-    } else if (candidate !== hoverCandidate) {
-      console.log("2")
-      setTransitioning(true);
-      setHoverCandidate(null);
-      setTimeout(() => {
-        setHoverCandidate(candidate);
-        setTransitioning(false);
-      }, 180);
-    }
-  }
-
-  const hoverExit = () => {
-    setTimeout(() => {
-      setHoverCandidate(null);
-    }, 10);
   }
 
   console.log("incbet", bet)

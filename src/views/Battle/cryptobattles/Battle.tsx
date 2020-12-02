@@ -121,17 +121,16 @@ const Battle: React.FC = () => {
       )
     } else if (battles.length) {
       return (
-        <>
-          {battles.length === 2 && <PersVersusCard battles={battles} />}
-          {battles.length === 1 && <SinglePersVersusCard battles={battles} />}
-        </>
+        <BattleSection>
+          <SinglePersVersusCard battles={battles} />
+          {/* INSERT TRACKING COMPONENT HERE */}
+          BLAH BLAH BLAH
+        </BattleSection>
       )
     }
     return null;
 
   };
-
-  console.log(yesterdaysBattle);
 
   // if (isMobile()) {
   //   return (
@@ -178,16 +177,13 @@ const Battle: React.FC = () => {
           <Page>
 
             <Countdown />
-            {battles && battles.length > 0 && <TotalBets battle1={battles[0]} id={battles[0]._id} />}
+            {/* {battles && battles.length > 0 && <TotalBets battle1={battles[0]} id={battles[0]._id} />} */}
             <SmallSpace />
 
             {battleFields()}
-            {account && yesterdaysBattle.length > 0 && <Yesterday onClick={() => setBetRedeemModal(true)} >Show Yesterdays Result</Yesterday>}
+            {/* {account && yesterdaysBattle.length > 0 && <Yesterday onClick={() => setBetRedeemModal(true)} >Show Yesterdays Result</Yesterday>} */}
             <SmallSpace />
-            {/* {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
-            {prevDayBattles.length > 0 &&
-              <InbetweenCard battles={prevDayBattles} />
-            } */}
+
             <Pool3 />
             <Title>Information</Title>
             <SmallSpace />
@@ -210,6 +206,13 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const BattleSection = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+align-items: center;
+`
 
 const PageTitle = styled.div`
 font-family: "Gilroy";

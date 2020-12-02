@@ -397,7 +397,7 @@ const Loading = styled.img`
 
 const Container = styled.div`
 display: flex;
-width: 100%;
+width: 60%;
 justify-content: space-evenly;
 align-items: center;
 `

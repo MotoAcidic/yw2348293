@@ -15,17 +15,18 @@ import UnstakeModal from "./UnstakeModal";
 import WarPool from "./WarPool";
 
 import Roadmap from "./Roadmap";
+import moment from "moment";
 
 import FarmCards from "./components/FarmCards";
-import CountDown from "./components/CountDown";
+import CountDown from "./BigCountDown";
 import MobileCountDown from "./components/MobileCountdown";
-import moment from 'moment';
 
 import { Account } from "../../yam/lib/accounts";
 import { getStartTime, getWarStaked } from "../../yamUtils";
 import useFarms from "../../hooks/useFarms";
 import BigNumber from "bignumber.js";
 import TopDisplayContainer from '../../components/TopDisplayContainer'
+import ScrollUpButton from "react-scroll-up-button";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -105,20 +106,21 @@ const Farms: React.FC = () => {
         <ContentContainer>
           <Page>
             <CardContainer>
-              <Landing>
 
                 <TopDisplayContainer />
-                  
-                <BigTitle>The Future of Prediction Markets, Community Participation, and Governance lives here! </BigTitle>
+              <LandingSection>
+
+                <CountDown launchDate={start} />
+                {/* <BigTitle>The Future of Prediction Markets, Community Participation, and Governance lives here! </BigTitle> */}
                 <Title>YieldWars is building prediction markets from the bottom-up with extra emphasis on participation and communty</Title>
 
-                {!isMobile() ?
+                {/* {!isMobile() ?
                   <iframe title="promo" style={{ width: "650px", height: "365.4px", margin: "10px auto 40px auto" }} src={`https://www.youtube.com/embed/uVJI32AnOUM`} frameBorder="0" />
                   :
                   <iframe title="promo" style={{ width: "90vw", height: "50.6vw", margin: "40px auto 40px auto" }} src={`https://www.youtube.com/embed/uVJI32AnOUM`} frameBorder="0" />
-                }
+                } */}
 
-              </Landing>
+              </LandingSection>
               <Seperator />
               <Roadmap />
              
@@ -138,6 +140,7 @@ const Farms: React.FC = () => {
   );
 };
 
+
 const Title = !isMobile() ? styled.div`
 font-family: "Gilroy";
   font-size: 24px;
@@ -148,7 +151,8 @@ font-family: "Gilroy";
   letter-spacing: normal;
   color: #ffffff;
   max-width: 70vw;
-  margin: 0 auto 60px;
+  width: 800px;
+  margin: 60px auto 75px auto;
   ` : styled.div`
   font-family: "Gilroy";
     font-size: 18px;
@@ -162,7 +166,6 @@ font-family: "Gilroy";
     margin: auto;
     `
 
-
 const Seperator = !isMobile() ? styled.div`
   width: 1000px;
   height: 1px;
@@ -173,34 +176,14 @@ const Seperator = !isMobile() ? styled.div`
   background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
   `
 
-const BigTitle = !isMobile() ? styled.div`
-  font-family: "Gilroy";
-  font-size: 80px;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: rgb(255, 204, 74);
-  max-width: 80vw;
-  margin: 0 auto 20px;
-` : styled.div`
-font-family: "Gilroy";
-font-size: 40px;
-text-transform: uppercase;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: rgb(255, 204, 74);
-max-width: 90vw;
-margin: 0 auto 20px;
+const LandingSection = !isMobile() ? styled.div`
+height: calc(100vh - 154px);
+display: flex;
+flex-direction: column;
+justify-content: center;
+`: styled.div`
+min-height: calc(100vh - 73px);
 `
-
-const Landing = styled.div`
-min-height: 90vh;`
 
 const StyledA = styled.a`
   cursor: pointer;

@@ -69,12 +69,12 @@ const Text = !isMobile() ? styled.div`` : styled.div`max-width: 90%;`;
 
 const Notice = !isMobile() ? styled.div`
   width: 100%;
-  height: 20px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: "Gilroy";
-  font-size: 14px;
+  font-size: 13px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -108,8 +108,8 @@ const StyledTopBar = styled.div`
 const StyledTopBarInner = styled.div`
   align-items: center;
   display: flex;
-  min-height: 70px;
   height: ${props => props.theme.topBarSize}px;
+  margin-top: 5px;
   justify-content: space-between;
   max-width: ${props => props.theme.siteWidth}px;
   width: 100%;

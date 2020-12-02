@@ -2,11 +2,6 @@ import React from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
 
-function isMobile() {
-  if (window.innerWidth < window.innerHeight) return true;
-  return false;
-}
-
 class CountDown extends React.Component {
 	constructor(props) {
 		super(props)
@@ -24,14 +19,14 @@ class CountDown extends React.Component {
 
 		let endTime;
 		const format = 'hh:mm:ss';
-		if (moment.utc().isBetween(moment.utc('19:00:00', format), moment.utc('20:00:00', format))) {
-			this.setState({ inBetween: true })
-			endTime = moment.utc().startOf('hour').hours(20)
+		if (moment.utc().isBetween(moment.utc('18:00:00', format), moment.utc('19:00:00', format))) {
+			this.setState({inBetween: true})
+			endTime = moment.utc().startOf('hour').hours(19)
 		} else {
-			if (moment.utc().isBetween(moment.utc('20:00:00', format), moment.utc('23:59:59', format))) {
-				endTime = moment.utc().add(1, 'days').startOf('hour').hours(19)
+			if (moment.utc().isBetween(moment.utc('19:00:00', format), moment.utc('23:59:59', format))) {
+				endTime = moment.utc().add(1, 'days').startOf('hour').hours(18)
 			} else {
-				endTime = moment.utc().startOf('hour').hours(19)
+				endTime = moment.utc().startOf('hour').hours(18)
 			}
 		}
 
@@ -51,7 +46,7 @@ class CountDown extends React.Component {
 	render() {
 		return (
 			<Desc>
-				{this.state.inBetween ? "Next battle starts in " : "Battle ends in "}
+				{this.state.inBetween ? "Next battle starts in" : "Battle ends in"}
 				<Countdown>
 					<Item>
 						{this.state.hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
@@ -77,39 +72,26 @@ const Item = styled.div`
 text-align: center;
 `
 
-const Desc = !isMobile() ? styled.div`
+const Desc = styled.div`
 display: flex;
 align-items: center;
-font-family: Alegreya;
-  font-size: 22px;
+font-family: "Gilroy";
+  font-size: 20px;
 	font-stretch: normal;
-	font-style: normal;
-	font-weight: bold;
+  font-style: normal;
   letter-spacing: normal;
   text-align: center;
   color: #ffffff;
-	margin-bottom: 5px;
-` : styled.div`
-margin-top: 40px;
-display: flex;
-align-items: center;
-font-family: Alegreya;
-  font-size: 22px;
-	font-stretch: normal;
-	font-style: normal;
-	font-weight: bold;
-  letter-spacing: normal;
-  text-align: center;
-  color: #ffffff;
-	margin-bottom: 5px;
+	color: #ffffff;
+	margin-bottom: 20px;
 `;
 
 const TimerText = styled.div`
 text-align: center;
 width: 100%;
 margin-top: 1vh;
-font-family: Alegreya;
-  font-size: 30px;
+font-family: "Gilroy";
+  font-size: 20px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
@@ -119,17 +101,14 @@ font-family: Alegreya;
 
 const Countdown = styled.div`
 display: flex;
-font-family: Alegreya;
-font-size: 30px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-letter-spacing: 2px;
-margin-top: -5px;
-margin-left: 10px;
-color: #ffb700;
-width: 110px;
-justify-content: center;
+margin-left: 5px;
+font-family: "Gilroy";
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: 2px;
+  color: #ffb700;
 `
 
 

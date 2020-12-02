@@ -15,7 +15,6 @@ import Cookie from 'universal-cookie'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import personalities from './personalities'
-import BettingCard from "./unused/VersusCard";
 import BattleWhite from '../../../assets/img/battlewhite.png'
 import BattleRed from '../../../assets/img/battlered.png'
 import BattleGreen from '../../../assets/img/battlegreen.png'

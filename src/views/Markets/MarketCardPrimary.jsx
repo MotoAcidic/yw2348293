@@ -1,20 +1,12 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { Switch } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
-import Page from "../../components/Page";
 import useYam from "../../hooks/useYam";
 // import useBet from "../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
-import Pool3 from "./unused/Pool3";
 import useFarms from "../../hooks/useFarms";
 import { getWarStaked, getChessContracts, getChessBets, chessTVL } from "../../yamUtils";
-import { getStats } from "./unused/utils";
-
-import Uniswap from "../../assets/img/uniswap@2x.png";
-import Chess from "../../assets/img/chess.png";
-import Rook from '../../assets/img/rook.png'
 import { NavLink } from 'react-router-dom'
 import BalanceBar from "./BalanceBarPrimary"
 
@@ -26,157 +18,43 @@ function isMobile() {
   }
 }
 
-function switchingBattles() {
-  let day = Math.floor((((Date.now() / 1000) - 1601406000) / 86400) + 1)
-  let tomorrow = Math.floor(((Date.now() / 1000 + 3600 - 1601406000) / 86400) + 1)
-  return (tomorrow > day);
-}
-
-function getServerURI() {
-  if (window.location.hostname === "localhost") {
-    return "http://localhost:5000";
-  }
-  return "https://yieldwars-api.herokuapp.com";
-}
-
 const Battle = ({ bet }) => {
-  let [farms] = useFarms()
   const yam = useYam()
-
-  let [battles, setBattles] = useState(
-    {
-      finished: false,
-      farm1: {
-        name: "choice1",
-      },
-      farm2: {
-        name: "choice2",
-      }
-    }
-  )
-
   const { account, connect, ethereum } = useWallet()
-  let [schedule, setSchedule] = useState([])
+  const [currBets, setCurrBets] = useState({ choice1: 0, choice2: 0 });
+  let [img1, setImg1] = useState(null)
+  let [img2, setImg2] = useState(null)
 
-  const [
-    {
-      circSupply,
-      curPrice,
-      // nextRebase,
-      targetPrice,
-      totalSupply,
-    },
-    setStats
-  ] = useState({});
-  let [warStaked, setWarStaked] = useState({
-    warStaked: new BigNumber(0),
-    circSupply: new BigNumber(0)
-  });
-
-  const fetchStats = useCallback(async () => {
-    const statsData = await getStats(yam);
-    setStats(statsData);
-  }, [yam, setStats]);
-  let [modal, setShowModal] = useState(false);
-  let [candidate, setCandidate] = useState(battles.farm1);
-  let [hoverCandidate, setHoverCandidate] = useState("");
-  const [transitioning, setTransitioning] = useState(false);
-  const [roughBets, setRoughBets] = useState({ choice1: 0, choice2: 0 });
-
-  let currentPrice = curPrice || 0;
-
-  const fetchWarStaked = useCallback(
-    async pools => {
-      const st = await getWarStaked(pools, yam);
-      setWarStaked(st);
-    },
-    [yam, setWarStaked]
-  );
-
-  const onClickTrump = (e) => {
-    if (!account) {
-      connect('injected')
-    }
-    setCandidate(battles.farm1)
-    setShowModal(true)
-  }
-
-  const onClickBiden = (e) => {
-    if (!account) {
-      connect('injected')
-    }
-    setCandidate(battles.farm2)
-    setShowModal(true)
-  }
-
-  const getRoughBets = async () => {
+  const getCurrBets = async () => {
     let tvl = await chessTVL(yam, account)
     console.log("tvl", tvl)
     const choice1 = tvl.trumpTotal
     const choice2 = tvl.bidenTotal
     console.log(choice1, choice2);
-    setRoughBets({ choice1, choice2 });
+    setCurrBets({ choice1, choice2 });
   }
 
   useEffect(() => {
-    console.log("using effect");
-    if (yam && account && farms && farms[0]) {
-      fetchStats();
+    if (yam) getCurrBets();
+    if (!img1 || !img2) {
+      let imag1 = new Image();
+      imag1.onload = function () { setImg1(bet.pool1.graphic) }
+      imag1.src = bet.pool1.graphic;
+      let imag2 = new Image();
+      imag2.onload = function () { setImg2(bet.pool2.graphic) }
+      imag2.src = bet.pool2.graphic;
     }
-    if (yam && farms) {
-      console.log(farms);
-      fetchWarStaked(farms);
-
-    }
-    // if (yam && account && !roughBets.choice1) {
-    if (yam) {
-
-      getRoughBets();
-    }
-    // }
-  }, [yam, farms, farms[0]]);
-
-  const closeModal = (event) => {
-    setShowModal(false)
-  }
-
-  const stopProp = (e) => {
-    e.stopPropagation()
-  }
-
-  const electionContract = getChessContracts(yam)
-
-  const hoverOver = (candidate) => {
-    console.log("called", candidate, hoverCandidate)
-    if ((!candidate || !hoverCandidate) && !transitioning) {
-      console.log("1", candidate)
-      setHoverCandidate(candidate)
-    } else if (candidate !== hoverCandidate) {
-      console.log("2")
-      setTransitioning(true);
-      setHoverCandidate(null);
-      setTimeout(() => {
-        setHoverCandidate(candidate);
-        setTransitioning(false);
-      }, 180);
-    }
-  }
-
-  const hoverExit = () => {
-    setTimeout(() => {
-      setHoverCandidate(null);
-    }, 10);
-  }
+  }, [yam, img1, img2]);
 
   return (
     <VersusContainer to={`/market/${bet._id}`}>
       <ImgWrapper>
-        <Candidate1 src={bet.pool1.graphic} />
+        <Candidate1 src={img1} />
       </ImgWrapper>
       {/* <Versus>VS</Versus> */}
       <ImgWrapper  >
         <Candidate2
-          src={bet.pool2.graphic}
+          src={img2}
         />
       </ImgWrapper>
       <Info>
@@ -184,15 +62,15 @@ const Battle = ({ bet }) => {
           {bet.description}
         </Description>
         <BetAmount>
-          {roughBets.choice1 > 0 &&
+          {currBets.choice1 > 0 &&
             <>
               <Volume>
                 Volume:&nbsp;
                 <Money>
-                  ${(roughBets.choice1 + roughBets.choice2).toFixed(2)}
+                  ${(currBets.choice1 + currBets.choice2).toFixed(2)}
                 </Money>
               </Volume>
-              <BalanceBar bet={bet} votes1={roughBets.choice1} votes2={roughBets.choice2} />
+              <BalanceBar bet={bet} votes1={currBets.choice1} votes2={currBets.choice2} />
             </>
           }
         </BetAmount>

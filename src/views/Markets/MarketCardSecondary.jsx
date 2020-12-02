@@ -1,20 +1,12 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { Switch } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
-import Page from "../../components/Page";
 import useYam from "../../hooks/useYam";
 // import useBet from "../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
-import Pool3 from "./unused/Pool3";
 import useFarms from "../../hooks/useFarms";
 import { getWarStaked, getChessContracts, getChessBets, chessTVL } from "../../yamUtils";
-import { getStats } from "./unused/utils";
-
-import Uniswap from "../../assets/img/uniswap@2x.png";
-import Chess from "../../assets/img/chess.png";
-import Rook from '../../assets/img/rook.png'
 import { NavLink } from 'react-router-dom'
 
 function isMobile() {
@@ -25,57 +17,33 @@ function isMobile() {
   }
 }
 
-function switchingBattles() {
-  let day = Math.floor((((Date.now() / 1000) - 1601406000) / 86400) + 1)
-  let tomorrow = Math.floor(((Date.now() / 1000 + 3600 - 1601406000) / 86400) + 1)
-  return (tomorrow > day);
-}
-
-function getServerURI() {
-  if (window.location.hostname === "localhost") {
-    return "http://localhost:5000";
-  }
-  return "https://yieldwars-api.herokuapp.com";
-}
-
 const Battle = ({ bet }) => {
-  let [farms] = useFarms()
   const yam = useYam()
-
   const { account, connect, ethereum } = useWallet()
-
-  const [roughBets, setRoughBets] = useState({ pool1: 0, pool2: 0 });
+  const [currBets, setCurrBets] = useState({ choice1: 0, choice2: 0 });
   let [img1, setImg1] = useState(null)
   let [img2, setImg2] = useState(null)
 
-  let imag1 = new Image();
-  imag1.onload = function () { setImg1(bet.pool1.graphic) }
-  imag1.src = bet.pool1.graphic;
-
-  let imag2 = new Image();
-  imag2.onload = function () { setImg2(bet.pool2.graphic) }
-  imag2.src = bet.pool2.graphic;
-
-  // const getRoughBets = async () => {
-  //   let tvl = await chessTVL(yam, account)
-  //   const trump = tvl.trumpTotal
-  //   const biden = tvl.bidenTotal
-  //   console.log(trump, biden);
-  //   setRoughBets({ trump, biden });
-  // }
-
-  useEffect(() => {
-    console.log("using effect");
-    // if (yam && account && !roughBets.pool1) {
-    //   getRoughBets();
-    // }
-  }, [yam]);
-
-  const stopProp = (e) => {
-    e.stopPropagation()
+  const getCurrBets = async () => {
+    let tvl = await chessTVL(yam, account)
+    console.log("tvl", tvl)
+    const choice1 = tvl.trumpTotal
+    const choice2 = tvl.bidenTotal
+    console.log(choice1, choice2);
+    setCurrBets({ choice1, choice2 });
   }
 
-  console.log("incbet", bet)
+  useEffect(() => {
+    if (yam) getCurrBets();
+    if (!img1 || !img2) {
+      let imag1 = new Image();
+      imag1.onload = function () { setImg1(bet.pool1.graphic) }
+      imag1.src = bet.pool1.graphic;
+      let imag2 = new Image();
+      imag2.onload = function () { setImg2(bet.pool2.graphic) }
+      imag2.src = bet.pool2.graphic;
+    }
+  }, [yam, img1, img2]);
 
   return (
     <VersusContainer to={`/market/${bet._id}`}>

@@ -26,7 +26,6 @@ import { getStartTime, getWarStaked } from "../../yamUtils";
 import useFarms from "../../hooks/useFarms";
 import BigNumber from "bignumber.js";
 import TopDisplayContainer from '../../components/TopDisplayContainer'
-import ScrollUpButton from "react-scroll-up-button";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import './swal.css'
-import { Chart } from '../../Markets/node_modules/react-charts'
+import { Chart } from 'react-charts'
 import moment from "moment";
 
 function isMobile() {
@@ -321,7 +321,6 @@ color: #ffffff;
 const GreenText = styled.div`
 font-family: "GilroyMedium";
 font-size: 18px;
-
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
@@ -344,7 +343,6 @@ text-align: center;
 	text-align: left;
 	letter-spacing: 1px;
 	color: #ff4343;
-
 `
 
 export default FarmGraph;

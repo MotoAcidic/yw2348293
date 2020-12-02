@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import './swal.css'
-import { Chart } from 'react-charts'
+import { Chart } from '../../Markets/node_modules/react-charts'
 
 function isMobile() {
 	if (window.innerWidth < window.innerHeight) {

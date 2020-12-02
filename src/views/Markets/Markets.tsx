@@ -16,7 +16,8 @@ import Uniswap from "../../assets/img/uniswap@2x.png";
 import Chess from "../../assets/img/chess.png";
 import Rook from '../../assets/img/rook.png'
 import Background from '../../assets/img/bg3.svg'
-import MarketCard from "./MarketCard";
+import MarketCardPrimary from "./MarketCardPrimary";
+import MarketCardSecondary from "./MarketCardSecondary";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -180,20 +181,7 @@ const Battle: React.FC = () => {
     console.log(trump, biden);
     setRoughBets({ trump, biden });
   }
-  useEffect(() => {
-    console.log("using effect");
-    if (yam && account && farms && farms[0]) {
-      fetchStats();
-    }
-    if (yam && farms) {
-      console.log(farms);
-      fetchWarStaked(farms);
 
-    }
-    if (yam && !roughBets.trump) {
-      getRoughBets();
-    }
-  }, [yam, farms, farms[0]]);
   const hoverOver = (candidate) => {
     console.log("called", candidate, hoverCandidate)
     if ((!candidate || !hoverCandidate) && !transitioning) {
@@ -213,43 +201,41 @@ const Battle: React.FC = () => {
   useEffect(() => {
     axios.get(`${getServerURI()}/markets/get-markets`).then(res => {
       console.log("markets", res.data);
-      setMarkets(res.data.activeMarkets);
+      let allMarkets = res.data.activeMarkets;
+      let primaryBet;
+      console.log("allmarkets", allMarkets);
+      const primaryBetIndex = allMarkets.findIndex(bet => bet.primary)
+      if (primaryBetIndex !== -1) {
+        primaryBet = allMarkets.splice(primaryBetIndex, 1);
+        primaryBet = primaryBet[0];
+      } else {
+        primaryBet = allMarkets.shift();
+      }
+      const PrimaryBet = () => (
+        <PrimaryContainer>
+          <MarketCardPrimary bet={primaryBet} />
+        </PrimaryContainer>
+      )
+      const AllMarkets = () => (
+
+        <MarketsContainer>
+          <PrimaryBet />
+          <MarketsGrid>
+  
+            {allMarkets.map(bet =>
+              <SecondaryContainer>
+                <MarketCardSecondary bet={bet} />
+              </SecondaryContainer>
+            )}
+          </MarketsGrid>
+        </MarketsContainer>
+      )
+      setMarkets(<AllMarkets/>);
     }).catch(err => {
       console.log(err);
     })
   }, []);
 
-  const BetsDisplay = () => {
-    if (!markets) return null;
-    let allMarkets = markets;
-    let primaryBet;
-    const primaryBetIndex = allMarkets.findIndex(bet => bet.primary)
-    if (primaryBetIndex !== -1) {
-      primaryBet = allMarkets.splice(primaryBetIndex, 1);
-      primaryBet = primaryBet[0];
-    } else {
-      primaryBet = allMarkets.shift();
-    }
-    const PrimaryBet = () => (
-      <PrimaryContainer>
-        <MarketCard primary={true} bet={primaryBet} />
-      </PrimaryContainer>
-    )
-    return (
-      <MarketsContainer>
-        <PrimaryBet />
-        <MarketsGrid>
-
-          {allMarkets.map(bet =>
-            <SecondaryContainer>
-              <MarketCard primary={false} bet={bet} />
-            </SecondaryContainer>
-          )}
-        </MarketsGrid>
-      </MarketsContainer>
-    )
-
-  }
 
 
   return (
@@ -261,8 +247,7 @@ const Battle: React.FC = () => {
             <TopDisplayContainer />
             <LandingSection>
 
-
-              <BetsDisplay />
+              {markets}
               {/* <Title>
               Alexandra Botez has claimed Victory!
 		        </Title>

@@ -38,7 +38,7 @@ function getServerURI() {
   return "https://yieldwars-api.herokuapp.com";
 }
 
-const Battle = ({ bet, primary }) => {
+const Battle = ({ bet }) => {
   let [farms] = useFarms()
   const yam = useYam()
 
@@ -168,34 +168,19 @@ const Battle = ({ bet, primary }) => {
   return (
     <VersusContainer to={`/market/${bet._id}`}>
       <ImgWrapper>
-        <Candidate1
-          src={bet.pool1.graphic}
-
-        />
-        {
-          primary ? 
-        <Title>
+        <Candidate1 src={bet.pool1.graphic} />
+        <SmallTitle>
           {bet.pool1.name}
-        </Title> : 
-                <SmallTitle>
-                {bet.pool1.name}
-              </SmallTitle>
-        }
+        </SmallTitle>
       </ImgWrapper>
       {/* <Versus>VS</Versus> */}
       <ImgWrapper  >
         <Candidate2
           src={bet.pool2.graphic}
         />
-        {
-          primary ? 
-        <Title>
+        <SmallTitle>
           {bet.pool2.name}
-        </Title> : 
-                <SmallTitle>
-                {bet.pool2.name}
-              </SmallTitle>
-        }
+        </SmallTitle>
       </ImgWrapper>
     </VersusContainer>
   );

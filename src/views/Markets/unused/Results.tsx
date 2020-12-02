@@ -2,14 +2,14 @@ import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { Switch } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import Page from "../../components/Page";
-import useYam from "../../hooks/useYam";
+import Page from "../../../components/Page";
+import useYam from "../../../hooks/useYam";
 // import useBet from "../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 import Pool3 from "./Pool3";
-import useFarms from "../../hooks/useFarms";
-import { getWarStaked, getChessContracts, getCurrentBets, electionTVL } from "../../yamUtils";
+import useFarms from "../../../hooks/useFarms";
+import { getWarStaked, getChessContracts, getCurrentBets, electionTVL } from "../../../yamUtils";
 import { getStats } from "./utils";
 
 import Uniswap from "../../assets/img/uniswap@2x.png";

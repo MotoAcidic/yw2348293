@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import BigNumber from "bignumber.js";
-import Page from "../../components/Page";
-import useFarms from "../../hooks/useFarms";
-import useYam from "../../hooks/useYam";
+import Page from "../../../components/Page";
+import useFarms from "../../../hooks/useFarms";
+import useYam from "../../../hooks/useYam";
 import { useWallet } from "use-wallet";
-import { getTotalValue } from "../../yamUtils";
+import { getTotalValue } from "../../../yamUtils";
 import { getStats } from "./utils";
 import Background from '../../assets/img/bg3.svg'
 import img_1 from "../../assets/img/instructions/0@2x.png";

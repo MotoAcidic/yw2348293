@@ -2,14 +2,15 @@ import React, { useCallback, useMemo, useState } from 'react'
 
 import BigNumber from 'bignumber.js'
 
-import Button from '../../components/Button'
-import Modal, { ModalProps } from '../../components/Modal'
-import ModalActions from '../../components/ModalActions'
-import ModalTitle from '../../components/ModalTitle'
-import TokenInput from '../../components/TokenInput'
+import Button from '../../../components/Button'
+import Modal, { ModalProps } from '../../../components/Modal'
+import ModalActions from '../../../components/ModalActions'
+import ModalTitle from '../../../components/ModalTitle'
+import TokenInput from '../../../components/TokenInput'
 import styled from 'styled-components'
 
-import { getFullDisplayBalance } from '../../utils/formatBalance'
+
+import { getFullDisplayBalance } from '../../../utils/formatBalance'
 
 interface DepositModalProps extends ModalProps {
   max: BigNumber,
@@ -20,6 +21,7 @@ interface DepositModalProps extends ModalProps {
 const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, tokenName = '' }) => {
   const [val, setVal] = useState('')
   const [done, setDone] = useState(false)
+
 
   const fullBalance = useMemo(() => {
     return getFullDisplayBalance(max)
@@ -43,7 +45,7 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
 
   return (
     <Modal>
-      <ModalTitle text={`Stake Your Tokens`} />
+      <ModalTitle text={`Unstake Your Tokens`} />
       <TokenInput
         value={val}
         onSelectMax={handleSelectMax}
@@ -53,19 +55,18 @@ const DepositModal: React.FC<DepositModalProps> = ({ max, onConfirm, onDismiss, 
       />
       {done ? (
         <ModalActions>
-          <ModalButton style={{width: "60%"}}  onClick={onDismiss} >
+               <ModalButton style={{width: "60%"}}  onClick={onDismiss} >
             Close
           </ModalButton>
-          Pending
         </ModalActions>
       ) : (
-          <ModalActions>
-            <ModalButton style={{width: "60%"}}  onClick={onDismiss} >           Cancel
-          </ModalButton>
-            <ModalButton style={{width: "60%"}} onClick={() => confirm(val)} >
-              Confirm
-            </ModalButton>
-          </ModalActions>
+        <ModalActions>
+        <ModalButton style={{width: "60%"}}  onClick={onDismiss} >           Cancel
+      </ModalButton>
+        <ModalButton style={{width: "60%"}} onClick={() => confirm(val)} >
+          Confirm
+        </ModalButton>
+      </ModalActions>
         )}
     </Modal>
   )
@@ -97,6 +98,5 @@ const ModalButton = styled.button`
     opacity: 1;
   }
 `
-
 
 export default DepositModal

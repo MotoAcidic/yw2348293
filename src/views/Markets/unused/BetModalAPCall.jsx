@@ -1,25 +1,25 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import styled from 'styled-components'
-import Button from '../../components/Button'
+import Button from '../../../components/Button'
 import { useWallet } from "use-wallet";
-import useModal from '../../hooks/useModal'
+import useModal from '../../../hooks/useModal'
 import RulesModal from "./BetRulesModal";
 import Cookie from 'universal-cookie'
-import Container from '../../components/Container'
-import useFarm from '../../hooks/useFarm'
-import useYam from '../../hooks/useYam'
-import { getDisplayBalance } from '../../utils/formatBalance'
+import Container from '../../../components/Container'
+import useFarm from '../../../hooks/useFarm'
+import useYam from '../../../hooks/useYam'
+import { getDisplayBalance } from '../../../utils/formatBalance'
 import { provider } from 'web3-core'
-import useApprove from '../../hooks/useApprove'
+import useApprove from '../../../hooks/useApprove'
 import './swal.css'
 import UnstakeModal from './UnstakeModal'
-import useStakedBalance from '../../hooks/useStakedBalance'
-import useUnstake from '../../hooks/useUnstake'
-import useAllowance from '../../hooks/useAllowance'
-import { placeWARBetAP, placeETHBetAP, getCurrentBetsAP, getCurrentBalancesAP, getRewardsAP, getFinishedAP, redeem } from '../../yamUtils'
+import useStakedBalance from '../../../hooks/useStakedBalance'
+import useUnstake from '../../../hooks/useUnstake'
+import useAllowance from '../../../hooks/useAllowance'
+import { placeWARBetAP, placeETHBetAP, getCurrentBetsAP, getCurrentBalancesAP, getRewardsAP, getFinishedAP, redeem } from '../../../yamUtils'
 import Swal from 'sweetalert2';
-import { getElectionContracts, harvest } from '../../yamUtils'
-import { getContract } from '../../utils/erc20'
+import { getElectionContracts, harvest } from '../../../yamUtils'
+import { getContract } from '../../../utils/erc20'
 
 
 function isMobile() {

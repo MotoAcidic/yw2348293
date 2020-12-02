@@ -7,18 +7,14 @@ import useYam from "../../hooks/useYam";
 // import useBet from "../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
-import Pool3 from "./Pool3";
+import Pool3 from "./unused/Pool3";
 import useFarms from "../../hooks/useFarms";
 import { getWarStaked, getChessContracts, getChessBets, chessTVL } from "../../yamUtils";
-import { getStats } from "./utils";
+import { getStats } from "./unused/utils";
 
 import Uniswap from "../../assets/img/uniswap@2x.png";
 import Chess from "../../assets/img/chess.png";
 import Rook from '../../assets/img/rook.png'
-import Rules from './BetRulesModal'
-import Countdown from './CountDown'
-import moment from 'moment';
-import Results from "./Results"
 import Background from '../../assets/img/bg3.svg'
 import MarketCard from "./MarketCard";
 

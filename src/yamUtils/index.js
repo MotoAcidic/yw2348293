@@ -1047,14 +1047,20 @@ export const chessTVL = async (yam, account) => {
   return { trumpTotal, bidenTotal }
 }
 
-// export const getLiveElectionResults = async (yam, states) => {
-//   for (let i = 0; i < states.length; i++) {
-//     let data = await yam.contracts.everipedia.methods.presidentialWinners(states[i].name).call()
-//     // console.log(data);
-//     states[i].winner = data.winner
-//     states[i].resultNow = data.resultNow
-//     states[i].resultBlock = data.resultBlock
-//     // console.log(states[i]);
-//   }
-//   return states
-// }
+// TESTING FOR MARKETS
+
+export const testTVL = async (yam, account) => {
+  const ethPrice = await getETHPrice(yam)
+  const curPrice = await getCurrentPrice(yam)
+  const currentBets = await getChessBets(yam)
+  console.log(currentBets);
+  
+  const trumpEth = ethPrice * currentBets.trumpETHPot
+  const bidenEth = ethPrice * currentBets.bidenETHPot
+  const trumpWar = curPrice * currentBets.trumpWARPot
+  const bidenWar = curPrice * currentBets.bidenWARPot
+  const trumpTotal = trumpEth + trumpWar
+  const bidenTotal = bidenEth + bidenWar
+
+  return { pool1: trumpTotal, pool2: bidenTotal }
+}

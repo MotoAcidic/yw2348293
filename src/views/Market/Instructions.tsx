@@ -159,6 +159,7 @@ const Rectangle = !isMobile()
         border: solid 2px rgba(255, 183, 0, 0.3);
       background-color: rgba(256,256,256,0.08);
       margin-bottom: 80px;
+      margin-top: 80px;
       width: 780px;
     `
   : styled.div`

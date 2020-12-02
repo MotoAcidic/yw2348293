@@ -11,7 +11,7 @@ import { useWallet } from "use-wallet";
 import Uniswap from "../../assets/img/uniswap@2x.png";
 import Vitalik from "../../assets/img/chess_vitalik.png"
 import Alexandra from "../../assets/img/chess_alexandra_2.png"
-import { getWarStaked, getChessContracts, getChessBets, chessTVL } from "../../yamUtils";
+import { getWarStaked, getChessContracts, getChessBets, testTVL } from "../../yamUtils";
 
 import Chess from "../../assets/img/chess.png";
 import Rook from '../../assets/img/rook.png'
@@ -66,12 +66,12 @@ const Battle = () => {
     setShowModal(true)
   }
 
-  // const getRoughBets = async () => {
-  //   let tvl = await chessTVL(yam, account)
-  //   const pool1 = tvl.pool1Total
-  //   const pool2 = tvl.pool2Total
-  //   setRoughBets({ pool1, pool2 });
-  // }
+  const getRoughBets = async () => {
+    let tvl = await testTVL(yam, account)
+    const pool1 = tvl.pool1
+    const pool2 = tvl.pool2
+    setRoughBets({ pool1, pool2 });
+  }
 
   useEffect(() => {
     console.log("using effect");
@@ -101,9 +101,9 @@ const Battle = () => {
         setBattle(-1)
       })
     }
-    // if (yam && account && !roughBets.pool1) {
-    //   getRoughBets();
-    // }
+    if (yam && account && !roughBets.pool1) {
+      getRoughBets();
+    }
   }, [yam]);
 
   const closeModal = (event) => {
@@ -122,43 +122,32 @@ const Battle = () => {
         <BackgroundSection background={background} />
         <ContentContainer>
           <Page>
-
-            {/* <SubTitle>
-              <a target="_blank"
-                rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Vitalik_Buterin">
-                Vitalik Buterin
-              </a>
-
-              &nbsp;is playing&nbsp;
-              <a target="_blank"
-                rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Alexandra_Botez">
-                Alexandra Botez
-              </a>
-               &nbsp;in chess. Who Will Win?
-            </SubTitle> */}
             {/* <Countdown endTime={moment.utc("2020-11-23T02:00", "YYYY-MM-DDTHH:mm").unix() * 1000} /> */}
-            {roughBets.pool1 > 0 &&
-              <VotingBalance votes1={roughBets.pool1} votes2={roughBets.pool2} />
-            }
             {battle && battle !== -1 && (
-              <VersusContainer>
-                <VersusBackground>
-                  <ImgWrapper onClick={(e) => onClickPool1(e)}>
-                    <Candidate1
-                      src={img1}
+              <>
+                <InfoBlock >
+                  {battle.description}
+                </InfoBlock>
+                <VersusContainer>
+                  <VersusBackground>
+                    <ImgWrapper onClick={(e) => onClickPool1(e)}>
+                      <Candidate1
+                        src={img1}
 
-                    />
-                  </ImgWrapper>
-                  <Divider>
-                    <img src={VSPNG} width="125px" style={{ position: 'absolute', zIndex: 10000 }} />
-                  </Divider>
-                  <ImgWrapper onClick={(e) => onClickPool2(e)} >
-                    <Candidate2
-                      src={img2}
-                    />
-                  </ImgWrapper>
-                </VersusBackground>
-              </VersusContainer>
+                      />
+                    </ImgWrapper>
+                    <Divider>
+                      <img src={VSPNG} width="125px" style={{ position: 'absolute', zIndex: 10000 }} />
+                    </Divider>
+                    <ImgWrapper onClick={(e) => onClickPool2(e)} >
+                      <Candidate2
+                        src={img2}
+                      />
+                    </ImgWrapper>
+                  </VersusBackground>
+                </VersusContainer>
+                <VotingBalance votes1={roughBets.pool1} votes2={roughBets.pool2} icon1={battle.pool1.icon} icon2={battle.pool2.icon} />
+              </>
             )}
             {battle === -1 && (
               <Error404>
@@ -177,12 +166,10 @@ const Battle = () => {
                 </ModalBlock>
               </Modal>
             </div>
-            <InfoBlock >
-              Watch the match on Twitch!
-            </InfoBlock>
 
-            <Rules />
-            <Pool3 />
+
+            {/* <Rules />
+            <Pool3 /> */}
           </Page>
         </ContentContainer>
       </StyledCanvas>
@@ -265,6 +252,7 @@ filter: brightness(100%) contrast(100%) ;
   transition: all 0.2s ease-in-out;
   filter: brightness(115%) contrast(115%);
   transform: scale(1.05);
+  z-index: 1000;
 }
 `
 
@@ -277,14 +265,14 @@ font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-margin-bottom: 2vh;
 align-items: center;
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
 align-items: center;
-width: 420px;
-margin-bottom: 80px;
+width: 80%;
+margin-bottom: 10px;
+margin-top: 5px;
 background-color: rgba(0,0,0,0.3);
 border-radius: 8px;
 height: 40px;
@@ -293,7 +281,7 @@ height: 40px;
 const ModalBlock = styled.div`
 width: 534px;
 height: 0px;
-margin-top: 23vh;
+margin-top: 20vh;
 `
 
 const Modal = styled.div`
@@ -488,7 +476,7 @@ const StyledA = styled.a`
 
 
 const VersusContainer = !isMobile() ? styled.div`
-width: 96vw;
+width: 92vw;
 height: 32.5vw;
 max-width: 1800px;
 max-height: 600px;

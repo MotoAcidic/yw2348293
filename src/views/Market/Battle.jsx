@@ -381,14 +381,13 @@ font-family: "Gilroy";
 const BackgroundSection = styled.div`
   background-image: url(${props => props.background});
   position: fixed;
-  width: 180vw;
+  width: 100vw;
   height: 100vh;
   top: 0;
   background-repeat: no-repeat;
   background-position: fit;
-  background-size: contain;
-  // animation: marquee 400s ease-in-out 200ms infinite;
-  `
+  background-size: cover;
+`
 
 const StyledCanvas = styled.div`
   position: absolute;

@@ -221,7 +221,7 @@ const Battle: React.FC = () => {
         <MarketsContainer>
           <PrimaryBet />
           <MarketsGrid>
-  
+
             {allMarkets.map(bet =>
               <SecondaryContainer>
                 <MarketCardSecondary bet={bet} />
@@ -230,7 +230,7 @@ const Battle: React.FC = () => {
           </MarketsGrid>
         </MarketsContainer>
       )
-      setMarkets(<AllMarkets/>);
+      setMarkets(<AllMarkets />);
     }).catch(err => {
       console.log(err);
     })
@@ -266,23 +266,23 @@ const Battle: React.FC = () => {
 };
 
 const MarketsGrid = !isMobile() ? styled.div`
-width: 100%;
-grid-column-gap: 25px;
-    -webkit-column-gap: 25px;
-    column-gap: 25px;
-    display: grid;
-    grid-template-columns: 33%;
-    grid-template-columns: repeat(3,1fr);
-    grid-row-gap: 19px;
-    row-gap: 19px;
-    grid-template-rows: auto;
-    height: 30%;
+  width: 100%;
+  grid-column-gap: 25px;
+  -webkit-column-gap: 25px;
+  column-gap: 25px;
+  display: grid;
+  grid-template-columns: 50%;
+  grid-template-columns: repeat(2,1fr);
+  grid-row-gap: 19px;
+  row-gap: 19px;
+  grid-template-rows: auto;
+  height: 20%;
 ` : styled.div`
-width: 100%;`;
+  width: 100%;`;
 
 const MarketsContainer = !isMobile() ? styled.div`
 height: 100%;
-width: 100%;
+width: 90vw;
 display: flex;
 flex-direction: row;
 flex-wrap: wrap;
@@ -290,162 +290,29 @@ flex-wrap: wrap;
 `
 
 const SecondaryContainer = !isMobile() ? styled.div`
-// height: 16vh;
+height: calc(15vw + 100px);
 ` : styled.div`
 width: 100%;`;
 
 const PrimaryContainer = !isMobile() ? styled.div`
-width: 100%;
-height: 60%;
+width: 90vw;
+height: 31.7vw;
 margin-bottom: 2vh;
 ` : styled.div`
 width: 100%;`;
 
 const LandingSection = !isMobile() ? styled.div`
-height: calc(100vh - 154px);
+// height: calc(100vh - 154px);
+// width: 80vw;
+margin: auto;
 display: flex;
 flex-direction: column;
 justify-content: center;
-width: 80vw;
 `: styled.div`
 min-height: calc(100vh - 73px);
 `
 
-const ConnectContainer = !isMobile() ? styled.div`
-width: 600px;
-height: 140px;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 30px;
-margin: 0 auto 5vh auto;
-font-family: "Gilroy";
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-flex-direction: column;
-color: #ffffff;
-border-radius: 8px;
-border: solid 2px rgba(255, 183, 0, 0.3);
- background-color: rgba(4,2,43,0.4);
- cursor: pointer;
- margin: 40vh auto 40vh auto;
-` : styled.div`
-margin: 0 0 40px 0;
-width: 90vw;
-display: flex;
-flex-direction: column;
-padding-top: 20px;
-font-family: "Gilroy";
-  font-size: 25px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-	color: #ffffff;
-	border-radius: 8px;
-  border: solid 2px rgba(255, 183, 0, 0.3);
- background-color: rgba(4,2,43,0.4); 
-`
-
-const AFK = styled.div`
-height: 65vh;
-display: flex;
-align-items: center;
-justify-content: center;
-text-shadow: -1px 1px 0 #000,
-1px 1px 0 #000,
-1px -1px 0 #000,
--1px -1px 0 #000;`
-
-const SubTitle = styled.div`
-font-family: "Gilroy";
-font-size: 20px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-	color: white;
-	margin-bottom: 10px;
-`
-
-const Versus = styled.div`
-position: absolute;
-height: 180px;
-width: 110px;
-z-index: 20004;
-display: flex;
-align-items: center;
-justify-content: center;
-background-image: url(${Rook});
-background-size: contain;
-background-repeat: no-repeat;
-margin-top: 50px;
-filter: drop-shadow(0 0 0.75rem white)
-`
-
-const ImgWrapper = styled.div`
-width: 50%;
-height: 100%;
-transition: all 0.2s ease-in-out;
-// filter: brightness(100%) contrast(100%) grayscale(100%) ;
-// &:hover {
-// transition: all 0.2s ease-in-out;
-//   filter: brightness(110%) contrast(110%) grayscale(80%);
-//   transform: scale(1.05);
-//   z-index: 2000000;
-// }
-`
-
-const InfoBlock = styled.a`
-font-family: "Gilroy";
-color: rgb(255, 204, 160);
-font-size: 22px;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-margin-bottom: 2vh;
-align-items: center;
-display: flex;
-flex-direction: row;
-justify-content: space-evenly;
-align-items: center;
-width: 420px;
-margin-bottom: 80px;
-background-color: rgba(0,0,0,0.3);
-border-radius: 8px;
-height: 40px;
-`
-
-const ModalBlock = styled.div`
-width: 534px;
-height: 0px;
-margin-top: 23vh;
-`
-
-const Modal = styled.div`
-border-radius: 8px;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 100000;
-  background-color: rgba(0, 0, 0, 0.2);
-  top: 0px;
-  left: 0px;
-  display: flex;
-  justify-content: center;
-`
-
-let Candidate1
-let Candidate2
-
-Candidate1 = styled.img`
+const Candidate1 = styled.img`
 width: calc(100% - 10px);
 height: 100%;
 border-radius: 6px 0 0 6px;
@@ -455,7 +322,7 @@ border: 10px solid black;
 border-right: 2px solid black;
 `
 
-Candidate2 = styled.img`
+const Candidate2 = styled.img`
 width: calc(100% - 10px);
 height: 100%;
 border-radius: 0 6px 6px 0;

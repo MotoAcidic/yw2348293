@@ -8,6 +8,7 @@ import { useWallet } from "use-wallet";
 import useFarms from "../../hooks/useFarms";
 import { getWarStaked, getChessContracts, getChessBets, chessTVL } from "../../yamUtils";
 import { NavLink } from 'react-router-dom'
+import BalanceBar from "./BalanceBarSecondary";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -47,47 +48,90 @@ const Battle = ({ bet }) => {
 
   return (
     <VersusContainer to={`/market/${bet._id}`}>
-      <ImgWrapper>
-        <Candidate1 src={bet.pool1.graphic} />
-        <SmallTitle>
-          {bet.pool1.name}
-        </SmallTitle>
-      </ImgWrapper>
-      {/* <Versus>VS</Versus> */}
-      <ImgWrapper  >
-        <Candidate2
-          src={bet.pool2.graphic}
-        />
-        <SmallTitle>
-          {bet.pool2.name}
-        </SmallTitle>
-      </ImgWrapper>
+      <Images>
+
+        <ImgWrapper>
+          <Candidate1 src={bet.pool1.graphic} />
+        </ImgWrapper>
+        {currBets.choice1 > 0 &&
+              <BalanceBar bet={bet} votes1={currBets.choice1} votes2={currBets.choice2} />
+          }
+        {/* <Versus>VS</Versus> */}
+        <ImgWrapper  >
+          <Candidate2
+            src={bet.pool2.graphic}
+          />
+
+        </ImgWrapper>
+      </Images>
+      <Info>
+        <Description>
+          {bet.description}
+        </Description>
+      </Info>
     </VersusContainer>
   );
 };
 
-const SmallTitle = styled.div`
-position: absolute;
-height: 20%;
-width: 100%;
+
+const Volume = styled.div`
+font-family: "SF Mono Semibold";
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
 display: flex;
-align-items: center;
-justify-content: center;
-bottom: 0;
-background: rgba(0,0,0,0.7);
-font-size: 16px;
+font-size: 10px;
+align-items: flex-end;
 `
 
+const Money = styled.div`
+font-family: "SF Mono Semibold";
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+font-size: 14px;
+`
 
-const Title = styled.div`
-position: absolute;
-height: 12%;
+const BetAmount = styled.div`
+display: flex;
+flex-direction: column;
+height: calc(100% - 24px);
+justify-content: space-between;
+padding-bottom: 20px;
+padding-top: 10px;
+padding-right: 2%;
+width: 30%;
+align-items: center;`
+
+const Description = styled.div`
+font-family: "Gilroy";
+font-weight: normal;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+font-size: 16px;
+width: 65%;
+text-align: left;
+padding: 0 2% 0 4%;`
+
+const Info = styled.div`
+height: 50px;
 width: 100%;
 display: flex;
 align-items: center;
 justify-content: center;
 bottom: 0;
 background: rgba(0,0,0,0.7);
+display: flex;
+flex-direction: row;
 `
 
 const ImgWrapper = styled.div`
@@ -127,13 +171,18 @@ border: 5px solid black;
 border-left: 2px solid black;
 `
 
+const Images = styled.div`
+height: calc(100% - 50px);
+display: flex;
+position: relative;`
+
 const VersusContainer = !isMobile() ? styled(NavLink)`
 width: 100%;
 max-width: 1400px;
 max-height: 650px;
 height: 100%;
 display: flex;
-flex-direction: row;
+flex-direction: column;
 align-items: center;
 font-size: 30px;
 margin: 0 auto 40px auto;
@@ -146,6 +195,7 @@ letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
 background-color: rgba(256,256,256,0.08);
+text-decoration: none;
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;

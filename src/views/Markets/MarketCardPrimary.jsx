@@ -180,8 +180,8 @@ border-left: 2px solid black;
 const VersusContainer = !isMobile() ? styled(NavLink)`
 position: relative;
 width: 100%;
-max-width: 1400px;
-max-height: 650px;
+// max-width: 1400px;
+// max-height: 650px;
 height: 100%;
 display: flex;
 flex-direction: row;

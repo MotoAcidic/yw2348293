@@ -231,7 +231,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					</Text>
 				<AllBets>
 					<BetDisplay>
-						<CardIcon src={MiniTrump} />
+						<CardIcon src={battle.pool1.icon} />
 						<AmountBet>
 							{farmBets.trumpWARPot.toLocaleString() + " $WAR"}
 						</AmountBet>
@@ -240,7 +240,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 						</AmountBet>
 					</BetDisplay>
 					<BetDisplay>
-						<CardIcon src={MiniBiden} />
+						<CardIcon src={battle.pool2.icon} />
 						<AmountBet>
 							{farmBets.bidenWARPot.toLocaleString() + " $WAR"}
 						</AmountBet>

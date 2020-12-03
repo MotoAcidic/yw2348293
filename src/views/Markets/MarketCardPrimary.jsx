@@ -124,11 +124,12 @@ font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-color: #ffffff;
+color: rgb(255, 204, 160);
 font-size: 24px;
 width: 65%;
 text-align: left;
-padding: 0 2% 0 4%;`
+padding: 0 2% 0 4%;
+`
 
 const Info = styled.div`
 position: absolute;

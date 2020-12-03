@@ -15,20 +15,21 @@ const FarmGraph = ({ votes1, votes2, icon1, icon2 }) => {
   const percent1 = 100 * (votes1 / (votes1 + votes2))
   console.log('v1, v2, %: ', votes1, votes2, percent1);
   return (
-    <VotingBalance>
-      {/* <SubTitle>
-        Voting Balance
-      </SubTitle> */}
-      <StyledContent>
-        <CardIcon src={icon1} />
+    <VotingBalance style={votes1 + votes2 ? {height: '60px'} : {height: '0px'}}>
+      {votes1 + votes2 && (
+        <>
+          <StyledContent>
+            <CardIcon src={icon1} />
 
-        <BalanceBar>
-          <div style={{ backgroundColor: 'rgb(154,220,180)', height: '100%', borderRadius: "2px 0 0 2px", width: percent1 + '%', borderRight: "2px solid white" }} />
-        </BalanceBar>
-        <CardIcon src={icon2} />
+            <BalanceBar>
+              <div style={{ backgroundColor: 'rgb(154,220,180)', height: '100%', borderRadius: "2px 0 0 2px", width: percent1 + '%', borderRight: "2px solid white" }} />
+            </BalanceBar>
+            <CardIcon src={icon2} />
 
-      </StyledContent>
-      <SmallText>Volume: ${(votes1 + votes2).toLocaleString(undefined, { maximumFractionDigits: 2 })}💰</SmallText>
+          </StyledContent>
+          <SmallText>Volume: ${(votes1 + votes2).toLocaleString(undefined, { maximumFractionDigits: 2 })}💰</SmallText>
+        </>
+      )}
     </VotingBalance>
   )
 }
@@ -36,8 +37,8 @@ const FarmGraph = ({ votes1, votes2, icon1, icon2 }) => {
 
 const SmallText = styled.div`
 font-family: "Gilroy";
-margin: 2px auto 0px;
-font-size: 16px;
+margin: -7px auto 0px;
+font-size: 12px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
@@ -69,7 +70,6 @@ border-radius: 3px;
 
 const SubTitle = styled.div`
 font-family: "Gilroy";
-margin-bottom: 5px;
 font-size: 20px;
 font-weight: bold;
 font-stretch: normal;
@@ -78,14 +78,19 @@ line-height: 1;
 letter-spacing: normal;
 text-align: center;
 color: #ffffff;
-  
+height: 100%;
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
 `
 
 const VotingBalance = styled.div`
 display: flex;
 flex-direction: column;
 width: 89%;
-margin: 10px auto 15px auto;
+margin: 0px auto 11px auto;
+transition: height .2s ease-in-out;
 `
 
 

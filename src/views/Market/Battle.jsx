@@ -38,18 +38,29 @@ function getServerURI() {
 }
 
 
-const Battle = () => {
+const Battle = ({ battle }) => {
   const yam = useYam()
 
   const { account, connect, ethereum } = useWallet()
 
-  let [battle, setBattle] = useState(null)
   let [img1, setImg1] = useState(null)
   let [img2, setImg2] = useState(null)
   let [background, setBackground] = useState(null)
   let [modal, setShowModal] = useState(false);
   let [candidate, setCandidate] = useState("pool1");
   const [roughBets, setRoughBets] = useState({ pool1: 0, pool2: 0 });
+
+  let imag1 = new Image();
+  imag1.onload = function () { setImg1(battle.pool1.graphic) }
+  imag1.src = battle.pool1.graphic;
+
+  let imag2 = new Image();
+  imag2.onload = function () { setImg2(battle.pool2.graphic) }
+  imag2.src = battle.pool2.graphic;
+
+  let backg = new Image();
+  backg.onload = function () { setBackground(battle.background) }
+  backg.src = battle.background;
 
   const onClickPool1 = (e) => {
     if (!account) {
@@ -76,32 +87,6 @@ const Battle = () => {
 
   useEffect(() => {
     console.log("using effect");
-    if (!battle) {
-      let url = window.location.pathname
-      console.log(url);
-
-      url = url.substring(8, url.length)
-      axios.post(`${getServerURI()}/markets/get-market`, {
-        id: url
-      }).then(res => {
-        setBattle(res.data)
-
-        let img1 = new Image();
-        img1.onload = function () { setImg1(res.data.pool1.graphic) }
-        img1.src = res.data.pool1.graphic;
-
-        let img2 = new Image();
-        img2.onload = function () { setImg2(res.data.pool2.graphic) }
-        img2.src = res.data.pool2.graphic;
-
-        let background = new Image();
-        background.onload = function () { setBackground(res.data.background) }
-        background.src = res.data.background;
-      }).catch(err => {
-        console.log(err);
-        setBattle(-1)
-      })
-    }
     if (yam && account && !roughBets.pool1 && battle) {
       getRoughBets();
     }

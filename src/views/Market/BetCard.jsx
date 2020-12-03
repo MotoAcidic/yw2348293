@@ -16,7 +16,7 @@ import UnstakeModal from './UnstakeModal'
 import useStakedBalance from '../../hooks/useStakedBalance'
 import useUnstake from '../../hooks/useUnstake'
 import useAllowance from '../../hooks/useAllowance'
-import { placeChessWARBet, placeChessETHBet, getChessBets, getChessBalances, getChessRewards, getChessFinished, redeem } from '../../yamUtils'
+import { placeTestWARBet, placeTestETHBet, getTestBets, getTestBalances, getTestRewards, getTestFinished, redeem } from '../../yamUtils'
 import Swal from 'sweetalert2';
 import { getElectionContracts, harvest } from '../../yamUtils'
 import Pool3 from "./Pool3";
@@ -65,10 +65,8 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	const [ethInput, setETHInput] = useState(0);
 	const [warInput, setWARInput] = useState(0);
 	const [disabled, setDisabled] = useState(false)
-	const [farmBets, setFarmBets] = useState({ trumpETHPot: 0, bidenETHPot: 0, trumpWARPot: 0, bidenWARPot: 0 });
-	const [farmBalances, setFarmBalances] = useState({ trumpETHBal: 0, bidenETHBal: 0, trumpWARBal: 0, bidenWARBal: 0 });
-	const stakedBalance = useStakedBalance(contract)
-	const { onUnstake } = useUnstake(contract)
+	const [farmBets, setFarmBets] = useState({ pool1ETHPot: 0, pool2ETHPot: 0, pool1WARPot: 0, pool2WARPot: 0 });
+	const [farmBalances, setFarmBalances] = useState({ pool1ETHBal: 0, pool2ETHBal: 0, pool1WARBal: 0, pool2WARBal: 0 });
 	const [pending, setPending] = useState(false);
 
 	const tokenContract = useMemo(() => {
@@ -80,34 +78,10 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	const allowance = useAllowance(tokenContract, electionContract)
 	console.log(allowance);
 
-	const [onPresentUnstake] = useModal(
-		<UnstakeModal
-			max={stakedBalance}
-			onConfirm={onUnstake}
-			tokenName={"WAR"}
-		/>
-	)
-
-	const claimAndUnstake = () => {
-		console.log(contract);
-		console.log(account);
-		harvest(contract, account);
-		onPresentUnstake()
-	}
-
-	const fireUnstakeSWAL = () => {
-		let cookie = new Cookie()
-		if (cookie.get("seenChessUnstakeSWAL")) {
-			return;
-		}
-		Swal.fire("Please make sure you have $WAR or $ETH in your MetaMask Wallet to place a bet.\n\n$WAR in your WARchest (below) needs to be unstaked to use it in a bet.\n\nView the full betting rules below.")
-		cookie.set("seenChessUnstakeSWAL", true)
-	}
-
 	useEffect(() => {
 		const getBets = async () => {
-			const bets = await getChessBets(yam);
-			const balances = await getChessBalances(yam, account);
+			const bets = await getTestBets(yam);
+			const balances = await getTestBalances(yam, account);
 			setFarmBalances(balances);
 			// console.log("gotbets", bets);
 			setFarmBets(bets);
@@ -116,7 +90,6 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		if (yam) {
 			getBets();
 		}
-		fireUnstakeSWAL();
 	}, [yam, account])
 
 	const placeBet = () => {
@@ -130,16 +103,16 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 				return
 			}
 			if (warInput) {
-				const candidate = candidateInfo.name === "Vitalik" ? 1 : 2;
+				const candidate = candidateInfo === "pool1" ? 1 : 2;
 				// console.log("War Bet", candidate, warInput)
 				setPending(true)
-				placeChessWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => setPending(false))
+				placeTestWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => setPending(false))
 			}
 			if (ethInput) {
-				const candidate = candidateInfo.name === "Vitalik" ? 1 : 2;
+				const candidate = candidateInfo === "pool1" ? 1 : 2;
 				// console.log("Eth Bet", candidate, ethInput)
 				setPending(true)
-				placeChessETHBet(yam, candidate, parseFloat(ethInput), account).then((ret) => {
+				placeTestETHBet(yam, candidate, parseFloat(ethInput), account).then((ret) => {
 					setPending(false)
 				})
 			}
@@ -150,9 +123,9 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	}
 
 	const redeemRewards = async () => {
-		const done = await getChessFinished(yam);
+		const done = await getTestFinished(yam);
 		console.log("election finished?", done);
-		getChessRewards(yam, account);
+		getTestRewards(yam, account);
 	}
 
 	const handleApprove = useCallback(async () => {
@@ -167,6 +140,10 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		}
 	}, [onApprove])
 
+	let candidate = battle.pool1.name
+	if (candidateInfo === 'pool2')
+		candidate = battle.pool2.name
+
 	return (
 		<Container size="sm">
 			<VersusContainer>
@@ -175,46 +152,46 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					Your Bets
 				</TitleText>
 				<YourBets>
-					{!farmBalances.trumpWARBal > 0 && !farmBalances.trumpETHBal > 0 &&
-						!farmBalances.bidenWARBal > 0 && !farmBalances.bidenETHBal > 0 ?
+					{!farmBalances.pool1WARBal > 0 && !farmBalances.pool1ETHBal > 0 &&
+						!farmBalances.pool2WARBal > 0 && !farmBalances.pool2ETHBal > 0 ?
 						<SmallText>none, place a bet!</SmallText>
 						: null
 					}
-					{farmBalances.trumpWARBal > 0 || farmBalances.trumpETHBal > 0 ?
+					{farmBalances.pool1WARBal > 0 || farmBalances.pool1ETHBal > 0 ?
 						<Column>
-							<CardIcon src={MiniTrump} />
+							<CardIcon src={battle.pool1.icon} />
 							<Space />
-							{farmBalances.trumpWARBal > 0 &&
+							{farmBalances.pool1WARBal > 0 &&
 								<Bets>
 									<AmountBet>
-										{'$WAR: ' + farmBalances.trumpWARBal.toLocaleString()}
+										{'$WAR: ' + farmBalances.pool1WARBal.toLocaleString()}
 									</AmountBet>
 								</Bets>
 							}
-							{farmBalances.trumpETHBal > 0 &&
+							{farmBalances.pool1ETHBal > 0 &&
 								<Bets>
 									<AmountBet>
-										{'$ETH: ' + farmBalances.trumpETHBal.toLocaleString()}
+										{'$ETH: ' + farmBalances.pool1ETHBal.toLocaleString()}
 									</AmountBet>
 								</Bets>}
 						</Column>
 						: null
 					}
-					{farmBalances.bidenWARBal > 0 || farmBalances.bidenETHBal > 0 ?
+					{farmBalances.pool2WARBal > 0 || farmBalances.pool2ETHBal > 0 ?
 						<Column>
-							<CardIcon src={MiniBiden} />
+							<CardIcon src={battle.pool2.icon} />
 							<Space />
-							{farmBalances.bidenWARBal > 0 &&
+							{farmBalances.pool2WARBal > 0 &&
 								<Bets>
 									<AmountBet>
-										{'$WAR: ' + farmBalances.bidenWARBal.toLocaleString()}
+										{'$WAR: ' + farmBalances.pool2WARBal.toLocaleString()}
 									</AmountBet>
 								</Bets>
 							}
-							{farmBalances.bidenETHBal > 0 &&
+							{farmBalances.pool2ETHBal > 0 &&
 								<Bets>
 									<AmountBet>
-										{'$ETH: ' + farmBalances.bidenETHBal.toLocaleString()}
+										{'$ETH: ' + farmBalances.pool2ETHBal.toLocaleString()}
 									</AmountBet>
 								</Bets>
 							}
@@ -228,24 +205,24 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 
 				<Text>
 					All Bets
-					</Text>
+				</Text>
 				<AllBets>
 					<BetDisplay>
 						<CardIcon src={battle.pool1.icon} />
 						<AmountBet>
-							{farmBets.trumpWARPot.toLocaleString() + " $WAR"}
+							{farmBets.pool1WARPot.toLocaleString() + " $WAR"}
 						</AmountBet>
 						<AmountBet>
-							{farmBets.trumpETHPot.toLocaleString() + " $ETH"}
+							{farmBets.pool1ETHPot.toLocaleString() + " $ETH"}
 						</AmountBet>
 					</BetDisplay>
 					<BetDisplay>
 						<CardIcon src={battle.pool2.icon} />
 						<AmountBet>
-							{farmBets.bidenWARPot.toLocaleString() + " $WAR"}
+							{farmBets.pool2WARPot.toLocaleString() + " $WAR"}
 						</AmountBet>
 						<AmountBet>
-							{farmBets.bidenETHPot.toLocaleString() + " $ETH"}
+							{farmBets.pool2ETHPot.toLocaleString() + " $ETH"}
 						</AmountBet>
 					</BetDisplay>
 				</AllBets>
@@ -256,15 +233,15 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					<>
 						<Text>
 							Bet $WAR
-					</Text>
+						</Text>
 						<Top>
 							<Text>
-								{candidateInfo.name + " to Win"}
+								{candidate + " to Win"}
 							</Text>
 							<InputContainer>
 								<Input disabled={pending ? true : false} type="number" min="0" value={warInput} onChange={e => setWARInput(e.target.value)} />
 								WAR
-						</InputContainer>
+							</InputContainer>
 						</Top>
 					</>
 					: <Button size="xlg" onClick={() => handleApprove()}>Approve WAR</Button>
@@ -273,15 +250,15 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 				<Space />
 				<Text>
 					Bet $ETH
-					</Text>
+				</Text>
 				<Top>
 					<Text>
-						{candidateInfo.name + " to Win"}
+						{candidate + " to Win"}
 					</Text>
 					<InputContainer>
 						<Input disabled={pending ? true : false} type="number" min="0" value={ethInput} onChange={e => setETHInput(e.target.value)} />
 								ETH
-						</InputContainer>
+					</InputContainer>
 				</Top>
 				{pending ?
 					<BetPlaced>Your bet is pending. Check MetaMask for updates.</BetPlaced>

@@ -1049,6 +1049,73 @@ export const chessTVL = async (yam, account) => {
 
 // TESTING FOR MARKETS
 
+export const getTestBets = async (yam) => {
+  const precision = new BigNumber(10).pow(18);
+
+  const pool1ETHPot = new BigNumber(await yam.contracts.chess_one_off.methods.choice1ETHPot().call()) / precision;
+  const pool2ETHPot = new BigNumber(await yam.contracts.chess_one_off.methods.choice2ETHPot().call()) / precision;
+  const pool1WARPot = new BigNumber(await yam.contracts.chess_one_off.methods.choice1WARPot().call()) / precision;
+  const pool2WARPot = new BigNumber(await yam.contracts.chess_one_off.methods.choice2WARPot().call()) / precision;
+
+  return ({ pool1ETHPot, pool2ETHPot, pool1WARPot, pool2WARPot });
+}
+
+export const getTestBalances = async (yam, account) => {
+  if (yam.defaultProvider) {
+    return ({ pool1ETHBal: 0, pool2ETHBal: 0, pool1WARBal: 0, pool2WARBal: 0 });
+  }
+  const precision = new BigNumber(10).pow(18);
+
+  const pool1ETHBal = new BigNumber(await yam.contracts.chess_one_off.methods.choice1ETHBet(account).call()) / precision;
+  const pool2ETHBal = new BigNumber(await yam.contracts.chess_one_off.methods.choice2ETHBet(account).call()) / precision;
+  const pool1WARBal = new BigNumber(await yam.contracts.chess_one_off.methods.choice1WARBet(account).call()) / precision;
+  const pool2WARBal = new BigNumber(await yam.contracts.chess_one_off.methods.choice2WARBet(account).call()) / precision;
+
+
+  return ({ pool1ETHBal, pool2ETHBal, pool1WARBal, pool2WARBal });
+}
+
+export const placeTestWARBet = async (yam, candidate, amount, account) => {
+  console.log("war bet: ", candidate, amount, account);
+  const precision = new BigNumber(10).pow(18);
+  let p = await yam.contracts.chess_one_off.methods.WARBet(
+    candidate, new BigNumber(amount).times(precision).toString()
+  )
+    .send({ from: account, gas: 200000 })
+  return (p);
+}
+
+export const placeTestETHBet = async (yam, candidate, amount, account) => {
+  console.log("eth bet: ", candidate, amount, account);
+  const precision = new BigNumber(10).pow(18);
+
+  let p = await yam.contracts.chess_one_off.methods.ETHBet(candidate)
+    .send({ from: account, value: new BigNumber(amount).times(precision).toString(), gas: 200000 });
+  return (p);
+}
+
+export const getTestContracts = (yam) => {
+  if (!yam || !yam.contracts) {
+    return null
+  }
+  const election = yam.contracts.chess_one_off
+  return election
+}
+
+export const getTestFinished = async (yam) => {
+  const electionFinished = await yam.contracts.chess_one_off.methods.winner().call();
+  return (electionFinished);
+}
+
+export const getTestRewards = async (yam, account) => {
+  let p = await yam.contracts.chess_one_off.methods.getRewards().send({ from: account, gas: 200000 })
+    .on('transactionHash', tx => {
+      console.log("get election rewards", tx)
+      return tx.transactionHash
+    })
+  return (p);
+}
+
 export const testTVL = async (yam, account) => {
   const ethPrice = await getETHPrice(yam)
   const curPrice = await getCurrentPrice(yam)

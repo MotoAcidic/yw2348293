@@ -64,6 +64,7 @@ const Battle: React.FC = () => {
   let [yesterdaysBattle, setYesterdaysBattle] = useState([])
   let [dailyQuestion, setDailyQuestion] = useState();
   const [betRedeemModal, setBetRedeemModal] = useState(false)
+  const [isLoading, setLoading] = useState(true)
 
 
 
@@ -171,6 +172,22 @@ const Battle: React.FC = () => {
   //   );
   // }
 
+  const useScript = url => {
+    useEffect(() => {
+      const script = document.createElement('script');
+
+      script.src = url;
+      script.async = true;
+      document.body.appendChild(script);
+      setTimeout(() => {
+        setLoading(false)
+      }, 1500);
+      return () => {
+        document.body.removeChild(script);
+      }
+    }, [url]);
+  };
+
   return (
     <Switch>
       <StyledCanvas>
@@ -178,11 +195,37 @@ const Battle: React.FC = () => {
         <ContentContainer>
           <Page>
 
-            <Countdown />
+            {/* <Countdown />
             {battles && battles.length > 0 && <TotalBets battle1={battles[0]} id={battles[0]._id} />}
             <SmallSpace />
 
-            {battleFields()}
+            {battleFields()} */}
+
+
+            <LandingSection>
+
+              <CongratsContainer>
+                <Column>
+                  <Title>
+                    Congratulations to Our Champion,
+            </Title>
+                  <BigTitle href="https://twitter.com/TheCryptoDog?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank">
+                    CryptoDog!
+            </BigTitle>
+                  <ChampContainer href="https://twitter.com/TheCryptoDog?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank">
+                    <ChampionImage src="https://pbs.twimg.com/profile_images/1334035208698429440/YMYs5fqW_400x400.jpg" >
+                    </ChampionImage>
+                    <RainbowShadow />
+                  </ChampContainer>
+                </Column>
+              </CongratsContainer>
+              <LinkToResults href="https://yieldwars.com/results">
+
+                Claim rewards from previous days
+              </LinkToResults>
+            </LandingSection>
+
+
             {account && yesterdaysBattle.length > 0 && <Yesterday onClick={() => setBetRedeemModal(true)} >Show Yesterdays Result</Yesterday>}
             <SmallSpace />
             {/* {prevDayBattles.length > 0 && battles.length > 0 ? <Seperator /> : null}
@@ -211,6 +254,99 @@ const Battle: React.FC = () => {
     </Switch>
   );
 };
+
+const Position = styled.div`
+position: relative;
+margin-left: -50%;`
+
+const LinkToResults = styled.a`
+position: absolute;
+bottom: 30px;
+width: 300px;
+left: 50%;
+transform: translate(-50%, 0);
+`
+
+const Column = !isMobile ? styled.div`
+display: flex;
+flex-direction: column;
+` : styled.div`
+display: flex;
+flex-direction: column;
+margin-top: 80px;
+`
+
+const CongratsContainer = styled.div`
+display: flex;
+`
+
+const ChampContainer = styled.a`
+width: 300px;
+height: 300px;
+display: flex;
+justify-content: center;
+align-items: center;
+margin-left: auto;
+margin-right: auto;
+margin-top: 20px;
+margin-bottom: 80px;`
+
+const ChampionImage = styled.img`
+margin-top: 20px;
+border-radius: 50%;
+border: 5px solid yellow;
+height: 100%;
+width: 100%;
+` 
+
+const RainbowShadow = styled.div`
+background: linear-gradient(
+  45deg,
+  rgba(255, 0, 0, 1) 0%,
+  rgba(255, 154, 0, 1) 10%,
+  rgba(208, 222, 33, 1) 20%,
+  rgba(79, 220, 74, 1) 30%,
+  rgba(63, 218, 216, 1) 40%,
+  rgba(47, 201, 226, 1) 50%,
+  rgba(28, 127, 238, 1) 60%,
+  rgba(95, 21, 242, 1) 70%,
+  rgba(186, 12, 248, 1) 80%,
+  rgba(251, 7, 217, 1) 90%,
+  rgba(255, 0, 0, 1) 100%
+);
+background-size: 300% 300%;
+animation: dOtNsp 2s linear infinite;
+filter: blur(6px);
+position: absolute;
+top: -2px;
+right: -8px;
+bottom: -2px;
+left: -8px;
+z-index: -1;`
+
+const BigTitle = styled.a`
+font-family: "Gilroy";
+  font-size: 60px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: rgb(255, 204, 74);
+  margin-top: 10px;
+  max-width: 80vw;
+  text-decoration: none;
+`
+
+const LandingSection = !isMobile() ? styled.div`
+height: calc(100vh - 73px);
+display: flex;
+flex-direction: column;
+justify-content: center;
+position: relative;
+`: styled.div`
+min-height: calc(100vh - 73px);
+`
 
 const PageTitle = styled.div`
 font-family: "Gilroy";
@@ -255,26 +391,13 @@ font-family: "Gilroy";
   margin: auto;
 `
 
-const ModalBlock = !isMobile() ?  styled.div`
+const ModalBlock = !isMobile() ? styled.div`
 margin-top: 23vh;
 height: fit-content;
-` :styled.div`
+` : styled.div`
 margin-top: 23vh;
 height: fit-content;
 position: fixed;
-` 
-
-const BigTitle = styled.div`
-font-family: "Gilroy";
-  font-size: 60px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: rgb(255, 204, 74);
-  max-width: 80vw;
-  margin: -30px auto 40px;
 `
 
 const Seperator = !isMobile() ? styled.div`

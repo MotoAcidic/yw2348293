@@ -12,6 +12,7 @@ import Uniswap from "../../assets/img/uniswap@2x.png";
 import Vitalik from "../../assets/img/chess_vitalik.png"
 import Alexandra from "../../assets/img/chess_alexandra_2.png"
 import { getWarStaked, getChessContracts, getChessBets, testTVL } from "../../yamUtils";
+import { getPots, getUserBet, placeETHBet } from "../../yamUtils";
 
 import Chess from "../../assets/img/chess.png";
 import Rook from '../../assets/img/rook.png'
@@ -67,7 +68,7 @@ const Battle = () => {
   }
 
   const getRoughBets = async () => {
-    let tvl = await testTVL(yam, account)
+    let tvl = await getPots(yam, battle._id)
     const pool1 = tvl.pool1
     const pool2 = tvl.pool2
     setRoughBets({ pool1, pool2 });
@@ -101,7 +102,7 @@ const Battle = () => {
         setBattle(-1)
       })
     }
-    if (yam && account && !roughBets.pool1) {
+    if (yam && account && !roughBets.pool1 && battle) {
       getRoughBets();
     }
   }, [yam]);
@@ -114,7 +115,7 @@ const Battle = () => {
     e.stopPropagation()
   }
 
-  const contract = getChessContracts(yam)
+  const contract = null //getChessContracts(yam)
 
   return (
     <Switch>
@@ -262,7 +263,7 @@ filter: brightness(100%) contrast(100%) ;
 const InfoBlock = styled.a`
 font-family: "Gilroy";
 color: rgb(255, 204, 160);
-font-size: 22px;
+font-size: 20px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;

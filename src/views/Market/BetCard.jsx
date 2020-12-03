@@ -17,6 +17,7 @@ import useStakedBalance from '../../hooks/useStakedBalance'
 import useUnstake from '../../hooks/useUnstake'
 import useAllowance from '../../hooks/useAllowance'
 import { placeTestWARBet, placeTestETHBet, getTestBets, getTestBalances, getTestRewards, getTestFinished, redeem } from '../../yamUtils'
+import { getPots, getUserBet, placeETHBet } from "../../yamUtils";
 import Swal from 'sweetalert2';
 import { getElectionContracts, harvest } from '../../yamUtils'
 import Pool3 from "./Pool3";
@@ -65,23 +66,23 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	const [ethInput, setETHInput] = useState(0);
 	const [warInput, setWARInput] = useState(0);
 	const [disabled, setDisabled] = useState(false)
-	const [farmBets, setFarmBets] = useState({ pool1ETHPot: 0, pool2ETHPot: 0, pool1WARPot: 0, pool2WARPot: 0 });
-	const [farmBalances, setFarmBalances] = useState({ pool1ETHBal: 0, pool2ETHBal: 0, pool1WARBal: 0, pool2WARBal: 0 });
+	const [farmBets, setFarmBets] = useState({ pool1ETHPot: 0, pool2ETHPot: 0 });
+	const [farmBalances, setFarmBalances] = useState({ pool1ETHBal: 0, pool2ETHBal: 0 });
 	const [pending, setPending] = useState(false);
 
-	const tokenContract = useMemo(() => {
-		return getContract(ethereum, "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde")
-	}, [ethereum, "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"])
+	// const tokenContract = useMemo(() => {
+	// 	return getContract(ethereum, "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde")
+	// }, [ethereum, "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"])
 
-	console.log(tokenContract);
-	const { onApprove } = useApprove(tokenContract, electionContract)
-	const allowance = useAllowance(tokenContract, electionContract)
-	console.log(allowance);
+	// console.log(tokenContract);
+	// const { onApprove } = useApprove(tokenContract, electionContract)
+	// const allowance = useAllowance(tokenContract, electionContract)
+	// console.log(allowance);
 
 	useEffect(() => {
 		const getBets = async () => {
-			const bets = await getTestBets(yam);
-			const balances = await getTestBalances(yam, account);
+			const bets = await getPots(yam, battle._id);
+			const balances = await getUserBet(yam, battle._id, account);
 			setFarmBalances(balances);
 			// console.log("gotbets", bets);
 			setFarmBets(bets);
@@ -98,25 +99,25 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 			// 	claimAndUnstake()
 			// 	return
 			// }
-			if (warInput < 0 || ethInput < 0) {
+			if (ethInput < 0) {
 				Swal.fire('Please enter a valid value to bet!')
 				return
 			}
-			if (warInput) {
-				const candidate = candidateInfo === "pool1" ? 1 : 2;
-				// console.log("War Bet", candidate, warInput)
-				setPending(true)
-				placeTestWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => setPending(false))
-			}
+			// if (warInput) {
+			// 	const candidate = candidateInfo === "pool1" ? 1 : 2;
+			// 	// console.log("War Bet", candidate, warInput)
+			// 	setPending(true)
+			// 	placeTestWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => setPending(false))
+			// }
 			if (ethInput) {
 				const candidate = candidateInfo === "pool1" ? 1 : 2;
 				// console.log("Eth Bet", candidate, ethInput)
 				setPending(true)
-				placeTestETHBet(yam, candidate, parseFloat(ethInput), account).then((ret) => {
+				placeETHBet(yam, battle._id, candidate, parseFloat(ethInput), account).then((ret) => {
 					setPending(false)
 				})
 			}
-			if (!ethInput && !warInput) {
+			if (!ethInput) {
 				Swal.fire("Place a bet for a candidate!");
 			}
 		}
@@ -128,17 +129,17 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		getTestRewards(yam, account);
 	}
 
-	const handleApprove = useCallback(async () => {
-		try {
-			const txHash = await onApprove()
-			console.log(txHash);
-			// user rejected tx or didn't go thru
-			if (!txHash) {
-			}
-		} catch (e) {
-			console.log(e)
-		}
-	}, [onApprove])
+	// const handleApprove = useCallback(async () => {
+	// 	try {
+	// 		const txHash = await onApprove()
+	// 		console.log(txHash);
+	// 		// user rejected tx or didn't go thru
+	// 		if (!txHash) {
+	// 		}
+	// 	} catch (e) {
+	// 		console.log(e)
+	// 	}
+	// }, [onApprove])
 
 	let candidate = battle.pool1.name
 	if (candidateInfo === 'pool2')

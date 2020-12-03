@@ -128,6 +128,7 @@ const Battle = () => {
                 <InfoBlock >
                   {battle.description}
                 </InfoBlock>
+                <VotingBalance votes1={roughBets.pool1} votes2={roughBets.pool2} icon1={battle.pool1.icon} icon2={battle.pool2.icon} />
                 <VersusContainer>
                   <VersusBackground>
                     <ImgWrapper onClick={(e) => onClickPool1(e)}>
@@ -146,7 +147,9 @@ const Battle = () => {
                     </ImgWrapper>
                   </VersusBackground>
                 </VersusContainer>
-                <VotingBalance votes1={roughBets.pool1} votes2={roughBets.pool2} icon1={battle.pool1.icon} icon2={battle.pool2.icon} />
+                <InfoBlock >
+                  {battle.resolution}
+                </InfoBlock>
               </>
             )}
             {battle === -1 && (
@@ -155,7 +158,7 @@ const Battle = () => {
               </Error404>
             )}
             {battle &&
-              <div style={modal ? { display: 'block' } : { display: 'none' }}>
+              <ModalSection style={modal ? { display: 'block', opacity: 1 } : { display: 'none', opacity: 0 }}>
                 <Modal onClick={(e) => closeModal(e)}>
                   <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
                     {yam && <BetModal
@@ -166,7 +169,7 @@ const Battle = () => {
                     }
                   </ModalBlock>
                 </Modal>
-              </div>
+              </ModalSection>
             }
             {/* <Rules />
             <Pool3 /> */}
@@ -271,8 +274,8 @@ flex-direction: row;
 justify-content: space-evenly;
 align-items: center;
 width: 80%;
-margin-bottom: 5px;
-margin-top: 10px;
+margin-bottom: -8px;
+margin-top: 8px;
 background-color: rgba(0,0,0,0.3);
 border-radius: 8px;
 height: 40px;
@@ -297,6 +300,10 @@ border-radius: 8px;
   justify-content: center;
 `
 
+const ModalSection = styled.div`
+animation: fadein .2s ease-in-out;
+`
+
 let Candidate1
 let Candidate2
 
@@ -306,8 +313,8 @@ height: 100%;
 border-radius: 6px 0 0 6px;
 cursor: pointer;
 object-fit: cover;
-border: 10px solid black;
-border-right: 2px solid black;
+border: 8px solid black;
+border-right: 4px solid black;
 `
 
 Candidate2 = styled.img`
@@ -316,8 +323,8 @@ height: 100%;
 border-radius: 0 6px 6px 0;
 cursor: pointer;
 object-fit: cover;
-border: 10px solid black;
-border-left: 2px solid black;
+border: 8px solid black;
+border-left: 4px solid black;
 `
 
 const VersusBackground = styled.div`
@@ -394,17 +401,20 @@ const BackgroundSection = styled.div`
   background-repeat: no-repeat;
   background-position: fit;
   background-size: cover;
+  filter: brightness(.7);
 `
 
 const StyledCanvas = styled.div`
   position: absolute;
   width: 100%;
-  background-color: #154f9b;
+  height: 100vh;
+  background-color: black;
 `;
 
 const ContentContainer = styled.div`
   position: absolute;
   width: 100%;
+  height: 100%;
   text-align: center;
 `;
 

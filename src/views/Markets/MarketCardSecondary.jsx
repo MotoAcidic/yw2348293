@@ -149,7 +149,7 @@ font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-color: #ffffff;
+color: rgb(255, 204, 160);
 font-size: 16px;
 text-align: left;
 padding: 2%;

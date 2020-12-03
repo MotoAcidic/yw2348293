@@ -152,22 +152,14 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					Your Bets
 				</TitleText>
 				<YourBets>
-					{!farmBalances.pool1WARBal > 0 && !farmBalances.pool1ETHBal > 0 &&
-						!farmBalances.pool2WARBal > 0 && !farmBalances.pool2ETHBal > 0 ?
+					{!farmBalances.pool1ETHBal > 0 && !farmBalances.pool2ETHBal > 0 ?
 						<SmallText>none, place a bet!</SmallText>
 						: null
 					}
-					{farmBalances.pool1WARBal > 0 || farmBalances.pool1ETHBal > 0 ?
+					{farmBalances.pool1ETHBal > 0 ?
 						<Column>
 							<CardIcon src={battle.pool1.icon} />
 							<Space />
-							{farmBalances.pool1WARBal > 0 &&
-								<Bets>
-									<AmountBet>
-										{'$WAR: ' + farmBalances.pool1WARBal.toLocaleString()}
-									</AmountBet>
-								</Bets>
-							}
 							{farmBalances.pool1ETHBal > 0 &&
 								<Bets>
 									<AmountBet>
@@ -177,17 +169,10 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 						</Column>
 						: null
 					}
-					{farmBalances.pool2WARBal > 0 || farmBalances.pool2ETHBal > 0 ?
+					{farmBalances.pool2ETHBal > 0 ?
 						<Column>
 							<CardIcon src={battle.pool2.icon} />
 							<Space />
-							{farmBalances.pool2WARBal > 0 &&
-								<Bets>
-									<AmountBet>
-										{'$WAR: ' + farmBalances.pool2WARBal.toLocaleString()}
-									</AmountBet>
-								</Bets>
-							}
 							{farmBalances.pool2ETHBal > 0 &&
 								<Bets>
 									<AmountBet>
@@ -210,17 +195,11 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					<BetDisplay>
 						<CardIcon src={battle.pool1.icon} />
 						<AmountBet>
-							{farmBets.pool1WARPot.toLocaleString() + " $WAR"}
-						</AmountBet>
-						<AmountBet>
 							{farmBets.pool1ETHPot.toLocaleString() + " $ETH"}
 						</AmountBet>
 					</BetDisplay>
 					<BetDisplay>
 						<CardIcon src={battle.pool2.icon} />
-						<AmountBet>
-							{farmBets.pool2WARPot.toLocaleString() + " $WAR"}
-						</AmountBet>
 						<AmountBet>
 							{farmBets.pool2ETHPot.toLocaleString() + " $ETH"}
 						</AmountBet>
@@ -229,25 +208,6 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 
 				<Separator />
 
-				{allowance.toNumber() > 0 ?
-					<>
-						<Text>
-							Bet $WAR
-						</Text>
-						<Top>
-							<Text>
-								{candidate + " to Win"}
-							</Text>
-							<InputContainer>
-								<Input disabled={pending ? true : false} type="number" min="0" value={warInput} onChange={e => setWARInput(e.target.value)} />
-								WAR
-							</InputContainer>
-						</Top>
-					</>
-					: <Button size="xlg" onClick={() => handleApprove()}>Approve WAR</Button>
-				}
-
-				<Space />
 				<Text>
 					Bet $ETH
 				</Text>
@@ -257,7 +217,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					</Text>
 					<InputContainer>
 						<Input disabled={pending ? true : false} type="number" min="0" value={ethInput} onChange={e => setETHInput(e.target.value)} />
-								ETH
+						ETH
 					</InputContainer>
 				</Top>
 				{pending ?

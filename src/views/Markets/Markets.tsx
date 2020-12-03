@@ -244,7 +244,10 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
-            <TopDisplayContainer />
+            {/* <TopDisplayContainer /> */}
+            <Title>
+              Active Markets
+		        </Title>
             <LandingSection>
 
               {markets}
@@ -380,9 +383,9 @@ font-family: "Gilroy";
   font-style: normal;
   line-height: 1;
   letter-spacing: normal;
-  color: #ffffff;
+  color: rgb(255, 204, 160);
   max-width: 80vw;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 ` : styled.div`
 font-family: "Gilroy";
   font-size: 30px;

@@ -154,20 +154,20 @@ const Battle = () => {
                 the page you are looking for was not found. (404)
               </Error404>
             )}
-            <div style={modal ? { display: 'block' } : { display: 'none' }}>
-              <Modal onClick={(e) => closeModal(e)}>
-                <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
-                  {yam && <BetModal
-                    battle={battle}
-                    candidateInfo={candidate}
-                    contract={contract}
-                  />
-                  }
-                </ModalBlock>
-              </Modal>
-            </div>
-
-
+            {battle &&
+              <div style={modal ? { display: 'block' } : { display: 'none' }}>
+                <Modal onClick={(e) => closeModal(e)}>
+                  <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
+                    {yam && <BetModal
+                      battle={battle}
+                      candidateInfo={candidate}
+                      contract={contract}
+                    />
+                    }
+                  </ModalBlock>
+                </Modal>
+              </div>
+            }
             {/* <Rules />
             <Pool3 /> */}
           </Page>
@@ -271,8 +271,8 @@ flex-direction: row;
 justify-content: space-evenly;
 align-items: center;
 width: 80%;
-margin-bottom: 10px;
-margin-top: 5px;
+margin-bottom: 5px;
+margin-top: 10px;
 background-color: rgba(0,0,0,0.3);
 border-radius: 8px;
 height: 40px;

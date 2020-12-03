@@ -46,6 +46,9 @@ const Battle = ({ bet }) => {
     }
   }, [yam, img1, img2]);
 
+  if (!bet) {
+    return null
+  }
   return (
     <VersusContainer to={`/market/${bet._id}`}>
       <ImgWrapper>

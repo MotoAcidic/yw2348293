@@ -276,10 +276,9 @@ const MarketsGrid = !isMobile() ? styled.div`
   display: grid;
   grid-template-columns: 50%;
   grid-template-columns: repeat(2,1fr);
-  grid-row-gap: 19px;
-  row-gap: 19px;
+  grid-row-gap: 20px;
+  row-gap: 20px;
   grid-template-rows: auto;
-  height: 20%;
 ` : styled.div`
   width: 100%;`;
 
@@ -293,7 +292,7 @@ flex-wrap: wrap;
 `
 
 const SecondaryContainer = !isMobile() ? styled.div`
-height: calc(15vw + 100px);
+// height: calc(15vw + 100px);
 ` : styled.div`
 width: 100%;`;
 

@@ -270,6 +270,8 @@ const Battle: React.FC = () => {
 
 const MarketsGrid = !isMobile() ? styled.div`
   width: 100%;
+min-width: 1000px;
+min-height: 340px;
   grid-column-gap: 25px;
   -webkit-column-gap: 25px;
   column-gap: 25px;
@@ -292,13 +294,16 @@ flex-wrap: wrap;
 `
 
 const SecondaryContainer = !isMobile() ? styled.div`
-// height: calc(15vw + 100px);
+height: calc(15vw + 40px);
+min-height: 202px;
 ` : styled.div`
 width: 100%;`;
 
 const PrimaryContainer = !isMobile() ? styled.div`
 width: 90vw;
 height: 31.7vw;
+min-width: 1000px;
+min-height: 340px;
 margin-bottom: 2vh;
 ` : styled.div`
 width: 100%;`;

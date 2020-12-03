@@ -57,7 +57,7 @@ align-items: flex-end;
 
 const Teams = styled.div`
 display: flex;
-width: 90%;
+width: 98%;
 margin: 0 auto 5px auto;
 justify-content: space-between;`
 

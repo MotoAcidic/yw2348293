@@ -118,6 +118,7 @@ display: flex;
 font-size: 12px;
 align-items: flex-end;
 width: 40%;
+min-width: 200px;
 `
 
 const Money = styled.div`
@@ -150,11 +151,12 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: rgb(255, 204, 160);
+// color: white;
 font-size: 16px;
 text-align: left;
-padding: 2%;
+padding: 0.5% 2% 0.5% 2%;
 position: absolute;
-height: 9%;
+min-height: 9%;
 bottom: 42px;
 width: 96%;
 background: rgba(0,0,0,0.7);
@@ -216,8 +218,6 @@ position: relative;`
 
 const VersusContainer = !isMobile() ? styled(NavLink)`
 width: 100%;
-max-width: 1400px;
-max-height: 650px;
 height: 100%;
 display: flex;
 flex-direction: column;

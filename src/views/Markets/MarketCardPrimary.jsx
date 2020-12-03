@@ -64,23 +64,24 @@ const Battle = ({ bet }) => {
         <Description>
           {bet.description}
         </Description>
-        <BetAmount>
-          {currBets.choice1 > 0 &&
-            <>
-              <Volume>
-                Volume:&nbsp;
+        {currBets.choice1 > 0 ?
+          <BetAmount>
+            <Volume>
+              Volume:&nbsp;
                 <Money>
-                  ${(currBets.choice1 + currBets.choice2).toFixed(2)}
-                </Money>
-              </Volume>
-              <BalanceBar bet={bet} votes1={currBets.choice1} votes2={currBets.choice2} />
-            </>
-          }
-        </BetAmount>
+                ${(currBets.choice1 + currBets.choice2).toFixed(2)}
+              </Money>
+            </Volume>
+            <BalanceBar bet={bet} votes1={currBets.choice1} votes2={currBets.choice2} />
+          </BetAmount> :
+          <LoginPls />
+        }
       </Info>
     </VersusContainer>
   );
 };
+
+const LoginPls = styled.div``
 
 const Volume = styled.div`
 font-family: "SF Mono Semibold";
@@ -109,11 +110,8 @@ font-size: 20px;
 const BetAmount = styled.div`
 display: flex;
 flex-direction: column;
-height: calc(100% - 24px);
+height: 55px;
 justify-content: space-between;
-padding-bottom: 20px;
-padding-top: 10px;
-padding-right: 2%;
 width: 30%;
 align-items: center;`
 
@@ -124,17 +122,16 @@ font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-color: rgb(255, 204, 160);
+color: #ffffff;
 font-size: 24px;
 width: 65%;
 text-align: left;
-padding: 0 2% 0 4%;
 `
 
 const Info = styled.div`
 position: absolute;
-height: 17%;
-width: 100%;
+min-height: 15%;
+width: 96%;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -142,6 +139,8 @@ bottom: 0;
 background: rgba(0,0,0,0.7);
 display: flex;
 flex-direction: row;
+padding: 0.25% 2% 0.25% 2%;
+justify-content: space-between;
 `
 
 const ImgWrapper = styled.div`
@@ -201,6 +200,8 @@ letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
 background-color: rgba(256,256,256,0.08);
+min-width: 1000px;
+min-height: 340px;
 ` : styled.div`
 position: relative;
 margin: 0 0 40px 0;

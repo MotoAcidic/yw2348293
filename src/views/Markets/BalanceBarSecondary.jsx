@@ -21,26 +21,23 @@ const FarmGraph = ({ bet, votes1, votes2 }) => {
       {/* <SubTitle>
         Voting Balance
       </SubTitle> */}
-      {/* <CardIcon src={MiniVitalik} /> */}
-      {/* <Teams>
+      <StyledContent>
+        {/* <CardIcon src={MiniVitalik} /> */}
+        <Teams>
           <Team>
             {bet.pool1.name}
           </Team>
           <Team>
             {bet.pool2.name}
           </Team>
-        </Teams> */}
-      <BalanceBar>
-        <SmallText>
-          <Volume>
+        </Teams>
+        <BalanceBar>
+          <div style={{ backgroundColor: 'rgb(154,220,180)', height: '100%', borderRadius: "2px 0 0 2px", width: percent1 + '%', borderRight: "2px solid white" }} />
+        </BalanceBar>
+        {/* <CardIcon src={MiniAlexandra} /> */}
 
-            💰${(votes1 + votes2).toLocaleString(undefined, { maximumFractionDigits: 2 })}💰
-          </Volume>
-        </SmallText>
-        <div style={{ backgroundColor: 'rgb(154,220,180)', height: '100%', borderRadius: "2px 0 0 2px", width: percent1 + '%', borderRight: "2px solid black" }} />
-      </BalanceBar>
-      {/* <CardIcon src={MiniAlexandra} /> */}
-
+      </StyledContent>
+      {/* <SmallText>Volume: ${(votes1 + votes2).toLocaleString(undefined, { maximumFractionDigits: 2 })}💰</SmallText> */}
     </VotingBalance>
   )
 }
@@ -64,26 +61,17 @@ width: 90%;
 margin: 0 auto 5px auto;
 justify-content: space-between;`
 
-const Volume = styled.div`
-position: relative;
-left: -50%;
-font-family: "SF Mono Semibold";
-font-size: 12px;
+const SmallText = styled.div`
+font-family: "Gilroy";
+margin: -5px auto 0px;
+font-size: 14px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 text-align: center;
-color: black;
-border-radius: 2px;
-padding: 1px 2px;
-background: rgba(256,256,256,0.3);
-`
-
-const SmallText = styled.div`
-left: 50%;
-position: absolute;
+color: #ffffff;
 `
 
 const CardIcon = styled.img`
@@ -94,7 +82,7 @@ const CardIcon = styled.img`
   display: flex;
   justify-content: center;
   margin: 0 15px;
-  background-color: black;
+  background-color: white;
   filter: brightness(110%) contrast(110%) grayscale(60%);
 `
 
@@ -102,9 +90,9 @@ const BalanceBar = styled.div`
 // width: calc(100% - 110px);
 width: 100%;
 margin: 0 auto;
-height: 14px;
+height: 10px;
 background-color: rgb(154,180,220);
-border: 1px solid black;
+border: 1px solid white;
 border-radius: 3px;
 `
 
@@ -125,11 +113,18 @@ color: #ffffff;
 const VotingBalance = styled.div`
 display: flex;
 flex-direction: column;
-position: absolute;
-z-index: 20004;
-margin-left: 25%;
-top: 12px;
-width: 50%;
+width: 90%;
+    height: 100%;
+    margin: -15px auto 0px auto;
+    justify-content: center;
+    padding-top: 7px;
+`
+
+
+const StyledContent = styled.div`
+  display: flex;
+	flex-direction: column;
+  width: 100%;
 `
 
 export default FarmGraph;

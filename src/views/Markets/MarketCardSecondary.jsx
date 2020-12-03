@@ -46,6 +46,11 @@ const Battle = ({ bet }) => {
     }
   }, [yam, img1, img2]);
 
+  const connectMe = (e) => {
+    e.preventDefault()
+    connect('injected')
+  }
+
   return (
     <VersusContainer to={`/market/${bet._id}`}>
       <Images>
@@ -53,9 +58,9 @@ const Battle = ({ bet }) => {
         <ImgWrapper>
           <Candidate1 src={bet.pool1.graphic} />
         </ImgWrapper>
-        {currBets.choice1 > 0 &&
+        {/* {currBets.choice1 > 0 &&
               <BalanceBar bet={bet} votes1={currBets.choice1} votes2={currBets.choice2} />
-          }
+          } */}
         {/* <Versus>VS</Versus> */}
         <ImgWrapper  >
           <Candidate2
@@ -64,15 +69,42 @@ const Battle = ({ bet }) => {
 
         </ImgWrapper>
       </Images>
-      <Info>
-        <Description>
-          {bet.description}
-        </Description>
-      </Info>
+      <Description>
+        {bet.description}
+      </Description>
+      {currBets.choice1 > 0 ?
+        <Info>
+          {/* <BetAmount> */}
+          <Volume>
+            Volume:&nbsp;
+                <Money>
+              ${(currBets.choice1 + currBets.choice2).toFixed(2)}
+            </Money>
+          </Volume>
+          <BalanceBar bet={bet} votes1={currBets.choice1} votes2={currBets.choice2} />
+          {/* </BetAmount> */}
+        </Info> :
+        <PleaseLogin onClick={e => connectMe(e)}>
+          Click Me to Connect your Wallet
+        </PleaseLogin>
+      }
     </VersusContainer>
   );
 };
 
+const PleaseLogin = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+height: 38px;
+width: calc(100% - 3px);
+margin-left: 3px;
+font-size: 24px;
+color: rgb(255,204,74);
+border: 2px solid rgba(255, 183, 0, 0.3);
+border-top: none;
+border-radius: 0 0 4px 4px;
+`
 
 const Volume = styled.div`
 font-family: "SF Mono Semibold";
@@ -83,8 +115,9 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 display: flex;
-font-size: 10px;
+font-size: 12px;
 align-items: flex-end;
+width: 40%;
 `
 
 const Money = styled.div`
@@ -95,22 +128,22 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
-font-size: 14px;
+font-size: 20px;
 `
 
 const BetAmount = styled.div`
 display: flex;
-flex-direction: column;
+flex-direction: row;
 height: calc(100% - 24px);
 justify-content: space-between;
 padding-bottom: 20px;
 padding-top: 10px;
 padding-right: 2%;
-width: 30%;
+width: 100%;
 align-items: center;`
 
 const Description = styled.div`
-font-family: "Gilroy";
+font-family: "GilroyMedium";
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
@@ -118,20 +151,25 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 font-size: 16px;
-width: 65%;
 text-align: left;
-padding: 0 2% 0 4%;`
+padding: 2%;
+position: absolute;
+height: 9%;
+bottom: 42px;
+width: 96%;
+background: rgba(0,0,0,0.7);
+`
 
 const Info = styled.div`
-height: 50px;
-width: 100%;
+height: 40px;
+width: calc(93% + 2px);
+padding: 0 4% 0 3%;
 display: flex;
 align-items: center;
-justify-content: center;
+justify-content: space-between;
 bottom: 0;
+border-radius: 0 0 8px 8px;
 background: rgba(0,0,0,0.7);
-display: flex;
-flex-direction: row;
 `
 
 const ImgWrapper = styled.div`
@@ -154,7 +192,7 @@ let Candidate2
 Candidate1 = styled.img`
 width: calc(100% - 5px);
 height: calc(100% - 10px);
-border-radius: 6px 0 0 6px;
+border-radius: 6px 0 0 0;
 cursor: pointer;
 object-fit: cover;
 border: 5px solid black;
@@ -164,7 +202,7 @@ border-right: 2px solid white;
 Candidate2 = styled.img`
 width: calc(100% - 5px);
 height: calc(100% - 10px);
-border-radius: 0 6px 6px 0;
+border-radius: 0 6px  0;
 cursor: pointer;
 object-fit: cover;
 border: 5px solid black;
@@ -172,7 +210,7 @@ border-left: 2px solid black;
 `
 
 const Images = styled.div`
-height: calc(100% - 50px);
+height: calc(100% - 40px);
 display: flex;
 position: relative;`
 
@@ -185,7 +223,6 @@ display: flex;
 flex-direction: column;
 align-items: center;
 font-size: 30px;
-margin: 0 auto 40px auto;
 font-family: "Gilroy";
 font-weight: bold;
 font-stretch: normal;
@@ -193,9 +230,11 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
-border-radius: 8px;
+border-radius: 8px 8px 0 0;
 background-color: rgba(256,256,256,0.08);
 text-decoration: none;
+position: relative;
+border-radius: 8px;
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;

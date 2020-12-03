@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import './swal.css'
+import BigNumber from 'bignumber.js'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -13,7 +14,8 @@ function isMobile() {
 
 const FarmGraph = ({ votes1, votes2, icon1, icon2 }) => {
   const percent1 = 100 * (votes1 / (votes1 + votes2))
-  console.log('v1, v2, %: ', votes1, votes2, percent1);
+  const precision = new BigNumber(10).pow(18)
+  let total = new BigNumber(votes1 + votes2).div(precision).toNumber()
   return (
     <VotingBalance style={votes1 + votes2 ? {height: '60px'} : {height: '0px'}}>
       {votes1 + votes2 && (
@@ -27,7 +29,7 @@ const FarmGraph = ({ votes1, votes2, icon1, icon2 }) => {
             <CardIcon src={icon2} />
 
           </StyledContent>
-          <SmallText>Volume: ${(votes1 + votes2).toLocaleString(undefined, { maximumFractionDigits: 2 })}💰</SmallText>
+          <SmallText>Volume: ${total.toLocaleString(undefined, { maximumFractionDigits: 2 })}💰</SmallText>
         </>
       )}
     </VotingBalance>

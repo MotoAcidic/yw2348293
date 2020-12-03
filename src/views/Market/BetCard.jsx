@@ -17,10 +17,12 @@ import useStakedBalance from '../../hooks/useStakedBalance'
 import useUnstake from '../../hooks/useUnstake'
 import useAllowance from '../../hooks/useAllowance'
 import { placeTestWARBet, placeTestETHBet, getTestBets, getTestBalances, getTestRewards, getTestFinished, redeem } from '../../yamUtils'
+import { getPots, getUserBet, placeETHBet } from "../../yamUtils";
 import Swal from 'sweetalert2';
 import { getElectionContracts, harvest } from '../../yamUtils'
 import Pool3 from "./Pool3";
 import { getContract } from '../../utils/erc20'
+import BigNumber from 'bignumber.js'
 
 
 function isMobile() {
@@ -65,23 +67,38 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	const [ethInput, setETHInput] = useState(0);
 	const [warInput, setWARInput] = useState(0);
 	const [disabled, setDisabled] = useState(false)
-	const [farmBets, setFarmBets] = useState({ pool1ETHPot: 0, pool2ETHPot: 0, pool1WARPot: 0, pool2WARPot: 0 });
-	const [farmBalances, setFarmBalances] = useState({ pool1ETHBal: 0, pool2ETHBal: 0, pool1WARBal: 0, pool2WARBal: 0 });
+	const [farmBets, setFarmBets] = useState({ pool1ETHPot: { value: 0, choice: "" }, pool2ETHPot: { value: 0, choice: "" } });
+	const [farmBalances, setFarmBalances] = useState({ value: 0 });
 	const [pending, setPending] = useState(false);
 
-	const tokenContract = useMemo(() => {
-		return getContract(ethereum, "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde")
-	}, [ethereum, "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"])
+	// const tokenContract = useMemo(() => {
+	// 	return getContract(ethereum, "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde")
+	// }, [ethereum, "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde"])
 
-	console.log(tokenContract);
-	const { onApprove } = useApprove(tokenContract, electionContract)
-	const allowance = useAllowance(tokenContract, electionContract)
-	console.log(allowance);
+	// console.log(tokenContract);
+	// const { onApprove } = useApprove(tokenContract, electionContract)
+	// const allowance = useAllowance(tokenContract, electionContract)
+	// console.log(allowance);
 
 	useEffect(() => {
 		const getBets = async () => {
-			const bets = await getTestBets(yam);
-			const balances = await getTestBalances(yam, account);
+			let precision = new BigNumber(10).pow(18)
+			let bets = await getPots(yam, battle._id);
+			bets = {
+				pool1ETHPot: {
+					choice: bets[0].choice,
+					value: new BigNumber(bets[0].value).div(precision).toNumber()
+				}, 
+				pool2ETHPot: {
+					choice: bets[1].choice,
+					value: new BigNumber(bets[1].value).div(precision).toNumber()
+				}
+			}
+			let balances = await getUserBet(yam, battle._id, account);
+			balances = {
+				choiceId: balances.choiceId,
+				value: new BigNumber(balances.value).div(precision).toNumber()
+			}
 			setFarmBalances(balances);
 			// console.log("gotbets", bets);
 			setFarmBets(bets);
@@ -98,25 +115,25 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 			// 	claimAndUnstake()
 			// 	return
 			// }
-			if (warInput < 0 || ethInput < 0) {
+			if (ethInput < 0) {
 				Swal.fire('Please enter a valid value to bet!')
 				return
 			}
-			if (warInput) {
-				const candidate = candidateInfo === "pool1" ? 1 : 2;
-				// console.log("War Bet", candidate, warInput)
-				setPending(true)
-				placeTestWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => setPending(false))
-			}
+			// if (warInput) {
+			// 	const candidate = candidateInfo === "pool1" ? 0 : 1;
+			// 	// console.log("War Bet", candidate, warInput)
+			// 	setPending(true)
+			// 	placeTestWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => setPending(false))
+			// }
 			if (ethInput) {
-				const candidate = candidateInfo === "pool1" ? 1 : 2;
+				const candidate = candidateInfo === "pool1" ? 0 : 1;
 				// console.log("Eth Bet", candidate, ethInput)
 				setPending(true)
-				placeTestETHBet(yam, candidate, parseFloat(ethInput), account).then((ret) => {
+				placeETHBet(yam, battle._id, candidate, parseFloat(ethInput), account).then((ret) => {
 					setPending(false)
 				})
 			}
-			if (!ethInput && !warInput) {
+			if (!ethInput) {
 				Swal.fire("Place a bet for a candidate!");
 			}
 		}
@@ -128,17 +145,17 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		getTestRewards(yam, account);
 	}
 
-	const handleApprove = useCallback(async () => {
-		try {
-			const txHash = await onApprove()
-			console.log(txHash);
-			// user rejected tx or didn't go thru
-			if (!txHash) {
-			}
-		} catch (e) {
-			console.log(e)
-		}
-	}, [onApprove])
+	// const handleApprove = useCallback(async () => {
+	// 	try {
+	// 		const txHash = await onApprove()
+	// 		console.log(txHash);
+	// 		// user rejected tx or didn't go thru
+	// 		if (!txHash) {
+	// 		}
+	// 	} catch (e) {
+	// 		console.log(e)
+	// 	}
+	// }, [onApprove])
 
 	let candidate = battle.pool1.name
 	if (candidateInfo === 'pool2')
@@ -152,35 +169,19 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					Your Bets
 				</TitleText>
 				<YourBets>
-					{!farmBalances.pool1ETHBal > 0 && !farmBalances.pool2ETHBal > 0 ?
-						<SmallText>none, place a bet!</SmallText>
+					{!farmBalances.value > 0 ?
+						<NoBetsText>none, place a bet!</NoBetsText>
 						: null
 					}
-					{farmBalances.pool1ETHBal > 0 ?
+					{farmBalances.value > 0 ?
 						<Column>
-							<CardIcon src={battle.pool1.icon} />
-							<Space />
-							{farmBalances.pool1ETHBal > 0 &&
+							{farmBalances.value > 0 &&
 								<Bets>
 									<AmountBet>
-										{'$ETH: ' + farmBalances.pool1ETHBal.toLocaleString()}
+										<SmallText>{farmBalances.choiceId}</SmallText>
+										{'$ETH: ' + farmBalances.value.toLocaleString()}
 									</AmountBet>
 								</Bets>}
-						</Column>
-						: null
-					}
-					{farmBalances.pool2ETHBal > 0 ?
-						<Column>
-							<CardIcon src={battle.pool2.icon} />
-							<Space />
-							{farmBalances.pool2ETHBal > 0 &&
-								<Bets>
-									<AmountBet>
-										{'$ETH: ' + farmBalances.pool2ETHBal.toLocaleString()}
-									</AmountBet>
-								</Bets>
-							}
-
 						</Column>
 						: null
 					}
@@ -195,13 +196,15 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					<BetDisplay>
 						<CardIcon src={battle.pool1.icon} />
 						<AmountBet>
-							{farmBets.pool1ETHPot.toLocaleString() + " $ETH"}
+							<SmallText>{farmBets.pool1ETHPot.choice}</SmallText>
+							{'$ETH: ' + farmBets.pool1ETHPot.value.toLocaleString()}
 						</AmountBet>
 					</BetDisplay>
 					<BetDisplay>
 						<CardIcon src={battle.pool2.icon} />
 						<AmountBet>
-							{farmBets.pool2ETHPot.toLocaleString() + " $ETH"}
+							<SmallText>{farmBets.pool2ETHPot.choice}</SmallText>
+							{'$ETH: ' + farmBets.pool2ETHPot.value.toLocaleString()}
 						</AmountBet>
 					</BetDisplay>
 				</AllBets>
@@ -349,6 +352,18 @@ align-items: center;
 `
 
 const SmallText = styled.div`
+font-family: "Gilroy";
+font-size: 14px;
+font-weight: 100;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+margin-bottom: 5px;
+`
+
+const NoBetsText = styled.div`
 font-family: "Gilroy";
 font-size: 14px;
 font-weight: 100;

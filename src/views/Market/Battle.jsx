@@ -69,8 +69,8 @@ const Battle = () => {
 
   const getRoughBets = async () => {
     let tvl = await getPots(yam, battle._id)
-    const pool1 = tvl.pool1
-    const pool2 = tvl.pool2
+    const pool1 = tvl[0].value
+    const pool2 = tvl[1].value
     setRoughBets({ pool1, pool2 });
   }
 

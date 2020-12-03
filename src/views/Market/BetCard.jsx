@@ -22,6 +22,7 @@ import Swal from 'sweetalert2';
 import { getElectionContracts, harvest } from '../../yamUtils'
 import Pool3 from "./Pool3";
 import { getContract } from '../../utils/erc20'
+import BigNumber from 'bignumber.js'
 
 
 function isMobile() {
@@ -66,8 +67,8 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	const [ethInput, setETHInput] = useState(0);
 	const [warInput, setWARInput] = useState(0);
 	const [disabled, setDisabled] = useState(false)
-	const [farmBets, setFarmBets] = useState({ pool1ETHPot: 0, pool2ETHPot: 0 });
-	const [farmBalances, setFarmBalances] = useState({ pool1ETHBal: 0, pool2ETHBal: 0 });
+	const [farmBets, setFarmBets] = useState({ pool1ETHPot: { value: 0, choice: "" }, pool2ETHPot: { value: 0, choice: "" } });
+	const [farmBalances, setFarmBalances] = useState({ value: 0 });
 	const [pending, setPending] = useState(false);
 
 	// const tokenContract = useMemo(() => {
@@ -81,8 +82,23 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 
 	useEffect(() => {
 		const getBets = async () => {
-			const bets = await getPots(yam, battle._id);
-			const balances = await getUserBet(yam, battle._id, account);
+			let precision = new BigNumber(10).pow(18)
+			let bets = await getPots(yam, battle._id);
+			bets = {
+				pool1ETHPot: {
+					choice: bets[0].choice,
+					value: new BigNumber(bets[0].value).div(precision).toNumber()
+				}, 
+				pool2ETHPot: {
+					choice: bets[1].choice,
+					value: new BigNumber(bets[1].value).div(precision).toNumber()
+				}
+			}
+			let balances = await getUserBet(yam, battle._id, account);
+			balances = {
+				choiceId: balances.choiceId,
+				value: new BigNumber(balances.value).div(precision).toNumber()
+			}
 			setFarmBalances(balances);
 			// console.log("gotbets", bets);
 			setFarmBets(bets);
@@ -153,35 +169,19 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					Your Bets
 				</TitleText>
 				<YourBets>
-					{!farmBalances.pool1ETHBal > 0 && !farmBalances.pool2ETHBal > 0 ?
-						<SmallText>none, place a bet!</SmallText>
+					{!farmBalances.value > 0 ?
+						<NoBetsText>none, place a bet!</NoBetsText>
 						: null
 					}
-					{farmBalances.pool1ETHBal > 0 ?
+					{farmBalances.value > 0 ?
 						<Column>
-							<CardIcon src={battle.pool1.icon} />
-							<Space />
-							{farmBalances.pool1ETHBal > 0 &&
+							{farmBalances.value > 0 &&
 								<Bets>
 									<AmountBet>
-										{'$ETH: ' + farmBalances.pool1ETHBal.toLocaleString()}
+										<SmallText>{farmBalances.choiceId}</SmallText>
+										{'$ETH: ' + farmBalances.value.toLocaleString()}
 									</AmountBet>
 								</Bets>}
-						</Column>
-						: null
-					}
-					{farmBalances.pool2ETHBal > 0 ?
-						<Column>
-							<CardIcon src={battle.pool2.icon} />
-							<Space />
-							{farmBalances.pool2ETHBal > 0 &&
-								<Bets>
-									<AmountBet>
-										{'$ETH: ' + farmBalances.pool2ETHBal.toLocaleString()}
-									</AmountBet>
-								</Bets>
-							}
-
 						</Column>
 						: null
 					}
@@ -196,13 +196,15 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					<BetDisplay>
 						<CardIcon src={battle.pool1.icon} />
 						<AmountBet>
-							{farmBets.pool1ETHPot.toLocaleString() + " $ETH"}
+							<SmallText>{farmBets.pool1ETHPot.choice}</SmallText>
+							{'$ETH: ' + farmBets.pool1ETHPot.value.toLocaleString()}
 						</AmountBet>
 					</BetDisplay>
 					<BetDisplay>
 						<CardIcon src={battle.pool2.icon} />
 						<AmountBet>
-							{farmBets.pool2ETHPot.toLocaleString() + " $ETH"}
+							<SmallText>{farmBets.pool2ETHPot.choice}</SmallText>
+							{'$ETH: ' + farmBets.pool2ETHPot.value.toLocaleString()}
 						</AmountBet>
 					</BetDisplay>
 				</AllBets>
@@ -350,6 +352,18 @@ align-items: center;
 `
 
 const SmallText = styled.div`
+font-family: "Gilroy";
+font-size: 14px;
+font-weight: 100;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+color: #ffffff;
+margin-bottom: 5px;
+`
+
+const NoBetsText = styled.div`
 font-family: "Gilroy";
 font-size: 14px;
 font-weight: 100;

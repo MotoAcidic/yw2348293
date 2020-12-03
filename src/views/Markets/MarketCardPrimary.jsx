@@ -6,7 +6,7 @@ import useYam from "../../hooks/useYam";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 import useFarms from "../../hooks/useFarms";
-import { getWarStaked, getChessContracts, getChessBets, chessTVL } from "../../yamUtils";
+import { getWarStaked, getChessContracts, getChessBets, getPots, getPotVals } from "../../yamUtils";
 import { NavLink } from 'react-router-dom'
 import BalanceBar from "./BalanceBarPrimary"
 
@@ -25,11 +25,11 @@ const Battle = ({ bet }) => {
   let [img1, setImg1] = useState(null)
   let [img2, setImg2] = useState(null)
 
+
   const getCurrBets = async () => {
-    let tvl = await chessTVL(yam, account)
-    console.log("tvl", tvl)
-    const choice1 = tvl.trumpTotal
-    const choice2 = tvl.bidenTotal
+    let potVals = await getPotVals(yam, bet._id)
+    const choice1 = potVals.choice0Val
+    const choice2 = potVals.choice1Val
     console.log(choice1, choice2);
     setCurrBets({ choice1, choice2 });
   }
@@ -45,6 +45,11 @@ const Battle = ({ bet }) => {
       imag2.src = bet.pool2.graphic;
     }
   }, [yam, img1, img2]);
+
+  const connectMe = (e) => {
+    e.preventDefault()
+    connect('injected')
+  }
 
   if (!bet) {
     return null
@@ -64,7 +69,7 @@ const Battle = ({ bet }) => {
         <Description>
           {bet.description}
         </Description>
-        {currBets.choice1 > 0 ?
+        {account ?
           <BetAmount>
             <Volume>
               Volume:&nbsp;
@@ -74,14 +79,27 @@ const Battle = ({ bet }) => {
             </Volume>
             <BalanceBar bet={bet} votes1={currBets.choice1} votes2={currBets.choice2} />
           </BetAmount> :
-          <LoginPls />
+          <PleaseLogin onClick={e => connectMe(e)}>
+            Click Me to Connect your Wallet
+      </PleaseLogin>
         }
       </Info>
     </VersusContainer>
   );
 };
 
-const LoginPls = styled.div``
+const PleaseLogin = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+width: 240px;
+font-size: 16px;
+color: rgb(255,204,74);
+border: 2px solid rgba(255, 183, 0, 0.3);
+border-radius: 4px;
+background-color: rgba(256,256,256,0.2);
+padding: 10px;
+`
 
 const Volume = styled.div`
 font-family: "SF Mono Semibold";

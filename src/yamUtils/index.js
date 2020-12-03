@@ -884,6 +884,25 @@ export const getPots = async (yam, betId) => {
   return (potsTotal);
 }
 
+export const getPotVals = async (yam, betId) => {
+  let potsTotal = await yam.contracts.betting_v2.methods.getPots(betId).call()
+  const precision = new BigNumber(10).pow(18);
+  const ethPrice = await getETHPrice(yam)
+  const curPrice = await getCurrentPrice(yam)
+  // potsTotal[0].value = Number(potsTotal[0].value) * ethPrice;
+  // potsTotal[1].value = Number(potsTotal[1].value) * ethPrice;
+  const choice0Val = potsTotal[0].value * ethPrice / precision;
+  const choice1Val = potsTotal[1].value * ethPrice / precision;
+  console.log("choiceVals", choice0Val, choice1Val)
+  const returnVal = {
+    choice0: potsTotal[0].choice,
+    choice0Val,
+    choice1: potsTotal[1].choice,
+    choice1Val,
+  }
+  return (returnVal);
+}
+
 export const getUserBet = async (yam, betId, account) => {
   console.log("calling user bet: ", betId)
   const currentBet = await yam.contracts.betting_v2.methods.getCurrentBet(betId, account).call()
@@ -896,7 +915,7 @@ export const placeETHBet = async (yam, betId, choice, amount, account) => {
   const precision = new BigNumber(10).pow(18);
   let choices = await yam.contracts.betting_v2.methods.getBet(betId).call()
   console.log(choices);
-  
+
   let p = await yam.contracts.betting_v2.methods.ETHBet(betId, choices.possibleChoices[choice])
     .send({ from: account, value: new BigNumber(amount).times(precision).toString(), gas: 200000 });
   return (p);
@@ -1038,7 +1057,7 @@ export const chessTVL = async (yam, account) => {
   const curPrice = await getCurrentPrice(yam)
   const currentBets = await getChessBets(yam)
   console.log(currentBets);
-  
+
   const trumpEth = ethPrice * currentBets.trumpETHPot
   const bidenEth = ethPrice * currentBets.bidenETHPot
   const trumpWar = curPrice * currentBets.trumpWARPot
@@ -1123,7 +1142,7 @@ export const testTVL = async (yam, account) => {
   const curPrice = await getCurrentPrice(yam)
   const currentBets = await getChessBets(yam)
   console.log(currentBets);
-  
+
   const trumpEth = ethPrice * currentBets.trumpETHPot
   const bidenEth = ethPrice * currentBets.bidenETHPot
   const trumpWar = curPrice * currentBets.trumpWARPot

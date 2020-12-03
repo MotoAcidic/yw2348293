@@ -6,7 +6,7 @@ import useYam from "../../hooks/useYam";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 import useFarms from "../../hooks/useFarms";
-import { getWarStaked, getChessContracts, getChessBets, chessTVL } from "../../yamUtils";
+import { getWarStaked, getChessContracts, getChessBets, getPots, getPotVals } from "../../yamUtils";
 import { NavLink } from 'react-router-dom'
 import BalanceBar from "./BalanceBarSecondary";
 
@@ -26,10 +26,9 @@ const Battle = ({ bet }) => {
   let [img2, setImg2] = useState(null)
 
   const getCurrBets = async () => {
-    let tvl = await chessTVL(yam, account)
-    console.log("tvl", tvl)
-    const choice1 = tvl.trumpTotal
-    const choice2 = tvl.bidenTotal
+    let potVals = await getPotVals(yam, bet._id)
+    const choice1 = potVals.choice0Val
+    const choice2 = potVals.choice1Val
     console.log(choice1, choice2);
     setCurrBets({ choice1, choice2 });
   }
@@ -72,7 +71,7 @@ const Battle = ({ bet }) => {
       <Description>
         {bet.description}
       </Description>
-      {currBets.choice1 > 0 ?
+      {account ?
         <Info>
           {/* <BetAmount> */}
           <Volume>

@@ -120,13 +120,13 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 				return
 			}
 			// if (warInput) {
-			// 	const candidate = candidateInfo === "pool1" ? 1 : 2;
+			// 	const candidate = candidateInfo === "pool1" ? 0 : 1;
 			// 	// console.log("War Bet", candidate, warInput)
 			// 	setPending(true)
 			// 	placeTestWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => setPending(false))
 			// }
 			if (ethInput) {
-				const candidate = candidateInfo === "pool1" ? 1 : 2;
+				const candidate = candidateInfo === "pool1" ? 0 : 1;
 				// console.log("Eth Bet", candidate, ethInput)
 				setPending(true)
 				placeETHBet(yam, battle._id, candidate, parseFloat(ethInput), account).then((ret) => {

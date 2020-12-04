@@ -11,6 +11,7 @@ import Battle from './Battle'
 import PriceBattle from './BattlePrice'
 import PriceTracking from './TrackingPrice'
 import BattleTracking from './battle/Tracking'
+import BattleComplete from './battle/Complete'
 
 
 function getServerURI() {
@@ -54,7 +55,7 @@ const Market = () => {
 	if (now < battle.bettingEnd) { // BETTING PHASE
 		console.log('in betting phase');
 		if (battle.battleType === 'battle')
-			return <Battle battle={battle} />
+			return <BattleComplete battle={battle} />
 		else if (battle.battleType === 'price')
 			return <PriceBattle battle={battle} />
 		else

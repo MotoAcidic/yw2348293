@@ -258,6 +258,14 @@ const Battle: React.FC = () => {
               Come back soon to claim rewards
 		        </Title> */}
             </LandingSection>
+
+            {/* <Title>
+              Complete Markets
+		        </Title>
+            <LandingSection>
+
+              
+            </LandingSection> */}
             {/* <Results /> 
             <Rules />
             <Pool3 /> */}

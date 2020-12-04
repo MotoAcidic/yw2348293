@@ -51,7 +51,7 @@ const Market = () => {
 	}
 	if (now < battle.bettingEnd) { // BETTING PHASE
 		console.log('in betting phase');
-		return <Battle battle={battle} />
+		return <BattleTracking battle={battle} />
 	}
 	else if (now > battle.bettingEnd && now < battle.battleEnd) { // TRACKING PHASE
 		console.log('in tracking phase');

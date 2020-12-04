@@ -15,7 +15,7 @@ function isMobile() {
 const FarmGraph = ({ votes1, votes2, icon1, icon2 }) => {
   const percent1 = 100 * (votes1 / (votes1 + votes2))
   const precision = new BigNumber(10).pow(18)
-  let total = new BigNumber(votes1 + votes2).div(precision).toNumber()
+  let total = votes1 + votes2;
   return (
     <VotingBalance style={votes1 + votes2 ? {height: '60px'} : {height: '0px'}}>
       {votes1 + votes2 && (

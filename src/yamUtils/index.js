@@ -897,8 +897,10 @@ export const getPotVals = async (yam, betId) => {
   const returnVal = {
     choice0: potsTotal[0].choice,
     choice0Val,
+    choice0ETHVal: potsTotal[0].value / precision,
     choice1: potsTotal[1].choice,
     choice1Val,
+    choice1ETHVal: potsTotal[1].value / precision,
   }
   return (returnVal);
 }

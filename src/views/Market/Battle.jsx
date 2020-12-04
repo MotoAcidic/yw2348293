@@ -77,6 +77,7 @@ const Battle = ({ battle }) => {
     setCandidate("pool2")
     setShowModal(true)
   }
+  
   const getCurrBets = async () => {
     let potVals = await getPotVals(yam, battle._id)
     const pool1 = potVals.choice0Val

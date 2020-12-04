@@ -17,7 +17,7 @@ import useStakedBalance from '../../hooks/useStakedBalance'
 import useUnstake from '../../hooks/useUnstake'
 import useAllowance from '../../hooks/useAllowance'
 import { placeTestWARBet, placeTestETHBet, getTestBets, getTestBalances, getTestRewards, getTestFinished, redeem } from '../../yamUtils'
-import { getPots, getUserBet, placeETHBet } from "../../yamUtils";
+import { getPotVals, getUserBet, placeETHBet } from "../../yamUtils";
 import Swal from 'sweetalert2';
 import { getElectionContracts, harvest } from '../../yamUtils'
 import Pool3 from "./Pool3";
@@ -83,15 +83,15 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	useEffect(() => {
 		const getBets = async () => {
 			let precision = new BigNumber(10).pow(18)
-			let bets = await getPots(yam, battle._id);
+			let bets = await getPotVals(yam, battle._id);
 			bets = {
 				pool1ETHPot: {
-					choice: bets[0].choice,
-					value: new BigNumber(bets[0].value).div(precision).toNumber()
+					choice: bets.choice0,
+					value: bets.choice0ETHVal
 				},
 				pool2ETHPot: {
-					choice: bets[1].choice,
-					value: new BigNumber(bets[1].value).div(precision).toNumber()
+					choice: bets.choice1,
+					value: bets.choice1ETHVal
 				}
 			}
 			let balances = await getUserBet(yam, battle._id, account);
@@ -180,8 +180,8 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 									<AmountBet>
 										<SmallText>{farmBalances.choiceId}</SmallText>
 										{'$ETH: ' + farmBalances.value.toLocaleString(undefined, {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 2
+											minimumFractionDigits: 3,
+											maximumFractionDigits: 3
 										})}
 									</AmountBet>
 								</Bets>}
@@ -201,8 +201,8 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 						<AmountBet>
 							<SmallText>{farmBets.pool1ETHPot.choice}</SmallText>
 							{'$ETH: ' + farmBets.pool1ETHPot.value.toLocaleString(undefined, {
-								minimumFractionDigits: 2,
-								maximumFractionDigits: 2
+								minimumFractionDigits: 3,
+								maximumFractionDigits: 3
 							})}
 						</AmountBet>
 					</BetDisplay>
@@ -211,8 +211,8 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 						<AmountBet>
 							<SmallText>{farmBets.pool2ETHPot.choice}</SmallText>
 							{'$ETH: ' + farmBets.pool2ETHPot.value.toLocaleString(undefined, {
-								minimumFractionDigits: 2,
-								maximumFractionDigits: 2
+								minimumFractionDigits: 3,
+								maximumFractionDigits: 3
 							})}
 						</AmountBet>
 					</BetDisplay>

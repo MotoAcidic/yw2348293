@@ -1,28 +1,23 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import styled from 'styled-components'
-import Button from '../../components/Button'
+import Button from '../../../components/Button'
 import { useWallet } from "use-wallet";
-import useModal from '../../hooks/useModal'
+import useModal from '../../../hooks/useModal'
 import Cookie from 'universal-cookie'
-import Container from '../../components/Container'
-import MiniBiden from "../../assets/img/alexandraicon.png";
-import MiniTrump from "../../assets/img/vitalikicon.jpg";
-import useFarm from '../../hooks/useFarm'
-import useYam from '../../hooks/useYam'
+import Container from '../../../components/Container'
+import useFarm from '../../../hooks/useFarm'
+import useYam from '../../../hooks/useYam'
 import { provider } from 'web3-core'
-import useApprove from '../../hooks/useApprove'
-import './swal.css'
-import UnstakeModal from './UnstakeModal'
-import useStakedBalance from '../../hooks/useStakedBalance'
-import useUnstake from '../../hooks/useUnstake'
-import useAllowance from '../../hooks/useAllowance'
-import { placeTestWARBet, placeTestETHBet, getTestBets, getTestBalances, getTestRewards, getTestFinished, redeem } from '../../yamUtils'
-import { getPots, getUserBet, placeETHBet } from "../../yamUtils";
+import useApprove from '../../../hooks/useApprove'
+import useStakedBalance from '../../../hooks/useStakedBalance'
+import useUnstake from '../../../hooks/useUnstake'
+import useAllowance from '../../../hooks/useAllowance'
+import { placeTestWARBet, placeTestETHBet, getTestBets, getTestBalances, getTestRewards, getTestFinished, redeem } from '../../../yamUtils'
+import { getPots, getUserBet, placeETHBet } from "../../../yamUtils";
 import Swal from 'sweetalert2';
-import { getElectionContracts, harvest } from '../../yamUtils'
-import Pool3 from "./Pool3";
-import { getContract } from '../../utils/erc20'
+import { getElectionContracts, harvest } from '../../../yamUtils'
 import BigNumber from 'bignumber.js'
+import VotingBalance from '../VotingBalance'
 
 
 function isMobile() {
@@ -162,9 +157,11 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		candidate = battle.pool2.name
 
 	return (
-		<Container size="sm">
+		<Section>
+			<InfoBlock >
+				Betting is now closed
+        	</InfoBlock>
 			<VersusContainer>
-
 				<TitleText>
 					Your Bets
 				</TitleText>
@@ -192,9 +189,9 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 
 				<Separator />
 
-				<Text>
+				<TitleText>
 					All Bets
-				</Text>
+				</TitleText>
 				<AllBets>
 					<BetDisplay>
 						<CardIcon src={battle.pool1.icon} />
@@ -217,32 +214,42 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 						</AmountBet>
 					</BetDisplay>
 				</AllBets>
-
-				<Separator />
-
-				<Text>
-					Bet $ETH
-				</Text>
-				<Top>
-					<Text>
-						{candidate + " to Win"}
-					</Text>
-					<InputContainer>
-						<Input disabled={pending ? true : false} type="number" min="0" value={ethInput} onChange={e => setETHInput(e.target.value)} />
-						ETH
-					</InputContainer>
-				</Top>
-				{pending ?
-					<BetPlaced>Your bet is pending. Check MetaMask for updates.</BetPlaced>
-					:
-					<Button size="xlg" onClick={() => placeBet()} disabled={!account || disabled ? true : false}>Place a Bet</Button>
-				}
+				<Separator style={{marginBottom: '30px', marginTop: '20px'}}/>
+				<VotingBalance votes1={farmBets.pool1ETHPot.value} votes2={farmBets.pool2ETHPot.value} icon1={battle.pool1.icon} icon2={battle.pool2.icon} />
 			</VersusContainer>
-			{/* <Button size="xlg" onClick={() => redeemRewards()}>Redeem Rewards</Button> */}
-		</Container>
+		</Section>
 	)
 }
 
+const Section = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 20%;
+height: 85%;
+`
+
+const InfoBlock = styled.a`
+font-family: "Gilroy";
+color: rgb(255, 204, 160);
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+align-items: center;
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+align-items: center;
+width: 80%;
+margin-bottom: 10px;
+margin-top: 8px;
+background-color: rgba(0,0,0,0.3);
+border-radius: 8px;
+height: 40px;
+`
 
 const Separator = styled.div`
   width: 80%;
@@ -302,13 +309,13 @@ letter-spacing: normal;
 color: #ffffff;`
 
 const CardIcon = styled.img`
-	height: 40px;
-  width: 40px;
+	height: 50px;
+  width: 50px;
   border-radius: 50%;
   align-items: center;
   display: flex;
   justify-content: center;
-  margin: 0 15px;
+  margin: 0px 10px 10px 10px;
 `
 const Bets = styled.div`
 display: flex;
@@ -345,6 +352,8 @@ line-height: 1;
 letter-spacing: normal;
 color: rgb(255, 190, 26);
 margin-bottom: 10px;
+margin-top: 10px;
+
 `
 
 const Text = styled.div`
@@ -436,7 +445,10 @@ color: #ffffff;
 border-radius: 8px;
 border: solid 2px white;
 background-color: rgb(40,40,40);
-padding: 20px;
+padding: 10px;
+padding-top: 20px;
+width: 100%;
+height: 100%;
 ` : styled.div`
 margin: 0 0 40px 0;
 max-width: 95wvw;

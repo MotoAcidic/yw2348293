@@ -74,7 +74,12 @@ const Battle = ({ bet }) => {
             <Volume>
               Volume:&nbsp;
                 <Money>
-                ${(currBets.choice1 + currBets.choice2).toFixed(2)}
+                ${
+                  (currBets.choice1 + currBets.choice2).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })
+                }
               </Money>
             </Volume>
             <BalanceBar bet={bet} votes1={currBets.choice1} votes2={currBets.choice2} />

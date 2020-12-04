@@ -88,7 +88,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 				pool1ETHPot: {
 					choice: bets[0].choice,
 					value: new BigNumber(bets[0].value).div(precision).toNumber()
-				}, 
+				},
 				pool2ETHPot: {
 					choice: bets[1].choice,
 					value: new BigNumber(bets[1].value).div(precision).toNumber()
@@ -179,7 +179,10 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 								<Bets>
 									<AmountBet>
 										<SmallText>{farmBalances.choiceId}</SmallText>
-										{'$ETH: ' + farmBalances.value.toLocaleString()}
+										{'$ETH: ' + farmBalances.value.toLocaleString(undefined, {
+											minimumFractionDigits: 2,
+											maximumFractionDigits: 2
+										})}
 									</AmountBet>
 								</Bets>}
 						</Column>
@@ -197,14 +200,20 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 						<CardIcon src={battle.pool1.icon} />
 						<AmountBet>
 							<SmallText>{farmBets.pool1ETHPot.choice}</SmallText>
-							{'$ETH: ' + farmBets.pool1ETHPot.value.toLocaleString()}
+							{'$ETH: ' + farmBets.pool1ETHPot.value.toLocaleString(undefined, {
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2
+							})}
 						</AmountBet>
 					</BetDisplay>
 					<BetDisplay>
 						<CardIcon src={battle.pool2.icon} />
 						<AmountBet>
 							<SmallText>{farmBets.pool2ETHPot.choice}</SmallText>
-							{'$ETH: ' + farmBets.pool2ETHPot.value.toLocaleString()}
+							{'$ETH: ' + farmBets.pool2ETHPot.value.toLocaleString(undefined, {
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2
+							})}
 						</AmountBet>
 					</BetDisplay>
 				</AllBets>

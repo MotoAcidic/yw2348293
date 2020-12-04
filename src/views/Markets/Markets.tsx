@@ -285,8 +285,8 @@ min-height: 340px;
   width: 100%;`;
 
 const MarketsContainer = !isMobile() ? styled.div`
-height: 100%;
-width: 90vw;
+height: 90%;
+width: 80vw;
 display: flex;
 flex-direction: row;
 flex-wrap: wrap;
@@ -294,14 +294,14 @@ flex-wrap: wrap;
 `
 
 const SecondaryContainer = !isMobile() ? styled.div`
-height: calc(15vw + 40px);
+height: calc(14vw + 40px);
 min-height: 202px;
 ` : styled.div`
 width: 100%;`;
 
 const PrimaryContainer = !isMobile() ? styled.div`
 width: 90vw;
-height: 31.7vw;
+height: 28vw;
 min-width: 1000px;
 min-height: 340px;
 margin-bottom: 2vh;
@@ -382,7 +382,7 @@ const NextBattle = styled.div`
 
 const Title = !isMobile() ? styled.div`
 font-family: "Gilroy";
-  font-size: 30px;
+  font-size: 24px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;

@@ -50,7 +50,7 @@ const Battle = ({ battle }) => {
   const [userBet, setUserBet] = useState(false)
   const [alreadyRedeemed, setAlreadyRedeemed] = useState(false);
   const [userLost, setUserLost] = useState(false);
-  const [winner, setWinner] = useState(1)
+  const [winner, setWinner] = useState(null)
 
 
   let imag1 = new Image();

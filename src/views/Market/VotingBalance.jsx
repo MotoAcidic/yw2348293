@@ -18,12 +18,11 @@ const FarmGraph = ({ votes1, votes2, icon1, icon2 }) => {
 
 
   return (
-    <VotingBalance style={votes1 + votes2 ? {height: '60px'} : {height: '0px'}}>
+    <VotingBalance style={votes1 + votes2 ? { height: '60px' } : { height: '0px' }}>
       {votes1 + votes2 ? (
         <>
           <StyledContent>
             <CardIcon src={icon1} />
-
             <BalanceBar>
               <div style={{ backgroundColor: 'rgb(154,220,180)', height: '100%', borderRadius: "2px 0 0 2px", width: percent1 + '%', borderRight: "2px solid white" }} />
             </BalanceBar>

@@ -2,25 +2,22 @@ import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { Switch } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import Page from "../../components/Page";
-import useYam from "../../hooks/useYam";
+import Page from "../../../components/Page";
+import useYam from "../../../hooks/useYam";
 // import useBet from "../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 
-import Uniswap from "../../assets/img/uniswap@2x.png";
-import Vitalik from "../../assets/img/chess_vitalik.png"
-import Alexandra from "../../assets/img/chess_alexandra_2.png"
-import { getWarStaked, getChessContracts, getChessBets, testTVL } from "../../yamUtils";
-import { getPots, getPotVals, getUserBet, placeETHBet } from "../../yamUtils";
+import Uniswap from "../../../assets/img/uniswap@2x.png";
+import { getWarStaked, getChessContracts, getChessBets, testTVL } from "../../../yamUtils";
+import { getPots, getPotVals, getUserBet, placeETHBet } from "../../../yamUtils";
+import VSPNG from '../../../assets/img/VS.png'
+import VotingBalance from '../VotingBalance'
+import Pool3 from '../Pool3'
+import Rules from '../Instructions'
+import BetModal from '../BetCard'
+import MarketCountDown from "../CountDown";
 
-import Chess from "../../assets/img/chess.png";
-import Rook from '../../assets/img/rook.png'
-import VSPNG from '../../assets/img/VS.png'
-import VotingBalance from './VotingBalance'
-import Pool3 from './Pool3'
-import Rules from './Instructions'
-import BetModal from './BetCard'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -122,6 +119,9 @@ const Battle = ({ battle }) => {
                         src={img1}
                       />
                     </ImgWrapper>
+                    <CountDownContainer>
+                      <MarketCountDown battle={battle} />
+                    </CountDownContainer>
                     <Divider>
                       <img src={VSPNG} width="125px" style={{ position: 'absolute', zIndex: 10000 }} />
                     </Divider>
@@ -164,6 +164,13 @@ const Battle = ({ battle }) => {
     </Switch>
   );
 };
+
+
+const CountDownContainer = styled.div`
+position: absolute;
+left: 50%;
+top: 0;
+z-index: 100001;`
 
 const Divider = !isMobile() ? styled.div` 
 display: flex;
@@ -214,21 +221,6 @@ font-family: "Gilroy";
   color: #ffffff;
   max-width: 80vw;
   margin-bottom: 5px;
-`
-
-const Versus = styled.div`
-position: absolute;
-height: 180px;
-width: 110px;
-z-index: 20004;
-display: flex;
-align-items: center;
-justify-content: center;
-background-image: url(${Rook});
-background-size: contain;
-background-repeat: no-repeat;
-margin-top: 50px;
-filter: drop-shadow(0 0 0.75rem white)
 `
 
 const ImgWrapper = styled.div`
@@ -320,6 +312,7 @@ display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
+position: relative;
 `
 
 const BigTitle = styled.div`

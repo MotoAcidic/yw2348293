@@ -9,6 +9,7 @@ import useFarms from "../../hooks/useFarms";
 import { getWarStaked, getChessContracts, getChessBets, getPots, getPotVals } from "../../yamUtils";
 import { NavLink } from 'react-router-dom'
 import BalanceBar from "./BalanceBarPrimary"
+import MarketsCountDown from "./CountDownPrimary";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -59,6 +60,9 @@ const Battle = ({ bet }) => {
       <ImgWrapper>
         <Candidate1 src={img1} />
       </ImgWrapper>
+      <CountDownContainer>
+          <MarketsCountDown battle={bet} />
+        </CountDownContainer>
       {/* <Versus>VS</Versus> */}
       <ImgWrapper  >
         <Candidate2
@@ -92,6 +96,13 @@ const Battle = ({ bet }) => {
     </VersusContainer>
   );
 };
+
+const CountDownContainer = styled.div`
+position: absolute;
+left: 50%;
+top: 0;
+z-index: 100001;`
+
 
 const PleaseLogin = styled.div`
 display: flex;

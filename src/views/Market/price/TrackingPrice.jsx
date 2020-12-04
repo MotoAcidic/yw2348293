@@ -2,22 +2,18 @@ import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { Switch } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import Page from "../../components/Page";
-import useYam from "../../hooks/useYam";
+import Page from "../../../components/Page";
+import useYam from "../../../hooks/useYam";
 // import useBet from "../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
-import Uniswap from "../../assets/img/uniswap@2x.png";
-import { getPots, getPotVals, getUserBet, placeETHBet } from "../../yamUtils";
 
-import Chess from "../../assets/img/chess.png";
-import Rook from '../../assets/img/rook.png'
-import VSPNG from '../../assets/img/VS.png'
-import VotingBalance from './VotingBalance'
-import Pool3 from './Pool3'
-import Rules from './Instructions'
-import BetModal from './BetCard'
-import PriceGraph from "./BattlePriceGraph";
+import Uniswap from "../../../assets/img/uniswap@2x.png";
+
+import { getPots, getPotVals, getUserBet, placeETHBet } from "../../../yamUtils";
+import VSPNG from '../../../assets/img/VS.png'
+import VotingBalance from '../VotingBalance'
+import BetModal from '../BetCard'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -118,10 +114,6 @@ const Battle = ({ battle }) => {
                         src={img1}
 
                       />
-                      <GraphContainerL>
-
-                        <PriceGraph coin={battle.pool1.name} />
-                      </GraphContainerL>
                     </ImgWrapper>
                     <Divider>
                       <img src={VSPNG} width="125px" style={{ position: 'absolute', zIndex: 10000 }} />
@@ -130,9 +122,6 @@ const Battle = ({ battle }) => {
                       <Candidate2
                         src={img2}
                       />
-                      <GraphContainerR>
-                        <PriceGraph coin={battle.pool2.name} />
-                      </GraphContainerR>
                     </ImgWrapper>
                   </VersusBackground>
                 </VersusContainer>
@@ -168,24 +157,6 @@ const Battle = ({ battle }) => {
     </Switch>
   );
 };
-
-const GraphContainerL = styled.div`
-position: absolute;
-left: 45%;
-width: 35%;
-top: 47%;
-// padding: 5px;
-//     border-radius: 4px;
-//     border: 1px solid white;
-`
-
-const GraphContainerR = styled.div`
-position: absolute;
-left: 15%;
-top: 47%;
-width: 35%;
-`
-
 
 const Divider = !isMobile() ? styled.div` 
 display: flex;
@@ -237,22 +208,6 @@ font-family: "Gilroy";
   max-width: 80vw;
   margin-bottom: 5px;
 `
-
-const Versus = styled.div`
-position: absolute;
-height: 180px;
-width: 110px;
-z-index: 20004;
-display: flex;
-align-items: center;
-justify-content: center;
-background-image: url(${Rook});
-background-size: contain;
-background-repeat: no-repeat;
-margin-top: 50px;
-filter: drop-shadow(0 0 0.75rem white)
-`
-
 const ImgWrapper = styled.div`
 width: 50%;
 height: 100%;
@@ -408,7 +363,7 @@ const BackgroundSection = styled.div`
   background-repeat: no-repeat;
   background-position: fit;
   background-size: cover;
-  filter: brightness(.35);
+  filter: brightness(.7);
 `
 
 const StyledCanvas = styled.div`

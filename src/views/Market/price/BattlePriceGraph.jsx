@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import './swal.css'
+import '../swal.css'
 import { Chart } from 'react-charts'
 
 function isMobile() {
@@ -16,8 +16,6 @@ function isMobile() {
 function getGeckoId(coin) {
 	coin = coin.toLowerCase();
 	switch (coin) {
-		case "uniswap":
-			return "uniswap";
 		case "sushiswap":
 			return "sushi";
 		case "snx":

@@ -7,12 +7,11 @@ import useYam from "../../hooks/useYam";
 // import useBet from "../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
-import Battle from './Battle'
-import PriceBattle from './BattlePrice'
-import PriceTracking from './TrackingPrice'
+import Battle from './battle/Battle'
+import PriceBattle from './price/BattlePrice'
+import PriceTracking from './price/TrackingPrice'
 import BattleTracking from './battle/Tracking'
 import BattleComplete from './battle/Complete'
-
 
 function getServerURI() {
 	if (window.location.hostname === "localhost") {
@@ -20,7 +19,6 @@ function getServerURI() {
 	}
 	return "https://yieldwars-api.herokuapp.com";
 }
-
 
 const Market = () => {
 	const yam = useYam()

@@ -18,7 +18,7 @@ const FarmGraph = ({ votes1, votes2, icon1, icon2 }) => {
   let total = votes1 + votes2;
   return (
     <VotingBalance style={votes1 + votes2 ? {height: '60px'} : {height: '0px'}}>
-      {votes1 + votes2 && (
+      {votes1 + votes2 > 0 && (
         <>
           <StyledContent>
             <CardIcon src={icon1} />

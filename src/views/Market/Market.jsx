@@ -11,6 +11,7 @@ import Battle from './battle/Battle'
 import PriceBattle from './price/BattlePrice'
 import PriceTracking from './price/TrackingPrice'
 import BattleTracking from './battle/Tracking'
+import BattleComplete from './battle/Complete'
 
 function getServerURI() {
 	if (window.location.hostname === "localhost") {

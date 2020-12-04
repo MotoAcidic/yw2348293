@@ -161,8 +161,7 @@ font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-color: rgb(255, 204, 160);
-// color: white;
+color: white;
 font-size: 16px;
 text-align: left;
 padding: 0.5% 2% 0.5% 2%;
@@ -170,7 +169,7 @@ position: absolute;
 min-height: 9%;
 bottom: 42px;
 width: 96%;
-background: rgba(0,0,0,0.7);
+background: rgba(0,0,0,0.9);
 `
 
 const Info = styled.div`

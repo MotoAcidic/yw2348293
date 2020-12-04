@@ -12,7 +12,7 @@ import Uniswap from "../../assets/img/uniswap@2x.png";
 import Vitalik from "../../assets/img/chess_vitalik.png"
 import Alexandra from "../../assets/img/chess_alexandra_2.png"
 import { getWarStaked, getChessContracts, getChessBets, testTVL } from "../../yamUtils";
-import { getPots, getUserBet, placeETHBet } from "../../yamUtils";
+import { getPots, getPotVals, getUserBet, placeETHBet } from "../../yamUtils";
 
 import Chess from "../../assets/img/chess.png";
 import Rook from '../../assets/img/rook.png'
@@ -48,7 +48,7 @@ const Battle = ({ battle }) => {
   let [background, setBackground] = useState(null)
   let [modal, setShowModal] = useState(false);
   let [candidate, setCandidate] = useState("pool1");
-  const [roughBets, setRoughBets] = useState({ pool1: 0, pool2: 0 });
+  const [currBets, setCurrBets] = useState({ pool1: 0, pool2: 0 });
 
   let imag1 = new Image();
   imag1.onload = function () { setImg1(battle.pool1.graphic) }
@@ -77,18 +77,17 @@ const Battle = ({ battle }) => {
     setCandidate("pool2")
     setShowModal(true)
   }
-
-  const getRoughBets = async () => {
-    let tvl = await getPots(yam, battle._id)
-    const pool1 = tvl[0].value
-    const pool2 = tvl[1].value
-    setRoughBets({ pool1, pool2 });
+  const getCurrBets = async () => {
+    let potVals = await getPotVals(yam, battle._id)
+    const pool1 = potVals.choice0Val
+    const pool2 = potVals.choice1Val
+    setCurrBets({ pool1, pool2 });
   }
 
   useEffect(() => {
     console.log("using effect");
-    if (yam && account && !roughBets.pool1 && battle) {
-      getRoughBets();
+    if (yam && account && !currBets.pool1 && battle) {
+      getCurrBets();
     }
   }, [yam]);
 
@@ -114,7 +113,7 @@ const Battle = ({ battle }) => {
                 <InfoBlock >
                   {battle.description}
                 </InfoBlock>
-                <VotingBalance votes1={roughBets.pool1} votes2={roughBets.pool2} icon1={battle.pool1.icon} icon2={battle.pool2.icon} />
+                <VotingBalance votes1={currBets.pool1} votes2={currBets.pool2} icon1={battle.pool1.icon} icon2={battle.pool2.icon} />
                 <VersusContainer>
                   <VersusBackground>
                     <ImgWrapper onClick={(e) => onClickPool1(e)}>

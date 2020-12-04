@@ -80,7 +80,7 @@ const Battle = ({ bet }) => {
             <BalanceBar bet={bet} votes1={currBets.choice1} votes2={currBets.choice2} />
           </BetAmount> :
           <PleaseLogin onClick={e => connectMe(e)}>
-            Click Me to Connect your Wallet
+            View Bets
       </PleaseLogin>
         }
       </Info>

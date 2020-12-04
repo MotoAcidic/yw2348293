@@ -84,7 +84,7 @@ const Battle = ({ bet }) => {
           {/* </BetAmount> */}
         </Info> :
         <PleaseLogin onClick={e => connectMe(e)}>
-          Click Me to Connect your Wallet
+          View Bets
         </PleaseLogin>
       }
     </VersusContainer>

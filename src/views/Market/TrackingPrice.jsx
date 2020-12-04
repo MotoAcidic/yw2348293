@@ -77,7 +77,6 @@ const Battle = ({ battle }) => {
     setCandidate("pool2")
     setShowModal(true)
   }
-  
   const getCurrBets = async () => {
     let potVals = await getPotVals(yam, battle._id)
     const pool1 = potVals.choice0Val
@@ -120,6 +119,7 @@ const Battle = ({ battle }) => {
                     <ImgWrapper onClick={(e) => onClickPool1(e)}>
                       <Candidate1
                         src={img1}
+
                       />
                     </ImgWrapper>
                     <Divider>
@@ -232,7 +232,6 @@ filter: drop-shadow(0 0 0.75rem white)
 `
 
 const ImgWrapper = styled.div`
-position: relative;
 width: 50%;
 height: 100%;
 transition: all 0.2s ease-in-out;

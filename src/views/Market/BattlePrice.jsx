@@ -7,11 +7,7 @@ import useYam from "../../hooks/useYam";
 // import useBet from "../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
-
 import Uniswap from "../../assets/img/uniswap@2x.png";
-import Vitalik from "../../assets/img/chess_vitalik.png"
-import Alexandra from "../../assets/img/chess_alexandra_2.png"
-import { getWarStaked, getChessContracts, getChessBets, testTVL } from "../../yamUtils";
 import { getPots, getPotVals, getUserBet, placeETHBet } from "../../yamUtils";
 
 import Chess from "../../assets/img/chess.png";
@@ -21,6 +17,7 @@ import VotingBalance from './VotingBalance'
 import Pool3 from './Pool3'
 import Rules from './Instructions'
 import BetModal from './BetCard'
+import PriceGraph from "./BattlePriceGraph";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -77,7 +74,6 @@ const Battle = ({ battle }) => {
     setCandidate("pool2")
     setShowModal(true)
   }
-  
   const getCurrBets = async () => {
     let potVals = await getPotVals(yam, battle._id)
     const pool1 = potVals.choice0Val
@@ -120,7 +116,12 @@ const Battle = ({ battle }) => {
                     <ImgWrapper onClick={(e) => onClickPool1(e)}>
                       <Candidate1
                         src={img1}
+
                       />
+                      <GraphContainerL>
+
+                        <PriceGraph coin={battle.pool1.name} />
+                      </GraphContainerL>
                     </ImgWrapper>
                     <Divider>
                       <img src={VSPNG} width="125px" style={{ position: 'absolute', zIndex: 10000 }} />
@@ -129,6 +130,9 @@ const Battle = ({ battle }) => {
                       <Candidate2
                         src={img2}
                       />
+                      <GraphContainerR>
+                        <PriceGraph coin={battle.pool2.name} />
+                      </GraphContainerR>
                     </ImgWrapper>
                   </VersusBackground>
                 </VersusContainer>
@@ -164,6 +168,24 @@ const Battle = ({ battle }) => {
     </Switch>
   );
 };
+
+const GraphContainerL = styled.div`
+position: absolute;
+left: 45%;
+width: 35%;
+top: 47%;
+// padding: 5px;
+//     border-radius: 4px;
+//     border: 1px solid white;
+`
+
+const GraphContainerR = styled.div`
+position: absolute;
+left: 15%;
+top: 47%;
+width: 35%;
+`
+
 
 const Divider = !isMobile() ? styled.div` 
 display: flex;
@@ -232,7 +254,6 @@ filter: drop-shadow(0 0 0.75rem white)
 `
 
 const ImgWrapper = styled.div`
-position: relative;
 width: 50%;
 height: 100%;
 transition: all 0.2s ease-in-out;

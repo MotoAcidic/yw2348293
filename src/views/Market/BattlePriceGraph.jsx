@@ -17,9 +17,9 @@ function getGeckoId(coin) {
 	coin = coin.toLowerCase();
 	switch (coin) {
 		case "uniswap":
-      return "uniswap";
-    case "sushiswap":
-      return "sushi";
+			return "uniswap";
+		case "sushiswap":
+			return "sushi";
 		case "snx":
 			return "havven";
 		case "yfi":
@@ -40,7 +40,7 @@ function getGeckoId(coin) {
 			return "bzx-protocol";
 		case "srm":
 			return "serum";
-		case "farm":
+		case "coin":
 			return "harvest-finance";
 		case "based":
 			return "based-money";
@@ -83,7 +83,7 @@ const calcPercentChange = (start, end) => {
 	return final.toFixed(1);
 }
 
-const FarmGraph = ({ farm }) => {
+const FarmGraph = ({ coin }) => {
 	const [price, setPrice] = useState(null);
 	const [marketCap, setMarketCap] = useState(null);
 	const [graphData, setGraphData] = useState(null);
@@ -91,10 +91,10 @@ const FarmGraph = ({ farm }) => {
 
 	useEffect(() => {
 		if (!price) {
-			axios.get(`https://api.coingecko.com/api/v3/coins/${getGeckoId(farm.id)}/market_chart?vs_currency=usd&days=1`).then(res => {
+			axios.get(`https://api.coingecko.com/api/v3/coins/${getGeckoId(coin)}/market_chart?vs_currency=usd&days=1`).then(res => {
 				const { market_caps, prices } = res.data;
-				console.log(farm.id, market_caps, prices);
-				setMarketCap(market_caps[market_caps.length - 1][1].toFixed(0));
+				console.log(coin, market_caps, prices);
+				setMarketCap(market_caps[market_caps.length - 1][1].toLocaleString(undefined, { maximumFractionDigits: 0 }));
 				setPrice(prices[prices.length - 1][1].toFixed(2));
 				let chartData = [];
 				// For using 2 days (24 data points)
@@ -131,20 +131,31 @@ const FarmGraph = ({ farm }) => {
 		[]
 	);
 
-	console.log("farm", farm)
+	console.log("coin", coin)
 
 	return (
 		<StyledContent>
-			<StyledTitle>{farm.id}</StyledTitle>
-			<Text>${price}</Text>
-			<SubTitle>Market Cap</SubTitle>
-			<Text>{marketCap !== "0" ? "$" + marketCap : "unknown"}</Text>
-			<SubTitle>Recent Change</SubTitle>
-			{recentChange >= 0 ?
-				<GreenText>+{recentChange}%</GreenText>
-				:
-				<RedText>{recentChange}%</RedText>
-			}
+			<Row>
+				<Column>
+					{/* <StyledTitle>{coin}</StyledTitle> */}
+					<SubTitle>Price</SubTitle>
+
+					<Text>${price}</Text>
+				</Column>
+				<Column>
+					<SubTitle>Market Cap</SubTitle>
+					<Text>{marketCap !== "0" ? "$" + marketCap : "unknown"}</Text>
+				</Column>
+			</Row>
+			<Change>
+
+				<PriceTime>7d</PriceTime>
+				{recentChange >= 0 ?
+					<GreenText>+{recentChange}%</GreenText>
+					:
+					<RedText>{recentChange}%</RedText>
+				}
+			</Change>
 			{graphData &&
 				<ChartContainer>
 					<Chart data={data} axes={axes} series={series} />
@@ -154,10 +165,24 @@ const FarmGraph = ({ farm }) => {
 	)
 }
 
+const Change = styled.div`
+display: flex;
+align-items: center;
+margin-bottom: 15px;
+`
+
+const Row = styled.div`
+display: flex;
+justify-content: space-between;
+`
+
+const Column = styled.div`
+display: flex;
+flex-direction: column;`
 
 const ChartContainer = styled.div`
 height: 40px;
-width: 170px;
+width: 100%;
 margin-bottom: 10px;
 `
 
@@ -165,6 +190,7 @@ const StyledContent = styled.div`
   display: flex;
 	flex-direction: column;
 	height: 100%;
+	width: 100%;
 `
 
 const StyledTitle = styled.div`
@@ -184,7 +210,7 @@ margin-bottom: 5px;
 const SubTitle = styled.div`
 font-family: "Gilroy";
 margin-bottom: 5px;
-font-size: 20px;
+font-size: 16px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
@@ -196,7 +222,7 @@ color: #ffffff;
 `
 const Text = styled.div`
 font-family: "Gilroy";
-font-size: 16px;
+font-size: 12px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
@@ -208,9 +234,23 @@ color: #ffffff;
 	margin-bottom: 10px;
 	letter-spacing: 1px;
 `
+const PriceTime = styled.div`
+font-family: "SF Mono Semibold";
+font-size: 12px;
+font-weight: normal;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+text-align: center;
+	padding: 2px 4px 2px 4px;
+	border: 1px solid white;
+	letter-spacing: 1px;
+`
+
 const GreenText = styled.div`
-font-family: "Gilroy";
-font-size: 16px;
+font-family: "SF Mono Semibold";
+font-size: 12px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
@@ -218,13 +258,13 @@ line-height: 1;
 letter-spacing: normal;
 text-align: center;
 	text-align: left;
-	margin-bottom: 10px;
 	letter-spacing: 1px;
 	color: #38ff00;
+	margin-left: 10px;
 `
 const RedText = styled.div`
-font-family: "Gilroy";
-font-size: 16px;
+font-family: "SF Mono Semibold";
+font-size: 12px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
@@ -232,9 +272,9 @@ line-height: 1;
 letter-spacing: normal;
 text-align: center;
 	text-align: left;
-	margin-bottom: 10px;
 	letter-spacing: 1px;
 	color: #ff4343;
+	margin-left: 10px;
 `
 
 export default FarmGraph;

@@ -86,7 +86,7 @@ const Battle = ({ bet }) => {
           </BetAmount> :
           <PleaseLogin onClick={e => connectMe(e)}>
             View Bets
-      </PleaseLogin>
+          </PleaseLogin>
         }
       </Info>
     </VersusContainer>
@@ -159,7 +159,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 bottom: 0;
-background: rgba(0,0,0,0.7);
+background: rgba(0,0,0,0.9);
 display: flex;
 flex-direction: row;
 padding: 0.25% 2% 0.25% 2%;

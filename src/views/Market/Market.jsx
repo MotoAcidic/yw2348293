@@ -8,6 +8,7 @@ import useYam from "../../hooks/useYam";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
 import Battle from './Battle'
+import BattleTracking from './battle/Tracking'
 
 
 function getServerURI() {
@@ -55,11 +56,11 @@ const Market = () => {
 	else if (now > battle.bettingEnd && now < battle.battleEnd) { // TRACKING PHASE
 		console.log('in tracking phase');
 		if (battle.battleType === 'battle')
-			return <Battle battle={battle} />
+			return <BattleTracking battle={battle} />
 		else if (battle.battleType === 'price')
 			return <Battle battle={battle} />
 		else
-			return <Battle battle={battle} />
+			return <BattleTracking battle={battle} />
 	}
 	else if (now > battle.battleEnd) {  // REDEMPTION PHASE
 		console.log('in redemption phase');

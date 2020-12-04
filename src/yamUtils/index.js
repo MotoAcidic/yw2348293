@@ -953,6 +953,11 @@ export const getOutstandingBets = async (yam, account) => {
   return outstandingBets
 }
 
+export const getBet = async (yam, betId) => {
+  let bet = await yam.contracts.betting_v2.methods.getBet(betId).call()
+  return bet
+}
+
 /*==========================
             ADMIN
 ==========================*/

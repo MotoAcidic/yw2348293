@@ -12,7 +12,7 @@ import Uniswap from "../../../assets/img/uniswap@2x.png";
 import Vitalik from "../../../assets/img/chess_vitalik.png"
 import Alexandra from "../../../assets/img/chess_alexandra_2.png"
 import { getWarStaked, getChessContracts, getChessBets, testTVL } from "../../../yamUtils";
-import { getPots, getUserBet, placeETHBet } from "../../../yamUtils";
+import { getPots, getUserBet, getBet } from "../../../yamUtils";
 
 import Chess from "../../../assets/img/chess.png";
 import Rook from '../../../assets/img/rook.png'
@@ -20,7 +20,7 @@ import Complete from '../../../assets/img/complete.png'
 import VotingBalance from '../VotingBalance'
 import Pool3 from '../Pool3'
 import Rules from '../Instructions'
-import StatusCard from './StatusCard'
+import StatusCard from './CompleteCard'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -47,6 +47,11 @@ const Battle = ({ battle }) => {
   let [img2, setImg2] = useState(null)
   let [background, setBackground] = useState(null)
   const [roughBets, setRoughBets] = useState({ pool1: 0, pool2: 0 });
+  const [userBet, setUserBet] = useState(false)
+  const [alreadyRedeemed, setAlreadyRedeemed] = useState(false);
+  const [userLost, setUserLost] = useState(false);
+  const [winner, setWinner] = useState(1)
+
 
   let imag1 = new Image();
   imag1.onload = function () { setImg1(battle.pool1.graphic) }
@@ -67,10 +72,33 @@ const Battle = ({ battle }) => {
     setRoughBets({ pool1, pool2 });
   }
 
+  const getWinner = async () => {
+    let winner = await getBet(yam, battle._id)
+    if (winner.winner) {
+      if (winner.possibleChoices[0] === winner.winner) {
+        setWinner(1)
+      }
+      else {
+        setWinner(2)
+      }
+    }
+  }
+
+  const getRedeemable = async () => {
+    const isRedeemable = await getUserBet(yam, battle._id, account);
+    if (isRedeemable) {
+      setUserBet(true);
+      if (isRedeemable.isClaimed) setAlreadyRedeemed(true);
+      if (!isRedeemable.won) setUserLost(true);
+    }
+  }
+
   useEffect(() => {
     console.log("using effect");
     if (yam && account && !roughBets.pool1 && battle) {
       getRoughBets();
+      getRedeemable()
+      getWinner()
     }
   }, [yam]);
 
@@ -78,8 +106,6 @@ const Battle = ({ battle }) => {
   const stopProp = (e) => {
     e.stopPropagation()
   }
-
-  const contract = null //getChessContracts(yam)
 
   return (
     <Switch>
@@ -92,25 +118,32 @@ const Battle = ({ battle }) => {
               <>
                 <VersusContainer>
                   <LeftContainer>
-                    <InfoBlock  style={{ marginBottom: '20px' }}>
+                    <InfoBlock style={{ marginBottom: '20px' }}>
                       {battle.description}
                     </InfoBlock>
-                    <VersusBackground href={battle.link} target="_none">
+                    <VersusBackground>
                       <ImgWrapper>
                         <Candidate1
                           src={img1}
-
+                          style={winner === 1 ?
+                            {
+                              transform: `scale(1.1)`,
+                            }
+                            :
+                            { transform: `scale(.9)`, filter: `grayscale(100%) brightness(.5)` }
+                          }
                         />
                       </ImgWrapper>
                       <ImgWrapper>
                         <Candidate2
                           src={img2}
+                          style={winner === 2 ? { transform: `scale(1.1)` } : { transform: `scale(.9)`, filter: `grayscale(100%) brightness(.5)` }}
                         />
                       </ImgWrapper>
                     </VersusBackground>
-                    <InfoBlock href={battle.link} target="_none" style={{ marginTop: '30px' }}>
-                      Watch the Game Live!
-                    </InfoBlock>
+                    <WinMessage>
+                      The Winner is {winner === 1 ? battle.pool1.name : battle.pool2.name}!
+                    </WinMessage>
                   </LeftContainer>
                   <StatusCard
                     battle={battle}
@@ -135,6 +168,7 @@ const Battle = ({ battle }) => {
     </Switch>
   );
 };
+
 
 const Divider = !isMobile() ? styled.div` 
 display: flex;
@@ -225,6 +259,27 @@ align-items: center;
 width: 80%;
 margin-bottom: -8px;
 margin-top: 8px;
+background-color: rgba(0,0,0,0.3);
+border-radius: 8px;
+height: 40px;
+`
+
+const WinMessage = styled.a`
+font-family: "Gilroy";
+color: white;
+font-size: 35px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+align-items: center;
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+align-items: center;
+width: 80%;
+margin-top: 40px;
 background-color: rgba(0,0,0,0.3);
 border-radius: 8px;
 height: 40px;

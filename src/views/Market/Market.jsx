@@ -55,16 +55,16 @@ const Market = () => {
 	if (now < battle.bettingEnd) { // BETTING PHASE
 		console.log('in betting phase');
 		if (battle.battleType === 'battle')
-			return <BattleComplete battle={battle} />
+			return <Battle battle={battle} />
 		else if (battle.battleType === 'price')
 			return <PriceBattle battle={battle} />
 		else
-			return <BattleTracking battle={battle} />
+			return <Battle battle={battle} />
 	}
 	else if (now > battle.bettingEnd && now < battle.battleEnd) { // TRACKING PHASE
 		console.log('in tracking phase');
 		if (battle.battleType === 'battle')
-			return <BattleTracking battle={battle} />
+			return <BattleComplete battle={battle} />
 		else if (battle.battleType === 'price')
 			return <PriceTracking battle={battle} />
 		else
@@ -72,7 +72,7 @@ const Market = () => {
 	}
 	else if (now > battle.battleEnd) {  // REDEMPTION PHASE
 		console.log('in redemption phase');
-		return <Battle battle={battle} />
+		return <BattleComplete battle={battle} />
 	}
 	else
 		return (null)

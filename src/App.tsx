@@ -80,7 +80,7 @@ const App: React.FC = () => {
             <Route path="/splash" exact>
               <Splash />
             </Route>
-            <Redirect exact from="/" to="/twitter-battle" />
+            <Redirect exact from="/" to="/markets" />
             <Route path="/home" exact>
               <Farms />
             </Route>

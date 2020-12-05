@@ -150,6 +150,8 @@ position: absolute;
 left: 15%;
 width: 66%;
 top: 47%;
+cursor: pointer;
+
 padding: 2%;
 background-color: rgba(0,0,0,0.6);
 border-radius: 4px;
@@ -163,6 +165,8 @@ left: 15%;
 width: 66%;
 top: 47%;
 padding: 2%;
+cursor: pointer;
+
 background-color: rgba(0,0,0,0.6);
 border-radius: 4px;
 // width: 35%;

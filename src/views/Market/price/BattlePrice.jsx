@@ -15,6 +15,8 @@ import BetModal from '../BetCard'
 import PriceGraph from "./BattlePriceGraph";
 import MarketCountDown from "../CountDown";
 import Background from '../../../assets/img/bg3.svg'
+import useModal from '../../../hooks/useModal'
+import RulesModal from "../BetRulesModal";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -43,6 +45,7 @@ const Battle = ({ battle }) => {
   let [modal, setShowModal] = useState(false);
   let [candidate, setCandidate] = useState("pool1");
   const [currBets, setCurrBets] = useState({ pool1: 0, pool2: 0 });
+  const [presentRulesModal] = useModal(<RulesModal />);
 
   let imag1 = new Image();
   imag1.onload = function () { setImg1(battle.pool1.graphic) }
@@ -137,6 +140,9 @@ const Battle = ({ battle }) => {
                 <InfoBlock >
                   {battle.resolution}
                 </InfoBlock>
+                <RulesInfoBlock onClick={presentRulesModal} >
+                  Betting Rules
+                </RulesInfoBlock>
               </>
             )}
             {battle === -1 && (
@@ -167,6 +173,30 @@ const Battle = ({ battle }) => {
   );
 };
 
+const RulesInfoBlock = styled.a`
+font-family: "Gilroy";
+color: rgb(255, 204, 160);
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+align-items: center;
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+align-items: center;
+margin-top: 28px;
+background-color: rgba(0,0,0,0.6);
+border-radius: 2px;
+color: white;
+text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black;
+padding: 10px;
+cursor: pointer;
+border: 1px solid white;
+`
+
 const CountDownContainer = styled.div`
 position: absolute;
 left: 50%;
@@ -178,6 +208,7 @@ position: absolute;
 left: 45%;
 width: 35%;
 top: 47%;
+cursor: pointer;
 // padding: 5px;
 //     border-radius: 4px;
 //     border: 1px solid white;
@@ -187,6 +218,7 @@ const GraphContainerR = styled.div`
 position: absolute;
 left: 15%;
 top: 47%;
+cursor: pointer;
 width: 35%;
 `
 

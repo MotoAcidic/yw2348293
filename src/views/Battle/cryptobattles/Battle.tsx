@@ -175,6 +175,15 @@ const Battle: React.FC = () => {
         <BackgroundSection />
         <ContentContainer>
           <Page>
+
+            <Countdown />
+            {/* {battles && battles.length > 0 && <TotalBets battle1={battles[0]} id={battles[0]._id} />} */}
+            <SmallSpace />
+
+            {battleFields()}
+            {/* {account && yesterdaysBattle.length > 0 && <Yesterday onClick={() => setBetRedeemModal(true)} >Show Yesterdays Result</Yesterday>} */}
+            <SmallSpace />
+
             {!isMobile() ?
               <iframe title="promo" style={{ width: "500px", height: "281.25px", margin: "10px auto 40px auto" }} src={`https://www.youtube.com/embed/wvYUTiFDHW4`} frameBorder="0" />
               :

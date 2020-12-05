@@ -31,6 +31,7 @@ class CountDown extends React.Component {
 		// }
 
 		let diffTime = endTime - moment.utc();
+		console.log("fia\n", endTime, "\n", moment.utc(), "\n", diffTime);
 		let duration = moment.duration(diffTime);
 		setInterval(() => {
 			duration = moment.duration(duration - 1000);
@@ -47,7 +48,7 @@ class CountDown extends React.Component {
 		return (
 
 			<Countdown>
-				<Text>Betting Ends:</Text>
+				<Text>Bettindf Ends:</Text>
 				{/* <Item>
 					{this.state.days.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
 				</Item>

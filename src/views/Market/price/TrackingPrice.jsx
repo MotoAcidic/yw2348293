@@ -10,7 +10,6 @@ import { useWallet } from "use-wallet";
 import Uniswap from "../../../assets/img/uniswap@2x.png";
 import { getWarStaked, getChessContracts, getChessBets, testTVL } from "../../../yamUtils";
 import { getPots, getUserBet, placeETHBet } from "../../../yamUtils";
-import Background from '../../../assets/img/bg3.svg'
 
 import VSPNG from '../../../assets/img/VS.png'
 import VotingBalance from '../VotingBalance'
@@ -238,14 +237,16 @@ display: flex;
 flex-direction: row;
 justify-content: space-evenly;
 align-items: center;
-width: 90%;
+max-width: 80%;
 padding-left: 10px;
 padding-right: 10px;
 margin-bottom: -8px;
 margin-top: 8px;
-background-color: rgba(0,0,0,0.6);
+// background-color: rgba(0,0,0,0.6);
 border-radius: 8px;
 height: 50px;
+color: white;
+text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 `
 
 const ModalBlock = styled.div`
@@ -369,7 +370,7 @@ font-family: "Gilroy";
 `;
 
 const BackgroundSection = styled.div`
-  background-image: url(${Background});
+  background-image: url(${props => props.background});
   position: fixed;
   width: 100vw;
   height: 100vh;

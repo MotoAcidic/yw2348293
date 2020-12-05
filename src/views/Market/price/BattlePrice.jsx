@@ -14,6 +14,7 @@ import VotingBalance from '../VotingBalance'
 import BetModal from '../BetCard'
 import PriceGraph from "./BattlePriceGraph";
 import MarketCountDown from "../CountDown";
+import Background from '../../../assets/img/bg3.svg'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -253,7 +254,6 @@ filter: brightness(100%) contrast(100%) ;
   z-index: 1000;
 }
 `
-
 const InfoBlock = styled.a`
 font-family: "Gilroy";
 color: rgb(255, 204, 160);
@@ -268,12 +268,16 @@ display: flex;
 flex-direction: row;
 justify-content: space-evenly;
 align-items: center;
-width: 80%;
+max-width: 80%;
+padding-left: 10px;
+padding-right: 10px;
 margin-bottom: -8px;
 margin-top: 8px;
-background-color: rgba(0,0,0,0.3);
+// background-color: rgba(0,0,0,0.6);
 border-radius: 8px;
-height: 40px;
+height: 50px;
+color: white;
+text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 `
 
 const ModalBlock = styled.div`
@@ -397,7 +401,7 @@ const BackgroundSection = styled.div`
   background-repeat: no-repeat;
   background-position: fit;
   background-size: cover;
-  filter: brightness(.35);
+  filter: brightness(.35) blur(4px);
 `
 
 const StyledCanvas = styled.div`

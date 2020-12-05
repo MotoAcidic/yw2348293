@@ -94,18 +94,23 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					value: bets.choice1ETHVal
 				}
 			}
+			setFarmBets(bets);
+		}
+		const getBalances = async () => {
+			let precision = new BigNumber(10).pow(18)
 			let balances = await getUserBet(yam, battle._id, account);
 			balances = {
 				choiceId: balances.choiceId,
 				value: new BigNumber(balances.value).div(precision).toNumber()
 			}
 			setFarmBalances(balances);
-			// console.log("gotbets", bets);
-			setFarmBets(bets);
 		}
 		// console.log("got da yams???", yam)
 		if (yam) {
 			getBets();
+		}
+		if (yam && account) {
+			getBalances();
 		}
 	}, [yam, account])
 

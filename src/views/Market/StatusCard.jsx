@@ -91,18 +91,23 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 					regValue: bets.choice1Val
 				}
 			}
+			setFarmBets(bets);
+		}
+		const getBalances = async () => {
+			let precision = new BigNumber(10).pow(18)
 			let balances = await getUserBet(yam, battle._id, account);
 			balances = {
 				choiceId: balances.choiceId,
 				value: new BigNumber(balances.value).div(precision).toNumber()
 			}
 			setFarmBalances(balances);
-			// console.log("gotbets", bets);
-			setFarmBets(bets);
 		}
 		// console.log("got da yams???", yam)
 		if (yam) {
 			getBets();
+		}
+		if (yam && account) {
+			getBalances();
 		}
 	}, [yam, account])
 
@@ -134,12 +139,6 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 				Swal.fire("Place a bet for a candidate!");
 			}
 		}
-	}
-
-	const redeemRewards = async () => {
-		const done = await getTestFinished(yam);
-		console.log("election finished?", done);
-		getTestRewards(yam, account);
 	}
 
 	// const handleApprove = useCallback(async () => {
@@ -216,7 +215,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 						</AmountBet>
 					</BetDisplay>
 				</AllBets>
-				<Separator style={{marginBottom: '30px', marginTop: '20px'}}/>
+				<Separator style={{ marginBottom: '30px', marginTop: '20px' }} />
 				<VotingBalance votes1={farmBets.pool1ETHPot.regValue} votes2={farmBets.pool2ETHPot.regValue} icon1={battle.pool1.icon} icon2={battle.pool2.icon} />
 			</VersusContainer>
 		</Section>

@@ -260,7 +260,8 @@ margin-top: 8px;
 border-radius: 8px;
 height: 50px;
 color: white;
-text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black;
+
 `
 
 const ModalBlock = styled.div`

@@ -266,7 +266,7 @@ text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px blac
 const ModalBlock = styled.div`
 width: 534px;
 height: 0px;
-margin-top: 25vh;
+margin-top: 30vh;
 `
 
 const Modal = styled.div`

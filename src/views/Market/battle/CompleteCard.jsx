@@ -250,7 +250,7 @@ width: 80%;
 padding: 10px;
 margin-bottom: 40px;
 margin-top: 8px;
-background-color: rgba(0,0,0,0.3);
+background-color: rgba(0,0,0,0.6);
 border-radius: 8px;
 height: 40px;
 `

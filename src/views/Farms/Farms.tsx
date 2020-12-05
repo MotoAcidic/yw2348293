@@ -20,6 +20,7 @@ import moment from "moment";
 import FarmCards from "./components/FarmCards";
 import CountDown from "./BigCountDown";
 import MobileCountDown from "./components/MobileCountdown";
+import Pool3 from "./Pool3";
 
 import { Account } from "../../yam/lib/accounts";
 import { getStartTime, getWarStaked } from "../../yamUtils";
@@ -106,12 +107,12 @@ const Farms: React.FC = () => {
           <Page>
             <CardContainer>
 
-                <TopDisplayContainer />
+              <TopDisplayContainer />
               <LandingSection>
-
-                <CountDown launchDate={start} />
-                {/* <BigTitle>The Future of Prediction Markets, Community Participation, and Governance lives here! </BigTitle> */}
-                <Title>YieldWars is building prediction markets from the bottom-up with extra emphasis on participation and communty</Title>
+                <Pool3 />
+                {/* <CountDown launchDate={start} />
+                <BigTitle>The Future of Prediction Markets, Community Participation, and Governance lives here! </BigTitle>
+                <Title>YieldWars is building prediction markets from the bottom-up with extra emphasis on participation and communty</Title> */}
 
                 {/* {!isMobile() ?
                   <iframe title="promo" style={{ width: "650px", height: "365.4px", margin: "10px auto 40px auto" }} src={`https://www.youtube.com/embed/uVJI32AnOUM`} frameBorder="0" />
@@ -122,7 +123,7 @@ const Farms: React.FC = () => {
               </LandingSection>
               <Seperator />
               <Roadmap />
-             
+
               <Seperator />
 
               <WarPool />

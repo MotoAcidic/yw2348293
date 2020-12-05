@@ -136,12 +136,6 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		}
 	}
 
-	const redeemRewards = async () => {
-		const done = await getTestFinished(yam);
-		console.log("election finished?", done);
-		getTestRewards(yam, account);
-	}
-
 	// const handleApprove = useCallback(async () => {
 	// 	try {
 	// 		const txHash = await onApprove()

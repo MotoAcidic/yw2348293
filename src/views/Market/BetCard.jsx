@@ -309,6 +309,7 @@ const CardIcon = styled.img`
   display: flex;
   justify-content: center;
   margin: 0 15px;
+  background-color: white;
 `
 const Bets = styled.div`
 display: flex;

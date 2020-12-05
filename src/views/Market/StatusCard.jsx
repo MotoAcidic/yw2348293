@@ -353,7 +353,7 @@ font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-color: rgb(255, 190, 26);
+color: rgb(255, 204, 160);
 margin-bottom: 10px;
 margin-top: 10px;
 
@@ -446,7 +446,7 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
-border: solid 2px white;
+border: solid 2px rgba(255, 255, 255, 0.2);
 background-color: rgb(40,40,40);
 padding: 10px;
 padding-top: 20px;

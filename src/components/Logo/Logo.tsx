@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import logo from '../../assets/img/logo.png'
+import logo from '../../assets/img/newlogo.png'
 
 const Logo: React.FC = () => {
   return (

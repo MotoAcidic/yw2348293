@@ -295,26 +295,26 @@ const Versus = ({ battles }) => {
 								{useScript("https://platform.twitter.com/widgets.js")}
 							</TLVS>
 						</TLVersusItem>
-						{
-							isMobile() ? 					<BattleButtonWrapper >
-							<BattleButtonContainer>
-								{!voted ?
-									<BattleButton onClick={castVote} >
-										Vote
+						{isMobile() ?
+							<BattleButtonWrapper >
+								<BattleButtonContainer>
+									{!voted ?
+										<BattleButton onClick={castVote} >
+											Vote
 									</BattleButton>
-									:
-									<BattleText>Voted</BattleText>
-								}
-							</BattleButtonContainer>
-							<BetButtonContainer>
-								<BattleButton onClick={openBetModal} >
-									Bet
+										:
+										<BattleText>Voted</BattleText>
+									}
+								</BattleButtonContainer>
+								<BetButtonContainer>
+									<BattleButton onClick={openBetModal} >
+										Bet
 								</BattleButton>
-							</BetButtonContainer>
-						</BattleButtonWrapper> :
-						<Divider>
-							<img src={VSPNG} width="85px" style={{ position: 'absolute', zIndex: 10000 }} />
-						</Divider>
+								</BetButtonContainer>
+							</BattleButtonWrapper> :
+							<Divider>
+								<img src={VSPNG} width="85px" style={{ position: 'absolute', zIndex: 10000 }} />
+							</Divider>
 						}
 						<BLVersusItem onClick={() => pick1(2)} style={selectedCSS2} checked={checked1 === 2}>
 							{checked1 === 2 && <RainbowShadow />}
@@ -342,23 +342,23 @@ const Versus = ({ battles }) => {
 					</Options>
 					{!isMobile() &&
 
-					<BattleButtonWrapper >
-						<BattleButtonContainer>
-							{!voted ?
-								<BattleButton onClick={castVote} >
-									Vote
+						<BattleButtonWrapper >
+							<BattleButtonContainer>
+								{!voted ?
+									<BattleButton onClick={castVote} >
+										Vote
 								</BattleButton>
-								:
-								<BattleText>Voted</BattleText>
-							}
-						</BattleButtonContainer>
-						<BetButtonContainer>
-							<BattleButton onClick={openBetModal} >
-								Bet
+									:
+									<BattleText>Voted</BattleText>
+								}
+							</BattleButtonContainer>
+							<BetButtonContainer>
+								<BattleButton onClick={openBetModal} >
+									Bet
 							</BattleButton>
-						</BetButtonContainer>
-					</BattleButtonWrapper>
-}
+							</BetButtonContainer>
+						</BattleButtonWrapper>
+					}
 				</VersusContainer>
 
 				{/* <PersVersusBet
@@ -453,7 +453,8 @@ font-family: "Edo";
 		rgba(186, 12, 150, 1) 80%,
 		rgba(251, 7, 50, 1) 90%,
 		rgba(255, 0, 0, 1) 100%
-	  );	background-size: 200% 200%;
+	  );	
+	  background-size: 200% 200%;
 	animation: dOtNsp2 3s linear infinite;
 	-webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -666,7 +667,7 @@ align-items: center;
 height: 50%;
 `
 
-const Picture = !isMobile () ? styled.img`
+const Picture = !isMobile() ? styled.img`
 width: 170px;
 height: 170px;
 border-radius: 50%;

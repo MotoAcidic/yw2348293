@@ -109,7 +109,7 @@ const WarPool: React.FC = () => {
 	)
 
 	const unstake = () => {
-		alert()
+		// alert()
 		onPresentUnstake()
 	}
 
@@ -131,17 +131,17 @@ const WarPool: React.FC = () => {
 			<MobileInfoContainer>
 				<WarTopContainer>
 					<Title>$WARchest</Title>
-					<StyledDetails>
+					{/* <StyledDetails>
 						<StyledDetail>APR</StyledDetail>
 						<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
-					</StyledDetails>
+					</StyledDetails> */}
 				</WarTopContainer>
 				<MobileInfoLines>
 					<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
 					<Line><>Currently Staked: </><ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
 					<Line>Battle Rewards: <ShadedLine>{getDisplayBalance(earnings)}</ShadedLine> </Line>
 					<MobileDisclaimer>(Updated @ 19:00 UTC Each Day)</MobileDisclaimer>
-					<Line>Daily Rewards Available: <ShadedLine>14000 WAR</ShadedLine></Line>
+					<Line>Daily Rewards Available: <ShadedLine>2500 WAR</ShadedLine></Line>
 				</MobileInfoLines>
 				<BottomButtonContainer>
 					{!allowance.toNumber() ? (
@@ -154,8 +154,13 @@ const WarPool: React.FC = () => {
 					) : (
 							<MobileButtons>
 								<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
+								<MS/>
 								<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
+								<MS/>
+								
 								<Button size='xlg' onClick={onClaimRestake} disabled={!earnings.toNumber()}>Claim & Restake</Button>
+								<MS/>
+								
 								<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
 							</MobileButtons>
 						)}
@@ -173,17 +178,17 @@ const WarPool: React.FC = () => {
 		<InfoContainer>
 			<WarTopContainer>
 				<Title>$WARchest</Title>
-				<StyledDetails>
+				{/* <StyledDetails>
 					<StyledDetail>APR</StyledDetail>
 					<StyledDetail>{apr.toFixed(2)}%</StyledDetail>
-				</StyledDetails>
+				</StyledDetails> */}
 			</WarTopContainer>
 			<InfoLines>
 				<Line>Your Balance: <ShadedLine>{getDisplayBalance(tokenBalance)} WAR</ShadedLine></Line>
 				<Line>Currently Staked: <ShadedLine>{getDisplayBalance(stakedBalance)}</ShadedLine></Line>
 				<Line>Battle Rewards: <ShadedLine>{getDisplayBalance(earnings)} WAR</ShadedLine></Line>
 				<Disclaimer>(Updated @ 19:00 UTC Each Day)</Disclaimer>
-				<Line>Daily Rewards Available: <ShadedLine>14000 WAR</ShadedLine></Line>
+				<Line>Daily Rewards Available: <ShadedLine>2500 WAR</ShadedLine></Line>
 			</InfoLines>
 			<BottomButtonContainer>
 				{!allowance.toNumber() ? (
@@ -193,7 +198,7 @@ const WarPool: React.FC = () => {
 						onClick={handleApprove}
 						text={`Approve WAR`}
 					/>
-					// <Button
+					// <PoolButton
 					// 	size="lg"
 					// 	disabled={true}
 					// 	onClick={handleApprove}
@@ -201,21 +206,51 @@ const WarPool: React.FC = () => {
 					// />
 				) : (
 						<>
-							<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
-							<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
-							<Button size='xlg' onClick={onClaimRestake} disabled={!earnings.toNumber()}>Claim & Restake</Button>
-							<Button size='lg' onClick={unstake}>Unstake Tokens</Button>
-							{/*<Button size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</Button>*/}
-							{/* <Button size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</Button>
-							<Button size='lg' onClick={onReward} disabled={true}>Claim Rewards</Button>
-							<Button size='lg' onClick={onPresentUnstake} disabled={true}>Unstake Tokens</Button>
-							<Button size='lg' onClick={onClaimUnstake} disabled={true}>Claim & Unstake</Button> */}
+							<PoolButton onClick={onPresentStake}>Stake Tokens</PoolButton>
+							<PoolButton onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</PoolButton>
+							<PoolButton onClick={onClaimRestake} disabled={!earnings.toNumber()}>Claim & Restake</PoolButton>
+							<PoolButton onClick={unstake}>Unstake Tokens</PoolButton>
+							{/*<PoolButton size='lg' onClick={onClaimUnstake} disabled={!earnings.toNumber()}>Claim & Unstake</PoolButton>*/}
+							{/* <PoolButton size='lg' onClick={onPresentStake} disabled={true}>Stake Tokens</PoolButton>
+							<PoolButton size='lg' onClick={onReward} disabled={true}>Claim Rewards</PoolButton>
+							<PoolButton size='lg' onClick={onPresentUnstake} disabled={true}>Unstake Tokens</PoolButton>
+							<PoolButton size='lg' onClick={onClaimUnstake} disabled={true}>Claim & Unstake</Button> */}
 						</>
 					)}
 			</BottomButtonContainer>
 		</InfoContainer>
 	)
 }
+
+const MS = styled.div`
+height: 5px;`
+
+const PoolButton = styled.button`
+  align-items: center;
+  border: solid 2px #ffb700;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0.8;
+  display: flex;
+  font-size:16px;
+  background-color: rgba(256, 256, 256, 0.05);
+  height: 38px;
+  padding: 0 10px 0 10px;
+  justify-content: center;
+  outline: none;
+  font-family: "Gilroy";
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  transition: all .1s linear;
+  color: white;
+  &:hover {
+    opacity: 1;
+  }
+`
 
 const Disclaimer = styled.div`
 font-family: "SF Mono Semibold";
@@ -236,10 +271,8 @@ font-family: "SF Mono Semibold";
   font-style: normal;
   letter-spacing: 1px;
   color: #ffffff;
-  transform: translateY(16px);
-	margin-top: -40px;
-	margin-bottom: 20px;
-`
+	margin: -10px 0 10px 0;
+	`
 
 const WarTopContainer = styled.div`
 display: flex;
@@ -296,11 +329,12 @@ color: #ffffff;
 const MobileButtons = styled.div`
 display: flex;
 flex-direction: column;
+width: 100%;
+align-items: center;
 `
 
 const BottomButtonContainer = styled.div`
-width: 84%;
-margin-left: 8%;
+width: 100%;
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -330,7 +364,7 @@ justify-content: space-evenly;
 text-align: left;
 margin: 3%;
 font-family: "SF Mono Semibold";
-  font-size: 40px;
+  font-size: 24px;
   font-weight: 600;
   font-stretch: normal;
   font-style: normal;
@@ -339,9 +373,25 @@ font-family: "SF Mono Semibold";
   color: #ffffff;
 `
 
-const MobileInfoLines = styled.div`
+const MobileInfoLines = !isMobile () ? styled.div`
 width: 80%;
 height: 60%;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+text-align: left;
+padding: 50px 10% 0% 10%;
+font-family: "SF Mono Semibold";
+  font-size: 18px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: #ffffff;
+` : styled.div`
+width: 80%;
+// height: 60%;
 display: flex;
 flex-direction: column;
 justify-content: space-evenly;
@@ -370,11 +420,10 @@ font-family: "Gilroy";
 `
 
 const InfoContainer = !isMobile() ? styled.div`
-width: 1000px;
+width: 780px;
   border-radius: 8px;
   border: solid 2px rgba(255, 183, 0, 0.3);
   background-color: rgba(256,256,256,0.08);
-
 	margin: 20px auto 80px auto;
 `: styled.div`
 width: 300px;
@@ -387,11 +436,10 @@ width: 300px;
 
 const MobileInfoContainer = styled.div`
 width: 80vw;
-  height: 450px;
   border-radius: 8px;
   border: solid 2px rgba(255, 183, 0, 0.3);
   background-color: rgba(256,256,256,0.08);
-	margin: 20px auto 60px auto;
+	margin: 20px auto 80px auto;
 `
 
 export default WarPool

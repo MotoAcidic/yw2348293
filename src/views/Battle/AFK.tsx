@@ -3,7 +3,7 @@ import { Switch } from "react-router-dom";
 import styled from "styled-components";
 import Page from "../../components/Page";
 import Background from '../../assets/img/bg3.svg'
-import Pool3 from "./cryptobattles/Pool3";
+import Pool3 from "./old/Pool3";
 import moment from "moment";
 import TopDisplayContainer from "../../components/TopDisplayContainer";
 import BigCountDown from "./BigCountDown";

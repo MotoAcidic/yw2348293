@@ -231,7 +231,6 @@ text-align: center;
 	margin-bottom: 10px;
 	letter-spacing: 1px;
 	color: #ff4343;
-
 `
 
 export default FarmGraph;

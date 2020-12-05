@@ -20,13 +20,13 @@ import moment from "moment";
 import FarmCards from "./components/FarmCards";
 import CountDown from "./BigCountDown";
 import MobileCountDown from "./components/MobileCountdown";
+import Pool3 from "./Pool3";
 
 import { Account } from "../../yam/lib/accounts";
 import { getStartTime, getWarStaked } from "../../yamUtils";
 import useFarms from "../../hooks/useFarms";
 import BigNumber from "bignumber.js";
 import TopDisplayContainer from '../../components/TopDisplayContainer'
-import ScrollUpButton from "react-scroll-up-button";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -107,12 +107,12 @@ const Farms: React.FC = () => {
           <Page>
             <CardContainer>
 
-                <TopDisplayContainer />
+              <TopDisplayContainer />
               <LandingSection>
-
-                <CountDown launchDate={start} />
-                {/* <BigTitle>The Future of Prediction Markets, Community Participation, and Governance lives here! </BigTitle> */}
-                <Title>YieldWars is building prediction markets from the bottom-up with extra emphasis on participation and communty</Title>
+                <Pool3 />
+                {/* <CountDown launchDate={start} />
+                <BigTitle>The Future of Prediction Markets, Community Participation, and Governance lives here! </BigTitle>
+                <Title>YieldWars is building prediction markets from the bottom-up with extra emphasis on participation and communty</Title> */}
 
                 {/* {!isMobile() ?
                   <iframe title="promo" style={{ width: "650px", height: "365.4px", margin: "10px auto 40px auto" }} src={`https://www.youtube.com/embed/uVJI32AnOUM`} frameBorder="0" />
@@ -123,7 +123,7 @@ const Farms: React.FC = () => {
               </LandingSection>
               <Seperator />
               <Roadmap />
-             
+
               <Seperator />
 
               <WarPool />
@@ -166,7 +166,6 @@ font-family: "Gilroy";
     margin: 40px auto;
     `
 
-
 const Seperator = !isMobile() ? styled.div`
   width: 1000px;
   height: 1px;
@@ -176,32 +175,6 @@ const Seperator = !isMobile() ? styled.div`
   height: 1px;
   background-image: linear-gradient(90deg, rgba(256, 256, 256, 0), rgba(256, 256, 256, 0.6) 20%, rgba(256, 256, 256, 0.6) 80%, rgba(256, 256, 256, 0));
   `
-
-const BigTitle = !isMobile() ? styled.div`
-  font-family: "Gilroy";
-  font-size: 60px;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  color: rgb(255, 204, 74);
-  max-width: 80vw;
-  margin: 0 auto 20px;
-` : styled.div`
-font-family: "Gilroy";
-font-size: 40px;
-text-transform: uppercase;
-font-weight: bold;
-font-stretch: normal;
-font-style: normal;
-line-height: 1;
-letter-spacing: normal;
-color: rgb(255, 204, 74);
-max-width: 90vw;
-margin: 0 auto 20px;
-`
 
 const LandingSection = !isMobile() ? styled.div`
 height: calc(100vh - 154px);

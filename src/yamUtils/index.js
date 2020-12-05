@@ -884,6 +884,27 @@ export const getPots = async (yam, betId) => {
   return (potsTotal);
 }
 
+export const getPotVals = async (yam, betId) => {
+  let potsTotal = await yam.contracts.betting_v2.methods.getPots(betId).call()
+  const precision = new BigNumber(10).pow(18);
+  const ethPrice = await getETHPrice(yam)
+  const curPrice = await getCurrentPrice(yam)
+  // potsTotal[0].value = Number(potsTotal[0].value) * ethPrice;
+  // potsTotal[1].value = Number(potsTotal[1].value) * ethPrice;
+  const choice0Val = potsTotal[0].value * ethPrice / precision;
+  const choice1Val = potsTotal[1].value * ethPrice / precision;
+  console.log("choiceVals", choice0Val, choice1Val)
+  const returnVal = {
+    choice0: potsTotal[0].choice,
+    choice0Val,
+    choice0ETHVal: potsTotal[0].value / precision,
+    choice1: potsTotal[1].choice,
+    choice1Val,
+    choice1ETHVal: potsTotal[1].value / precision,
+  }
+  return (returnVal);
+}
+
 export const getUserBet = async (yam, betId, account) => {
   console.log("calling user bet: ", betId)
   const currentBet = await yam.contracts.betting_v2.methods.getCurrentBet(betId, account).call()
@@ -895,6 +916,8 @@ export const placeETHBet = async (yam, betId, choice, amount, account) => {
   console.log("eth bet: ", choice, amount, account);
   const precision = new BigNumber(10).pow(18);
   let choices = await yam.contracts.betting_v2.methods.getBet(betId).call()
+  console.log(choices);
+
   let p = await yam.contracts.betting_v2.methods.ETHBet(betId, choices.possibleChoices[choice])
     .send({ from: account, value: new BigNumber(amount).times(precision).toString(), gas: 200000 });
   return (p);
@@ -928,6 +951,11 @@ export const getOutstandingBets = async (yam, account) => {
   //   outstandingBets[i] = await yam.contracts.betting_v2.methods.getBet(outstandingBets[i].betId).call()
   // }
   return outstandingBets
+}
+
+export const getBet = async (yam, betId) => {
+  let bet = await yam.contracts.betting_v2.methods.getBet(betId).call()
+  return bet
 }
 
 /*==========================
@@ -1036,7 +1064,7 @@ export const chessTVL = async (yam, account) => {
   const curPrice = await getCurrentPrice(yam)
   const currentBets = await getChessBets(yam)
   console.log(currentBets);
-  
+
   const trumpEth = ethPrice * currentBets.trumpETHPot
   const bidenEth = ethPrice * currentBets.bidenETHPot
   const trumpWar = curPrice * currentBets.trumpWARPot
@@ -1047,14 +1075,87 @@ export const chessTVL = async (yam, account) => {
   return { trumpTotal, bidenTotal }
 }
 
-// export const getLiveElectionResults = async (yam, states) => {
-//   for (let i = 0; i < states.length; i++) {
-//     let data = await yam.contracts.everipedia.methods.presidentialWinners(states[i].name).call()
-//     // console.log(data);
-//     states[i].winner = data.winner
-//     states[i].resultNow = data.resultNow
-//     states[i].resultBlock = data.resultBlock
-//     // console.log(states[i]);
-//   }
-//   return states
-// }
+// TESTING FOR MARKETS
+
+export const getTestBets = async (yam) => {
+  const precision = new BigNumber(10).pow(18);
+
+  const pool1ETHPot = new BigNumber(await yam.contracts.chess_one_off.methods.choice1ETHPot().call()) / precision;
+  const pool2ETHPot = new BigNumber(await yam.contracts.chess_one_off.methods.choice2ETHPot().call()) / precision;
+  const pool1WARPot = new BigNumber(await yam.contracts.chess_one_off.methods.choice1WARPot().call()) / precision;
+  const pool2WARPot = new BigNumber(await yam.contracts.chess_one_off.methods.choice2WARPot().call()) / precision;
+
+  return ({ pool1ETHPot, pool2ETHPot, pool1WARPot, pool2WARPot });
+}
+
+export const getTestBalances = async (yam, account) => {
+  if (yam.defaultProvider) {
+    return ({ pool1ETHBal: 0, pool2ETHBal: 0, pool1WARBal: 0, pool2WARBal: 0 });
+  }
+  const precision = new BigNumber(10).pow(18);
+
+  const pool1ETHBal = new BigNumber(await yam.contracts.chess_one_off.methods.choice1ETHBet(account).call()) / precision;
+  const pool2ETHBal = new BigNumber(await yam.contracts.chess_one_off.methods.choice2ETHBet(account).call()) / precision;
+  const pool1WARBal = new BigNumber(await yam.contracts.chess_one_off.methods.choice1WARBet(account).call()) / precision;
+  const pool2WARBal = new BigNumber(await yam.contracts.chess_one_off.methods.choice2WARBet(account).call()) / precision;
+
+
+  return ({ pool1ETHBal, pool2ETHBal, pool1WARBal, pool2WARBal });
+}
+
+export const placeTestWARBet = async (yam, candidate, amount, account) => {
+  console.log("war bet: ", candidate, amount, account);
+  const precision = new BigNumber(10).pow(18);
+  let p = await yam.contracts.chess_one_off.methods.WARBet(
+    candidate, new BigNumber(amount).times(precision).toString()
+  )
+    .send({ from: account, gas: 200000 })
+  return (p);
+}
+
+export const placeTestETHBet = async (yam, candidate, amount, account) => {
+  console.log("eth bet: ", candidate, amount, account);
+  const precision = new BigNumber(10).pow(18);
+
+  let p = await yam.contracts.chess_one_off.methods.ETHBet(candidate)
+    .send({ from: account, value: new BigNumber(amount).times(precision).toString(), gas: 200000 });
+  return (p);
+}
+
+export const getTestContracts = (yam) => {
+  if (!yam || !yam.contracts) {
+    return null
+  }
+  const election = yam.contracts.chess_one_off
+  return election
+}
+
+export const getTestFinished = async (yam) => {
+  const electionFinished = await yam.contracts.chess_one_off.methods.winner().call();
+  return (electionFinished);
+}
+
+export const getTestRewards = async (yam, account) => {
+  let p = await yam.contracts.chess_one_off.methods.getRewards().send({ from: account, gas: 200000 })
+    .on('transactionHash', tx => {
+      console.log("get election rewards", tx)
+      return tx.transactionHash
+    })
+  return (p);
+}
+
+export const testTVL = async (yam, account) => {
+  const ethPrice = await getETHPrice(yam)
+  const curPrice = await getCurrentPrice(yam)
+  const currentBets = await getChessBets(yam)
+  console.log(currentBets);
+
+  const trumpEth = ethPrice * currentBets.trumpETHPot
+  const bidenEth = ethPrice * currentBets.bidenETHPot
+  const trumpWar = curPrice * currentBets.trumpWARPot
+  const bidenWar = curPrice * currentBets.bidenWARPot
+  const trumpTotal = trumpEth + trumpWar
+  const bidenTotal = bidenEth + bidenWar
+
+  return { pool1: trumpTotal, pool2: bidenTotal }
+}

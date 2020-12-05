@@ -96,7 +96,7 @@ const Farms: React.FC = () => {
 
   let diffTime = launch - Math.round(new Date().getTime());
 
-  const start = moment.utc("2020-12-06T20:00", "YYYY-MM-DDTHH:mm");
+  const start = moment.utc("2020-12-05T20:00", "YYYY-MM-DDTHH:mm");
 
 
   return (
@@ -163,7 +163,7 @@ font-family: "Gilroy";
     letter-spacing: normal;
     color: #ffffff;
     max-width: 70vw;
-    margin: auto;
+    margin: 40px auto;
     `
 
 const Seperator = !isMobile() ? styled.div`

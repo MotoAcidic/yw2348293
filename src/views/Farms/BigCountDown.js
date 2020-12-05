@@ -3,11 +3,11 @@ import moment from 'moment'
 import styled from 'styled-components'
 
 function isMobile() {
-  if (window.innerWidth < window.innerHeight) {
-    return true;
-  } else {
-    return false;
-  }
+	if (window.innerWidth < window.innerHeight) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 class CountDown extends React.Component {
@@ -43,37 +43,37 @@ class CountDown extends React.Component {
 
 		return (
 			<Timer>
-				<CountDownText>Something Special Coming Soon</CountDownText>
+				<CountDownText href="https://yieldwars.medium.com/yieldwars-markets-are-coming-here-is-what-you-need-to-know-2a73fb7c1e18" target="_blank">Announcing... YieldWars Markets</CountDownText>
 				{/* <CountDownText>Are You Ready for the Next Frontier?</CountDownText> */}
 				{this.state.milliseconds > 0 &&
-				<Countdown>
-					<Item>
-						{this.state.days.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-						<TimerText>Days</TimerText>
-					</Item>
-					<div>:</div>
-					<Item>
-						{this.state.hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-						<TimerText>Hours</TimerText>
-					</Item>
-					<div>:</div>
-					<Item>
-						{this.state.minutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-						<TimerText>Minutes</TimerText>
-					</Item>
-					<div>:</div>
-					<Item>
-						{this.state.seconds.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-						<TimerText>Seconds</TimerText>
-					</Item>
-				</Countdown>
-	}	
+					<Countdown>
+						<Item>
+							{this.state.days.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+							<TimerText>Days</TimerText>
+						</Item>
+						<div>:</div>
+						<Item>
+							{this.state.hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+							<TimerText>Hours</TimerText>
+						</Item>
+						<div>:</div>
+						<Item>
+							{this.state.minutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+							<TimerText>Minutes</TimerText>
+						</Item>
+						<div>:</div>
+						<Item>
+							{this.state.seconds.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+							<TimerText>Seconds</TimerText>
+						</Item>
+					</Countdown>
+				}
 			</Timer>
 		)
 	}
 }
 
-const CountDownText = styled.div`
+const CountDownText = styled.a`
 margin-bottom: 20px;
 width: 100%;
 font-family: "Gilroy";
@@ -90,7 +90,6 @@ const Item = styled.div`
 text-align: center;
 width: 120px;
 color: rgb(255, 204, 74);
-
 `
 
 const TimerText = styled.div`
@@ -109,6 +108,7 @@ font-family: "Gilroy";
 
 const Countdown = !isMobile() ? styled.div`
 display: flex;
+margin-top: 20px;
 flex-direction: row;
 justify-content: space-evenly;
 font-family: "Gilroy";

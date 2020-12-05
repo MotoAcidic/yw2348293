@@ -155,7 +155,19 @@ const Roadmap = () => {
       <Title>Official Medium Posts</Title>
       <MediumSection>
         <TextSection>
-        <LinkSection>
+          <LinkSection>
+            <a
+              className="medium-link"
+              style={{ color: "white" }}
+              href="https://yieldwars.medium.com/yieldwars-markets-are-coming-here-is-what-you-need-to-know-2a73fb7c1e18"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              YieldWars Markets Are Coming
+                </a>
+                Dec 3
+              </LinkSection>
+          <LinkSection>
             <a
               className="medium-link"
               style={{ color: "white" }}

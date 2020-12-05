@@ -172,7 +172,7 @@ border-radius: 4px;
 const CountDownContainer = styled.div`
 position: absolute;
 left: 50%;
-top: 0;
+top: -1%;
 z-index: 100001;`
 
 

@@ -94,7 +94,8 @@ class MarketsCountDown extends React.Component {
 const Container = styled.div`
 position: relative;
 left: -50%;
-border: 2px solid black;
+border: 2px solid rgba(0,0,0,0.2);
+backdrop-filter: blur(1px);
     padding: 5px;
     border-radius: 0px 0px 4px 4px;
 		background-color: rgba(0,0,0,0.5);

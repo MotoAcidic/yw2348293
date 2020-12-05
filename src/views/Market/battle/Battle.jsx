@@ -169,8 +169,8 @@ const Battle = ({ battle }) => {
 const CountDownContainer = styled.div`
 position: absolute;
 left: 50%;
-top: 0;
-z-index: 100001;`
+top: -1%;
+z-index: 10001;`
 
 const Divider = !isMobile() ? styled.div` 
 display: flex;

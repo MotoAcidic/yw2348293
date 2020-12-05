@@ -50,7 +50,7 @@ const Battle = ({ battle }) => {
   const [userBet, setUserBet] = useState(false)
   const [alreadyRedeemed, setAlreadyRedeemed] = useState(false);
   const [userLost, setUserLost] = useState(false);
-  const [winner, setWinner] = useState(null)
+  const [winner, setWinner] = useState(1)
 
 
   let imag1 = new Image();
@@ -118,38 +118,40 @@ const Battle = ({ battle }) => {
               <>
                 <VersusContainer>
                   <LeftContainer>
-                    <InfoBlock style={{ marginBottom: '20px' }}>
+                    <InfoBlock style={{ marginBottom: '30px' }}>
                       {battle.description}
                     </InfoBlock>
                     <VersusBackground>
-                      <ImgWrapper>
-                        <Candidate1
-                          src={img1}
-                          style={winner === 1 ?
-                            {
-                              transform: `scale(1.1)`,
-                            }
-                            :
-                            { transform: `scale(.9)`, filter: `grayscale(100%) brightness(.5)` }
-                          }
-                        />
-                      </ImgWrapper>
-                      <ImgWrapper>
-                        <Candidate2
-                          src={img2}
-                          style={winner === 2 ? { transform: `scale(1.1)` } : { transform: `scale(.9)`, filter: `grayscale(100%) brightness(.5)` }}
-                        />
-                      </ImgWrapper>
+                      {winner === 1 ?
+                        <WinWrapper>
+                          <Candidate1 src={img1} />
+                        </WinWrapper>
+                        :
+                        <ImgWrapper>
+                          <Candidate1 src={img1} />
+                        </ImgWrapper>
+                      }
+                      {winner === 2 ?
+                        <WinWrapper>
+                          <Candidate2 src={img2} />
+                        </WinWrapper>
+                        :
+                        <ImgWrapper>
+                          <Candidate2 src={img2} />
+                        </ImgWrapper>
+                      }
                     </VersusBackground>
-                    <WinMessage>
-                      The Winner is {winner === 1 ? battle.pool1.name : battle.pool2.name}!
-                    </WinMessage>
+                    {winner &&
+                      <WinMessage>
+                        The Winner is {winner === 1 ? battle.pool1.name : battle.pool2.name}!
+                      </WinMessage>
+                    }
                   </LeftContainer>
                   <StatusCard
                     battle={battle}
                   />
                 </VersusContainer>
-                <InfoBlock style={{ marginBottom: '30px' }}>
+                <InfoBlock style={{ marginBottom: '30px', marginTop: '30px' }}>
                   {battle.resolution}
                 </InfoBlock>
               </>
@@ -165,7 +167,7 @@ const Battle = ({ battle }) => {
           </Page>
         </ContentContainer>
       </StyledCanvas>
-    </Switch>
+    </Switch >
   );
 };
 
@@ -240,6 +242,41 @@ const ImgWrapper = styled.div`
 width: 50%;
 height: 100%;
 transition: all 0.2s ease-in-out;
+transform: scale(.9);
+filter: grayscale(100%) brightness(.5);
+`
+
+const WinWrapper = styled.div`
+width: 50%;
+height: 100%;
+transition: all 0.2s ease-in-out;
+transform: scale(1.1);  
+&:after {
+  content: "";
+  position: fixed;
+  width: 100%;
+  height: 102%;
+  top: 7.5px;
+  left: 7.5px;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 0, 0, 1) 0%,
+    rgba(255, 154, 0, 1) 10%,
+    rgba(208, 222, 33, 1) 20%,
+    rgba(79, 220, 74, 1) 30%,
+    rgba(63, 218, 216, 1) 40%,
+    rgba(47, 201, 226, 1) 50%,
+    rgba(28, 127, 238, 1) 60%,
+    rgba(95, 21, 242, 1) 70%,
+    rgba(186, 12, 248, 1) 80%,
+    rgba(251, 7, 217, 1) 90%,
+    rgba(255, 0, 0, 1) 100%
+  );
+  background-size: 300% 300%;
+  animation: dOtNsp 2s linear infinite;
+  filter: blur(5px);
+  z-index: -1;
+}
 `
 
 const InfoBlock = styled.a`
@@ -279,7 +316,7 @@ flex-direction: row;
 justify-content: space-evenly;
 align-items: center;
 width: 80%;
-margin-top: 40px;
+margin-top: 60px;
 background-color: rgba(0,0,0,0.3);
 border-radius: 8px;
 height: 40px;
@@ -313,22 +350,27 @@ let Candidate2
 
 Candidate1 = styled.img`
 width: calc(100% - 10px);
-height: 100%;
-border-radius: 6px 0 0 6px;
+height: calc(100% - 10px);
 cursor: pointer;
 object-fit: cover;
+margin: 8px;
+border-radius: 6px;
 border: 8px solid black;
 border-right: 4px solid black;
+opacity: .9;
 `
 
 Candidate2 = styled.img`
 width: calc(100% - 10px);
-height: 100%;
-border-radius: 0 6px 6px 0;
+height: calc(100% - 10px);
+border-radius: 6px;
 cursor: pointer;
 object-fit: cover;
+margin: 8px;
+border-radius: 6px;
 border: 8px solid black;
 border-left: 4px solid black;
+opacity: .9;
 `
 
 const VersusBackground = styled.a`

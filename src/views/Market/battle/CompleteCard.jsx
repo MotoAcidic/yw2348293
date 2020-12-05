@@ -247,7 +247,7 @@ flex-direction: row;
 justify-content: space-evenly;
 align-items: center;
 width: 80%;
-margin-bottom: 10px;
+margin-bottom: 40px;
 margin-top: 8px;
 background-color: rgba(0,0,0,0.3);
 border-radius: 8px;

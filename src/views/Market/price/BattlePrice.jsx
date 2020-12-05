@@ -401,7 +401,7 @@ const BackgroundSection = styled.div`
   background-repeat: no-repeat;
   background-position: fit;
   background-size: cover;
-  filter: brightness(.35) blur(4px);
+  filter: brightness(.35);
 `
 
 const StyledCanvas = styled.div`

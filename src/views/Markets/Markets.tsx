@@ -237,6 +237,21 @@ const Battle: React.FC = () => {
   }, []);
 
 
+  if (isMobile()) return (
+    <Switch>
+      <StyledCanvas>
+        <BackgroundSection />
+        <ContentContainer>
+          <Page>
+
+            <AFK>
+              <Title>Mobile Support Coming Soon</Title>
+            </AFK>
+          </Page>
+        </ContentContainer>
+      </StyledCanvas>
+    </Switch>
+  )
 
   return (
     <Switch>
@@ -275,6 +290,16 @@ const Battle: React.FC = () => {
     </Switch >
   );
 };
+
+const AFK = styled.div`
+height: 65vh;
+display: flex;
+align-items: center;
+justify-content: center;
+text-shadow: -1px 1px 0 #000,
+1px 1px 0 #000,
+1px -1px 0 #000,
+-1px -1px 0 #000;`
 
 const MarketsGrid = !isMobile() ? styled.div`
   width: 100%;

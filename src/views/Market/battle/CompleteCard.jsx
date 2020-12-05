@@ -146,10 +146,10 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	else if (userBet && !userLost && !alreadyRedeemed) {
 		status = <Button size="lg" onClick={() => redeemBet(battle._id)} >Claim ETH Bet</Button>
 	}
-	else if (userLost){
+	else if (userLost) {
 		status = "you lost this bet"
 	}
-	else if (alreadyRedeemed){
+	else if (alreadyRedeemed) {
 		status = "bet successfully redeemed"
 	}
 	if (pending) {
@@ -246,15 +246,16 @@ display: flex;
 flex-direction: row;
 justify-content: space-evenly;
 align-items: center;
-width: 80%;
-padding: 10px;
-margin-bottom: 40px;
+max-width: 80%;
+padding-left: 10px;
+padding-right: 10px;
+margin-bottom: 20px;
 margin-top: 8px;
-background-color: rgba(0,0,0,0.6);
+// background-color: rgba(0,0,0,0.6);
 border-radius: 8px;
-height: 40px;
+color: white;
+text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black;
 `
-
 const Separator = styled.div`
   width: 80%;
   height: 1px;

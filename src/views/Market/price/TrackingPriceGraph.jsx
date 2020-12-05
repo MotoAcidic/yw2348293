@@ -92,7 +92,7 @@ const FarmGraph = ({ battle, coin }) => {
 
 	useEffect(() => {
 		if (!price) {
-			axios.get(`https://api.coingecko.com/api/v3/coins/${getGeckoId(coin)}/market_chart?vs_currency=usd&days=3`).then(res => {
+			axios.get(`https://api.coingecko.com/api/v3/coins/${getGeckoId(coin)}/market_chart?vs_currency=usd&days=2`).then(res => {
 				let { market_caps, prices } = res.data;
 				console.log(coin, market_caps, prices);
 				setMarketCap(market_caps[market_caps.length - 1][1].toLocaleString(undefined, { maximumFractionDigits: 0 }));
@@ -189,9 +189,9 @@ const FarmGraph = ({ battle, coin }) => {
 				<Date>
 					{moment.unix(battle.bettingEnd).utc().add(2, 'days').format('MM/DD')}
 				</Date>
-				<Date>
+				{/* <Date>
 					{moment.unix(battle.bettingEnd).utc().add(3, 'days').format('MM/DD')}
-				</Date>
+				</Date> */}
 			</XAxisTicks>
 		</StyledContent>
 	)

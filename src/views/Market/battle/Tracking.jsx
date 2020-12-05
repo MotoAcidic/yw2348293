@@ -214,7 +214,7 @@ margin-bottom: -8px;
 margin-top: 8px;
 background-color: rgba(0,0,0,0.6);
 border-radius: 8px;
-height: 40px;
+height: 50px;
 `
 
 const ModalBlock = styled.div`

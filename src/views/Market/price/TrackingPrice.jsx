@@ -10,6 +10,7 @@ import { useWallet } from "use-wallet";
 import Uniswap from "../../../assets/img/uniswap@2x.png";
 import { getWarStaked, getChessContracts, getChessBets, testTVL } from "../../../yamUtils";
 import { getPots, getUserBet, placeETHBet } from "../../../yamUtils";
+import Background from '../../../assets/img/bg3.svg'
 
 import VSPNG from '../../../assets/img/VS.png'
 import VotingBalance from '../VotingBalance'
@@ -368,7 +369,7 @@ font-family: "Gilroy";
 `;
 
 const BackgroundSection = styled.div`
-  background-image: url(${props => props.background});
+  background-image: url(${Background});
   position: fixed;
   width: 100vw;
   height: 100vh;

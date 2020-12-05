@@ -156,18 +156,24 @@ const FarmGraph = ({ battle, coin }) => {
 					<Text>${price}</Text>
 				</Column>
 				<Column>
-					<SubTitle>Market Cap</SubTitle>
-					<Text>{marketCap !== "0" ? "$" + marketCap : "unknown"}</Text>
+					<SubTitle>Change</SubTitle>
+					{/* <SubTitle>Market Cap</SubTitle>
+					<Text>{marketCap !== "0" ? "$" + marketCap : "unknown"}</Text> */}
+					{recentChange >= 0 ?
+						<GreenText>+{recentChange}%</GreenText>
+						:
+						<RedText>{recentChange}%</RedText>
+					}
 				</Column>
 			</Row>
-			<Change>
+			{/* <Change>
 				<PriceTime>Change:</PriceTime>
 				{recentChange >= 0 ?
 					<GreenText>+{recentChange}%</GreenText>
 					:
 					<RedText>{recentChange}%</RedText>
 				}
-			</Change>
+			</Change> */}
 			{graphData &&
 				<ChartContainer style={{ width: `${percentDone}%` }}>
 					<Chart data={data} axes={axes} series={series} />
@@ -220,6 +226,7 @@ margin-bottom: 15px;
 const Row = styled.div`
 display: flex;
 justify-content: space-between;
+margin-bottom: 20px;
 `
 
 const Column = styled.div`
@@ -256,7 +263,7 @@ margin-bottom: 5px;
 const SubTitle = styled.div`
 font-family: "Gilroy";
 margin-bottom: 5px;
-font-size: 16px;
+font-size: 12px;
 font-weight: bold;
 font-stretch: normal;
 font-style: normal;
@@ -268,7 +275,7 @@ color: #ffffff;
 `
 const Text = styled.div`
 font-family: "Gilroy";
-font-size: 12px;
+font-size: 14px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
@@ -296,7 +303,7 @@ text-align: center;
 
 const GreenText = styled.div`
 font-family: "SF Mono Semibold";
-font-size: 12px;
+font-size: 14px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
@@ -306,11 +313,11 @@ text-align: center;
 	text-align: left;
 	letter-spacing: 1px;
 	color: #38ff00;
-	margin-left: 10px;
+	// margin-left: 10px;
 `
 const RedText = styled.div`
 font-family: "SF Mono Semibold";
-font-size: 12px;
+font-size: 14px;
 font-weight: normal;
 font-stretch: normal;
 font-style: normal;
@@ -320,7 +327,7 @@ text-align: center;
 	text-align: left;
 	letter-spacing: 1px;
 	color: #ff4343;
-	margin-left: 10px;
+	// margin-left: 10px;
 `
 
 export default FarmGraph;

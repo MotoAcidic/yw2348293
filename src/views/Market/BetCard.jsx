@@ -344,13 +344,13 @@ font-stretch: normal;
 font-style: normal;
 line-height: 1;
 letter-spacing: normal;
-color: rgb(255, 190, 26);
+color: rgb(255, 204, 160);
 margin-bottom: 10px;
 `
 
 const Text = styled.div`
 font-family: "Gilroy";
-color: rgb(255, 190, 26);
+color: rgb(255, 204, 160);
 font-size: 22px;
 font-weight: bold;
 font-stretch: normal;
@@ -392,7 +392,7 @@ font-weight: bold;
 font-stretch: normal;
 font-style: normal;
 letter-spacing: normal;
-color: #ffb700;
+color: rgb(255, 204, 160);
 text-align: right;
 height: 35px;
 width: 90%;
@@ -407,7 +407,7 @@ const InputContainer = styled.div`
 width: 170px;
 border-radius: 8px;
 box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-border: solid 1px rgba(255, 183, 0, 0.5);
+border: solid 1px rgb(255, 204, 160);
 background-color: rgba(255, 255, 255, 0.2);
 font-family: "SF Mono Semibold";
 font-size: 20px;
@@ -415,7 +415,7 @@ font-weight: bold;
 font-stretch: normal;
 font-style: normal;
 letter-spacing: normal;
-color: #ffb700;
+color: rgb(255, 204, 160);
 text-align: right;
 display: flex;
 justify-content: flex-end;
@@ -435,7 +435,7 @@ line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
 border-radius: 8px;
-border: solid 2px white;
+border: solid 2px rgba(255, 255, 255, 0.2);
 background-color: rgb(40,40,40);
 padding: 20px;
 ` : styled.div`

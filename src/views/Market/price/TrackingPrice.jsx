@@ -237,12 +237,14 @@ display: flex;
 flex-direction: row;
 justify-content: space-evenly;
 align-items: center;
-width: 80%;
+width: 90%;
+padding-left: 10px;
+padding-right: 10px;
 margin-bottom: -8px;
 margin-top: 8px;
 background-color: rgba(0,0,0,0.3);
 border-radius: 8px;
-height: 40px;
+height: 50px;
 `
 
 const ModalBlock = styled.div`

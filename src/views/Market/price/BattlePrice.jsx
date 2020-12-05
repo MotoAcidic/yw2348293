@@ -112,10 +112,8 @@ const Battle = ({ battle }) => {
                     <ImgWrapper onClick={(e) => onClickPool1(e)}>
                       <Candidate1
                         src={img1}
-
                       />
                       <GraphContainerL>
-
                         <PriceGraph coin={battle.pool1.name} />
                       </GraphContainerL>
                     </ImgWrapper>

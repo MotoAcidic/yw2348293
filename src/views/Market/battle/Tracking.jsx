@@ -15,7 +15,7 @@ import VSPNG from '../../../assets/img/VS.png'
 import VotingBalance from '../VotingBalance'
 import Pool3 from '../Pool3'
 import Rules from '../Instructions'
-import StatusCard from './StatusCard'
+import StatusCard from '../StatusCard'
 import MarketCountDown from "../CountDown";
 
 

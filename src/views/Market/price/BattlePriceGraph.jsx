@@ -89,7 +89,7 @@ const FarmGraph = ({ coin }) => {
 
 	useEffect(() => {
 		if (!price) {
-			axios.get(`https://api.coingecko.com/api/v3/coins/${getGeckoId(coin)}/market_chart?vs_currency=usd&days=1`).then(res => {
+			axios.get(`https://api.coingecko.com/api/v3/coins/${getGeckoId(coin)}/market_chart?vs_currency=usd&days=7`).then(res => {
 				const { market_caps, prices } = res.data;
 				console.log(coin, market_caps, prices);
 				setMarketCap(market_caps[market_caps.length - 1][1].toLocaleString(undefined, { maximumFractionDigits: 0 }));

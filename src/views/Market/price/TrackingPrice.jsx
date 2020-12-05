@@ -7,13 +7,18 @@ import useYam from "../../../hooks/useYam";
 // import useBet from "../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
-
 import Uniswap from "../../../assets/img/uniswap@2x.png";
+import { getWarStaked, getChessContracts, getChessBets, testTVL } from "../../../yamUtils";
+import { getPots, getUserBet, placeETHBet } from "../../../yamUtils";
 
-import { getPots, getPotVals, getUserBet, placeETHBet } from "../../../yamUtils";
 import VSPNG from '../../../assets/img/VS.png'
 import VotingBalance from '../VotingBalance'
-import BetModal from '../BetCard'
+import Pool3 from '../Pool3'
+import Rules from '../Instructions'
+import StatusCard from '../StatusCard'
+import MarketCountDown from "../CountDown";
+import PriceGraph from "./TrackingPriceGraph";
+
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -39,9 +44,7 @@ const Battle = ({ battle }) => {
   let [img1, setImg1] = useState(null)
   let [img2, setImg2] = useState(null)
   let [background, setBackground] = useState(null)
-  let [modal, setShowModal] = useState(false);
-  let [candidate, setCandidate] = useState("pool1");
-  const [currBets, setCurrBets] = useState({ pool1: 0, pool2: 0 });
+  const [roughBets, setRoughBets] = useState({ pool1: 0, pool2: 0 });
 
   let imag1 = new Image();
   imag1.onload = function () { setImg1(battle.pool1.graphic) }
@@ -55,38 +58,20 @@ const Battle = ({ battle }) => {
   backg.onload = function () { setBackground(battle.background) }
   backg.src = battle.background;
 
-  const onClickPool1 = (e) => {
-    if (!account) {
-      connect('injected')
-    }
-    setCandidate("pool1")
-    setShowModal(true)
-  }
-
-  const onClickPool2 = (e) => {
-    if (!account) {
-      connect('injected')
-    }
-    setCandidate("pool2")
-    setShowModal(true)
-  }
-  const getCurrBets = async () => {
-    let potVals = await getPotVals(yam, battle._id)
-    const pool1 = potVals.choice0Val
-    const pool2 = potVals.choice1Val
-    setCurrBets({ pool1, pool2 });
+  const getRoughBets = async () => {
+    let tvl = await getPots(yam, battle._id)
+    const pool1 = tvl[0].value
+    const pool2 = tvl[1].value
+    setRoughBets({ pool1, pool2 });
   }
 
   useEffect(() => {
     console.log("using effect");
-    if (yam && account && !currBets.pool1 && battle) {
-      getCurrBets();
+    if (yam && account && !roughBets.pool1 && battle) {
+      getRoughBets();
     }
   }, [yam]);
 
-  const closeModal = (event) => {
-    setShowModal(false)
-  }
 
   const stopProp = (e) => {
     e.stopPropagation()
@@ -103,29 +88,44 @@ const Battle = ({ battle }) => {
             {/* <Countdown endTime={moment.utc("2020-11-23T02:00", "YYYY-MM-DDTHH:mm").unix() * 1000} /> */}
             {battle && battle !== -1 && (
               <>
-                <InfoBlock >
-                  {battle.description}
-                </InfoBlock>
-                <VotingBalance votes1={currBets.pool1} votes2={currBets.pool2} icon1={battle.pool1.icon} icon2={battle.pool2.icon} />
                 <VersusContainer>
-                  <VersusBackground>
-                    <ImgWrapper onClick={(e) => onClickPool1(e)}>
-                      <Candidate1
-                        src={img1}
-
-                      />
-                    </ImgWrapper>
-                    <Divider>
-                      <img src={VSPNG} width="125px" style={{ position: 'absolute', zIndex: 10000 }} />
-                    </Divider>
-                    <ImgWrapper onClick={(e) => onClickPool2(e)} >
-                      <Candidate2
-                        src={img2}
-                      />
-                    </ImgWrapper>
-                  </VersusBackground>
+                  <LeftContainer>
+                    <InfoBlock style={{ marginBottom: '20px' }}>
+                      {battle.description}
+                    </InfoBlock>
+                    <VersusBackground href={battle.link} target="_none">
+                      <ImgWrapper>
+                        <Candidate1
+                          src={img1}
+                        />
+                        <GraphContainerL>
+                          <PriceGraph battle={battle} coin={battle.pool1.name} />
+                        </GraphContainerL>
+                      </ImgWrapper>
+                      <CountDownContainer>
+                        <MarketCountDown battle={battle} />
+                      </CountDownContainer>
+                      <Divider>
+                        <img src={VSPNG} width="50px" style={{ position: 'absolute', zIndex: 10000 }} />
+                      </Divider>
+                      <ImgWrapper>
+                        <Candidate2
+                          src={img2}
+                        />
+                        <GraphContainerR>
+                          <PriceGraph battle={battle} coin={battle.pool2.name} />
+                        </GraphContainerR>
+                      </ImgWrapper>
+                    </VersusBackground>
+                    {/* <InfoBlock href={battle.link} target="_none" style={{ marginTop: '30px' }}>
+                      Watch the Game Live!
+                    </InfoBlock> */}
+                  </LeftContainer>
+                  <StatusCard
+                    battle={battle}
+                  />
                 </VersusContainer>
-                <InfoBlock >
+                <InfoBlock style={{ marginBottom: '30px' }}>
                   {battle.resolution}
                 </InfoBlock>
               </>
@@ -135,20 +135,7 @@ const Battle = ({ battle }) => {
                 the page you are looking for was not found. (404)
               </Error404>
             )}
-            {battle &&
-              <ModalSection style={modal ? { display: 'block', opacity: 1 } : { display: 'none', opacity: 0 }}>
-                <Modal onClick={(e) => closeModal(e)}>
-                  <ModalBlock onClick={(e) => stopProp(e)} style={{ width: '600px' }} >
-                    {yam && <BetModal
-                      battle={battle}
-                      candidateInfo={candidate}
-                      contract={contract}
-                    />
-                    }
-                  </ModalBlock>
-                </Modal>
-              </ModalSection>
-            }
+
             {/* <Rules />
             <Pool3 /> */}
           </Page>
@@ -157,6 +144,37 @@ const Battle = ({ battle }) => {
     </Switch>
   );
 };
+
+const GraphContainerL = styled.div`
+position: absolute;
+left: 15%;
+width: 66%;
+top: 47%;
+padding: 2%;
+background-color: rgba(0,0,0,0.6);
+border-radius: 4px;
+// padding: 5px;
+//     border: 1px solid white;
+`
+
+const GraphContainerR = styled.div`
+position: absolute;
+left: 15%;
+width: 66%;
+top: 47%;
+padding: 2%;
+background-color: rgba(0,0,0,0.6);
+border-radius: 4px;
+// width: 35%;
+`
+
+
+const CountDownContainer = styled.div`
+position: absolute;
+left: 50%;
+top: 0;
+z-index: 100001;`
+
 
 const Divider = !isMobile() ? styled.div` 
 display: flex;
@@ -186,16 +204,6 @@ font-family: "Gilroy";
 
 `
 
-const AFK = styled.div`
-height: 65vh;
-display: flex;
-align-items: center;
-justify-content: center;
-text-shadow: -1px 1px 0 #000,
-1px 1px 0 #000,
-1px -1px 0 #000,
--1px -1px 0 #000;`
-
 const SubTitle = styled.div`
 font-family: "Gilroy";
   font-size: 22px;
@@ -213,12 +221,6 @@ width: 50%;
 height: 100%;
 transition: all 0.2s ease-in-out;
 filter: brightness(100%) contrast(100%) ;
-&:hover {
-  transition: all 0.2s ease-in-out;
-  filter: brightness(115%) contrast(115%);
-  transform: scale(1.05);
-  z-index: 1000;
-}
 `
 
 const InfoBlock = styled.a`
@@ -289,12 +291,21 @@ border: 8px solid black;
 border-left: 4px solid black;
 `
 
-const VersusBackground = styled.div`
+const VersusBackground = styled.a`
 width: 100%;
-height: 100%;
+height: 22.5vw;
 display: flex;
 flex-direction: row;
 justify-content: center;
+align-items: center;
+position: relative;
+`
+
+const LeftContainer = styled.div`
+width: 65%;
+height: 100%;
+display: flex;
+flex-direction: column;
 align-items: center;
 `
 
@@ -448,16 +459,17 @@ const StyledA = styled.a`
 
 
 const VersusContainer = !isMobile() ? styled.div`
-width: 92vw;
-height: 32.5vw;
+width: 100vw;
+height: 60vh;
 max-width: 1800px;
 max-height: 600px;
 min-width: 900px;
 min-height: 300px;
 display: flex;
-align-items: center;
+flex-direction: row;
+justify-content: space-evenly;
 font-size: 30px;
-margin: 0 auto 40px auto;
+margin: 35px auto 0px auto;
 font-family: "Gilroy";
 font-weight: bold;
 font-stretch: normal;
@@ -465,8 +477,6 @@ font-style: normal;
 line-height: 1;
 letter-spacing: normal;
 color: #ffffff;
-border-radius: 8px;
-background-color: rgba(256,256,256,0.08);
 ` : styled.div`
 margin: 0 0 40px 0;
 width: 90vw;

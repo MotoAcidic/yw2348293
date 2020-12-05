@@ -1,23 +1,23 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import styled from 'styled-components'
-import Button from '../../../components/Button'
+import Button from '../../components/Button'
 import { useWallet } from "use-wallet";
-import useModal from '../../../hooks/useModal'
+import useModal from '../../hooks/useModal'
 import Cookie from 'universal-cookie'
-import Container from '../../../components/Container'
-import useFarm from '../../../hooks/useFarm'
-import useYam from '../../../hooks/useYam'
+import Container from '../../components/Container'
+import useFarm from '../../hooks/useFarm'
+import useYam from '../../hooks/useYam'
 import { provider } from 'web3-core'
-import useApprove from '../../../hooks/useApprove'
-import useStakedBalance from '../../../hooks/useStakedBalance'
-import useUnstake from '../../../hooks/useUnstake'
-import useAllowance from '../../../hooks/useAllowance'
-import { placeTestWARBet, placeTestETHBet, getTestBets, getTestBalances, getTestRewards, getTestFinished, redeem } from '../../../yamUtils'
-import { getPotVals, getUserBet, placeETHBet } from "../../../yamUtils";
+import useApprove from '../../hooks/useApprove'
+import useStakedBalance from '../../hooks/useStakedBalance'
+import useUnstake from '../../hooks/useUnstake'
+import useAllowance from '../../hooks/useAllowance'
+import { placeTestWARBet, placeTestETHBet, getTestBets, getTestBalances, getTestRewards, getTestFinished, redeem } from '../../yamUtils'
+import { getPotVals, getUserBet, placeETHBet } from "../../yamUtils";
 import Swal from 'sweetalert2';
-import { getElectionContracts, harvest } from '../../../yamUtils'
+import { getElectionContracts, harvest } from '../../yamUtils'
 import BigNumber from 'bignumber.js'
-import VotingBalance from '../VotingBalance'
+import VotingBalance from './VotingBalance'
 
 
 function isMobile() {
@@ -169,7 +169,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 				</TitleText>
 				<YourBets>
 					{!farmBalances.value > 0 ?
-						<NoBetsText>none, place a bet!</NoBetsText>
+						<NoBetsText>none</NoBetsText>
 						: null
 					}
 					{farmBalances.value > 0 ?

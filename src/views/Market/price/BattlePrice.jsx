@@ -80,7 +80,7 @@ const Battle = ({ battle }) => {
 
   useEffect(() => {
     console.log("using effect");
-    if (yam && account && !currBets.pool1 && battle) {
+    if (yam && !currBets.pool1 && battle) { // && account
       getCurrBets();
     }
   }, [yam]);

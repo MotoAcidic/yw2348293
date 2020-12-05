@@ -72,8 +72,8 @@ const Battle = ({ bet }) => {
       <Description>
         {bet.description}
       </Description>
-      {account ?
-        <Info>
+
+      <Info>
           {/* <BetAmount> */}
           <Volume>
             Volume:&nbsp;
@@ -87,12 +87,27 @@ const Battle = ({ bet }) => {
             </Money>
           </Volume>
           <BalanceBar bet={bet} votes1={currBets.choice1} votes2={currBets.choice2} />
-          {/* </BetAmount> */}
+        </Info>
+
+      {/* {account ?
+        <Info>
+          <Volume>
+            Volume:&nbsp;
+                <Money>
+              ${
+                (currBets.choice1 + currBets.choice2).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })
+              }
+            </Money>
+          </Volume>
+          <BalanceBar bet={bet} votes1={currBets.choice1} votes2={currBets.choice2} />
         </Info> :
         <PleaseLogin onClick={e => connectMe(e)}>
           View Bets
         </PleaseLogin>
-      }
+      } */}
     </VersusContainer>
   );
 };

@@ -61,8 +61,8 @@ const Battle = ({ bet }) => {
         <Candidate1 src={img1} />
       </ImgWrapper>
       <CountDownContainer>
-          <MarketsCountDown battle={bet} />
-        </CountDownContainer>
+        <MarketsCountDown battle={bet} />
+      </CountDownContainer>
       {/* <Versus>VS</Versus> */}
       <ImgWrapper  >
         <Candidate2
@@ -73,7 +73,22 @@ const Battle = ({ bet }) => {
         <Description>
           {bet.description}
         </Description>
-        {account ?
+        
+        <BetAmount>
+          <Volume>
+            Volume:&nbsp;
+                <Money>
+              ${
+                (currBets.choice1 + currBets.choice2).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })
+              }
+            </Money>
+          </Volume>
+          <BalanceBar bet={bet} votes1={currBets.choice1} votes2={currBets.choice2} />
+        </BetAmount>
+        {/* {account ?
           <BetAmount>
             <Volume>
               Volume:&nbsp;
@@ -91,7 +106,7 @@ const Battle = ({ bet }) => {
           <PleaseLogin onClick={e => connectMe(e)}>
             View Bets
           </PleaseLogin>
-        }
+        } */}
       </Info>
     </VersusContainer>
   );

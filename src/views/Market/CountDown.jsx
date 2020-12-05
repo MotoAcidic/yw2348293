@@ -24,63 +24,67 @@ class MarketsCountDown extends React.Component {
 		let endTime = null;
 		let text = "";
 		if (now < battle.bettingEnd) {
-			console.log(1)
 			text = "Betting Ends:";
 			endTime = battle.bettingEnd;
 		} else if (now > battle.bettingEnd && now < battle.battleEnd) {
-			console.log(2)
 			text = "Tracking Ends:";
 			endTime = battle.battleEnd;
 		} else if (now > battle.battleEnd) {
-			console.log(3)
 			endTime = null;
 		}
-		this.setState({ endTime, text });
 		if (!endTime) return;
-		let diffTime = endTime - moment.utc().unix();
+		
+		endTime *= 1000;
+		let diffTime = endTime - moment.utc();
 		let duration = moment.duration(diffTime);
-		console.log("here:\n", endTime, "\n", moment.utc().unix(), "\n", diffTime)
+		// console.log("here:\n", endTime, "\n", moment.utc().unix(), "\n", diffTime)
 		setInterval(() => {
 			duration = moment.duration(duration - 1000);
 			this.setState({
 				days: duration.days(),
 				hours: duration.hours(),
 				minutes: duration.minutes(),
-				seconds: duration.seconds()
+				seconds: duration.seconds(),
+				endTime,
+				text
 			})
 		}, 1000);
 	}
 
 	render() {
 		if (!this.state.endTime) return null;
-		console.log(4);
 		return (
 			<Container>
 				<Text>{this.state.text}</Text>
-				<Countdown>
-					{this.state.days > 0 &&
-						<>
-							<Item>
-								{this.state.days.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-							</Item>
-							<div>:</div>
-						</>
-					}
-					<Item>
-						{this.state.hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-						{/* <TimerText>Hours</TimerText> */}
-					</Item>
-					<div>:</div>
-					<Item>
-						{this.state.minutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-						{/* <TimerText>Minutes</TimerText> */}
-					</Item>
-					<div>:</div>
-					<Item>
-						{this.state.seconds.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
-						{/* <TimerText>Seconds</TimerText> */}
-					</Item>
+				{this.state.endTime > moment.utc() ?
+					<Countdown>
+						{this.state.days > 0 &&
+							<>
+								<Item>
+									{this.state.days.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+								</Item>
+								<div>:</div>
+							</>
+						}
+						<Item>
+							{this.state.hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+							{/* <TimerText>Hours</TimerText> */}
+						</Item>
+						<div>:</div>
+						<Item>
+							{this.state.minutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+							{/* <TimerText>Minutes</TimerText> */}
+						</Item>
+						<div>:</div>
+						<Item>
+							{this.state.seconds.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}
+							{/* <TimerText>Seconds</TimerText> */}
+						</Item>
+					</Countdown> :
+					<Countdown>
+						Now!
 				</Countdown>
+				}
 			</Container>
 		)
 	}
@@ -89,12 +93,11 @@ class MarketsCountDown extends React.Component {
 const Container = styled.div`
 position: relative;
 left: -50%;
-top: 20px;
+top: 10px;
 border: 2px solid black;
-    padding: 5px;
-	border-radius: 4px;
-		background-color: rgba(0,0,0,0.5);
-		// background-color: rgba(256,256,256,0.3);
+padding: 5px;
+border-radius: 4px;
+background-color: rgba(0,0,0,0.5);
 `
 
 const Item = styled.div`

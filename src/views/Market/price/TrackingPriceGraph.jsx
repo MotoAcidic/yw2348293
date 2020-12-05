@@ -83,14 +83,12 @@ const calcPercentChange = (start, end) => {
 }
 
 const FarmGraph = ({ battle, coin }) => {
-	const [prices, setPrices] = useState(null);
 	const [startPrice, setStartPrice] = useState(null)
 	const [price, setPrice] = useState(null);
 	const [marketCap, setMarketCap] = useState(null);
 	const [graphData, setGraphData] = useState([]);
 	const [recentChange, setRecentChange] = useState(null);
 	const [percentDone, setPercentDone] = useState(0);
-	const [days, setDays] = useState({ prev: null, next: null });
 
 	useEffect(() => {
 		if (!price) {
@@ -100,7 +98,6 @@ const FarmGraph = ({ battle, coin }) => {
 				setMarketCap(market_caps[market_caps.length - 1][1].toLocaleString(undefined, { maximumFractionDigits: 0 }));
 				setPrice(prices[prices.length - 1][1].toFixed(2));
 				const start = battle.bettingEnd;
-				setDays({ prev: moment.unix(start).utc().format('MM/DD'), next: moment.unix(start).utc().add(1, 'days').format('MM/DD') })
 				for (let i = 0; i < prices.length; i++) {
 					// console.log("price", prices[i][0], start);
 					if (prices[i][0] / 1000 >= start) {
@@ -109,10 +106,8 @@ const FarmGraph = ({ battle, coin }) => {
 						break;
 					}
 				}
-				setPrices(prices)
 				const curr = prices[prices.length - 1][0] / 1000;
 				const percent = 100 * (curr - start) / (battle.battleEnd - start);
-				console.log("everything", curr, percent, prices)
 				let chartData = [];
 				for (let i = 0; i < prices.length; i++) {
 					chartData.push([i, prices[i][1]]);
@@ -120,7 +115,6 @@ const FarmGraph = ({ battle, coin }) => {
 				setPercentDone(percent);
 				setStartPrice(prices[0][1].toFixed(2))
 				setRecentChange(calcPercentChange(prices[0][1], prices[prices.length - 1][1]))
-				console.log("here", chartData);
 				setGraphData(chartData);
 			})
 		}

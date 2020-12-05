@@ -453,7 +453,8 @@ font-family: "Edo";
 		rgba(186, 12, 150, 1) 80%,
 		rgba(251, 7, 50, 1) 90%,
 		rgba(255, 0, 0, 1) 100%
-	  );	background-size: 200% 200%;
+	  );	
+	  background-size: 200% 200%;
 	animation: dOtNsp2 3s linear infinite;
 	-webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

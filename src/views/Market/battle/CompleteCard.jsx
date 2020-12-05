@@ -1,23 +1,23 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import styled from 'styled-components'
-import Button from '../../components/Button'
+import Button from '../../../components/Button'
 import { useWallet } from "use-wallet";
-import useModal from '../../hooks/useModal'
+import useModal from '../../../hooks/useModal'
 import Cookie from 'universal-cookie'
-import Container from '../../components/Container'
-import useFarm from '../../hooks/useFarm'
-import useYam from '../../hooks/useYam'
+import Container from '../../../components/Container'
+import useFarm from '../../../hooks/useFarm'
+import useYam from '../../../hooks/useYam'
 import { provider } from 'web3-core'
-import useApprove from '../../hooks/useApprove'
-import useStakedBalance from '../../hooks/useStakedBalance'
-import useUnstake from '../../hooks/useUnstake'
-import useAllowance from '../../hooks/useAllowance'
-import { placeTestWARBet, placeTestETHBet, getTestBets, getTestBalances, getTestRewards, getTestFinished, redeem } from '../../yamUtils'
-import { getPotVals, getUserBet, placeETHBet } from "../../yamUtils";
+import useApprove from '../../../hooks/useApprove'
+import useStakedBalance from '../../../hooks/useStakedBalance'
+import useUnstake from '../../../hooks/useUnstake'
+import useAllowance from '../../../hooks/useAllowance'
+import { placeTestWARBet, placeTestETHBet, getTestBets, getTestBalances, getTestRewards, getTestFinished, redeem } from '../../../yamUtils'
+import { getPotVals, getUserBet, getRewards, getBet } from "../../../yamUtils";
 import Swal from 'sweetalert2';
-import { getElectionContracts, harvest } from '../../yamUtils'
+import { getElectionContracts, harvest } from '../../../yamUtils'
 import BigNumber from 'bignumber.js'
-import VotingBalance from './VotingBalance'
+import VotingBalance from '../VotingBalance'
 
 
 function isMobile() {
@@ -58,13 +58,12 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	// const tokenContract = useMemo(() => {
 	// 	return getContract(ethereum, depositTokenAddress)
 	// }, [ethereum, depositTokenAddress])
-
-	const [ethInput, setETHInput] = useState(0);
-	const [warInput, setWARInput] = useState(0);
-	const [disabled, setDisabled] = useState(false)
+	const [userBet, setUserBet] = useState(false);
+	const [alreadyRedeemed, setAlreadyRedeemed] = useState(false);
+	const [userLost, setUserLost] = useState(false);
+	const [pending, setPending] = useState(false)
 	const [farmBets, setFarmBets] = useState({ pool1ETHPot: { value: 0, choice: "" }, pool2ETHPot: { value: 0, choice: "" } });
 	const [farmBalances, setFarmBalances] = useState({ value: 0 });
-	const [pending, setPending] = useState(false);
 
 	// const tokenContract = useMemo(() => {
 	// 	return getContract(ethereum, "0xf4a81c18816c9b0ab98fac51b36dcb63b0e58fde")
@@ -103,43 +102,26 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 		// console.log("got da yams???", yam)
 		if (yam) {
 			getBets();
+			getRedeemable()
 		}
 	}, [yam, account])
 
-	const placeBet = () => {
-		if (yam && account) {
-			// if (stakedBalance) {
-			// 	claimAndUnstake()
-			// 	return
-			// }
-			if (ethInput < 0) {
-				Swal.fire('Please enter a valid value to bet!')
-				return
-			}
-			// if (warInput) {
-			// 	const candidate = candidateInfo === "pool1" ? 0 : 1;
-			// 	// console.log("War Bet", candidate, warInput)
-			// 	setPending(true)
-			// 	placeTestWARBet(yam, candidate, parseFloat(warInput), account).then((ret) => setPending(false))
-			// }
-			if (ethInput) {
-				const candidate = candidateInfo === "pool1" ? 0 : 1;
-				// console.log("Eth Bet", candidate, ethInput)
+
+	const getRedeemable = async () => {
+		const bet = await getBet(yam, battle._id)
+		const isRedeemable = await getUserBet(yam, battle._id, account);
+		if (isRedeemable) {
+			setUserBet(true);
+			if (isRedeemable.isClaimed) setAlreadyRedeemed(true);
+			if (!isRedeemable.won) setUserLost(true);
+			if (!bet.winner) {
 				setPending(true)
-				placeETHBet(yam, battle._id, candidate, parseFloat(ethInput), account).then((ret) => {
-					setPending(false)
-				})
-			}
-			if (!ethInput) {
-				Swal.fire("Place a bet for a candidate!");
 			}
 		}
 	}
 
-	const redeemRewards = async () => {
-		const done = await getTestFinished(yam);
-		console.log("election finished?", done);
-		getTestRewards(yam, account);
+	const redeemBet = (betId) => {
+		getRewards(yam, betId, account)
 	}
 
 	// const handleApprove = useCallback(async () => {
@@ -154,14 +136,30 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 	// 	}
 	// }, [onApprove])
 
-	let candidate = battle.pool1.name
-	if (candidateInfo === 'pool2')
-		candidate = battle.pool2.name
+
+
+	let status;
+
+	if (!account) {
+		status = "connect wallet to claim"
+	}
+	else if (userBet && !userLost && !alreadyRedeemed) {
+		status = <Button size="lg" onClick={() => redeemBet(battle._id)} >Claim ETH Bet</Button>
+	}
+	else if (userLost){
+		status = "you lost this bet"
+	}
+	else if (alreadyRedeemed){
+		status = "bet successfully redeemed"
+	}
+	if (pending) {
+		status = "waiting on results"
+	}
 
 	return (
 		<Section>
 			<InfoBlock >
-				Betting is now closed
+				The Battle is now Complete
         	</InfoBlock>
 			<VersusContainer>
 				<TitleText>
@@ -169,7 +167,7 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 				</TitleText>
 				<YourBets>
 					{!farmBalances.value > 0 ?
-						<NoBetsText>none</NoBetsText>
+						<NoBetsText>none, place a bet!</NoBetsText>
 						: null
 					}
 					{farmBalances.value > 0 ?
@@ -216,9 +214,12 @@ const Bet = ({ battle, candidateInfo, electionContract }) => {
 						</AmountBet>
 					</BetDisplay>
 				</AllBets>
-				<Separator style={{marginBottom: '30px', marginTop: '20px'}}/>
+				<Separator style={{ marginBottom: '30px', marginTop: '20px' }} />
 				<VotingBalance votes1={farmBets.pool1ETHPot.regValue} votes2={farmBets.pool2ETHPot.regValue} icon1={battle.pool1.icon} icon2={battle.pool2.icon} />
 			</VersusContainer>
+			<InfoBlock>
+				{status}
+			</InfoBlock>
 		</Section>
 	)
 }

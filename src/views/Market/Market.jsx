@@ -57,7 +57,7 @@ const Market = () => {
 		else if (battle.battleType === 'price')
 			return <PriceBattle battle={battle} />
 		else
-			return <BattleTracking battle={battle} />
+			return <Battle battle={battle} />
 	}
 	else if (now > battle.bettingEnd && now < battle.battleEnd) { // TRACKING PHASE
 		console.log('in tracking phase');
@@ -70,7 +70,7 @@ const Market = () => {
 	}
 	else if (now > battle.battleEnd) {  // REDEMPTION PHASE
 		console.log('in redemption phase');
-		return <Battle battle={battle} />
+		return <BattleComplete battle={battle} />
 	}
 	else
 		return (null)

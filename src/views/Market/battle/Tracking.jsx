@@ -89,7 +89,7 @@ const Battle = ({ battle }) => {
               <>
                 <VersusContainer>
                   <LeftContainer>
-                    <InfoBlock style={{ marginBottom: '20px' }}>
+                    <InfoBlock style={{ marginBottom: '40px' }}>
                       {battle.description}
                     </InfoBlock>
                     <VersusBackground href={battle.link} target="_none">
@@ -119,7 +119,7 @@ const Battle = ({ battle }) => {
                     battle={battle}
                   />
                 </VersusContainer>
-                <InfoBlock style={{ marginBottom: '30px' }}>
+                <InfoBlock style={{ marginBottom: '30px', marginTop: '30px' }}>
                   {battle.resolution}
                 </InfoBlock>
               </>

@@ -12,7 +12,7 @@ import Uniswap from "../../../assets/img/uniswap@2x.png";
 import Vitalik from "../../../assets/img/chess_vitalik.png"
 import Alexandra from "../../../assets/img/chess_alexandra_2.png"
 import { getWarStaked, getChessContracts, getChessBets, testTVL } from "../../../yamUtils";
-import { getPots, getUserBet, placeETHBet } from "../../../yamUtils";
+import { getPots, getUserBet, getBet } from "../../../yamUtils";
 
 import Chess from "../../../assets/img/chess.png";
 import Rook from '../../../assets/img/rook.png'
@@ -20,7 +20,7 @@ import Complete from '../../../assets/img/complete.png'
 import VotingBalance from '../VotingBalance'
 import Pool3 from '../Pool3'
 import Rules from '../Instructions'
-import StatusCard from '../StatusCard'
+import StatusCard from './CompleteCard'
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -47,6 +47,11 @@ const Battle = ({ battle }) => {
   let [img2, setImg2] = useState(null)
   let [background, setBackground] = useState(null)
   const [roughBets, setRoughBets] = useState({ pool1: 0, pool2: 0 });
+  const [userBet, setUserBet] = useState(false)
+  const [alreadyRedeemed, setAlreadyRedeemed] = useState(false);
+  const [userLost, setUserLost] = useState(false);
+  const [winner, setWinner] = useState(null)
+
 
   let imag1 = new Image();
   imag1.onload = function () { setImg1(battle.pool1.graphic) }
@@ -67,10 +72,33 @@ const Battle = ({ battle }) => {
     setRoughBets({ pool1, pool2 });
   }
 
+  const getWinner = async () => {
+    let winner = await getBet(yam, battle._id)
+    if (winner.winner) {
+      if (winner.possibleChoices[0] === winner.winner) {
+        setWinner(1)
+      }
+      else {
+        setWinner(2)
+      }
+    }
+  }
+
+  const getRedeemable = async () => {
+    const isRedeemable = await getUserBet(yam, battle._id, account);
+    if (isRedeemable) {
+      setUserBet(true);
+      if (isRedeemable.isClaimed) setAlreadyRedeemed(true);
+      if (!isRedeemable.won) setUserLost(true);
+    }
+  }
+
   useEffect(() => {
     console.log("using effect");
     if (yam && account && !roughBets.pool1 && battle) {
       getRoughBets();
+      getRedeemable()
+      getWinner()
     }
   }, [yam]);
 
@@ -78,8 +106,6 @@ const Battle = ({ battle }) => {
   const stopProp = (e) => {
     e.stopPropagation()
   }
-
-  const contract = null //getChessContracts(yam)
 
   return (
     <Switch>
@@ -92,31 +118,40 @@ const Battle = ({ battle }) => {
               <>
                 <VersusContainer>
                   <LeftContainer>
-                    <InfoBlock  style={{ marginBottom: '20px' }}>
+                    <InfoBlock style={{ marginBottom: '30px' }}>
                       {battle.description}
                     </InfoBlock>
-                    <VersusBackground href={battle.link} target="_none">
-                      <ImgWrapper>
-                        <Candidate1
-                          src={img1}
-
-                        />
-                      </ImgWrapper>
-                      <ImgWrapper>
-                        <Candidate2
-                          src={img2}
-                        />
-                      </ImgWrapper>
+                    <VersusBackground>
+                      {winner === 1 ?
+                        <WinWrapper>
+                          <Candidate1 src={img1} />
+                        </WinWrapper>
+                        :
+                        <ImgWrapper>
+                          <Candidate1 src={img1} />
+                        </ImgWrapper>
+                      }
+                      {winner === 2 ?
+                        <WinWrapper>
+                          <Candidate2 src={img2} />
+                        </WinWrapper>
+                        :
+                        <ImgWrapper>
+                          <Candidate2 src={img2} />
+                        </ImgWrapper>
+                      }
                     </VersusBackground>
-                    <InfoBlock href={battle.link} target="_none" style={{ marginTop: '30px' }}>
-                      Watch the Game Live!
-                    </InfoBlock>
+                    {winner &&
+                      <WinMessage>
+                        The Winner is {winner === 1 ? battle.pool1.name : battle.pool2.name}!
+                      </WinMessage>
+                    }
                   </LeftContainer>
                   <StatusCard
                     battle={battle}
                   />
                 </VersusContainer>
-                <InfoBlock style={{ marginBottom: '30px' }}>
+                <InfoBlock style={{ marginBottom: '30px', marginTop: '30px' }}>
                   {battle.resolution}
                 </InfoBlock>
               </>
@@ -132,9 +167,10 @@ const Battle = ({ battle }) => {
           </Page>
         </ContentContainer>
       </StyledCanvas>
-    </Switch>
+    </Switch >
   );
 };
+
 
 const Divider = !isMobile() ? styled.div` 
 display: flex;
@@ -206,6 +242,41 @@ const ImgWrapper = styled.div`
 width: 50%;
 height: 100%;
 transition: all 0.2s ease-in-out;
+transform: scale(.9);
+filter: grayscale(100%) brightness(.5);
+`
+
+const WinWrapper = styled.div`
+width: 50%;
+height: 100%;
+transition: all 0.2s ease-in-out;
+transform: scale(1.1);  
+&:after {
+  content: "";
+  position: fixed;
+  width: 100%;
+  height: 102%;
+  top: 7.5px;
+  left: 7.5px;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 0, 0, 1) 0%,
+    rgba(255, 154, 0, 1) 10%,
+    rgba(208, 222, 33, 1) 20%,
+    rgba(79, 220, 74, 1) 30%,
+    rgba(63, 218, 216, 1) 40%,
+    rgba(47, 201, 226, 1) 50%,
+    rgba(28, 127, 238, 1) 60%,
+    rgba(95, 21, 242, 1) 70%,
+    rgba(186, 12, 248, 1) 80%,
+    rgba(251, 7, 217, 1) 90%,
+    rgba(255, 0, 0, 1) 100%
+  );
+  background-size: 300% 300%;
+  animation: dOtNsp 2s linear infinite;
+  filter: blur(5px);
+  z-index: -1;
+}
 `
 
 const InfoBlock = styled.a`
@@ -225,6 +296,27 @@ align-items: center;
 width: 80%;
 margin-bottom: -8px;
 margin-top: 8px;
+background-color: rgba(0,0,0,0.3);
+border-radius: 8px;
+height: 40px;
+`
+
+const WinMessage = styled.a`
+font-family: "Gilroy";
+color: white;
+font-size: 35px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+align-items: center;
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+align-items: center;
+width: 80%;
+margin-top: 60px;
 background-color: rgba(0,0,0,0.3);
 border-radius: 8px;
 height: 40px;
@@ -258,22 +350,27 @@ let Candidate2
 
 Candidate1 = styled.img`
 width: calc(100% - 10px);
-height: 100%;
-border-radius: 6px 0 0 6px;
+height: calc(100% - 10px);
 cursor: pointer;
 object-fit: cover;
+margin: 8px;
+border-radius: 6px;
 border: 8px solid black;
 border-right: 4px solid black;
+opacity: .9;
 `
 
 Candidate2 = styled.img`
 width: calc(100% - 10px);
-height: 100%;
-border-radius: 0 6px 6px 0;
+height: calc(100% - 10px);
+border-radius: 6px;
 cursor: pointer;
 object-fit: cover;
+margin: 8px;
+border-radius: 6px;
 border: 8px solid black;
 border-left: 4px solid black;
+opacity: .9;
 `
 
 const VersusBackground = styled.a`

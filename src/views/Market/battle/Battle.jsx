@@ -7,7 +7,6 @@ import useYam from "../../../hooks/useYam";
 // import useBet from "../../hooks/useBet";
 import BigNumber from "bignumber.js";
 import { useWallet } from "use-wallet";
-
 import Uniswap from "../../../assets/img/uniswap@2x.png";
 import { getWarStaked, getChessContracts, getChessBets, testTVL } from "../../../yamUtils";
 import { getPots, getPotVals, getUserBet, placeETHBet } from "../../../yamUtils";
@@ -17,7 +16,8 @@ import Pool3 from '../Pool3'
 import Rules from '../Instructions'
 import BetModal from '../BetCard'
 import MarketCountDown from "../CountDown";
-
+import useModal from '../../../hooks/useModal'
+import RulesModal from "../BetRulesModal";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -46,6 +46,8 @@ const Battle = ({ battle }) => {
   let [modal, setShowModal] = useState(false);
   let [candidate, setCandidate] = useState("pool1");
   const [currBets, setCurrBets] = useState({ pool1: 0, pool2: 0 });
+  const [presentRulesModal] = useModal(<RulesModal />);
+
 
   let imag1 = new Image();
   imag1.onload = function () { setImg1(battle.pool1.graphic) }
@@ -74,7 +76,7 @@ const Battle = ({ battle }) => {
     setCandidate("pool2")
     setShowModal(true)
   }
-  
+
   const getCurrBets = async () => {
     let potVals = await getPotVals(yam, battle._id)
     const pool1 = potVals.choice0Val
@@ -135,6 +137,9 @@ const Battle = ({ battle }) => {
                 <InfoBlock >
                   {battle.resolution}
                 </InfoBlock>
+                <RulesInfoBlock  onClick={presentRulesModal} >
+                  Betting Rules
+                </RulesInfoBlock>
               </>
             )}
             {battle === -1 && (
@@ -165,6 +170,29 @@ const Battle = ({ battle }) => {
   );
 };
 
+const RulesInfoBlock = styled.a`
+font-family: "Gilroy";
+color: rgb(255, 204, 160);
+font-size: 20px;
+font-weight: bold;
+font-stretch: normal;
+font-style: normal;
+line-height: 1;
+letter-spacing: normal;
+align-items: center;
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+align-items: center;
+margin-top: 28px;
+background-color: rgba(0,0,0,0.6);
+border-radius: 2px;
+color: white;
+text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black;
+padding: 10px;
+cursor: pointer;
+border: 1px solid white;
+`
 
 const CountDownContainer = styled.div`
 position: absolute;

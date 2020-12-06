@@ -304,7 +304,6 @@ height: 50px;
 color: white;
 text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black;
 `
-
 const WinMessage = styled.a`
 font-family: "Gilroy";
 color: white;
@@ -321,7 +320,7 @@ justify-content: space-evenly;
 align-items: center;
 width: 80%;
 margin-top: 60px;
-background-color: rgba(0,0,0,0.3);
+text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black;
 border-radius: 8px;
 height: 40px;
 `

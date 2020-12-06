@@ -217,11 +217,9 @@ const Battle: React.FC = () => {
         </PrimaryContainer>
       )
       const AllMarkets = () => (
-
         <MarketsContainer>
           <PrimaryBet />
           <MarketsGrid>
-
             {allMarkets.map(bet =>
               <SecondaryContainer>
                 <MarketCardSecondary bet={bet} />

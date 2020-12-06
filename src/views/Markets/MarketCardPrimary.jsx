@@ -10,6 +10,8 @@ import { getWarStaked, getChessContracts, getChessBets, getPots, getPotVals } fr
 import { NavLink } from 'react-router-dom'
 import BalanceBar from "./BalanceBarPrimary"
 import MarketsCountDown from "./CountDownPrimary";
+import fuckingRIP from "../../assets/img/complete.png"
+import { set } from "numeral";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -25,7 +27,7 @@ const Battle = ({ bet }) => {
   const [currBets, setCurrBets] = useState({ choice1: 0, choice2: 0 });
   let [img1, setImg1] = useState(null)
   let [img2, setImg2] = useState(null)
-
+  const [over, setOver] = useState(false);
 
   const getCurrBets = async () => {
     let potVals = await getPotVals(yam, bet._id)
@@ -45,6 +47,9 @@ const Battle = ({ bet }) => {
       imag2.onload = function () { setImg2(bet.pool2.graphic) }
       imag2.src = bet.pool2.graphic;
     }
+    if (bet.battleEnd < Date.now() / 1000) {
+      setOver(true);
+    }
   }, [yam, img1, img2]);
 
   const connectMe = (e) => {
@@ -57,6 +62,11 @@ const Battle = ({ bet }) => {
   }
   return (
     <VersusContainer to={`/market/${bet._id}`}>
+      {over &&
+        <ThisShitIsFuckingOver>
+          <RIPYW src={fuckingRIP} />
+        </ThisShitIsFuckingOver>
+      }
       <ImgWrapper>
         <Candidate1 src={img1} />
       </ImgWrapper>
@@ -73,7 +83,7 @@ const Battle = ({ bet }) => {
         <Description>
           {bet.description}
         </Description>
-        
+
         <BetAmount>
           <Volume>
             Volume:&nbsp;
@@ -111,6 +121,26 @@ const Battle = ({ bet }) => {
     </VersusContainer>
   );
 };
+
+const RIPYW = styled.img`
+width: 50%;
+height: auto;
+margin-bottom: 6%;
+filter: brightness(3) grayscale(0.2);
+`
+
+const ThisShitIsFuckingOver = styled.div`
+position: absolute;
+width: 100%;
+height: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 100000;
+border-radius: 4px;
+background-color: rgba(0,0,0,0.6);
+`
+
 
 const CountDownContainer = styled.div`
 position: absolute;
@@ -190,6 +220,7 @@ display: flex;
 flex-direction: row;
 padding: 0.25% 2% 0.25% 2%;
 justify-content: space-between;
+z-index: 10000000;
 `
 
 const ImgWrapper = styled.div`

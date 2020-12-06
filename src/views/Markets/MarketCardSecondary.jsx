@@ -10,6 +10,7 @@ import { getWarStaked, getChessContracts, getChessBets, getPots, getPotVals } fr
 import { NavLink } from 'react-router-dom'
 import BalanceBar from "./BalanceBarSecondary";
 import MarketsCountDown from "./CountDownSecondary";
+import fuckingRIP from "../../assets/img/complete.png"
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -25,6 +26,7 @@ const Battle = ({ bet }) => {
   const [currBets, setCurrBets] = useState({ choice1: 0, choice2: 0 });
   let [img1, setImg1] = useState(null)
   let [img2, setImg2] = useState(null)
+  const [over, setOver] = useState(false);
 
   const getCurrBets = async () => {
     let potVals = await getPotVals(yam, bet._id)
@@ -44,6 +46,9 @@ const Battle = ({ bet }) => {
       imag2.onload = function () { setImg2(bet.pool2.graphic) }
       imag2.src = bet.pool2.graphic;
     }
+    if (bet.battleEnd < Date.now() / 1000) {
+      setOver(true);
+    }
   }, [yam, img1, img2]);
 
   const connectMe = (e) => {
@@ -53,6 +58,11 @@ const Battle = ({ bet }) => {
 
   return (
     <VersusContainer to={`/market/${bet._id}`}>
+      {over &&
+        <ThisShitIsFuckingOver>
+          <RIPYW src={fuckingRIP} />
+        </ThisShitIsFuckingOver>
+      }
       <Images>
 
         <ImgWrapper>
@@ -74,20 +84,20 @@ const Battle = ({ bet }) => {
       </Description>
 
       <Info>
-          {/* <BetAmount> */}
-          <Volume>
-            Volume:&nbsp;
+        {/* <BetAmount> */}
+        <Volume>
+          Volume:&nbsp;
                 <Money>
-              ${
-                (currBets.choice1 + currBets.choice2).toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                })
-              }
-            </Money>
-          </Volume>
-          <BalanceBar bet={bet} votes1={currBets.choice1} votes2={currBets.choice2} />
-        </Info>
+            ${
+              (currBets.choice1 + currBets.choice2).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })
+            }
+          </Money>
+        </Volume>
+        <BalanceBar bet={bet} votes1={currBets.choice1} votes2={currBets.choice2} />
+      </Info>
 
       {/* {account ?
         <Info>
@@ -111,6 +121,25 @@ const Battle = ({ bet }) => {
     </VersusContainer>
   );
 };
+
+const RIPYW = styled.img`
+width: 50%;
+height: auto;
+margin-bottom: 10%;
+filter: brightness(3) grayscale(0.2);
+`
+
+const ThisShitIsFuckingOver = styled.div`
+position: absolute;
+width: 100%;
+height: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 100000;
+border-radius: 4px;
+background-color: rgba(0,0,0,0.6);
+`
 
 const CountDownContainer = styled.div`
 position: absolute;
@@ -187,6 +216,8 @@ min-height: 9%;
 bottom: 42px;
 width: 96%;
 background: rgba(0,0,0,0.9);
+z-index: 1000000;
+
 `
 
 const Info = styled.div`
@@ -199,6 +230,7 @@ justify-content: space-between;
 bottom: 0;
 border-radius: 0 0 8px 8px;
 background: rgba(0,0,0,0.7);
+z-index: 1000000;
 `
 
 const ImgWrapper = styled.div`

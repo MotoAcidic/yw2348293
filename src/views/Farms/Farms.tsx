@@ -27,6 +27,7 @@ import { getStartTime, getWarStaked } from "../../yamUtils";
 import useFarms from "../../hooks/useFarms";
 import BigNumber from "bignumber.js";
 import TopDisplayContainer from '../../components/TopDisplayContainer'
+import NewToken from "./NewToken";
 
 function isMobile() {
   if (window.innerWidth < window.innerHeight) {
@@ -109,6 +110,10 @@ const Farms: React.FC = () => {
 
               <TopDisplayContainer />
               <LandingSection>
+                <StyledA>
+                  Learn more about WBET
+                </StyledA>
+                <NewToken />
                 <Pool3 />
                 {/* <CountDown launchDate={start} />
                 <BigTitle>The Future of Prediction Markets, Community Participation, and Governance lives here! </BigTitle>
@@ -185,17 +190,21 @@ justify-content: center;
 min-height: calc(100vh - 73px);
 `
 
+
 const StyledA = styled.a`
   cursor: pointer;
-  display: flex;
-  background-image: url(${Uniswap});
-  background-size: cover;
-  background-position: center;
-  height: 30px;
-  opacity: 0.9;
-  width: 137px;
+  color: white;
+      font-family: "Gilroy";
+      font-size: 18px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      color: #ffffff;
   transition: all .1s linear;
-
+  margin: 0 auto 10px auto;
+  text-decoration: underline;
   &:hover {
     opacity: 1;
   }

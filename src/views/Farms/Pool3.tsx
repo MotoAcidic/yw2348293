@@ -152,14 +152,14 @@ const WarPool: React.FC = () => {
 						/>
 					) : (
 							<MobileButtons>
-								<Button size='lg' onClick={onPresentStake}>Stake Tokens</Button>
-								<MS/>
+								<Button size='lg' disabled={true} onClick={onPresentStake}>Stake Tokens</Button>
+								<MS />
 								<Button size='lg' onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</Button>
-								<MS/>
-								
+								<MS />
+
 								<Button size='xlg' onClick={onClaimRestake} disabled={!earnings.toNumber()}>Claim & Restake</Button>
-								<MS/>
-								
+								<MS />
+
 								<Button size='lg' onClick={onPresentUnstake}>Unstake Tokens</Button>
 							</MobileButtons>
 						)}
@@ -205,7 +205,7 @@ const WarPool: React.FC = () => {
 					// />
 				) : (
 						<>
-							<PoolButton onClick={onPresentStake}>Stake Tokens</PoolButton>
+							<PoolButton disabled={true} onClick={onPresentStake}>Stake Tokens</PoolButton>
 							<PoolButton onClick={onReward} disabled={!earnings.toNumber()}>Claim Rewards</PoolButton>
 							<PoolButton onClick={onClaimRestake} disabled={!earnings.toNumber()}>Claim & Restake</PoolButton>
 							<PoolButton onClick={unstake}>Unstake Tokens</PoolButton>
@@ -372,7 +372,7 @@ font-family: "SF Mono Semibold";
   color: #ffffff;
 `
 
-const MobileInfoLines = !isMobile () ? styled.div`
+const MobileInfoLines = !isMobile() ? styled.div`
 width: 80%;
 height: 60%;
 display: flex;
